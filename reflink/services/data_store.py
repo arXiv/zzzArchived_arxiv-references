@@ -1,5 +1,5 @@
 import boto3
-from botocore.exceptions import ClientError#, ResourceInUseException
+from botocore.exceptions import ClientError
 import datetime
 import json
 import jsonschema
@@ -18,13 +18,16 @@ class ReferenceStoreSession(object):
         self.table_name = self.schema.get('title', 'ReferenceSet')
 
         try:
-            self.create_table()
+            self._create_table()
         except Exception as e:    # The table already exists.
             pass
         self.table = self.dynamodb.Table(self.table_name)
 
 
-    def create_table(self) -> None:
+    def _create_table(self) -> None:
+        """
+        Set up a new table in DynamoDB. Blocks until table is available.
+        """
         table = self.dynamodb.create_table(
             TableName=self.table_name,
             KeySchema=[
