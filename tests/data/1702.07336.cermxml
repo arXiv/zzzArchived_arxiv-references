@@ -1,0 +1,3374 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>E. J. Botcherby, M. J. Booth, R. Juskaitis, and T. Wilson, Optics letters</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Matthew Bierbaum</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Brian D. Leahy</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Alexander A. Alemi</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>y Itai Cohen</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>James P. Sethna</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Department of Physics, Cornell University</institution>
+          ,
+          <addr-line>Ithaca, NY 14853</addr-line>
+          ,
+          <country country="US">USA</country>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2005</year>
+      </pub-date>
+      <volume>34</volume>
+      <issue>1504</issue>
+      <abstract>
+        <p>Microscopy is the workhorse of the physical and life sciences, producing crisp images of everything from atoms to cells well beyond the capabilities of the human eye. However, the analysis of these images is frequently little better than automated manual marking. Here, we revolutionize the analysis of microscopy images, extracting all the information theoretically contained in a complex microscope image. Using a generic, methodological approach, we extract the information by tting experimental images with a detailed optical model of the microscope, a method we call Parameter Extraction from Reconstructing Images (PERI). As a proof of principle, we demonstrate this approach with a confocal image of colloidal spheres, improving measurements of particle positions and radii by 100x over current methods and attaining the maximum possible accuracy. With this unprecedented resolution, we measure nanometer-scale colloidal interactions in dense suspensions solely with light microscopy, a previously impossible feat. Our approach is generic and applicable to imaging methods from bright eld to electron microscopy, where we expect accuracies of 1 nm and 0:1 pm, respectively.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_2.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_3.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_4.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_5.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_6.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_7.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_8.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_2_9.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_4_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_4_2.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_4_3.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_4_4.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_6_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_6_2.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_11_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_12_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_14_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_15_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_16_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_17_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_19_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_20_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_23_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_24_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_25_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_26_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_27_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_28_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_30_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="go/1702.07336.images/img_32_1.png" />
+    </fig>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>
+        I. INTRODUCTION
+t] Microscope technology has progressed to near
+perfecf tion. Crisp images speak of precisely engineered
+microso scope components: large-aperture and nearly
+aberration.t free lenses, high-frame-rate and low noise cameras,
+powa erful and uniform light sources. Nanometer-scale details
+boast of super-resolution techniques thought impossible
+-m mere decades ago: PALM [
+        <xref ref-type="bibr" rid="ref1 ref46">1</xref>
+        ], STORM [
+        <xref ref-type="bibr" rid="ref2 ref47">2</xref>
+        ], STED [
+        <xref ref-type="bibr" rid="ref3 ref48">3</xref>
+        ].
+d The continued development of ever more powerful
+techn niques { SIM [
+        <xref ref-type="bibr" rid="ref4 ref49">4</xref>
+        ], Lattice-light sheet microscopy [
+        <xref ref-type="bibr" rid="ref5 ref50">5</xref>
+        ] {
+reco assures that resolution will continue to improve.
+[ However, our ability to extract quantitative
+information from microscopy images has not kept pace. In elds
+1 from electron microscopy to super-resolution localization,
+v6 current methods mimic human perception with heuristic
+3 approaches, such as looking for the centers of bright spots
+3 or regions of contrast in an image [6{11]. The simplicity
+7 of these methods necessarily ignores physical
+complexi.0 ties in the image formation. As a result, systematic errors
+2 and ine cient estimates plague these techniques [
+        <xref ref-type="bibr" rid="ref12 ref13 ref57 ref58">12, 13</xref>
+        ].
+0 In this paper, we present a universal method of
+sci7 enti c image analysis that extracts all the information
+:1 theoretically contained in a complex image. Our method,
+v dubbed parameter extraction from reconstructing images
+i (PERI), uses a detailed model of the physics of image
+forrX mation to t experimental images. From the t, we then
+a extract information about the image at the
+informationtheoretic limit. We illustrate this approach on confocal
+images of colloidal spheres, measuring each particle's
+position and radius to within 3 nm, a 100x improvement
+over current methods. We use this extreme accuracy
+to measure colloidal interactions at the nanometer scale,
+measuring deviations from hard-sphere interactions for
+These two authors contributed equally to this work.
+yWork done while at Cornell, currently a liated with Google Inc.
+the rst time with light microscopy. Our method does
+not require modifying the microscope or the image
+acquisition. As a result, any researcher with a microscope
+can readily apply our technique to push their data to the
+information-theoretic limit.
+      </p>
+      <p>
+        How precisely can an object be located in an image?
+The fundamental limitation in locating an object arises
+from statistical noise in the image formation, not directly
+from di raction or optical limitations [
+        <xref ref-type="bibr" rid="ref14 ref59">14</xref>
+        ]. This limit is
+determined through the interplay of the image signal and
+noise, as described by the Cramer-Rao Bound. Speci
+cally, the Cramer-Rao Bound states that the covariance
+matrix of the estimated parameters is always larger than
+the inverse of the Fisher information matrix of the noise
+distribution [
+        <xref ref-type="bibr" rid="ref15 ref60">15</xref>
+        ]. For an image with Gaussian white noise
+of variance 2, sampled at points xk, the minimum
+uncertainty in the parameters measured from the image
+is
+cov ij
+2
+! 1
+;
+(1)
+where I(x) is the image that would be measured in the
+absence of noise.
+      </p>
+      <p>We can use this equation to estimate the minimum
+uncertainty in measuring a colloidal sphere's radius and
+position from a three-dimensional confocal image. For a
+particle of radius R blurred by di raction over a width
+w, the derivatives with respect to particle radius in
+equation (1) are only nonzero on a shell at the particle's
+edge of approximately 4 R2w voxels. At the particle's
+edge, the intensity changes from a characteristic
+brightness I to 0 over a width w, and the derivatives
+are thus of magnitude I=w. Substituting these
+values gives a minimum uncertainty in a particle's radius as</p>
+      <p>R pw=4 R2=SNR, where SNR = I= is the
+signalto-noise ratio. Likewise, changing the particle's position
+only a ects the edge voxels in the direction of the
+par0.1 px
+ticle's motion. The positional derivatives will thus be of
+magnitude I=w only on a projected shell of R2w
+voxels, giving the minimal uncertainty in the particle's
+position as x pw= R2=SNR. For a colloidal
+particle of diameter 1 m, imaged with a confocal
+microscope with voxel size of 100 nm and di ractive blur of
+w 200 nm at an SNR = 25, these uncertainties
+correspond to R 1:5 nm and x 3 nm, a fantastically high
+precision.</p>
+      <p>Actually achieving this localization without serious
+systematic errors requires a detailed knowledge of the
+image formation process. To incorporate this knowledge,
+we create a generative model of the microscope image
+based on the physics of the light interacting with the
+sample and with the microscope's optical train. We then
+t every parameter in the model by comparing the image
+produced by the model to the experimental image. Our
+model describes the physics of image formation in the
+order that it occurs: (1) uorescent dye is distributed
+unevenly throughout the sample, (2) the dyed sample is
+illuminated unevenly by the laser, (3) the resultant
+image is blurred due to di raction, and (4) the nal image
+is noisy.</p>
+      <p>
+        Dye Distribution: To reconstruct the image, we
+start with the continuous distribution of the uorescent
+dye in the sample. For the image in Fig. 1, the dye is
+distributed everywhere except in a slab, representing the
+glass cover-slip slide, and in a collection of spherical
+lacunae, representing the colloidal particles. To represent this
+continuous dye distribution on a pixelated grid, we draw
+these objects in real-space using a function that is tuned
+to match the exact Fourier representation of a sphere (see
+SI for an extensive discussion of this and the rest of the
+generative model). We call this correctly-aliased
+representation on a pixelated grid the Platonic image. While
+we focus on featuring only spheres in this work, PERI
+is exible enough to include any parameterizable object
+in the generative model, such as ellipsoidal [
+        <xref ref-type="bibr" rid="ref16 ref17 ref61 ref62">16, 17</xref>
+        ],
+rodlike [
+        <xref ref-type="bibr" rid="ref18 ref63">18</xref>
+        ], or polyhedral [
+        <xref ref-type="bibr" rid="ref19 ref64">19</xref>
+        ] particles.
+      </p>
+      <p>Illumination eld and background: This
+distribution of dye is illuminated by a scanned laser. Due
+to imperfections and dirt in the optics, the
+illumination is not uniform but instead varies in space. For
+instance, our line-scanning confocal's illumination eld is
+highly striped, as any imperfections in the line
+illumination are dragged across the eld of view. We describe
+this spatially-varying illumination as a continuous eld
+that varies throughout the image. Empirically, we nd
+that combining a Barnes interpolant along the scan
+direction and Legendre polynomials in the perpendicular
+directions accurately describes both the rapidly-varying
+stripes and the slowly-varying changes in the illumination
+of our line-scan confocal. Additionally, the microscope
+always registers a non-zero background signal, which we
+include in our model. We parameterize this background
+similarly to the illumination eld.</p>
+      <p>Point spread function: Di raction prevents the
+illuminated dye from being imaged exactly onto the
+detector. Instead, each dye molecule in the sample projects
+a comparatively large blur, known as the point-spread
+function (PSF), onto the imaging camera. As a result,
+the image captured on the camera is a convolution of the
+illuminated Platonic image with the PSF, and not simply
+the illuminated dye itself. While complicated, this PSF
+has been calculated exactly by many researchers for
+different geometries [20{27]. For microscope samples with
+a refractive index di erent from what the optical train is
+designed for, the PSF worsens with depth, becoming
+signi cantly broader and more aberrated. We use an
+adaptation of these exact PSF calculations for a line-scanning
+confocal as our PSF model, optimizing over parameters
+such as the numerical aperture of the lens and the index
+mismatch of the sample to the optics.</p>
+      <p>Putting these components together as shown in Fig. 1a,
+our model image M sampled at pixels x is described by
+M(x) = B(x)+</p>
+      <p>Z
+d3x0 [I(x0)(1 (1 c) (x0))]P (x x0; x)
+(2)
+where I is the illumination eld, B is the background,
+is the platonic image, and P is the spatially-varying PSF;
+we include a constant o set c to partially capture
+rapidlyvarying variations in the background. The model image
+is highly realistic, as shown by the comparison with real
+data in Fig. 1b.</p>
+      <p>Noise: Finally, noise degrades the image recorded on
+the camera. We treat the noise using a Bayesian
+framework, and look for the maximum-likelihood model given
+the microscope data, complete with possible priors on
+parameter values. Since the noise is empirically Gaussian
+(see SI), the most likely model is the least-squares t of
+the model to the microscope image.</p>
+      <p>
+        To nd the most likely model, we least-squares t every
+parameter in our generative model to nd the correct
+particle positions, radii, illumination eld, and point-spread
+function, as illustrated in Fig. 1c. A typical confocal
+image contains a few times 103 particles, each with 4 t
+parameters (x; y; z; R). In addition, there are a few
+hundred global parameters to optimize, such as the
+illumination and PSF parameters and the lens's z-step size along
+the optical axis, resulting in 104 parameters per
+image { a daunting optimization problem. We begin with
+an initial guess for the positions using standard
+particle locating techniques [
+        <xref ref-type="bibr" rid="ref28">28</xref>
+        ], and we simultaneously t
+the particle positions and the global variables using a
+Levenberg-Marquardt algorithm modi ed for large
+parameter spaces [29{32]. From here, we ensure that we
+have correctly identi ed every particle in the image by
+automatically adding and subtracting particles based on
+the the di erence between the model and the microscope
+image. After nding the best- t parameters, we
+sample from the log-likelihood using standard Monte Carlo
+techniques [
+        <xref ref-type="bibr" rid="ref33">33</xref>
+        ] to estimate the errors in the image
+reconstruction. (See SI for a detailed description of the tting
+method and numerical optimizations.)
+      </p>
+      <p>It is important to note that this t is over all the pixels
+in the image { to get a meaningful extraction of
+parameters, every pixel must be described accurately.
+Imperfectly t regions { due to e.g. deformed particles or PSF
+leakage from objects outside the image { can bias the
+extracted positions of particles in the region and even a ect
+the entire image reconstruction through the in uence on
+image-scale variables.</p>
+      <p>
+        Using PERI to measure positions with nanometer
+accuracy requires rigorous checks on our method, with
+both generated and experimental data. We rst
+generate images with a detailed physical model,
+employing an exact, spatially-varying point-spread function [
+        <xref ref-type="bibr" rid="ref20 ref65">20</xref>
+        ],
+experimentally-measured spatially-varying illumination,
+dense collections of particles with varying radii, and a
+realistic amount of noise. PERI successfully ts these
+generated data, converging to the global t minimum in
+the extremely large dimensional parameter space despite
+a host of possible numerical complications, such as local
+minima in the t space or a failure of the t to converge.
+From this t, PERI extracts both the particle positions
+and radii at the Cramer-Rao bound ( 2 nm and 1 nm,
+respectively). In contrast, current heuristic-based
+algorithms cannot measure the particle positions to better
+than 60 nm on realistically generated datasets. (See SI
+for a detailed comparison of PERI to other featuring
+algorithms.)
+      </p>
+      <p>Emboldened by this success, we next test PERI on
+real experimental data. We take fast, three-dimensional
+movies of a suspension of 1:34 m diameter silica spheres
+suspended in a glycerol and water mixture and feature
+these images using PERI. By analyzing each frame in the
+movie independently, we can extract systematic errors
+from PERI's featuring.</p>
+      <p>We rst analyze the residuals of our ts to the
+experimental data. Fig. 2(a,b) shows these residuals in both
+real- and Fourier-space. If our t to the experimental
+image were perfect, the residuals would be perfectly
+Gaussian white noise. Instead, while the overall probability
+distribution of the residuals is nearly Gaussian in both
+domains (see SI), in Fourier-space there are distinct wave
+vectors above the noise oor. Comprising roughly 10 5
+of the power in the experimental image, the extremely
+small size of this remaining signal demonstrates the
+quality of our generative model. The deviations of our model
+from the experimental data occur at length scales slightly
+larger than the particle diameter but smaller than
+typical illumination variations. These unexplained residuals
+most likely arise from approximations in models of
+linescanning point spread function, excess aberrations in the
+microscope, and the arti cially nite but large size we use
+in our PSF calculation to speed up optimization.
+Additionally, sharp peaks at high wave-vectors can be seen in
+one slice of the Fourier-space residuals, which arise from
+noise in the scanning of the lens and the line illumination.
+The remaining question is how much these residuals
+affect the parameters of interest, the particle positions and
+radii.</p>
+      <p>
+        We can use the extracted particle positions and radii
+over time to test the accuracy of PERI. During the
+movies, the particles di use about, sampling di erent
+regions of the spatially-varying illumination and
+pointspread function and changing the con guration of
+neighboring particles. However, the true particle radii remain
+constant in time. Measuring individual radii uctuations
+over time provides a stringent model-independent
+measurement of errors in PERI, as the changing con
+guration of the particles includes all the possible sources of
+systematic error. Tracking these radii uctuations over
+time suggests that we can measure the particle radius
+to within 3-4 nm (Fig. 2c), a fantastically high precision
+compared to the 672 nm particle radius and even the
+125 nm pixel size. A better understanding of the image
+formation in the microscope could increase this
+precision even further, to the 1:5 nm minimal error from the
+Cramer-Rao Bound. We can also constrain the positional
+errors. Since the particle positions undergo Brownian
+motion, their mean-square displacement grows linearly
+in time h x2(t)i = 2Dt [
+        <xref ref-type="bibr" rid="ref34">34</xref>
+        ]. Any featuring error that
+is uncorrelated with the particle position will manifest
+itself as a nonzero intercept when the tted mean-square
+displacement is extrapolated to t = 0. By extrapolating
+to zero (panel d), we nd that PERI's positional errors
+are indistinguishable from zero and are less than 10 nm,
+with this constraint being limited only by statistics.
+Additionally, we check PERI on a dataset of 2 m diameter
+particles xed in place via strong interactions { a less
+demanding test since immobilizing the particles also xes
+most of the sources of systematic error. In this data,
+we nd x and y errors of 1-2 nm, z errors of 3 nm, and
+radii errors of 0:8 nm (see SI). Combined, these
+measurements demonstrate that we are able to measure particle
+positions and radii to within 3 nm.
+      </p>
+      <p>Why is PERI able to measure particle positions and
+radii so accurately while heuristic methods fail?
+Heuristic methods produce poor measurements with large
+systematic errors simply because they ignore complexities of
+the image formation, such as the spatially-varying
+illumination and point-spread function. In contrast, PERI
+includes these complexities. Fitting the entire image
+ensures that all the complexities are accounted for { any
+portion of the image formation not included in the model
+will manifest itself as strong residuals in the t, declaring
+that the model is incomplete and suggesting what
+additional e ect must be included. This process of model
+selection is described in detail in the SI.</p>
+      <p>
+        This extraordinary accuracy in measuring particle
+positions from microscopy images creates a new window
+into nanometer-range particle interactions in dense
+suspensions. When colloidal particles are suspended in an
+aqueous solution, the particles charge, as the polar
+solvent dissociates ions on the particles' surface groups.
+This charge results in an electrostatic repulsion, which
+is in turn screened by counterions in the bulk [
+        <xref ref-type="bibr" rid="ref35 ref36">35, 36</xref>
+        ].
+The screening creates an interparticle potential that
+deviates from a hard-sphere potential only at nanometer
+separations. This potential ever so slightly biases the
+distribution of particle positions away from that expected
+for a hard sphere suspension.
+      </p>
+      <p>
+        Previous e orts measured these interactions only in
+idealized, isolated surfaces such as a between two
+surfaces [
+        <xref ref-type="bibr" rid="ref37">37</xref>
+        ] or a single colloidal particle interacting with a
+wall [
+        <xref ref-type="bibr" rid="ref38 ref39">38, 39</xref>
+        ]. However, by their nature these idealized
+measurements frequently cannot include possible
+complications present in a real suspension, such as
+manybody interactions, realistic surface asperities, or increases
+in dissolved ion concentration from dissociated surface
+groups on multiple particles. Measuring the interaction
+potential in a dense colloidal suspension includes these
+and many other possible complications in the interaction.
+      </p>
+      <p>We measure these nanometer-scale interactions by
+using PERI to analyze a large set of images of 1:3 m silica
+spheres suspended in a water-glycerol mixture. To
+prevent kinetic e ects from confounding our measurements,
+we allow the sample to fully sediment for an hour. This
+produces an open layer of sediment approximately 2-3
+particle layers deep, shown in Fig. 3a. We then image this
+suspension repeatedly over the course of several hours,
+extracting simulation-level detail of 720,000 particle
+positions and radii over all the images. The particle
+interactions determine the structure of the suspension. We
+quantify this structure with the probability Ps( ) of
+nding a pair of particles with surface-to-surface separation
+, accounting for radii polydispersity and sedimentation
+in a manner preferable to the usual pair-correlation
+function. To reconstruct the interparticle potential, we use
+the extracted particle radii and particle number from the
+data and we simulate the particle dynamics using
+Brownian dynamics. We incorporate both gravitational settling
+and the interparticle potential, which we model as an
+exponentially-decaying electrostatic repulsion. We then
+t the potential by simulating, reconstructing Ps( ) from
+the simulation at each set of potential parameter values,
+and iterating to nd the best Ps( ) that matches
+experiment (Fig. 3b).</p>
+      <p>The Ps( ) from the best- t simulation and from the
+experimental data analyzed by PERI agree excellently, at
+both large and small separations. At small separations,
+Ps( ) rises rapidly over the rst 0:1 m near contact
+in both the simulation data and the data extracted by
+PERI, as shown in gure 3b. At longer distances (inset),
+the probability grows due to the increased volume where
+particles can be located, with slight oscillations re ecting
+second- and third- nearest-neighbor interactions. In
+contrast, previous centroid-based methods produce a Ps( )
+with nonsensical features, such as signi cant overlaps,
+that cannot be t by a simulation.</p>
+      <p>
+        We use the extracted Ps( ) to measure
+nanometerscale interactions in dense colloidal suspensions for the
+rst time. The Ps( ) measured by PERI is well- t by an
+exponentially-decaying repulsive potential, as expected
+from electrostatic repulsion in standard colloidal
+theory [
+        <xref ref-type="bibr" rid="ref35">35</xref>
+        ] ( gure 3c). From the t, we measure the
+potential's screening length as 10:1 2:5 nm and the repulsion
+strength near contact as 100 30 kT, corresponding to
+surface potentials and screening lengths similar to that
+previously measured from the interaction of a single
+particle with a wall [
+        <xref ref-type="bibr" rid="ref38">38</xref>
+        ]. Our data strongly excludes
+hardsphere interactions as the interparticle potential.
+Importantly, this resolving power between potentials results
+from the values of Ps( ) near contact. Without the
+accurate localization provided by PERI, it is impossible to
+measure the potential at these separations.
+      </p>
+      <p>III.</p>
+    </sec>
+    <sec id="sec-2">
+      <title>DISCUSSION</title>
+      <p>Our technique and the ideas within it provide more
+than just a description of colloidal interactions.
+Nanometer accuracy in locating colloidal particle positions would
+revolutionize elds as diverse as the study of colloidal
+glasses and the measurement of biological forces with
+force-traction microscopy. With our open-source code 1,
+other researchers can immediately analyze existing
+images of these systems. Moreover, the principle of
+accurately reconstructing an image to extract parameters
+applies to a wide range of elds. Extending PERI to analyze
+bright eld microscopy images would provide
+nanometerscale precision for a simpler and more widespread
+imaging setup than confocal microscopy. Applying these ideas
+to imaging modalities such as STEM or STM will usher
+in a new era of precision measurements, for objects whose
+sizes range from microns to angstroms.</p>
+      <p>IV.</p>
+    </sec>
+    <sec id="sec-3">
+      <title>MATERIALS AND METHODS</title>
+      <sec id="sec-3-1">
+        <title>The microscope is a Zeiss LSM 5 Live inverted</title>
+        <p>confocal microscope, used in conjunction with an
+in nity-corrected 100x immersion oil lens (Zeiss
+PlanApochromat, 1.4 NA, immersion oil with index n =
+1:518). The LSM 5 Live confocals operate by
+linescanning. Rather than rastering a single point at a time
+1 Source code available with documentation and tutorials at http:
+//www.lassp.cornell.edu/sethna/peri/index.html
+to form the image, a line-scanning confocal images an
+entire line at once. An image of a line is focused onto
+the sample, and the sample uorescence is detected on
+a line CCD. Rastering this line allows images to be
+collected extremely rapidly; the data in the text was taken
+at 108 in-plane frames per second. However, the di
+erent line-scanning optics worsen the point-spread function
+compared to a point-scanning confocal and cause
+illumination imperfections such as dirt to be smeared out
+over one direction in the image. Importantly, our
+confocal is out tted with a hyper- ne piezo scanner which
+gives precise z-positioning of the lens. This precise
+zpositioning is important for accurate reconstruction of
+images { with the less-precise standard positioning our
+image reconstruction and results su er considerably.</p>
+        <p>Our experimental images consist of 1:3 m silica
+particles (MicroPearl) suspended in a mixture of
+glycerol and water. The glycerol/water mixture is tuned to
+match the refractive index of the particles by
+minimizing the sample scattering. For these particles we nd the
+optimal refractive index is n 1:437 corresponding to
+76% glycerol and 24% water. Since glycerol is
+hygroscopic, we controlled the concentration of glycerol and
+water by measuring the index of refraction rather than
+by measuring out the glycerol and water. We match the
+index of refraction of the spheres and the suspending uid
+to within a few parts per thousand, resulting in
+practically zero scattering by the spheres of either the laser or
+uorescent light. The glycerol has the additional
+advantage of creating a very viscous suspension, slowing down
+the Brownian motion of the particles. We add
+uorescein sodium salt to dye the suspending uid, at a
+concentration of 0.4 mg/mL. The uorescein di uses rapidly
+compared to the particles, and is e ectively uniformly
+distributed throughout the regions occupied by the uid.
+By using a considerable amount of dye and a low laser
+power, we minimize photobleaching during our
+experiments. Fluorescein sodium salt (molar weight 376.27)
+consists of two sodium ions bound to a dye molecule.
+Thus, this dye concentration corresponds to 2 10 3
+moles/L of monovalent sodium ions and 10 3 moles/L of
+divalent uorescein ions. To this solution we added the
+1.3 m silica particles (MicroPearl) at a concentration of
+6.8 mg particles per 1 mL of solution. These particles are
+placed in a 100 m deep sample cell; since the particles
+sediment the experimental volume fraction is determined
+equally by settling and the sample cell height as opposed
+to simply the density of particles in the original
+suspension. We allow the suspension to sediment for several
+hours to achieve equilibrium before taking any
+measurements. The data is collected over the course of a 1-2
+hours; we do not observe any change in the Ps( ) from
+the earlier samples to the later ones.</p>
+      </sec>
+    </sec>
+    <sec id="sec-4">
+      <title>Acknowledgments</title>
+      <sec id="sec-4-1">
+        <title>We would like to acknowledge N. Lin, W. Zipfel, M.</title>
+        <p>Transtrum, C. Clement, D. Koch, C. Schneider, and L.
+Bartell, S. Whitehead, T. Beatus and other members of
+the Cohen Lab for useful discussions. This work was
+supported in part by NSF DMR-1507607 (M. Bierbaum,
+A. Alemi, J. Sethna, and I. Cohen), NSF DMR-1120296
+(B. Leahy), and ACS PRF 56046-ND7 (B. Leahy). This
+work used the Extreme Science and Engineering
+Discovery Environment (XSEDE), which is supported by
+National Science Foundation grant number ACI-1053575.</p>
+        <p>Supplemental Material to:
+Light Microscopy at Maximal Precision
+I.</p>
+      </sec>
+    </sec>
+    <sec id="sec-5">
+      <title>OVERVIEW</title>
+      <p>In this supplemental material we describe the details of our method for extracting parameters from experimental
+confocal images at the highest resolution possible without modifying the microscope itself. To achieve maximal
+resolution, we build a generative model which aims to describe the value of every pixel in the experimental image.
+That is, we create simulated images by explicitly modeling every relevant aspect of image formation including particle
+positions and sizes, the location of dirt in the optics, amount of spherical aberration in the lens, and the functional
+form of the point spread function. We describe each of these model components in detail in Section III and how we
+decided on these particular components in Section IV. In order to t this model to the experiment, we adjust all model
+parameters until the features present in the true experimental image are duplicated in the simulated one. We decide
+when the t is complete and extract errors of the underlying parameters by using a traditional Bayesian framework
+which is described in general terms in Section II. This high dimensional optimization is in general very di cult and
+so we describe our algorithmic improvements and particular techniques in Section V. Finally, we assess the accuracy
+of this method in extracting underlying parameters and compare its performance with traditional featuring methods
+in Section VI.</p>
+      <p>Overall, this document is meant to provide a roadmap for other researchers to follow when adapting this technique
+to other types of microscopy and other types of samples in order to extract the maximal amount of information from
+their experimental images.
+(S1)
+P ( j d) / P (d j )P ( )</p>
+      <p>/ L(M( ) j d)P ( )
+where P ( ) are priors that allow us to incorporate extra information about the parameters . These priors can be
+as simple as the fact that the particle radius is positive de nite or that a group of images share similar PSFs. For
+example, an overlap prior Poverlap(xi; xj ; ai; aj ) = H(ai + aj jxi xj j), where H is the Heaviside step function, can
+be used to impose the physical constraint that particles cannot overlap. However, we found that the overlap prior
+only becomes relevant when the free volume of a particle is small compared to the average sampling error volume
+(when a particle is caged by 1 nm on all sides) and so we ignore it most of the time.</p>
+      <p>We primarily work with the log-likelihood function log L because the number of pixels in the image can be very
+large, on the order 107. For Gaussian noise, the log-likelihood is precisely the square of the L2 norm between the model
+and the data. Therefore, we are able to maximize this log-likelihood using a variety of standard routines including
+linear least squares and a variety of Monte-Carlo sampling techniques. After optimizing, we use the covariance J T J
+to determine errors in the parameters or standard Monte-Carlo algorithms to sample from the posterior probability
+distribution to extract full distributions of the model parameters. In this way, any quantity of interest that is a</p>
+      <p>When tting a model to noisy data, it is useful to adopt a Bayesian framework in which we rigorously treat the
+noise as part of our model. In the case of our featuring method, we t a model of each image pixel Mi to experimental
+data di, which can be described as a combination of signal and noise di = Si + i. This noise is present due to
+the detection of a nite number of photons by the microscope sensor, noise in the electronics, etc. and can be well
+described for our system by uncorrelated h i j i = 2 2 ij , Gaussian noise i N (0; ) (see Section III).</p>
+      <p>In a Bayesian framework, the likelihood that an individual pixel is correctly described by our model is given by the
+Gaussian likelihood,</p>
+      <p>L(Mi j di) =</p>
+      <p>1
+p2
+2
+i
+e (Mi di)=(2 i2)
+For uncorrelated pixel noise, the entire likelihood of the model given the image is given by the product over all pixels,
+L(M j d) = Qi L(Mi j di). We are ultimately interested in the probability of the underlying parameters given the
+image we record. According to Bayes' theorem, we can write this as
+function of particle distribution can be calculated using Monte-Carlo integration by</p>
+      <p>Z
+hO( )i =</p>
+      <p>O( )P ( j d) d
+=
+1 XN O( i)
+N</p>
+      <p>i</p>
+      <p>Here, i is a parameter vector sampled fairly from the posterior probability distribution and O( i) is an observable
+such as the pair correlation function, packing fraction, or mean squared displacement. Calculating higher-order
+moments provides estimated errors and error correlations on these observables. This is one of the more powerful
+aspects of this method { one can generate a probability distribution for each parameter and directly apply these
+distributions to any observable that can be inferred from the parameters.</p>
+      <p>Given this Bayesian framework, the main idea of this work is to create a full generative model for confocal images
+of spherical particles and provide algorithmic insights in order to implement the model on commodity computer
+hardware.</p>
+    </sec>
+    <sec id="sec-6">
+      <title>GENERATIVE MODEL</title>
+      <p>Most of the di culty in our method lies in creating a generative model that accurately reproduces each pixel in an
+experimental image using the fewest number of parameters possible. Our model is a physical description of how light
+interacts with both the sample and the microscope optics to create the distribution of light intensity that is measured
+by the microscope sensor and rendered as an image on the computer. In this section, we describe the model which we
+use to generate images similar to those acquired by line-scanning confocal microscopy of spherical particles suspended
+in a uorescent uid.</p>
+      <p>Our generative model aims to be an accurate physical description of the microscope imaging; it is not a heuristic.
+Creating this model requires a detailed understanding of image formation of colloidal spheres in a confocal microscope.
+In the simplest view, our samples consist of a continuous distribution of dye distributed throughout the image. If
+the uid is dyed (as for the images in this work), due to di usion the dye is uniformly distributed through the uid.
+The uid-free regions, such as those occupied by the particles, are perfectly dye-free. The sample is illuminated
+with a laser focused through an objective lens. This focused laser excites the uorescent dye only in the immediate
+vicinity of the lens's focus. An objective lens captures the dye's emitted light, focusing it through a pinhole to further
+reject out-of-focus light. The collected light passes through a long-pass or band-pass lter, which eliminates spurious
+re ected laser light before collection by a detector. This process produces an image of the sample at the focal point
+of the lens. Finally, rastering this focal region over the sample produces a three-dimensional image of the sample.</p>
+      <p>However, the actual image formation is more complex than the simple view outlined above. Excessive laser
+illumination can cause the dye to photobleach. Due to dirt and disorder in the optical train, the sample is not illuminated
+uniformly. Di raction prevents the laser light from being focused to a perfect point and prevents the objective lens
+and pinhole from collecting light from a single point in the sample. Aberrations are present if the sample's refractive
+index is not matched to the design of the objective lens, broadening the di ractive blur deeper into the sample. Both
+the illuminating and uorescing light can scatter o refractive index heterogeneities in the sample due to the particles.</p>
+      <p>Some of these complications can be eliminated by careful sample preparation. In practice, we eliminate
+photobleaching by using an excessive amount of dye in our samples and illuminating with a weak laser light. We eliminate
+scattering by matching the refractive index of the particles to the suspending uid { it is fairly easy to match the
+refractive indices to a few parts in 103. Since the scattering is quadratic in the index mismatch, the e ect of turbidity
+due to multiple-scattering is very weak in our samples. However, the rest of these complications must be accurately
+described by the generative model.</p>
+      <p>Based on this physical setup, we can describe the confocal images through three main generative model components:</p>
+      <sec id="sec-6-1">
+        <title>Platonic image</title>
+        <p>light).</p>
+        <p>(x) { the physical shape of the dye distribution in the sample (unmodi ed by perception of
+Illumination eld I(x) { the light intensity as a function of position, including both laser intensity variation
+from disorder in the optics and intensity attenuation into the sample.</p>
+        <p>Point spread function P (x; x0) { the image of a point particle due to di raction of light, including e ects from
+index mismatch and nite pinhole diameter.
+plus three minor additional t model components:</p>
+      </sec>
+      <sec id="sec-6-2">
+        <title>Sensor noise</title>
+        <p>the sensor.</p>
+        <p>Image Background c, B(x) { the overall exposure of the image c and the background values corresponding to a
+blank image without dye, B.</p>
+        <p>Rastering Step Size zscale { the displacement distance of the lens as it rasters along the optical axis.
+{ the noise due to shot noise from</p>
+        <p>nite light intensity reaching the sensor or electronic noise at
+These components are combined to form the image through convolution</p>
+        <p>Z
+M(x) = B(x) +
+which is sampled at discrete pixel locations to give the nal image Mi = M(xi).</p>
+        <p>Here, we describe each part of our model in detail along with our explanations and motivations behind any
+simpli cations. In subsequent sections we will also discuss other aspects of image formation which may result in other
+model choices and why we omit them from the nal form of the model.
+(S2)
+(S3)
+(S4)
+where S(x; p; a) = H(jx pj a) where H(x) is the Heaviside step function, which is either 0 or 1 depending on
+whether jx pj &gt; a or &lt; a, and denotes convolution. The Gaussian widths should be approximately 1 px;
+however, if the ratio of the z pixel size to the xy pixel size zscale 6= 1, then z will not be the same as x and y.</p>
+        <p>While Eq. S3 does not generally admit a simple solution, there is a closed-form functional form for the symmetric
+case x = y = z. In the symmetric case (zscale = 1) Eq. S3 takes the form
+(x) =
+The Platonic image must accurately represent the continuous distribution of uorescent dye in the sample on the
+nite, pixelated image domain. The colloidal sample consists of a collection of spherical particles embedded in the
+solvent, with either only the particles or only the solvent dyed. Our Platonic image should then consist of the union
+of images of individual spherical particles, with their corresponding radii and positions. Thus, if we have a method
+to accurately represent one colloidal sphere, we can easily construct the Platonic image in our generative model.</p>
+        <p>A nave way to generate the Platonic image of one sphere would be simply to sample the dye distributions at the
+di erent pixel locations, with each pixel being either 0 (if it is outside the sphere) or 1 (if it is inside the sphere) with
+no aliasing. This method will not work, since a pixel value in the Platonic image can only change when a sphere's
+position or radii has shifted by one pixel. This method of Platonic image formation would produce a generative model
+that does not adequately distinguish between particle locations separated by less than 1 pixel or 100 nm! Simply
+multiplying the resolution and corresponding coarse-graining of the boolean cut by a factor of N in each dimension
+increases the resolution of this method to 1=N pixels. However, calculating these high resolution platonic spheres is
+computationally expensive, requiring 109 operations to draw spheres capable of determining positions within 0:01 px.</p>
+        <p>To nd the correct representation of a Platonic sphere, we examine the mechanism of image formation in Eq. S2.
+The nal image results from a convolution of the Platonic image with the point-spread function P (x x0; x). Thus,
+we need a representation of a sphere that will produce the correct image after being convolved with the point-spread
+function. To do this, we recall that a convolution is a multiplication in Fourier space. However, creating the image
+of the sphere in Fourier space is problematic since there will be undesirable ringing in the Platonic image due to the
+truncation from the nite number of pixels (i.e. Gibbs phenomenon). Moreover, each update of one particle requires
+updating all the pixels in the image, which is exceedingly slow for large images.</p>
+        <p>Instead, we look for a functional form in real space that approximates the numerically-exact truncated Fourier series,
+where the truncation arises due to a nite number of pixels. For a sphere with radius a at position p, this truncated
+Fourier series is given by ~ (q; p; a) = 4 a3(j1(q)=q)eiq p, where q is sampled only at frequencies in the image. We can
+view the truncation operation as a multiplication in Fourier space by a boxcar H(1 jqxj)H(1 jqyj)H(1 jqzj), where
+q is the variable inverse to position, measured in px 1. By the convolution theorem, this truncation corresponds to
+a convolution in real space with sinc(x) sinc(y) sinc(z), using the inverse Fourier transform of the boxcar as the sinc
+function. Thus, the numerically exact image of a sphere would be the analytical convolution of sinc(x) sinc(y) sinc(z)
+with a sphere of radius a at position p, represented on a discrete grid. However, the convolution with the sinc
+function is analytically intractable. To circumvent this, we approximate the sinc function by a Gaussian. This gives
+a representation of the correctly-aliased Platonic image (x; a) of a sphere of radius a as
+(x) = S(x)
+h 2
+2 2 2
+x y z
+1=2 e x2=2 x2 e y2=2 y2 e z2=2 z2 i
+where r is the distance from the particle's center. The rst bracketed group of terms corresponds to treating the
+sphere as a at surface, and the second bracketed group corresponds to the e ects the sphere's curvature on the
+integral. In each sub-grouping, the rst term that depends on r a re ects the contribution due to the particle's
+nearer edge, and the second term that depends on r + a re ects the contribution due to the particle's farther edge.
+We then t in Eq. S4 to best match the exact Fourier space image of a sphere, giving a value 0:276.</p>
+        <p>Although Eq. S3 does not admit a simple solution for zscale 6= 1, we can use the exact form for zscale = 1 to construct
+an approximate solution. Since both erf(x) and e x2 approach their asymptotic values extremely rapidly, and since
+at the best t 0:276 (a + r)= 1 for even moderately small radii, the terms erf((a + r)= p2) 0:5 and
+exp( (r + a)2=2 2) 0 to an excellent accuracy. We then write the position vector in terms of its direction x^ and a
+vector x as x ax^ + x, and replace (a r)= in Equation (S4) by p( x= x)2 + ( y= y)2 + ( z= z)2. Note that
+this approximation is exact in the limit of in nite sphere radii. Empirically, we nd that this approximation works
+quite well, giving di erences in the Platonic image of a few percent from a numerical solution to Eq. S3 as well as
+high resolution boolean cut real-space spheres (see Fig. S1).</p>
+        <p>While this implementation of the Platonic image correctly captures most of the e ects of nite-pixel size, there are
+still some minor details that need to be xed to give unbiased images. By construction, Eq. (S4) conserves volume
+{ its integral over all space is 4=3 a3 since the Gaussian kernel is normalized. However, when (x) is sampled on a
+pixelated grid, its sum is not exactly 4=3 a3 but is slightly di erent, depending on the position of the particle's center
+relative to a voxel's center. The slight change in volume is important for two reasons. First, the convolution with the
+PSF in our image generation (see next subsection) suppresses high-frequency portions of the image, but it does not
+a ect the q = 0 component, i.e. the image sum or the particle volume. Since we aim to create a Platonic image that
+accurately represents the nal image, we need the q = 0 component of the Platonic image to be correct. Secondly,
+as discussed in section IV the real microscope image is actually an integral over a nite pixel area. As such, the
+image recorded on the detector preserves the particle's volume or the q = 0 component of the image. To circumvent
+this issue of incorrect particle volume, instead of drawing the particle at its actual radius we draw it with a slightly
+di erent radius that preserves the particle's volume, which we accomplish with an iterative scheme. The results of this
+iterative scheme are shown in Fig. S1 along with the errors it introduces. Incidentally, the e ects of image pixelation
+on image moments higher than h1i, e.g. hxi and its e ects on the particle positions, are much smaller than the noise
+oor in our data at a moderate SNR (see section IV).</p>
+        <p>The representation in equation S4 is the best method for forming Platonic spheres on a pixelated grid that we have
+found. However, there are other, simpler methods which work almost as well as the Platonic sphere. Aside from the
+important curvature term, equation S4 is basically an erf() interpolation between particle and void at the particle's
+edge. Other interpolation schemes can provide similar results. For instance, the spheres could be constructed by
+ignoring the curvature term and replacing the erf with a logistic 1=(1 + exp((r a)= )), a linear interpolation between
+particle and void at the pixel edge, or a cubic interpolation at the pixel edge. We have also implemented these methods
+for generating Platonic images of spheres, tting the parameters to match the exact Fourier representation. For the
+logistic we t , for the linear interpolation we t the slope, and for the cubic we t one parameter and constrain the
+other two such that the Platonic image and its derivative are continuous. While all of these methods are functional,
+they are not signi cantly faster than the exact Gaussian approximation in equation S4 and result in slightly worse
+featuring errors (see table I). As a result, we use the exact Gaussian approximation, but include these other options in
+our package for ease of use with more complicated shapes where the integral in equation S3 might not be analytically
+tractable.</p>
+        <p>The Platonic image needs to represent accurately all objects in the image, not just the spheres. In particular, when
+the solvent is dyed, the image usually contains a dark coverslip or its shadow from the point-spread function. We
+model this dark coverslip as a slab occupying a half-space. The slab is characterized by a z-position and by a unit
+normal n^ denoting the perpendicular to the plane. To capture accurately sub-pixel displacements of the slab, we
+use the image of a slab convolved with a Gaussian as above for a sphere; for the slab this gives a simple error (erf)
+function.</p>
+      </sec>
+    </sec>
+    <sec id="sec-7">
+      <title>B. Illumination eld</title>
+      <p>In order to illuminate the sample, confocal microscopes scan a laser over the eld of view using several distinct
+patterns including point, line, and disc scanning. This illumination laser travels through the optics train and interacts
+with uorescent dye in the suspension causing it to emit light in a second wavelength which is then detected. The
+intensity of this illumination pattern depends on the aberrations in the optics as well as dirt in the optical train which
+creates systematic uctuations in illumination across the eld of view. Accounting for these variations is important as
+they can account for most of the intensity variation in an image. In the case of our line scanning confocal microscope,
+these patterns manifest themselves as stripe patterns perpendicular to the scan direction, as the line-scan drags dirt
+across the eld of view, overlaid on aberrations and optical misalignments which cause the corners of the image to
+dim.</p>
+      <p>Confocal microscopes image by rastering in z, illuminating each xy plane separately. Ideally, the microscope
+illuminates each plane identically. In practice, aberrations due to refractive index mismatches cause a dimming of
+the illumination with depth into the sample [S20]. Since this overall dimming only depends on the depth z from the
+interface and not on the xy position in the sample, it is natural to describe the illumination eld as a product of an
+xy illumination and a z modulation:
+(S5)
+(S6)
+I(x) = Ixy(x; y)</p>
+      <p>Iz(z) :
+Empirically we nd that illumination elds of this form can accurately describe our real confocal images, without
+incorporating any coupling between xy and z.</p>
+      <p>We describe each of the separate functions Ixy and Iz by a series of basis functions. Since the modulation in z is
+fairly smooth [S20], we describe Iz(z) by a polynomial Pz(z) of moderate order 7-11 for 50-70 z-slices; typically we
+use a Legendre polynomial as the orthogonality accelerates the tting process. The in-plane illumination of a confocal
+is determined by its method of creating images. Our confocal is a line-scanning confocal microscope, which operates
+by imaging a line illumination parallel to the x axis and simultaneously collecting the line's uorescent image. This
+line is then scanned across the image in y. As a result of this scanning, any dirt in the optics is dragged across the
+eld of view, creating the illumination with stripes along the x-direction visible in Fig. S2. To model these stripes,
+we treat the variation along x and y di erently. We write the xy illumination eld as</p>
+      <p>Ixy(x; y) =</p>
+      <p>X B(x; ck)</p>
+      <p>Pk(y) ;
+k
+where Bk(x; ck) is a Barnes interpolant in x and Pk(y) a Legendre polynomial in y. Barnes interpolation is a method
+of interpolating between unstructured data using a given weight kernel [S41], similar to inverse distance weighting,
+using a truncated Gaussian kernel to allow for strictly local updates to the high frequency illumination structure.
+We use an interpolant with equally spaced anchor points in x throughout the (padded, see section III C) image.
+The kth Barnes interpolant has a large number of free parameters, described by the vector ck; the size of ck is
+equal to the number of anchoring points in the Barnes. To account for the ne stripes in the image, we use a
+large number of points for the Barnes associated with low-order polynomials, and decrease the number of points for
+higher-order polynomials. For a typical image of size (z; y; x) = (50; 256; 512) pixels, we use coe cient vectors of
+length (c0; c1; c2; c3; c4; c5; c6; c7; c8; c9; c10) (200; 120; 80; 50; 30; 30; 30; 30; 30; 30; 30). While this is a large number
+of coe cients, there are orders of magnitude fewer coe cients than pixels in the image. As a result, all of the ILM
+parameters are highly constrained (on the order of a few parts in 105, varying wildly with the parameter), and we do
+not over t the image.</p>
+      <p>Putting this all together, we use an ILM given by:
+"</p>
+      <p>X Bk(x; ck)Pk(y) 4X dj Pj (z)5
+k j</p>
+      <p>:
+This ILM accurately describes measured confocal illuminations, as determined both from blank images and from
+images with colloidal particles in them. While the Barnes structure of this ILM is optimized for line-scanning
+microscopes, it can easily be changed. For ease of use for di erent microscopes or imaging modalities we have
+implemented various ILMs consisting of simple Legendre polynomial series, as functions Pxy(x; y) Pz(z), Pxy(x; y) +
+Pz(z), and as Pxyz(x; y; z). Other illumination structures { such as a radially or azimuthally striped ILM for
+spinningdisk confocals { could also easily be incorporated into PERI's framework.</p>
+      <p>How well do these functional forms t to experimental data for a line-scanning confocal microscope? We acquire
+blank images of a water-glycerol mixture as a function of depth and t this data with Barnes illuminations of the
+form Eq. S7. As a function of the number of Barnes points in x and the polynomial degree in y, we look at the
+magnitude and patterns of the residuals. In Fig. S2, we see large scale structure in the ILM residuals, suggesting that
+high-order polynomials and Barnes interpolants with a large number of points are necessary. Fitting out the low-order
+background reveals the nd stripes in x emerge due to the line-scan nature of our machine. Finally, at higher orders
+of interpolants and polynomials we are able to adequately capture all illumination variation independent of depth
+into the sample.</p>
+      <p>Fitting the ILM correctly is essential for nding the correct particle positions and radii. Fig. S3 demonstrates the
+e ect of featuring a real confocal image with an illumination eld of insu cient order. In the left panel is an image
+featured with a high-degree polynomial illumination of 9th order in the x-direction and of 5th order in the y- and
+zdirections. While these polynomials are high-order, they are not high enough to capture all of the structure in the
+light illumination. There is a clear bias in the featured radii, with particle radii being systematically larger on the
+edge of the image and smaller in the middle. These biases arise from large stripes in the confocal illumination due to
+the line-scanning nature of our confocal. Using a higher-order 25th degree polynomial in the x-direction (upper right
+panel) eliminates the e ect of these stripes, as visible in the featured particle radii plotted as a function of x in the
+bottom panel. Note that the particle radii may be biased by as much as 1 px or 100 nm due to e ects of the spatially
+varying illumination eld.</p>
+    </sec>
+    <sec id="sec-8">
+      <title>Point spread function</title>
+      <p>Due to di raction, the illuminating laser light focused from the microscope's lens and the detected uorescent light
+collected from the sample are not focused to a single point. Instead, the light is focused to nite-sized di
+ractionlimited blur. To reconstruct an image correctly we need to account for the e ects of di raction in image formation.</p>
+      <p>A confocal microscope rst illuminates the sample with light focused through the microscope lens. The lens then
+collects the light emitted from uorophores distributed in the sample. As a result, the nal image of a point source on
+the detector results from two separate terms: an illumination point-spread function Pilm that describes the focusing of
+the incoming laser light, and a detection point spread function Pdet that describes the focused uorescent light collected
+(S8)</p>
+      <p>Here s( 0) and p( ) are the Fresnel re ectivity coe cients for s and p polarized light, Jn is the Bessel function of
+order n, and 2 is the angle of the refracted ray entering at an angle 0 (n2 sin 2 = n1 sin 0). To derive this equation
+from equation (12) in Ref. [S42], we used the additional assumption that all distance scales in the image (including
+zint) are small compared to the focal length of the lens. The corresponding detection PSF Pdet is identical to Pilm
+except for the removal of the pcos and the replacement of kin by the wave vector of the uorescent light kout. For
+from the emitted uorophores. Since a uorophore is only imaged if it is both excited by the laser illumination and
+detected by the camera, the resulting point-spread function for a confocal with an in nitesimal pinhole is the product
+of the illumination and detection point-spread functions: P (x) = Pilm(x)Pdet(x). For a confocal with a nite-sized
+pinhole, this product becomes an convolution over the pinhole area. The two separate point-spread functions (PSFs)
+Pilm and Pdet can be calculated from solutions to Maxwell's equations in the lens train [S20{S23]. The PSFs can be
+written as integrals over wavefronts of the propagating light.</p>
+      <p>An additional complication arises from the presence of an optical interface. Most microscope lenses are essentially
+\perfect" lenses, creating a perfect focus in the geometric optics limit. However, refraction through the optical
+interface destroys this perfect focus and creates an image with spherical aberration. In addition, the refracted rays
+shift the point of least confusion of the lens from its original geometric focus. For a confocal geometry, this spherical
+aberration and focal shift depend on the distance of the nominal focal point from the optical interface zint.</p>
+      <p>All of these e ects have been calculated in detail by many previous researchers [S20{S23]. The PSFs depend on
+several parameters: the wave vectors of the incoming and outgoing light kin and kout, the ratio of the indices of
+refraction nsample=nlens of the sample and the optical train design, the numerical aperture of the lens or its acceptance
+angle , and the distance focused into the sample zint. For completeness, we repeat the key results here. In polar
+coordinates, the illumination PSF Pilm( ; ; z) for illuminating light with wave vector kin traveling through a lens
+focused to a depth zint from the interface is [S20]</p>
+      <p>1
+Pilm(x) = jK1j2 + jK2j2 + 2 jK3j2 + cos 2
+1
+K1K2 + K2K1 + 2 jK3j
+2
+, where
+0 K1 1
+pcos 0 sin 0e ikinf(z; 0) 0@ 1221 (( ss(( 00)) + pp(( 00)) ccooss 22))JJ02((kkiinn ssiinn 00)) 1A d 0</p>
+      <p>J1(kin sin 0) p( 0) nn21 sin 0
+f ( ) = zint cos
+n2 (zint
+n1</p>
+      <p>s
+z) 1
+n1
+n2
+2
+sin2
+an in nitesimal pinhole, the complete PSF is the product of these two point spread functions:</p>
+      <p>P (x; zint) = Pilm(x; zint)Pdet(x; zint) :</p>
+      <p>The expressions in equations S8-S9 are for a perfect pinhole confocal, whereas our confocal is a line-scanning
+confocal. While there have been several works describing line-scanning confocals [S25, S26], these authors have
+treated where the line is focused onto the sample by a cylindrical lens. In our confocal, however, an image of a line
+is focused onto the sample through the large-aperture objective lens. As such, the illumination PSF in equation S9 is
+replaced by the integral of the detection PSF over a line in the x direction.</p>
+      <p>We use this model for a line-scanning point spread function with aberrations as our model for our exact PSF, tting
+the paramters that enter into equations S8-S9. These parameters are the acceptance angle of the objective lens,
+the wavelength of the laser, the ratio of energies of the uorescent light to the excitation light, the index mismatch
+n1=n2 of the sample to the optics, the position of the optical interface zint, and the amount that the lens is moved
+as the scan is rastered in z. In principle, other details could be included { polychromaticity and distribution of the
+uorescent light, nite pinhole width of the illuminating line, etc. { but we nd that these parameters are both
+relatively unconstrained by the t and have little impact on the other reconstructed parameters, such as particle
+positions and radii.</p>
+      <p>In addition, for initial featuring we occasionally use a Gaussian approximation to the PSF. Based on calculations of
+the exact PSF, 90% of the function can be described by a Gaussian [S22]. We veri ed this for PSFs calculated from
+Eq. S8, and found that although the presence of aberrations from the interface worsens the Gaussian approximation,
+generally a Gaussian accounts for 90% of the PSF except for in the most aberrated cases (large index mismatch
+imaging deep into the sample). Our simplest approximation of the PSF is as an anisotropic Gaussian with di erent
+widths in x; y; and z, with the widths changing with distance from the interface. We therefore parameterize the
+Gaussian widths as a function of depth,</p>
+      <p>P (x; z) =
+i
+(S9)
+(S10)
+where each width i(z) is described by a polynomial in z, typically a second order Legendre polynomial.</p>
+      <p>Figure S5 shows the e ects of ignoring these details about the point-spread function on the extracted positions.
+We generate confocal images using a simulated, exact PSF with random distribution of particles up to a depth of
+30 m. Featuring this data using a 3D anisotropic Gaussian, we nd a strong depth-dependent bias in the featured
+z position and radii measurements. Using a low order z-dependent Gaussian PSF decreases this bias only slightly.
+Interestingly however, ignoring the e ects of di raction completely and replacing the PSF with a Dirac delta-function
+does not cause signi cantly worse results than treating the PSF as a spatially-varying Gaussian. As shown by Fig. S5,
+an exact PSF is required to locate particle's positions and radii to within 20 nm (0.2 px). Therefore, we employ the
+full line-scan PSF calculation into our model.</p>
+      <p>The point-spread function de ned in equations S8-S9 decays extremely slowly with z and somewhat slowly in .
+To accurately capture these long-tails of the PSF in our generative model, we calculate the PSF on a very large
+grid for convolutions, corresponding to 40 25 30 px or 6 3 4 m in extent, which is considerably larger
+than the size of the 5 px radii particles. The long tails of the PSF bring information about structure far outside
+the image into the image region. As such, our generative model is de ned not only in regions corresponding to the
+interior microscope image but also in an exterior padded region, which is cropped out when comparing to the model.
+For completeness, we still de ne the ILM and Platonic image (including exterior particles) in the exterior padded
+region; however parameters con ned to this exterior region of the image are relatively unconstrained. We make up
+for this loss in speed due to the increased size by doing an extremely accurate but approximate convolution based on
+Chebyshev interpolation, as described in a future paper.</p>
+      <p>Due to background, the detector CCD pixels always read a non-zero value even when there is no light incident on
+them. We incorporate this into our generative model by tting a nonzero background level to the images. Ideally,
+this background would be constant at every pixel location. Empirically, however, we nd from blank images that
+this background varies with pixel location in the detector (see Fig.S6). For our confocal microscope, we nd the
+background is slowly-varying in the optical plane, perhaps due to di erent dwell times for di erent regions of the line
+scan and di erent sensitivies of di erent pixels; the background does not vary in z. As a result, the background is
+well-modeled by a low-order polynomial in x and y.</p>
+      <p>However, due to the long-tails of the PSF, the coverslip slab a ects the image in a much larger z region than that of
+a typical particle. Rather than dealing with this by using an even larger point-spread function, we use the calculated
+point spread function to capture the e ects of the PSF's moderate tails on the particles and slab, and t a polynomial
+in z to capture the residual slab correction. This residual correction is mathematically the same as a background
+level in the detector. As a result, while the \true" background in the image is P (x; y), our model uses a background
+P (x; y) + Pslab(z), as the coverslip is usually oriented along the z direction.</p>
+    </sec>
+    <sec id="sec-9">
+      <title>Sensor noise</title>
+      <p>The last feature of the generative model is our understanding of the unrecoverable parts of the image: noise. To
+study the intrinsic noise spectrum of the confocal microscope, we subtract the long wavelength behavior from the
+blank image of Fig. S2. After removing the background we nd that the noise appears white and is well approximated
+by a Gaussian distribution (see Fig. S7). There are, however, some highly localized non-Gaussian parts to the
+noise spectrum, arising due to the speci c nature of our confocal. For instance, at high scan speeds slight intensity
+uctuations in the laser's power couple to the dwell time on each stripe of line-scanned pixels. This produces periodic
+stripes across the image with a wavevector mostly parallel to the scan direction, but with a random noisy phase. How
+can we handle these sources of correlated noise and do they a ect the quality of our reconstruction?</p>
+      <p>In principle, these correlated noise sources can be represented in the Bayesian model by introducing a full noise
+covariance matrix. That is, instead of writing that log-likelihood as the product of all pixel values, we can write
+log L(M j d) =
+where ij1 is the covariance matrix between each pixel residual in the entire image. In our optimization, we would
+form a low dimensional representation for this covariance matrix and allow it to vary until we nd a maximum. In
+doing so, we would reconstruct the image and the correlated noise simultaneously. In practice, this introduces a large
+computational overhead due to the need for a full image convolution during each update as well as many new free
+parameters that need to be optimized.</p>
+      <p>Therefore, when desired we address the e ect of correlated noise by working in reverse { we identify the several
+intense Fourier peaks in the confocal noise spectrum and remove them from the raw data before the tting process.
+An example of this noise pole removal is given in Fig. S7. There, we can see that removing only 5 distinct poles
+(Fig. S7(d)) removes almost all visible correlated noise structure while changing the overall noise magnitude by a
+negligible amount. This small shift in estimated noise magnitude only a ects the estimate of the errors associated
+with parameters such as positions and radii in a proportional way. Since these errors are very small and do not bias
+our inferred parameters, we often ignore the confocal's noise poles in our analysis entirely.</p>
+      <p>Here, we investigate several complexities of image formation in confocal microscopes and systematically analyze
+whether or not it is necessary to include them in our generative model. In particular, we will rst analyze how much
+complexity we must introduce into the model elements listed in the previous section, including the platonic image,
+illumination eld, and point spread function. We will also look at elements of image formation which we have not
+explicitly included in our model. First, confocal microscopes build a 3D image by rastering in 1, 2, or 3 dimensions
+(see section III). There is noise in this rastering procedure that a ects the image formation process. Second, The
+nal image that comes from this scan is a cropped view of a much larger sample; the edges of this cropped image are
+in uenced by the excluded exterior particles. Third, while the actual distribution of light intensity is a continuous
+eld, the detector only measures a pixelated representation of this eld. Fourth, while the exposure is made by the
+camera, particles undergo di usional motion, blurring their apparent location. In this section, we address each of
+these image formation complexities and their e ects on the inferred parameters.</p>
+      <p>We would like to systematically investigate at what level omitting a detail of the image formation from the model
+a ects the tted parameters. We can understand this quantitatively by examining the optimization procedure. Let us
+assume that the true image formation is completely described by a set of N parameters . Then, near its maximum,
+the log-likelihood is approximately quadratic: log L = 21 Pij Hij i j , where the true value of the parameters is
+arbitrarily set to = 0. Empirically, we nd that with the starting parameter values provided by our initial
+featuring, the log-likelihood is extremely well-approximated by a quadratic.</p>
+      <p>If our model were complete, then the maximum of log L would be exactly at the true parameter values = 0.
+However, our model is incomplete. This means that, instead of tting all N parameters , we only t the rst (say)
+iienn fteoh reow tceh cen rsce lck in
+l</p>
+      <p>a g
+r s
+rp lep reu irre n
+e</p>
+      <p>a d n m
+u ) e I i
+la sam ftea oF (c ov .) ox
+s
+f
+o a eq 's
+d kn cy eh In rem (c rp
+u
+ise la n t . e nd ap
+r b eu in eg h a ll
+a T ) e</p>
+      <p>In co t e +
+n g 3 .
+i e</p>
+      <p>y
+m ic w l</p>
+      <p>h F o
+tson rscco rop</p>
+      <p>to com itsg iltn itw SP vp
+i
+m
+e m ( a lo u t n e
+d</p>
+      <p>e ls ia sh
+y ed eg n h au to ss y
+ll t a o t
+a la d e au ebh
+s u im is le i
+u
+w ih rse lab G C</p>
+      <p>a a
+oan rcoh rsow tehn reea isgn yb
+e s
+ew tea lt
+r r p ea rr i w u ed
+e e f
+.S m co led tra .)s fu b sc</p>
+      <p>a t e s d
+G r f b n g a r e
+F p ( la co irn sa ah iln
+I a le
+(S12)
+(S13)
+M parameters, which for convenience we denote as . Thus we can write the log-likelihood as three separate terms:
+log L =</p>
+      <p>Hij i j +</p>
+      <p>N
+X</p>
+      <p>M</p>
+      <p>X
+i=M+1 j=1
+The rst term, containing only the parameters that we are tting, is the quadratic in the reduced space, with a
+maximum at the true parameter values. The unimportant third term re ects the separate contribution to log L of the
+unknown or ignored portions of the model, and is constant in the space. However, the second term mixes both the
+tted parameters and the unknown parameters j . This mixing results in a linear shift of log L in the space away
+from the true parameters, and causes a systematic bias due to an incomplete model. Minimizing log L with respect
+to gives the tted values of the parameters gives an equation for the best- t incomplete model parameters :</p>
+      <p>M
+j = X Hjk1
+k=1</p>
+      <p>N</p>
+      <p>X
+i=M+1</p>
+      <p>Hik i
+where H 1 is the inverse of the sub-block H of the Hessian matrix H that corresponds to the tted parameters .</p>
+      <p>We can use equation S13 to estimate the e ect on one of the estimated parameters j , if we ignore one aspect of
+the generative model k. Ignoring the o -diagonal terms in H 1 to capture the scaling gives j Hkj k=Hjj . Thus,
+the error in the tted parameter j is proportional to both the coupling Hkj between that parameter and the ignored
+aspect of the generative model, and the magnitude of the error of the generative model k.</p>
+      <p>A.</p>
+    </sec>
+    <sec id="sec-10">
+      <title>Component complexities</title>
+      <p>There are several choices one can make concerning the form and complexity of each of the components of our model
+image. As discussed in the Section III, we have implemented many forms of the platonic image, illumination eld, and
+point spread function and each one of these forms has a varying number of parameters with which to t. How do we
+decide which form to use and at which complexity (number of parameters) to stop? To decide on a per-image basis,
+we could employ Occam's factor, which is a measure of the evidence that a model is correct given the data [S43]. In
+practice, however, we are mainly concerned with how these models in uence the underlying observables which we are
+attempting to extract. That is, we wish to use knowledge of the physical system to check which model best predicts
+the particle locations and sizes. To do so (as mentioned in the main manuscript), we often turn to particle sizes versus
+time as well as particle overlaps, both physical statements that assert almost no assumptions on our system.</p>
+      <p>We can also get a sense of the magnitude of the e ect these choices have on inferred positions and radii by
+creating synthetic data and tting it using a simpler model. In Fig. S8 we show the residuals of such ts for various
+simpli cations made to the platonic form, illumination eld, and point spread function. In the left columns of the
+gure we see the reference image formed using the most complex image model available and in each row the residuals
+for each choice with a description of that choice above the panel. For all but the last column, in which we t
+the image with the exact model once again, we can see systematic errors in the t. We compute how much these
+residuals in uence the extracted positions and radii and report these errors in Table I. In particular, most choices of
+platonic image aside from the naive boolean cut do not in uence particle featuring below an SNR of 30. However,
+the complexity of the illumination eld always matters until all long wavelength structure is removed from the image.
+Finally, the choice of PSF is crucial, requiring the use of a calculated confocal PSF to even approach the CRB.</p>
+      <p>B.</p>
+    </sec>
+    <sec id="sec-11">
+      <title>Scan jitter</title>
+      <p>Confocal microscopes operate by taking an image with the lens at a xed z position to create one layer of the
+three-dimensional image, then moving the lens up a xed amount to take the next layer. In our generative model, we
+assume that these steps of the lens (and the resultant image slices) are perfectly equally spaced by an amount which
+is tted internally. However, a real confocal microscope will have some error in the vertical positioning of the lens.
+As a result, the actual image taken will not be sampled at exactly evenly spaced slices in z, but at slices that are
+slightly shifted by a random amount.</p>
+      <p>To test the e ect of this z-scan jitter on our parameter estimation, we simulate images taken by a confocal microscope
+with imperfect z-positioning. Instead of sampling the image at a deterministic z position, we instead sampled the
+Fitting model type</p>
+      <p>Position error (px) Radius error (px)</p>
+      <p>Boolean cut
+m
+fro Linear interpolation
+icn Logistic function
+o
+ta Constrained cubic
+l
+P Approx Fourier sphere
+image at a z position shifted from the ideal position by an uncorrelated Gaussian amount of varying standard deviation.
+A representative image of a 5 px radius particle with a step positioning error of 10% is shown in Fig. S9(a). There
+is very little di erence between this image with z jitter and the perfectly-sampled image, as shown by the di erence
+image in panel b. We then t an ensemble of these images at varying image SNR levels, over a random sampling of
+image noise, z-jitter noise, and random shifts of particle positions by a fraction of a pixel.</p>
+      <p>The results of these ts are shown in Fig. S9c, showing the actual error in the featured positions versus the size
+of the z-positioning noise. For our confocal which is equipped with a hyper- ne z-positioning piezo, we expect the
+z positioning error to be a few nm, or a few percent of a pixel. For a 3% error in positioning, the signal-to-noise
+ratio must be 100 for the e ects of z-positioning jitter to be comparable to the theoretical minimum e ect from
+the image noise. This small e ect of the error is partially due to the large size of our particle. If each z slice of the
+image is randomly displaced with standard deviation , then we expect roughly a =pN scaling for the nal error in
+the particle's z-position, where N is the number of z slices the particle appears in. A 5 px diameter particle with a
+4 px axial point-spread function occupies 18 di erence slices, decreasing the e ect of scan noise by a factor of 4
+and putting it below the CRB for our data.</p>
+      <p>As the error in z-positioning increases, however, the e ect on the featured particle positions increases
+correspondingly. The error due to a 10% z jitter is comparable to the CRB for image noises of SN R = 20. For exceptionally
+large z-jitters of 40% the error due to the lens positioning dominates all other sources of error. However, even with
+this large error in lens positioning, the error in featured positions is still only 10% of a pixel, or about 10 nm in
+physical units.</p>
+      <p>The point spread function delocalizes the particle's image over a region larger than the particle's size. As a result,
+if two particles are close enough together, their images can overlap. This overlapping is a signi cant problem for
+heuristics such as centroid tting, as the true particle centers do not coincide with the tted centroid. In contrast,
+FIG. S9: Lens Positioning Jitter (a) The xz cross-section of a simulated image of a 5 px radius colloidal particle taken with
+a 10% error in the lens positioning. (b) The di erence between the image with positioning error and a reference image with
+zero positioning error. The di erences between the images are both random and small, for this image no more than 7% of the
+perfect image intensity. (c) The e ect of lens positioning error on featured particle positions, at signal-to-noise ratios of 20,
+50, 200, and 500. The solid symbols and dashed lines show the position error for images with imperfect lens positioning, while
+the solid lines denote the Cramer-Rao bound for an image with no positioning error. At lens positioning errors of 10% or
+larger, the error in featured positions from the z-slice jitter dominates that from the simple image noise, even for an SNR of
+20. However, the featuring error due to a z jitter of 1% is less than the error due to image noise, for any noise level than can
+be captured by an 8-bit camera.</p>
+      <p>PERI's accuracy is negligibly a ected by the presence of a second, close particle, since PERI correctly incorporates
+close particles in its generative model. The CRB of two touching, 5 px diameter particles increases by only 3%,
+and PERI nds particles to this accuracy when close.</p>
+      <p>However, large systematic errors can a ect PERI when one of these particles is missing in the generative model.
+This situation is illustrated in its simplest form in Fig. S10. If one of the two touching particles is missing from the
+generative model, then the second particle will be enlarged and drawn into the rst particle's void to compensate, as
+shown in panel b. As a result, the missing second particle will severely bias the tted positions and radii of the rst
+particle. Figure S10c shows the magnitude of this e ect. For particles separated by 1 px or less, signi cant biases on
+the order of 0:4 px appear in the identi ed particle's featured position. These biases matter at essentially all values
+of the SNR, only being comparable to the CRB for SNR &lt; 1. As a result, it is essential for PERI to identify all the
+particles in the image to return accurate results. For this reason, we take extra precaution and thoroughly search the
+image for missing particles before tting, as detailed in section V.</p>
+      <p>The biases caused by missing particles appear whether or not the missing particle is located inside or outside the
+image. As a result, accurately locating edge particles requires identifying all their nearby particles, even ones that
+are outside the image! We attempt to solve this problem by padding the Platonic and model images and the ILM by
+a signi cant portion, and including this padded extra-image region in both the add/remove and relaxation portions
+of the PERI algorithm. Nevertheless, it is extremely di cult to locate all the particles outside the image, for obvious
+reasons. As such, there is the possibility for moderate systematic errors to enter for particles located at or near the
+edge.</p>
+      <p>Nevertheless, if the exterior particle is identi ed, PERI correctly locates the interior particle, as shown in Fig. S11.
+To demonstrate this, we create simulated images of two particles near the boundary of an image. One particle is
+placed at z = a so that its edge just touches the boundary while the other is placed at z = (a + ) on the other side
+of the border. We plot the CRB of the interior particle and the measurement errors of both PERI and trackpy [S40]
+as a function of the exterior particle's coordinate in Fig. S11. While the CRB only changes by a factor of 2 as the
+particles come within contact, the featuring errors grow drastically for traditional featuring methods due to biases
+introduced by the exterior particle. For this same data set, PERI featuring errors follow the CRB allowing precise
+FIG. S10: E ect of missing particles. (a) The xz-cross section of an image of two 5 px radius particles placed in contact.
+(b) The di erence image for a bad generative model that includes only the particle on the left. To minimize the e ect of
+the missing right particle, the left particle is drawn to the right and expanded in radius. This e ect is visible as the red and
+blue ring on the right border of the left particle. (c) The error in position along the separation axis, as a function of true
+surface-to-surface distance, for a model with a missing particle. When the particles are separated by 10 px the featured
+particle is located correctly. However, as the particles get closer than 2 px signi cant biases start to appear. These biases
+saturate at a separation of 0:1 px, corresponding to a featuring error of 0:4 px.
+unbiased featuring of particles at the edge of images.</p>
+      <p>This apparent conundrum of edge particles presents an interesting positive side-e ect. Missing edge particles a ect
+the ts because they contribute a signi cant amount to the image. As such, we might expect that a particle outside
+the eld of view can still be located very precisely. This prediction is borne out by a calculation of the Cramer-Rao
+bound, as shown in Fig. S12. Until the particle and PSF fall o the edge of the image (distance &gt; 1R), the CRB
+remains constant for all particle parameters. When the particle is centered on the image edge (distance of 0), the
+CRB is twice that of the bulk, intuitively corresponding to a loss of half of the information about the particle. As the
+volume of the particle leaves the image, the CRB decreases as 1= 2 until the particle is no longer part of the image.
+Interestingly, Fig. S12 shows that the PSF constrains the particle position to within 0:1 px even when the particle is
+entirely out of the image! If correctly seeded with a moderate guess for the particle position outside the image, PERI
+will locate the particle to a precision of the Cramer-Rao bound. However, in practice it is very di cult to seed these
+particles into PERI, as a slight change of the intensity at the image edge could be either a missing particle outside
+the image or a slight variation in the ILM near the image edge. Nevertheless, PERI is very good at locating particles
+that are partially outside the image.</p>
+      <p>D.</p>
+    </sec>
+    <sec id="sec-12">
+      <title>Pixel intensity integration</title>
+      <p>Our generative model considers the image formed on the camera as if the camera pixels had an in nitesimal size.
+In reality, the camera pixels have a nite extent. As a result, the image at each pixel on the camera is not a discrete
+sampling of the light intensity, as in our generative model, but is instead an integration in the detector plane over the
+pixel's size.</p>
+      <p>To check whether the e ect of pixel integration matters, we generated images that were up-sampled by a factor of
+8 in the xy-plane. We then numerically integrated these images over the size of each pixel. A representative image
+is shown in Fig. S13a. There is very little di erence between the xy-integrated image and the generative model, as
+visible in panel b. We then tted an ensemble of these xy-integrated pixel images, both over an ensemble of noise
+samples and over an ensemble of particle positions shifted by a random fraction of a pixel. The results are shown
+in Fig. S13c. We nd that there is no discernible e ect of pixel integration at a SNR of 200 or less. The error due
+FIG. S11: In uence of particles outside of the image. Here we place one particle at x = a and a second particle at
+x = (a + ) so that one is completely inside the image and the other outside. We plot the CRB for the x, y, and z positions
+and radius a of the interior particle as well as measured errors for PERI in triangles and a centroid algorithm (trackpy [S40])
+in circles as a function of the position of the second particle. When the exterior particle is further than a pixel outside the
+image we see that the measurements of the interior particle are constant. However, as the PSF of the exterior particle begins
+to overlap the interior particle the CRB and all measured errors increase dramatically. While PERI's measured error continues
+to follow the CRB, trackpy's error increases beyond pixel resolution. Note that pixel separations at the edge are generic in
+colloidal images especially in dense suspensions.
+to neglecting pixel integration becomes comparable to that due to noise only for SN R 400, which is signi cantly
+higher than the maximum allowed by an ordinary 8-bit camera. Thus, the e ect of integrating over a pixel size for a
+colloidal particle essentially always has a negligible e ect on the tted parameters.</p>
+      <p>E.</p>
+    </sec>
+    <sec id="sec-13">
+      <title>Di usional motion</title>
+      <p>A typical colloidal particle is not xed in its location, but di uses about due to Brownian motion. For an isolated
+colloidal particle, this Brownian motion results in a random walk with mean displacement hxi = 0 and a mean-square
+displacement hx2i = 6Dt that is linear in time, with a di usion constant D = kT =6 R where is the solvent viscosity
+and R the particle radius. As a result, the microscope takes an image not of a colloidal particle at a single position,
+but of an integrated image of the colloidal particle over the trajectory that it has di used.</p>
+      <p>First, at what length- and time- scales is a colloidal particle de-localized due to Brownian motion by a scale that
+is larger than the resolution? For a 1 m diameter particle in water to di use the 1 nm resolution provided by PERI
+takes a fantastically small time of t = 1 nm2=D 10 s. Even for our relatively viscous samples of 80% glycerol
+and 20% water this time slows down to only 600 s. These times are orders of magnitude faster than the 5ms
+required by our confocal to take a 3D image of the particle, corresponding to a 8 nm displacement. Thus, a freely
+di using particle has always di used much more than the featuring errors than the uncertainty intrinsic to PERI.</p>
+      <p>However, this does not mean that the precision past 8 nm is empty. The particle's positions are Gaussian distributed
+about its mean value during the exposure time. While the extent of the distribution is much larger than the PERI
+featuring errors, the particle's mean position during the exposure time is well-de ned. Moreover, the actual image on
+the camera from the di using particle is a convolution of the particle's trajectory with a single particle image. Since
+this convolution is like an averaging, we might expect that the small Brownian excursions are averaged out in the
+image formation, and that the image allows for accurate featuring of the particle's mean position.</p>
+      <p>We can use the formalism of Eq. S13 to show that Brownian motion does not a ect our featuring accuracies. Let
+the particle's mean position be x0, and its Brownian trajectory be x0(t). Then the actual image I(x)on the detector
+FIG. S12: CRB of edge particles. Here we calculate the Cramer-Rao bound of the x, y, and z positions as well as radius
+(in red, blue, green, purple respectively) for an isolated particle as a function of its distance to the edge of the image. For
+positive displacement (inside the image) we see very little change with position as expected. As parts of the PSF leak out
+of the image (displacements close to zero, positive) we see that the expected error increases slightly since information is lost.
+Finally, as the particle itself leaves the image, information is lost more dramatically as indicated by a sharp rise in the CRB.
+However, note that even at a displacement of one radius a, the PSF allows us to locate the particle outside of the image to
+within a pixel. While in practice it is di cult to identify these particles systematically, their presence can greatly in uence the
+measured positions of other edge particles.
+is</p>
+      <p>I(x) =</p>
+      <p>1 Z texp
+texp 0</p>
+      <p>1 Z texp
+texp 0
+I0(x0(t)) dt = I0(x0) +</p>
+      <p>I0(x0(t))</p>
+      <p>I0(x0) dt
+(S14)
+where I0(x) is the image of one particle at position x and texp is the camera exposure time. As before, we view the
+actual image as I(x) = I0(x0; ) + (1 ) I, in terms of a group of tted parameters and an additional parameter
+describing the e ects of Brownian motion I. For the true image = 0 but for our model image = 1. Then
+equation S13 says the error will be j Hkj =Hjj , where H j = @ @ j I = @ j I. However, for small displacements
+the e ect of Brownian motion on the image is</p>
+      <p>I =
+x0) dt = 0
+since @I(x0)=@xi does not depend on time. As a result, @ k @ I = 0 and there is no a ect of Brownian motion on
+the image to rst order in the displacements, i.e. when the particle displacement is moderately small compared to
+the radius.</p>
+      <p>Finally, in Fig. S14 we show empirically that the e ect of Brownian motion is negligible for our exposure times. To
+create an image of a di using particle captured by a slow camera, we simulated a 200 point Brownian trajectory of a
+R = 5 px radius particle, generating an image for each point in the particle's trajectory. We then took the average
+of these images as the noise-free image captured by the microscope. One such image is shown in Fig. S14a. Once
+again, there is a slight di erence (10%, as shown in panel b) between the slow image of a di using particle and the
+reference image taken of a particle at a single location. We then tted an ensemble of these images, over a variety of
+both Brownian trajectories and noise samples. Figure S14c shows the results of these ts as a function of the mean
+displacement during the collection exposure=(R2D), where exposure is the exposure time of the camera and D the
+particle's di usion constant. Brownian motion has a negligible e ect on the featured positions for our experimental
+images of freely-di using particles (camera exposure time of 100 ms and D = 0:007 m2=s corresponding to a 1 m
+particle in 80:20 glycerol:water, corresponding to exposure=(R2D) 10 3). Interestingly, however, to achieve a
+higher localization accuracy at a higher SNR of 200, Brownian motion must be correctly taken into account in the
+image formation. Incorporating Brownian motion at these high signal-to-noise ratios would allow the teasing out of
+information about the particle's trajectory from a single image.</p>
+      <p>A typical confocal image is roughly 512 x 512 x 100 pixels in size and contains 104 particles meaning that the number
+of degrees of freedom in our t is roughly 107 described by 105 parameters, a daunting space to optimize. On modern
+hardware using the highly optimized FFTW, the typical time for an FFT the size of a single image is 1 sec.
+Given this time, a single sweep through all parameters would take an entire week while a full optimization would
+consume a year of computer time. However, since particles have nite size, we are able to optimize most of these
+parameters locally with a small coupling to global parameters (ILM, PSF). Additionally, the nite intensity resolution
+of microscope sensors, typically 8 or 16 bits, allows us to make further simpli cations to our model. Here we describe
+the practical algorithmic optimizations that we have made as well as the optimization schedule that we have devised
+to quickly reach the best t model.</p>
+      <p>First and foremost, we optimize our tting procedure by working in image updates and only updating parts of the
+image that are required at any one time. In order to modify the position of one particle by a small amount, the
+number of pixels that are a ected is simply (2a + w)3 where a is the particle radius and w is the PSF width, both in
+pixels. For a typical particle, the ratio of this volume to the entire image volume is typically 10 2 which represents
+a speed up of the same factor due to the roughly linear scaling of FFT performance with problem size (N log N ).
+In addition, since the PSF decreases with distance from a particle's center, a localized object produces only a weak
+signal in regions far away from it. For confocal microscope PSFs, the distance scale associated with this signal change
+is only a few tens of pixels. Therefore, we employ a technique common applied to inter-atomic potentials in molecular
+dynamic simulation { we simply cuto the PSF at this distance scale allowing for exact partial updates. By cutting
+o the PSF, we are able to incrementally apply image updates in an exact procedure (up to oating point errors).
+For example, when moving a single particle from x0 to x1, we must simply calculate the local image change given by
+M(x) =</p>
+      <p>Z
+c)( (x; x1)
+x0; x) ;
+(S15)
+cf. equation S2, then calculate M + M only in a small local region around the particle being updated. We are able
+to use similar update rules for all variables except for those e ecting the entire image such as the PSF, o set, zscale,
+and estimate of the SNR.</p>
+      <p>Additionally, in our code, we generously employ the principle of \space-time trade-o " in which we cache
+intermediate results of all model components and reuse them later in the computation. In particular, we maintain a full
+platonic image and illumination eld, which we update along with the model image. We also cache the calculated
+PSF so that we may utilize previous results until the PSF is sampled. In doing so, we are limited in our current
+implementation by the speed of the FFT, which takes 70% of the total runtime.</p>
+      <p>B.</p>
+    </sec>
+    <sec id="sec-14">
+      <title>Optimization of parameters and sampling for error</title>
+      <p>Once an approximate initial guess is obtained by more traditional featuring methods [S44], we optimize the
+parameters by tting using a modi ed Levenberg-Marquardt routine. Our Levenberg-Marquardt algorithm uses
+previouslyreported optimization strategies designed for large parameter spaces [S32]. However, a Levenberg-Marquardt
+minimization requires the matrix Ji @m(xi)=@ , which is the gradient of each pixel in the model with respect to all
+the parameters. For the 105 parameters and 107 pixels in our image, this matrix would be many thousand times
+too large to store in memory. Instead, we construct a random approximation to Ji by using a random sub-section
+of pixels xi in the image to compute J . This approach works well for the global parameters (PSF, ILM, etc) but
+fails for the particles, which appear in a relatively small number of pixels. For the particles, we instead t small
+groups of adjacent particles using the full Ji for the local region of a ected pixels. As the global parameters and
+particle parameters are coupled, we iterate by optimizing rst the globals, then the particles, and repeating until the
+optimization has converged.</p>
+      <p>Once the model is optimized, we can employ two di erent methods to extract the errors associated with each
+parameter. Since we calculated the gradients J during the optimization procedure, we can use this to nd the
+covariance matrix (J T J ) 1 which gives the correlated sensitivities of each parameter. In practice this is the faster
+method and yields accurate results and, as such, is our method of choice. However, additionally, we may use Monte
+Carlo sampling to estimate parameter errors. Our Monte Carlo sampler sweeps over each parameter and updates
+the particle position, accepting or rejecting based on the change in the log-likelihood of the model. We use slice
+sampling to produce highly uncorrelated samples, allowing an excellent error estimate from only a few sweeps. Our
+error sampling doubles as a check for convergence. If the log-likelihood increases after sampling, then the optimization
+has not converged and either more Monte Carlo sampling or more traditional optimization is needed. In practice,
+when desired we check with 5 10 Monte Carlo sweeps, and ensure that the log-likelihood remains the same or
+uctuates by a few times pN , where N is the number of parameters in the model.</p>
+    </sec>
+    <sec id="sec-15">
+      <title>Source code</title>
+      <p>A complete implementation of this method is provided in a Python package called peri, whose source can be found
+online 2 along with extensive documentation about the particulars of its implementation. Additionally, it is available
+at PyPI.org, the central repository for Python packages outside of the standard library.</p>
+      <p>We check our algorithm by benchmarking it against physically realistic image models, as shown in Fig. S15. For
+maximal realism, we generate these images with every model component in equation S2 as realistic as possible. We use
+our exact calculation for line-scanning confocal microscopes, with physical parameters expected from an experiment.
+From the structure of our tted line-scan confocal images, we re-create a random illumination eld that closely mimics
+the power spectrum of our actual confocal. We position the particles randomly, without placing them preferentially
+on the center or edge of a pixel. Since real images have particles that are also outside or partially inside the image,
+we generate the image on a large region before cropping to an internal region, resulting in edge particles and particles
+outside the eld of view. 3</p>
+      <p>We then t these algorithms both with PERI and with traditional centroid-based featuring algorithms. When we
+t these images with PERI we start with initial guesses that are not near the correct parameter values, to ensure
+that our method is robust to realistic initial guesses. For the centroid featuring methods, there are several algorithms
+and variants that can be used. We use the most commonly used of these versions, as implemented by Crocker and
+Grier [S44] in the IDL language. All of these centroid algorithms require the user to select various parameters, such
+as a lter size for smoothing of the noisy image and a mask size for nding the centroid positions. As is well-known
+in the colloid community, using the incorrect parameters can result in signi cantly poorer results. To overcome any
+possible limitation from using the incorrect parameters, we t all the possible parameters4 in the Crocker-Grier (CG)
+algorithm and use only the ones that produces the best global featuring of the data, as compared to the correct
+particle positions. (Centroid methods do not accurately nd particle radii). Needless to say, an actual experimenter
+does not have access to the ground truth or to the optimal parameters for the featuring. Moreover, even with these
+2 Source code and tutorial at http://www.lassp.cornell.edu/sethna/peri/index.html
+3 Unless otherwise speci ed, we use an index mismatch n2=n1 = 0:95, a ratio of uorescent light to excitation light energies of 0:889, an
+excitation wavelength of 488 nm, and a lens aperture acceptance angle of 1:173 corresponding to a 1:4 NA lens. The particles are 1 m
+in diameter, with a pixel size used of 100 nm, and extend from a region from just above to 5 m above the coverslip.
+4 We t the x; y; z bandpass sizes for both the lowpass and hipass lters, the centroid size or diameter, the particle mass size \masscut",
+the minimum particle separation, and a threshold below which pixels are ignored.
+optimal parameters, the centroid algorithm frequently misses a large fraction of particles, even in simple images. As
+such, we view the centroid featuring errors as unrealistically optimistic and probably not attainable with centroid
+methods even by experts. The results of these comparisons are shown in Fig. S15.</p>
+      <p>When two particles are close, their images overlap due to the breadth of the point-spread function. This overlap
+causes centroid methods considerable di culty. To compare the e ects of PSF overlap on both PERI and CG featured
+positions, we generate an ensemble of realistic images with isolated pairs of particles at random orientations and at
+a xed particle edge-to-edge separations. The upper-left panel shows these results for edge-to-edge separations from
+0:01 px to 2:0 px, with a xed noise scale of about 0:05 of the illumination amount. As the randomly-generated
+illumination elds vary from image to image, and the illumination varies from region to region within an image, there
+is not truly a global SNR for all of the images; the uctuations in this SNR from image to image are the origins of
+the uctuations in featuring error throughout Fig. S15. PERI features particles at the Cramer-Rao bound regardless
+of their separation. In contrast, even at large separations of 2 px, CG has signi cant errors due to particle overlaps.</p>
+      <p>Aberrations due to index mismatch signi cantly a ect image quality and extracted particle locations. The upper
+right panel shows the e ect of these aberrations on localizing isolated particles, as measured by the ratio between the
+Polydispersity Illumination eld</p>
+      <p>Point spread function Position error % Identi ed
+Barnes (10, 5), Nz = 1
+Barnes (30, 10), Nz = 2
+Gaussian(x; y; z; z0)
+Barnes (30, 10, 5), Nz = 3 Cheby linescan (6,8)
+index of refraction of the optics n1 and of the sample n2. Moving the ratio n2=n1 away from 1 increases aberration
+in the image. While increasing the aberrations in the lens negatively a ects PERI's ability to feature particles, the
+localization accuracy always remains excellent. In contrast, CG methods perform poorly throughout, with extremely
+poor performance as the aberrations increase.</p>
+      <p>Since the CRB decreases with particle radius, we expect that increasing the particle radius should result in an
+increase in localization accuracy. The lower-left panel of Fig. S15 shows that PERI's precision improves with increasing
+particle radius. In contrast, the Crocker-Grier precision worsens with increasing particle radius. We hypothesize this
+arises due to the at intensity pro le near the center of a large particle, whereas a centroid method assumes that the
+intensity is peaked at the particle center. As a result, slight noise can signi cantly worsen a large particle's localization
+with centroid methods. Conversely, centroid algorithms improve for small particles, performing only 3 worse than
+PERI's localization accuracy for particles with radius 2 px. For particles small to the PSF size, the image is essentially
+a single peak, which centroid methods work well for.</p>
+      <p>Realistic images taken with confocal microscopes consist of particles randomly distributed, occasionally close
+together and occasionally far apart. To examine the localization in these images, we use a Brownian dynamics simulation
+to create a random distribution of particles at volume fractions from = 0:1 to = 0:6. PERI localizes particle
+positions and radii excellently in all of these images, as visible in the lower-right panel. In contrast, centroid methods
+perform uniformly poorly, with localization accuracies of approximately half a pixel. Interestingly, these centroid
+algorithms do not localize signi cantly worse for dense suspensions despite the presence of more close particles, although
+they do frequently fail to identify particles.</p>
+      <p>Finally, we check how the complexity of our synthetic data a ects the accuracy of standard featuring methods. In
+Table II we see, surprisingly, that there is a non-monotonic relationship between positional error and image complexity,
+becoming optimal when there is signi cant striping in the image but little variation in depth. However, the rate of
+missing particles decreases signi cantly with simpler models and rising to as much as 40% for our most complex model
+images. The e ective resolution of CG is never much smaller than a single pixel in these synthetic tests, most likely
+due to pixel edge biases.</p>
+    </sec>
+    <sec id="sec-16">
+      <title>EXPERIMENTAL DETAILS</title>
+      <p>To extract the interparticle potential, we use Molecular Dynamics simulations to nd Ps( ) and vary the parameters
+to nd the best- t Ps( ). Since we know the particles' positions and radii via PERI, we seed the simulation with the
+featured particle positions and radii and relax the particle positions thoroughly before sampling for Ps( ). Using the
+extracted particle parameters enforces both the correct amount of particle radii polydispersity and the number density
+of particles. In the simulation we use a standard DLVO potential, consisting of non-retarded van der Waals attractions
+and Debye-Huckel repulsion [S45], augmented by gravitational settling. The free parameters we t are the strength of
+the attraction, the strength and screening length of the repulsion, and the gravitational settling strength; physically
+these correspond to the Hamaker constant, a combination of the particle zeta potential and salt concentration, and
+the average particle density.</p>
+      <p>Since the Ps( ) is measured from the simulation as a histogram with a nite number of samples, each simulated
+Ps( ) is somewhat noisy. In light of this noise, we use a Nelder-Mead algorithm to nd a good initial estimate of
+the t parameters. We then re ne this estimate of the t parameters. First, we t the ensemble of simulations to
+an approximate model which is locally linear in the t parameters. We then use this linear model to estimate a new
+set of best- t interaction parameters and re ne our estimate of the potential; the curve plotted in Fig. 3 of the main
+text is the Ps( ) generated from the linear model at the best t parameters. To estimate uncertainties in the t, we
+repeat this process by tting a random subset of half of the simulations to a model and nding the new set of best- t
+interactions. Repeating this 1000 times provides an estimate on the best- t parameters as the mean of these best- t
+parameters, and the uncertainty as the standard deviation of those parameters. Finally, we also obtain an estimate
+of systematic errors due to mis-featuring of particle positions and radii by xing each particle's radius to be its mean
+value throughout all the images it is measured in. Surprisingly, xing each particle's radius to a value that does not
+uctuate in time worsens both the reconstrunction and the experimentally-measured Ps( ), producing about three
+times as many overlaps. This probably arises because in some sense PERI directly measures the particle separations
+from the microscope image { changing the separation of two particles slightly will considerably change the fraction
+of uorescing dye separating them. Nevertheless, this xed-radius data gives an order-of-magnitude estimate of any
+systematics in the experimentally-measured Ps( ). In addition, we t the inteparticle interactions for several di erent
+forms of the potential: hard spheres, electrostatic repulsion only, electrostatic repulsion and van der Waals attraction
+(DLVO theory), and DLVO theory combined with a short-ranged hydrophilic repulsion.
+Uel, kT
+el; nm mg=kT; nm</p>
+      <p>A, kT</p>
+      <p>Uhyd, kT
+hyd, nm
+Electrostatics, tted a 100:6
+Electrostatics, xed a
+DLVO, tted a
+DLVO, xed a
+67:8
+103:6
+100:9
+DLVO + Hyd., tted a 121:5
+3:4 10:1
+2:3 7:3
+2:3 10:4
+3:2 7:5
+0:7 18:6
+DLVO + Hyd., xed a 121:5
+5:0 25:2
+0:06
+0:09
+0:05
+0:06
+0:07
+1:8
+385
+378
+390
+374
+376
+350
+2
+4
+2
+3
+2
+8
+0:231
+0:286
+0:496
+0:513
+0:006
+0:010
+0:004 105:5
+0:02 107:3
+0:6 4:7
+2:9 4:9
+0:03
+0:1</p>
+      <p>Table III shows the extracted potential parameters for all the interparticle interactions. Each interaction potential
+is t two ways, by allowing the tted particle's radius to vary with time and by xing each individual particle's radius
+to its average value over the frames. With the exception of a pure hard-sphere potential, all of the various interaction
+potentials equally well- t the data. In particular, tting the data with just an exponentially-decaying electrostatic
+repulsion ts the data no better than including the van der Waals interaction. However, while our data does not
+exclude a nonzero Hamaker constant, the data is well- t by Hamaker constants of a few kT. A hydrophilic repulsion is
+similarily not necessary to t the data, but our data can accommodate hydrophilic repulsion of a reasonable strength
+and length scale. Since there are considerably more overlaps in the xed radii data, we use the interaction potentials
+from the dataset with radii tted by PERI as the best estimate of the tting parameters, and the di erence between
+the ts as an estimate of the systematic uncertainties from imperfect experimental data.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Betzig</surname>
+          </string-name>
+          et al.,
+          <source>Science</source>
+          <volume>313</volume>
+          ,
+          <issue>1642</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>M. J.</given-names>
+            <surname>Rust</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Bates</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>X.</given-names>
+            <surname>Zhuang</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>3</volume>
+          ,
+          <issue>793</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <given-names>S. W.</given-names>
+            <surname>Hell</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Wichmann</surname>
+          </string-name>
+          , Opt. Lett.
+          <volume>19</volume>
+          ,
+          <issue>780</issue>
+          (
+          <year>1994</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [4]
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Kner</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B. B.</given-names>
+            <surname>Chhun</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. R.</given-names>
+            <surname>Gri s</surname>
+          </string-name>
+          , L. Winoto, and
+          <string-name>
+            <given-names>M. G. L.</given-names>
+            <surname>Gustafsson</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>6</volume>
+          ,
+          <issue>339</issue>
+          (
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [5]
+          <string-name>
+            <given-names>B.-C.</given-names>
+            <surname>Chen</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W. R.</given-names>
+            <surname>Legant</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Wang</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Shao</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D. E.</given-names>
+            <surname>Milkie</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M. W.</given-names>
+            <surname>Davidson</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Janetopoulos</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>X. S.</given-names>
+            <surname>Wu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J. A.</given-names>
+            <surname>Hammer</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Z.</given-names>
+            <surname>Liu</surname>
+          </string-name>
+          , et al.,
+          <source>Science</source>
+          <volume>346</volume>
+          ,
+          <issue>1257998</issue>
+          (
+          <year>2014</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [6]
+          <string-name>
+            <given-names>S. S.</given-names>
+            <surname>Rogers</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T. A.</given-names>
+            <surname>Waigh</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>X.</given-names>
+            <surname>Zhao</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>and J. R.</given-names>
+            <surname>Lu</surname>
+          </string-name>
+          ,
+          <source>Physical Biology</source>
+          <volume>4</volume>
+          ,
+          <issue>220</issue>
+          (
+          <year>2007</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [7]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Pathasarathy</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>9</volume>
+          ,
+          <issue>724</issue>
+          (
+          <year>2012</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [8]
+          <string-name>
+            <given-names>F.</given-names>
+            <surname>Gru</surname>
+          </string-name>
+          ll, M. Kirchgessner, R. Kaufmann,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Hausmann</surname>
+          </string-name>
+          , and U. Kebschull, in
+          <source>Field Programmable Logic and Applications (FPL)</source>
+          ,
+          <source>2011 International Conference on (IEEE</source>
+          ,
+          <year>2011</year>
+          ), pp.
+          <volume>1</volume>
+          {
+          <fpage>5</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [9]
+          <string-name>
+            <given-names>S. M.</given-names>
+            <surname>Anthony</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Granick</surname>
+          </string-name>
+          , Langmuir
+          <volume>25</volume>
+          ,
+          <issue>8152</issue>
+          (
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          [10]
+          <string-name>
+            <given-names>C. S.</given-names>
+            <surname>Smith</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Joseph</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Rieger</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>K. A.</given-names>
+            <surname>Lidke</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>7</volume>
+          ,
+          <issue>373</issue>
+          (
+          <year>2010</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          [11]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Andersson</surname>
+          </string-name>
+          ,
+          <source>Optics express 16</source>
+          ,
+          <issue>18714</issue>
+          (
+          <year>2008</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          [12]
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Gao and M. L. Kilfoil</surname>
+          </string-name>
+          , Optics express
+          <volume>17</volume>
+          ,
+          <issue>4685</issue>
+          (
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          [13]
+          <string-name>
+            <given-names>P. J.</given-names>
+            <surname>Lu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Shutman</surname>
+          </string-name>
+          , E. Sloutskin,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A. V.</given-names>
+            <surname>Butenko</surname>
+          </string-name>
+          , Optics express
+          <volume>21</volume>
+          ,
+          <issue>30755</issue>
+          (
+          <year>2013</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Ram</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. S.</given-names>
+            <surname>Ward</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>R. J.</given-names>
+            <surname>Ober</surname>
+          </string-name>
+          ,
+          <source>Proc. Natl. Acad. Sci</source>
+          . U.S.A.
+          <volume>103</volume>
+          ,
+          <issue>4457</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>C. R.</given-names>
+            <surname>Rao</surname>
+          </string-name>
+          ,
+          <source>Bull Calcutta. Math. Soc</source>
+          .
+          <volume>37</volume>
+          ,
+          <issue>81</issue>
+          (
+          <year>1945</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          [16]
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Keville</surname>
+          </string-name>
+          , E. Franses, and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Caruthers</surname>
+          </string-name>
+          ,
+          <source>Journal of colloid and interface science 144</source>
+          ,
+          <issue>103</issue>
+          (
+          <year>1991</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Mohraz and M. J. Solomon</surname>
+          </string-name>
+          , Langmuir
+          <volume>21</volume>
+          ,
+          <issue>5298</issue>
+          (
+          <year>2005</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Kuijk</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>A. van Blaaderen</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Imhof</surname>
+          </string-name>
+          ,
+          <source>Journal of the American Chemical Society</source>
+          <volume>133</volume>
+          ,
+          <issue>2346</issue>
+          (
+          <year>2011</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref19">
+        <mixed-citation>
+          [19]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Guttman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Z.</given-names>
+            <surname>Sapir</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Schultz</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A. V.</given-names>
+            <surname>Butenko</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B. M.</given-names>
+            <surname>Ocko</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Deutsch</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Sloutskin</surname>
+          </string-name>
+          ,
+          <source>Proceedings of the National Academy of Sciences</source>
+          <volume>113</volume>
+          ,
+          <issue>493</issue>
+          (
+          <year>2016</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref20">
+        <mixed-citation>
+          [20]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Hell</surname>
+          </string-name>
+          , G. Reiner,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Cremer</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>E. H. K.</given-names>
+            <surname>Stelzer</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Microsc</surname>
+          </string-name>
+          .
+          <volume>169</volume>
+          ,
+          <issue>391</issue>
+          (
+          <year>1993</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref21">
+        <mixed-citation>
+          [21]
+          <string-name>
+            <given-names>T. D.</given-names>
+            <surname>Visser</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>S. H.</given-names>
+            <surname>Wiersma</surname>
+          </string-name>
+          ,
+          <source>J. Opt. Soc. Am. A 11</source>
+          ,
+          <issue>599</issue>
+          (
+          <year>1994</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref22">
+        <mixed-citation>
+          [22]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Zhang</surname>
+          </string-name>
+          , J. Zerubia, and J.
+          <string-name>
+            <surname>-C.</surname>
+          </string-name>
+          Olivo-Marin,
+          <source>Appl. Optics 46</source>
+          ,
+          <year>1819</year>
+          (
+          <year>2007</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref23">
+        <mixed-citation>
+          [23]
+          <string-name>
+            <given-names>M. J.</given-names>
+            <surname>Nasse</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J. C.</given-names>
+            <surname>Woehl</surname>
+          </string-name>
+          ,
+          <source>J. Opt. Soc. Am. A 27</source>
+          ,
+          <issue>295</issue>
+          (
+          <year>2010</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref24">
+        <mixed-citation>
+          [24]
+          <string-name>
+            <given-names>J.-A.</given-names>
+            <surname>Conchello</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J. W.</given-names>
+            <surname>Lichtman</surname>
+          </string-name>
+          , Applied optics
+          <volume>33</volume>
+          ,
+          <issue>585</issue>
+          (
+          <year>1994</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref25">
+        <mixed-citation>
+          [25]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Dusch</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Dorval</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Vincent</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Wachsmuth</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Genovesio</surname>
+          </string-name>
+          ,
+          <source>Journal of Microscopy</source>
+          <volume>228</volume>
+          ,
+          <issue>132</issue>
+          (
+          <year>2007</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref26">
+        <mixed-citation>
+          [26]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Wolleschensky</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Zimmermann</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Ankerhold</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Kempe</surname>
+          </string-name>
+          ,
+          <source>in European Conference on Biomedical Optics 2005 (International Society for Optics and Photonics</source>
+          ,
+          <year>2005</year>
+          ), pp.
+          <fpage>58600N</fpage>
+          {
+          <fpage>58600N</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref27">
+        <mixed-citation>
+          [27]
+          <string-name>
+            <given-names>E. J.</given-names>
+            <surname>Botcherby</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M. J.</given-names>
+            <surname>Booth</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Juskaitis</surname>
+          </string-name>
+          , and T. Wilson, Optics letters
+          <volume>34</volume>
+          ,
+          <issue>1504</issue>
+          (
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref28">
+        <mixed-citation>
+          [28]
+          <string-name>
+            <given-names>J. C.</given-names>
+            <surname>Crocker</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>D. G.</given-names>
+            <surname>Grier</surname>
+          </string-name>
+          ,
+          <source>J. Colloid and Interface Science</source>
+          <volume>179</volume>
+          ,
+          <issue>298</issue>
+          (
+          <year>1995</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref29">
+        <mixed-citation>
+          [29]
+          <string-name>
+            <given-names>D. W.</given-names>
+            <surname>Marquardt</surname>
+          </string-name>
+          ,
+          <source>J. Soc. Indust</source>
+          . Applu. Math.
+          <volume>11</volume>
+          ,
+          <issue>431</issue>
+          (
+          <year>1963</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref30">
+        <mixed-citation>
+          [30]
+          <string-name>
+            <surname>M. K. Transtrum</surname>
+            ,
+            <given-names>B. B.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Machta</surname>
+            , and
+            <given-names>J. P.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Sethna</surname>
+          </string-name>
+          ,
+          <source>Physical review letters 104</source>
+          ,
+          <issue>060201</issue>
+          (
+          <year>2010</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref31">
+        <mixed-citation>
+          [31]
+          <string-name>
+            <surname>M. K. Transtrum</surname>
+            ,
+            <given-names>B. B.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Machta</surname>
+            , and
+            <given-names>J. P.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Sethna</surname>
+          </string-name>
+          , Physical Review E
+          <volume>83</volume>
+          ,
+          <issue>036701</issue>
+          (
+          <year>2011</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref32">
+        <mixed-citation>
+          [32]
+          <string-name>
+            <surname>M. K. Transtrum</surname>
+            and
+            <given-names>J. P.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Sethna</surname>
+          </string-name>
+          , arXiv preprint arXiv:
+          <volume>1201</volume>
+          .5885 (
+          <year>2012</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref33">
+        <mixed-citation>
+          [33]
+          <string-name>
+            <surname>R. M. Neal</surname>
+          </string-name>
+          , Ann. Stat.
+          <volume>31</volume>
+          ,
+          <issue>705</issue>
+          (
+          <year>2003</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref34">
+        <mixed-citation>
+          [34]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Einstein</surname>
+          </string-name>
+          ,
+          <source>Annales der Physik</source>
+          <volume>17</volume>
+          ,
+          <issue>549</issue>
+          (
+          <year>1905</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref35">
+        <mixed-citation>
+          [35]
+          <string-name>
+            <given-names>W. B.</given-names>
+            <surname>Russel</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D. A.</given-names>
+            <surname>Saville</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>W. R.</given-names>
+            <surname>Schowalter</surname>
+          </string-name>
+          , Colloidal
+          <string-name>
+            <surname>Dispersions</surname>
+          </string-name>
+          (Cambridge University Press, Cambridge, UK,
+          <year>1989</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref36">
+        <mixed-citation>
+          [36]
+          <string-name>
+            <given-names>J. N.</given-names>
+            <surname>Israelachvili</surname>
+          </string-name>
+          , Intermolecular and surface forces (Academic press,
+          <year>2011</year>
+          ), 3rd ed.
+        </mixed-citation>
+      </ref>
+      <ref id="ref37">
+        <mixed-citation>
+          [37]
+          <string-name>
+            <given-names>J. N.</given-names>
+            <surname>Israelachvili</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>G. E.</given-names>
+            <surname>Adams</surname>
+          </string-name>
+          ,
+          <source>Journal of the Chemical Society, Faraday Transactions 1: Physical Chemistry in Condensed Phases</source>
+          <volume>74</volume>
+          ,
+          <issue>975</issue>
+          (
+          <year>1978</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref38">
+        <mixed-citation>
+          [38]
+          <string-name>
+            <given-names>W. A.</given-names>
+            <surname>Ducker</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T. J.</given-names>
+            <surname>Senden</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>R. M.</given-names>
+            <surname>Pashley</surname>
+          </string-name>
+          ,
+          <source>Nature</source>
+          <volume>353</volume>
+          ,
+          <issue>239</issue>
+          (
+          <year>1991</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref39">
+        <mixed-citation>
+          [39]
+          <string-name>
+            <given-names>D. C.</given-names>
+            <surname>Prieve</surname>
+          </string-name>
+          , Adv.
+          <source>Colloid Interface Sci</source>
+          .
+          <volume>82</volume>
+          ,
+          <issue>93</issue>
+          (
+          <year>1999</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref40">
+        <mixed-citation>
+          [40]
+          <string-name>
+            <surname>D. B. Allan</surname>
+            ,
+            <given-names>T. A.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Caswell</surname>
+            , and
+            <given-names>N. C.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Keim</surname>
+          </string-name>
+          ,
+          <source>Trackpy v0.2</source>
+          (
+          <issue>2014</issue>
+          ),
+          <article-title>URL github</article-title>
+          .com/soft-matter/trackpy.
+        </mixed-citation>
+      </ref>
+      <ref id="ref41">
+        <mixed-citation>
+          [41]
+          <string-name>
+            <given-names>S. L.</given-names>
+            <surname>Barnes</surname>
+          </string-name>
+          ,
+          <source>Journal of Applied Meteorology</source>
+          <volume>3</volume>
+          ,
+          <issue>396</issue>
+          (
+          <year>1964</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref42">
+        <mixed-citation>
+          [42]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Hell</surname>
+          </string-name>
+          , G. Reiner,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Cremer</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>E. H.</given-names>
+            <surname>Stelzer</surname>
+          </string-name>
+          ,
+          <source>Journal of microscopy 169</source>
+          ,
+          <issue>391</issue>
+          (
+          <year>1993</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref43">
+        <mixed-citation>
+          [43]
+          <string-name>
+            <surname>D. J. MacKay</surname>
+          </string-name>
+          ,
+          <article-title>Information theory, inference and learning algorithms</article-title>
+          (Cambridge university press,
+          <year>2003</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref44">
+        <mixed-citation>
+          [44]
+          <string-name>
+            <given-names>J. C.</given-names>
+            <surname>Crocker</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>D. G.</given-names>
+            <surname>Grier</surname>
+          </string-name>
+          ,
+          <source>Journal of colloid and interface science 179</source>
+          ,
+          <issue>298</issue>
+          (
+          <year>1996</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref45">
+        <mixed-citation>
+          [45]
+          <string-name>
+            <given-names>W. B.</given-names>
+            <surname>Russel</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D. A.</given-names>
+            <surname>Saville</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>W. R.</given-names>
+            <surname>Schowalter</surname>
+          </string-name>
+          , Colloidal dispersions (Cambridge university press,
+          <year>1989</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref46">
+        <mixed-citation>
+          [S1]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Betzig</surname>
+          </string-name>
+          et al.,
+          <source>Science</source>
+          <volume>313</volume>
+          ,
+          <issue>1642</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref47">
+        <mixed-citation>
+          <string-name>
+            <surname>[S2] M. J. Rust</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Bates</surname>
+            , and
+            <given-names>X.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Zhuang</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>3</volume>
+          ,
+          <issue>793</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref48">
+        <mixed-citation>
+          [S3]
+          <string-name>
+            <given-names>S. W.</given-names>
+            <surname>Hell</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Wichmann</surname>
+          </string-name>
+          , Opt. Lett.
+          <volume>19</volume>
+          ,
+          <issue>780</issue>
+          (
+          <year>1994</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref49">
+        <mixed-citation>
+          [S4]
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Kner</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B. B.</given-names>
+            <surname>Chhun</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. R.</given-names>
+            <surname>Gri s</surname>
+          </string-name>
+          , L. Winoto, and
+          <string-name>
+            <given-names>M. G. L.</given-names>
+            <surname>Gustafsson</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>6</volume>
+          ,
+          <issue>339</issue>
+          (
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref50">
+        <mixed-citation>
+          <string-name>
+            <surname>[S5] B.-C. Chen</surname>
+            ,
+            <given-names>W. R.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Legant</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Wang</surname>
+            ,
+            <given-names>L.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Shao</surname>
+            ,
+            <given-names>D. E.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Milkie</surname>
+            ,
+            <given-names>M. W.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Davidson</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Janetopoulos</surname>
+            ,
+            <given-names>X. S.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Wu</surname>
+            ,
+            <given-names>J. A.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Hammer</surname>
+            ,
+            <given-names>Z.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Liu</surname>
+          </string-name>
+          , et al.,
+          <source>Science</source>
+          <volume>346</volume>
+          ,
+          <issue>1257998</issue>
+          (
+          <year>2014</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref51">
+        <mixed-citation>
+          [S6]
+          <string-name>
+            <given-names>S. S.</given-names>
+            <surname>Rogers</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T. A.</given-names>
+            <surname>Waigh</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>X.</given-names>
+            <surname>Zhao</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>and J. R.</given-names>
+            <surname>Lu</surname>
+          </string-name>
+          ,
+          <source>Physical Biology</source>
+          <volume>4</volume>
+          ,
+          <issue>220</issue>
+          (
+          <year>2007</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref52">
+        <mixed-citation>
+          [S7]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Pathasarathy</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>9</volume>
+          ,
+          <issue>724</issue>
+          (
+          <year>2012</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref53">
+        <mixed-citation>
+          [S8]
+          <string-name>
+            <given-names>F.</given-names>
+            <surname>Gru</surname>
+          </string-name>
+          ll, M. Kirchgessner, R. Kaufmann,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Hausmann</surname>
+          </string-name>
+          , and U. Kebschull, in
+          <source>Field Programmable Logic and Applications (FPL)</source>
+          ,
+          <source>2011 International Conference on (IEEE</source>
+          ,
+          <year>2011</year>
+          ), pp.
+          <volume>1</volume>
+          {
+          <fpage>5</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref54">
+        <mixed-citation>
+          [S9]
+          <string-name>
+            <given-names>S. M.</given-names>
+            <surname>Anthony</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Granick</surname>
+          </string-name>
+          , Langmuir
+          <volume>25</volume>
+          ,
+          <issue>8152</issue>
+          (
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref55">
+        <mixed-citation>
+          [S10]
+          <string-name>
+            <given-names>C. S.</given-names>
+            <surname>Smith</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Joseph</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Rieger</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>K. A.</given-names>
+            <surname>Lidke</surname>
+          </string-name>
+          ,
+          <source>Nat. Methods</source>
+          <volume>7</volume>
+          ,
+          <issue>373</issue>
+          (
+          <year>2010</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref56">
+        <mixed-citation>
+          [S11]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Andersson</surname>
+          </string-name>
+          ,
+          <source>Optics express 16</source>
+          ,
+          <issue>18714</issue>
+          (
+          <year>2008</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref57">
+        <mixed-citation>
+          [S12]
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Gao and M. L. Kilfoil</surname>
+          </string-name>
+          , Optics express
+          <volume>17</volume>
+          ,
+          <issue>4685</issue>
+          (
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref58">
+        <mixed-citation>
+          <string-name>
+            <surname>[S13] P. J. Lu</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Shutman</surname>
+          </string-name>
+          , E. Sloutskin,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A. V.</given-names>
+            <surname>Butenko</surname>
+          </string-name>
+          , Optics express
+          <volume>21</volume>
+          ,
+          <issue>30755</issue>
+          (
+          <year>2013</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref59">
+        <mixed-citation>
+          [S14]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Ram</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. S.</given-names>
+            <surname>Ward</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>R. J.</given-names>
+            <surname>Ober</surname>
+          </string-name>
+          ,
+          <source>Proc. Natl. Acad. Sci</source>
+          . U.S.A.
+          <volume>103</volume>
+          ,
+          <issue>4457</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref60">
+        <mixed-citation>
+          [S15]
+          <string-name>
+            <given-names>C. R.</given-names>
+            <surname>Rao</surname>
+          </string-name>
+          ,
+          <source>Bull Calcutta. Math. Soc</source>
+          .
+          <volume>37</volume>
+          ,
+          <issue>81</issue>
+          (
+          <year>1945</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref61">
+        <mixed-citation>
+          [S16]
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Keville</surname>
+          </string-name>
+          , E. Franses, and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Caruthers</surname>
+          </string-name>
+          ,
+          <source>Journal of colloid and interface science 144</source>
+          ,
+          <issue>103</issue>
+          (
+          <year>1991</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref62">
+        <mixed-citation>
+          [S17]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Mohraz and M. J. Solomon</surname>
+          </string-name>
+          , Langmuir
+          <volume>21</volume>
+          ,
+          <issue>5298</issue>
+          (
+          <year>2005</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref63">
+        <mixed-citation>
+          [S18]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Kuijk</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>A. van Blaaderen</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Imhof</surname>
+          </string-name>
+          ,
+          <source>Journal of the American Chemical Society</source>
+          <volume>133</volume>
+          ,
+          <issue>2346</issue>
+          (
+          <year>2011</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref64">
+        <mixed-citation>
+          [S19]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Guttman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Z.</given-names>
+            <surname>Sapir</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Schultz</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A. V.</given-names>
+            <surname>Butenko</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B. M.</given-names>
+            <surname>Ocko</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Deutsch</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Sloutskin</surname>
+          </string-name>
+          ,
+          <source>Proceedings of the National Academy of Sciences</source>
+          <volume>113</volume>
+          ,
+          <issue>493</issue>
+          (
+          <year>2016</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref65">
+        <mixed-citation>
+          [S20]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Hell</surname>
+          </string-name>
+          , G. Reiner,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Cremer</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>E. H. K.</given-names>
+            <surname>Stelzer</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Microsc</surname>
+          </string-name>
+          .
+          <volume>169</volume>
+          ,
+          <issue>391</issue>
+          (
+          <year>1993</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref66">
+        <mixed-citation>
+          [S21]
+          <string-name>
+            <given-names>T. D.</given-names>
+            <surname>Visser</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>S. H.</given-names>
+            <surname>Wiersma</surname>
+          </string-name>
+          ,
+          <source>J. Opt. Soc. Am. A 11</source>
+          ,
+          <issue>599</issue>
+          (
+          <year>1994</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref67">
+        <mixed-citation>
+          [S22]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Zhang</surname>
+          </string-name>
+          , J. Zerubia, and J.
+          <string-name>
+            <surname>-C.</surname>
+          </string-name>
+          Olivo-Marin,
+          <source>Appl. Optics 46</source>
+          ,
+          <year>1819</year>
+          (
+          <year>2007</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref68">
+        <mixed-citation>
+          <string-name>
+            <surname>[S23] M. J. Nasse</surname>
+            and
+            <given-names>J. C.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Woehl</surname>
+          </string-name>
+          ,
+          <source>J. Opt. Soc. Am. A 27</source>
+          ,
+          <issue>295</issue>
+          (
+          <year>2010</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref69">
+        <mixed-citation>
+          [S24]
+          <string-name>
+            <given-names>J.-A.</given-names>
+            <surname>Conchello</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J. W.</given-names>
+            <surname>Lichtman</surname>
+          </string-name>
+          , Applied optics
+          <volume>33</volume>
+          ,
+          <issue>585</issue>
+          (
+          <year>1994</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref70">
+        <mixed-citation>
+          [S25]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Dusch</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Dorval</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Vincent</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Wachsmuth</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Genovesio</surname>
+          </string-name>
+          ,
+          <source>Journal of Microscopy</source>
+          <volume>228</volume>
+          ,
+          <issue>132</issue>
+          (
+          <year>2007</year>
+          ).
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>
