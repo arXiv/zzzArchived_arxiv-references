@@ -4,6 +4,7 @@ import datetime
 import json
 import jsonschema
 import logging
+import os
 
 from typing import List
 
@@ -149,19 +150,14 @@ class ReferenceStoreSession(object):
 
 
 
-def get_session(endpoint_url: str, schema_path: str) -> ReferenceStoreSession:
+def get_session() -> ReferenceStoreSession:
     """
     Get a new database session.
-
-    Parameters
-    ----------
-    endpoint_url : str
-        Location of the DynamoDB endpoint.
-    schema_path : str
-        Location of the JSON schema for reference data.
 
     Returns
     -------
     :class:`.ReferenceStoreSession`
     """
+    schema_path = os.environ.get('REFLINK_SCHEMA', None)
+    endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
     return ReferenceStoreSession(endpoint_url, schema_path)
