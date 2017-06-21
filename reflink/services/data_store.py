@@ -1,9 +1,10 @@
 import boto3
-from botocore.exceptions import ClientError#, ResourceInUseException
+from botocore.exceptions import ClientError
 import datetime
 import json
 import jsonschema
 import logging
+import os
 
 from typing import List
 
@@ -18,13 +19,16 @@ class ReferenceStoreSession(object):
         self.table_name = self.schema.get('title', 'ReferenceSet')
 
         try:
-            self.create_table()
+            self._create_table()
         except Exception as e:    # The table already exists.
             pass
         self.table = self.dynamodb.Table(self.table_name)
 
 
-    def create_table(self) -> None:
+    def _create_table(self) -> None:
+        """
+        Set up a new table in DynamoDB. Blocks until table is available.
+        """
         table = self.dynamodb.create_table(
             TableName=self.table_name,
             KeySchema=[
@@ -146,19 +150,14 @@ class ReferenceStoreSession(object):
 
 
 
-def get_session(endpoint_url: str, schema_path: str) -> ReferenceStoreSession:
+def get_session() -> ReferenceStoreSession:
     """
     Get a new database session.
-
-    Parameters
-    ----------
-    endpoint_url : str
-        Location of the DynamoDB endpoint.
-    schema_path : str
-        Location of the JSON schema for reference data.
 
     Returns
     -------
     :class:`.ReferenceStoreSession`
     """
+    schema_path = os.environ.get('REFLINK_SCHEMA', None)
+    endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
     return ReferenceStoreSession(endpoint_url, schema_path)

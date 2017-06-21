@@ -1,14 +1,11 @@
-import sys
-sys.path.append('.')
-
 import unittest
 from moto import mock_dynamodb2
 import boto3
+import os
 from reflink.services import data_store
 
 
 schema_path = 'schema/references.json'
-DYNAMODB_ENDPOINT = None#'http://localhost:8000'
 
 
 class StoreReference(unittest.TestCase):
@@ -25,12 +22,13 @@ class StoreReference(unittest.TestCase):
 
         invalid_data = [{"foo": "bar", "baz":347}]
         document_id = 'arxiv:1234.5678'
+        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
 
-        session = data_store.get_session(DYNAMODB_ENDPOINT, schema_path)
+        session = data_store.get_session()
         with self.assertRaises(ValueError):
             session.create(document_id, invalid_data)
 
-        dynamodb = boto3.resource('dynamodb', endpoint_url=DYNAMODB_ENDPOINT)
+        dynamodb = boto3.resource('dynamodb')
         table = dynamodb.Table('ReferenceSet')
         table.get_item(Key={'document': document_id})
 
@@ -46,12 +44,13 @@ class StoreReference(unittest.TestCase):
             }
         ]
         document_id = 'arxiv:1234.5678'
+        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
 
-        session = data_store.get_session(DYNAMODB_ENDPOINT, schema_path)
+        session = data_store.get_session()
         session.create(document_id, valid_data)
 
         # Get the data that we just inserted.
-        dynamodb = boto3.resource('dynamodb', endpoint_url=DYNAMODB_ENDPOINT)
+        dynamodb = boto3.resource('dynamodb')
         table = dynamodb.Table('ReferenceSet')
         item = table.get_item(Key={'document': document_id})
         self.assertIsInstance(item, dict)
@@ -76,8 +75,9 @@ class RetrieveReference(unittest.TestCase):
             }
         ]
         document_id = 'arxiv:1234.5678'
+        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
 
-        session = data_store.get_session(DYNAMODB_ENDPOINT, schema_path)
+        session = data_store.get_session()
         session.create(document_id, valid_data)
 
         data = session.retrieve(document_id)
@@ -92,7 +92,9 @@ class RetrieveReference(unittest.TestCase):
         return ``None``.
         """
         document_id = 'arxiv:1234.5678'
-        session = data_store.get_session(DYNAMODB_ENDPOINT, schema_path)
+        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
+
+        session = data_store.get_session()
         data = session.retrieve(document_id)
 
 
