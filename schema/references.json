@@ -1,0 +1,103 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "ReferenceSet",
+    "type": "object",
+    "required": [
+        "created",
+        "document",
+        "references"
+    ],
+    "properties": {
+        "created": {
+            "description": "The datetime when the reference was created.",
+            "type": "string",
+            "format": "date-time"
+        },
+        "updated": {
+            "description": "The datetime when the reference was last updated.",
+            "type": "string",
+            "format": "date-time"
+        },
+        "document": {
+            "description": "arXiv identifier for the source document.",
+            "type": "string"
+        },
+        "references": {
+            "type": "array",
+            "items": {
+                "required": [
+                    "raw",
+                    "reftype"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "The title of the reference.",
+                        "type": "string"
+                    },
+                    "raw": {
+                        "description": "The un-parsed reference string.",
+                        "type": "string"
+                    },
+                    "authors": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "surname": {
+                                    "type": "string"
+                                },
+                                "givennames": {
+                                    "type": "string"
+                                },
+                                "prefix": {
+                                    "type": "string"
+                                },
+                                "suffix": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "reftype": {
+                        "description": "The type of work to which the reference refers.",
+                        "type": "string"
+                    },
+                    "doi": {
+                        "type": "string"
+                    },
+                    "volume": {
+                        "type": "string"
+                    },
+                    "issue": {
+                        "type": "string"
+                    },
+                    "pages": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "integer"
+                    },
+                    "identifiers": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "identifer_type": {
+                                    "description": "E.g. ISBN, ISSN, URI",
+                                    "type": "string"
+                                },
+                                "identifier": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
