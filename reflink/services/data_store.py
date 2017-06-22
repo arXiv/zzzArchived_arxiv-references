@@ -18,6 +18,7 @@ class ReferenceStoreSession(object):
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
+                                       
         with open(schema_path) as f:
             self.schema = json.load(f)
         self.table_name = self.schema.get('title', 'ReferenceSet')
