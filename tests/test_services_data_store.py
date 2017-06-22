@@ -1,3 +1,6 @@
+import sys
+sys.path.append('.')
+
 import unittest
 from moto import mock_dynamodb2
 import boto3

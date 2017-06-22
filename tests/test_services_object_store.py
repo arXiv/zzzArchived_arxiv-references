@@ -1,3 +1,7 @@
+import sys
+sys.path.append('.')
+
+
 import unittest
 from moto import mock_s3
 import boto3
