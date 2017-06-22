@@ -12,8 +12,12 @@ Data = List[dict]
 
 
 class ReferenceStoreSession(object):
-    def __init__(self, endpoint_url: str, schema_path: str) -> None:
-        self.dynamodb = boto3.resource('dynamodb', endpoint_url=endpoint_url)
+    def __init__(self, endpoint_url: str, schema_path: str,
+                 aws_access_key: str, aws_secret_key: str) -> None:
+        self.dynamodb = boto3.resource('dynamodb',
+                                       endpoint_url=endpoint_url,
+                                       aws_access_key_id=aws_access_key,
+                                       aws_secret_access_key=aws_secret_key)
         with open(schema_path) as f:
             self.schema = json.load(f)
         self.table_name = self.schema.get('title', 'ReferenceSet')
@@ -160,4 +164,7 @@ def get_session() -> ReferenceStoreSession:
     """
     schema_path = os.environ.get('REFLINK_SCHEMA', None)
     endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
-    return ReferenceStoreSession(endpoint_url, schema_path)
+    aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
+    aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+    return ReferenceStoreSession(endpoint_url, schema_path, aws_access_key,
+                                 aws_secret_key)
