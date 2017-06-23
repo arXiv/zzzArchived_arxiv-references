@@ -1,3 +1,8 @@
+import logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+                    level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 import boto3
 from botocore.exceptions import ClientError
 import datetime
@@ -12,16 +17,36 @@ Data = List[dict]
 
 
 class ReferenceStoreSession(object):
+    """
+    Provides a CRUD interface for the reference datastore.
+
+    Parameters
+    ----------
+    endpoint_url : str
+        If ``None``, uses AWS defaults. Mostly useful for local development
+        and testing.
+    schema_path : str
+        Location of the JSON schema for references metadata. If this file does
+        not exist, no validation will occur.
+    aws_access_key : str
+    aws_secret_key : str
+    """
     def __init__(self, endpoint_url: str, schema_path: str,
                  aws_access_key: str, aws_secret_key: str) -> None:
         self.dynamodb = boto3.resource('dynamodb',
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
-                                       
-        with open(schema_path) as f:
-            self.schema = json.load(f)
-        self.table_name = self.schema.get('title', 'ReferenceSet')
+
+        try:
+            with open(schema_path) as f:
+                self.schema = json.load(f)
+            self.table_name = self.schema.get('title', 'ReferenceSet')
+        except (FileNotFoundError, TypeError):
+            logger.error("Could not load schema at %s; validation is disabled." % schema_path)
+            self.schema = None
+            self.table_name = 'ReferenceSet'
+
 
         try:
             self._create_table()
@@ -76,11 +101,16 @@ class ReferenceStoreSession(object):
         ValueError
             Raised when the data in ``references`` is invalid.
         """
+        if self.schema is None:
+            logger.info("No schema available; skipping validation.")
+            return True
+
         try:
-            ack = jsonschema.validate(data, self.schema)
-        except jsonschema.ValidationError as E:
+            jsonschema.validate(data, self.schema)
+        except jsonschema.ValidationError as e:
+            logger.error("Invalid data: %s" % e)
             if raise_on_invalid:
-                raise ValueError(E.message)
+                raise ValueError('%s' % e) from e
             return False
         return True
 
@@ -119,7 +149,7 @@ class ReferenceStoreSession(object):
         try:
             self.table.put_item(Item=data)
         except ClientError as e:
-            raise IOError('Failed to create: %s' % e)
+            raise IOError('Failed to create: %s' % e) from e
 
     def retrieve(self, document_id: str) -> dict:
         """
@@ -143,13 +173,13 @@ class ReferenceStoreSession(object):
         try:
             response = self.table.get_item(Key={'document': document_id})
         except ClientError as e:
-            raise IOError('Failed to read: %s' % e)
+            raise IOError('Failed to read: %s' % e) from e
 
         if 'Item' not in response:   # No such record.
             return None
 
         if 'references' not in response['Item']:
-            raise IOError('Bad response from database: %s' % e)
+            raise IOError('Bad response from database: %s' % e) from e
 
         return response['Item']['references']
 

@@ -1,9 +1,27 @@
+import logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+                    level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 import boto3
 from botocore.exceptions import ClientError
 import os
 
 
 class PDFStoreSession(object):
+    """
+    Provides a CRUD interface for the PDF object store.
+
+    Parameters
+    ----------
+    bucket_name : str
+        Name of the S3 bucket in which to deposit PDFs.
+    endpoint_url : str
+        If ``None``, uses AWS defaults. Mostly useful for local development
+        and testing.
+    aws_access_key : str
+    aws_secret_key : str
+    """
     URI = 'https://{bucket_name}.s3.amazonaws.com/{document_id}'
 
     def __init__(self, bucket_name: str, endpoint_url: str,
@@ -14,15 +32,23 @@ class PDFStoreSession(object):
         self.bucket_name = bucket_name
         try:    # Does the bucket exist? If not, create it.
             self.s3.get_bucket_location(Bucket=self.bucket_name)
-        except ClientError:
+        except ClientError as e:
+            if 403 == e.response['ResponseMetadata']['HTTPStatusCode']:
+                logger.error('AWS S3 access denied; aborting.')
+                raise IOError('AWS S3 access denied; aborting.') from e
+            logger.info('Bucket %s does not exist. Will attempt to create.' % self.bucket_name)
             self._create_bucket()
 
     def _create_bucket(self):
         """
         Create a new bucket.
         """
-        # TODO: make this configurable.
-        self.s3.create_bucket(ACL='public-read', Bucket=self.bucket_name)
+        try:
+            self.s3.create_bucket(ACL='public-read', Bucket=self.bucket_name)
+        except ClientError as e:
+            if 403 == e.response['ResponseMetadata']['HTTPStatusCode']:
+                raise IOError('AWS S3 access denied; aborting.') from e
+            raise IOError('Could not create bucket: %s' % e) from e
 
     def create(self, document_id: str, filepath: str) -> str:
         """
@@ -66,7 +92,7 @@ class PDFStoreSession(object):
         except ClientError as e:
             if e.response['Error']['Code'] == '404':    # Object doesn't exist.
                 return None
-            raise IOError('Failed to retrieve URL: %s' % e)
+            raise IOError('Failed to retrieve URL: %s' % e) from e
         return self.URI.format(bucket_name=self.bucket_name,
                                document_id=document_id)
 
@@ -74,7 +100,6 @@ class PDFStoreSession(object):
 def get_session() -> PDFStoreSession:
     """
     Get a new PDF store session.
-
 
     Returns
     -------
