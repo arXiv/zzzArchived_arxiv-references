@@ -1,0 +1,94 @@
+2017-06-23 09:41:45,301 ERROR: Error while deserializing data: the JSON object must be str, bytes or bytearray, not 'MagicMock'
+2017-06-23 09:41:45,304 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4332470344'>
+2017-06-23 09:41:45,304 ERROR: Error while processing document: local variable 'deserialized' referenced before assignment
+2017-06-23 09:41:45,304 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4332470344'>
+2017-06-23 09:41:45,304 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:42:27,066 ERROR: Error while deserializing data: the JSON object must be str, bytes or bytearray, not 'MagicMock'
+2017-06-23 09:42:27,069 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4340846488'>
+2017-06-23 09:42:27,069 ERROR: Error while processing document: local variable 'deserialized' referenced before assignment
+2017-06-23 09:42:27,069 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4340846488'>
+2017-06-23 09:42:27,069 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:42:51,966 ERROR: Error while deserializing data: the JSON object must be str, bytes or bytearray, not 'MagicMock'
+2017-06-23 09:42:51,969 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4349063912'>
+2017-06-23 09:42:51,969 ERROR: Error while processing document: local variable 'deserialized' referenced before assignment
+2017-06-23 09:42:51,969 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4349063912'>
+2017-06-23 09:42:51,969 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:43:05,130 ERROR: Error while deserializing data: the JSON object must be str, bytes or bytearray, not 'MagicMock'
+2017-06-23 09:43:05,132 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4349076088'>
+2017-06-23 09:43:05,132 ERROR: Error while processing document: local variable 'deserialized' referenced before assignment
+2017-06-23 09:43:05,133 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4349076088'>
+2017-06-23 09:43:05,133 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:43:27,956 ERROR: Error while deserializing data: the JSON object must be str, bytes or bytearray, not 'MagicMock'
+2017-06-23 09:43:27,958 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4349064584'>
+2017-06-23 09:43:27,958 ERROR: Error while processing document: local variable 'deserialized' referenced before assignment
+2017-06-23 09:43:27,958 ERROR: Data payload: <MagicMock name='mock.binary_data' id='4349064584'>
+2017-06-23 09:43:27,959 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:44:36,799 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:45:52,652 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:46:17,532 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:47:33,662 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:47:51,576 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:48:18,755 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:49:10,716 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:49:31,740 ERROR: Encountered an exception while processing records. Exception was '>' not supported between instances of 'int' and 'NoneType'
+2017-06-23 09:49:50,217 ERROR: Encountered an exception while processing records. Exception was local variable '_eh' referenced before assignment
+2017-06-23 10:06:36,571 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:07:18,872 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:07:27,905 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:07:27,909 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:11:48,694 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:11:48,698 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:12:02,444 INFO: Encountered shutdown exception, skipping checkpoint
+2017-06-23 10:12:02,448 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:12:02,450 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:13:05,328 INFO: Encountered shutdown exception, skipping checkpoint
+2017-06-23 10:13:05,332 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:13:05,334 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:13:58,448 INFO: Was throttled while checkpointing, will attempt again in 5 seconds
+2017-06-23 10:14:03,451 INFO: Was throttled while checkpointing, will attempt again in 5 seconds
+2017-06-23 10:14:08,455 INFO: Was throttled while checkpointing, will attempt again in 5 seconds
+2017-06-23 10:14:13,460 INFO: Was throttled while checkpointing, will attempt again in 5 seconds
+2017-06-23 10:14:18,466 ERROR: Failed to checkpoint after 4 attempts, giving up.
+2017-06-23 10:14:18,467 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:14:18,469 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:14:28,724 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:28,828 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:28,929 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:29,033 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:29,136 ERROR: Failed to checkpoint after 4 attempts, giving up.
+2017-06-23 10:14:29,137 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:14:29,139 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:14:39,272 INFO: Encountered shutdown exception, skipping checkpoint
+2017-06-23 10:14:39,274 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:39,376 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:39,481 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:39,585 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:14:39,688 ERROR: Failed to checkpoint after 4 attempts, giving up.
+2017-06-23 10:14:39,689 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:14:39,691 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:15:31,396 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:15:31,503 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:15:31,605 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:15:31,707 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:15:31,808 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:15:31,915 INFO: Encountered shutdown exception, skipping checkpoint
+2017-06-23 10:15:31,916 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:15:32,018 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:15:32,121 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:15:32,224 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:15:32,324 ERROR: Failed to checkpoint after 4 attempts, giving up.
+2017-06-23 10:15:32,326 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:15:32,328 INFO: Shutting down due to failover. Won't checkpoint.
+2017-06-23 10:16:13,378 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:16:13,486 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:16:13,587 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:16:13,692 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:16:13,795 ERROR: MultiLangDaemon reported an invalid state while checkpointing.
+2017-06-23 10:16:13,899 INFO: Encountered shutdown exception, skipping checkpoint
+2017-06-23 10:16:13,900 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:16:14,006 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:16:14,107 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:16:14,213 INFO: Was throttled while checkpointing, will attempt again in 0 seconds
+2017-06-23 10:16:14,316 ERROR: Failed to checkpoint after 4 attempts, giving up.
+2017-06-23 10:16:14,318 INFO: Was told to terminate, attempting to checkpoint.
+2017-06-23 10:16:14,320 INFO: Shutting down due to failover. Won't checkpoint.
