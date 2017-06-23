@@ -13,8 +13,10 @@ import json
 from reflink.tasks import orchestrate
 
 # TODO: make this configurable.
-logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
                     level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 
 import amazon_kclpy
 from amazon_kclpy import kcl
@@ -66,7 +68,7 @@ class RecordProcessor(processor.RecordProcessorBase):
                     #  should be shutdown. This is due to some failover event,
                     #  e.g. another MultiLangDaemon has taken the lease for
                     #  this shard.
-                    logging.info("Encountered shutdown exception, skipping"
+                    logger.info("Encountered shutdown exception, skipping"
                                  " checkpoint")
                     return
                 elif 'ThrottlingException' == e.value:
@@ -74,18 +76,18 @@ class RecordProcessor(processor.RecordProcessorBase):
                     #  dependencies is is over burdened, e.g. too many dynamo
                     #  writes. We will sleep temporarily to let it recover.
                     if self._CHECKPOINT_RETRIES - 1 == n:
-                        logging.error("Failed to checkpoint after %i attempts,"
+                        logger.error("Failed to checkpoint after %i attempts,"
                                       " giving up." % n)
                         return
                     else:
-                        logging.info("Was throttled while checkpointing, will"
+                        logger.info("Was throttled while checkpointing, will"
                                      " attempt again in %i seconds"
                                      % self._SLEEP_SECONDS)
                 elif 'InvalidStateException' == e.value:
-                    logging.error("MultiLangDaemon reported an invalid state"
+                    logger.error("MultiLangDaemon reported an invalid state"
                                   " while checkpointing.")
                 else:  # Some other error
-                    logging.error("Encountered an error while checkpointing,"
+                    logger.error("Encountered an error while checkpointing,"
                                   " error was %s" % e)
             time.sleep(self._SLEEP_SECONDS)
 
@@ -105,14 +107,14 @@ class RecordProcessor(processor.RecordProcessorBase):
         try:
             deserialized = json.loads(data.decode('utf-8'))
         except Exception as e:
-            logging.error("Error while deserializing data: %s" % e)
-            logging.error("Data payload: %s" % data)
+            logger.error("Error while deserializing data: %s" % e)
+            logger.error("Data payload: %s" % data)
 
         try:
             orchestrate.process_document(deserialized.get('document_id'))
         except Exception as e:
-            logging.error("Error while processing document: %s" % e)
-            logging.error("Data payload: %s" % data)
+            logger.error("Error while processing document: %s" % e)
+            logger.error("Data payload: %s" % data)
 
     def should_update_sequence(self, sequence_number: int,
                                sub_sequence_number: int) -> bool:
@@ -161,7 +163,7 @@ class RecordProcessor(processor.RecordProcessorBase):
                 self._last_checkpoint_time = time.time()
 
         except Exception as e:
-            logging.error("Encountered an exception while processing records."
+            logger.error("Encountered an exception while processing records."
                           " Exception was %s" % e)
 
     def shutdown(self, shutdown: ShutdownInput) -> None:
@@ -181,13 +183,13 @@ class RecordProcessor(processor.RecordProcessorBase):
                 # Checkpointing with no parameter will checkpoint at the
                 # largest sequence number reached by this processor on this
                 # shard id.
-                logging.info("Was told to terminate, attempting to checkpoint.")
+                logger.info("Was told to terminate, attempting to checkpoint.")
                 self.checkpoint(shutdown.checkpointer, None)
             else: # reason == 'ZOMBIE'
                 # **ATTEMPTING TO CHECKPOINT ONCE A LEASE IS LOST WILL FAIL**
-                logging.info("Shutting down due to failover. Won't checkpoint.")
+                logger.info("Shutting down due to failover. Won't checkpoint.")
         except Exception as e:
-            logging.error("Encountered exception while shutting down: %s" % e)
+            logger.error("Encountered exception while shutting down: %s" % e)
 
 
 if __name__ == "__main__":
