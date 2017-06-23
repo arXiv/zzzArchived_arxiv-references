@@ -11,6 +11,7 @@ import logging
 import os
 import json
 from reflink.tasks import orchestrate
+from reflink.types import IntOrNone, BytesOrNone
 
 # TODO: make this configurable.
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
@@ -53,8 +54,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._last_checkpoint_time = time.time()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
-                   sequence_number: bytes = None,
-                   sub_sequence_number: int = None) -> None:
+                   sequence_number: BytesOrNone = None,
+                   sub_sequence_number: IntOrNone = None) -> None:
         """
         Checkpoints with retries on retryable exceptions.
         """
