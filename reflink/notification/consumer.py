@@ -13,8 +13,7 @@ import json
 from reflink.tasks import orchestrate
 
 # TODO: make this configurable.
-logging.basicConfig(filename=__name__,
-                    format='%(asctime)s %(levelname)s: %(message)s',
+logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',
                     level=logging.DEBUG)
 
 import amazon_kclpy
