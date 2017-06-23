@@ -1,4 +1,6 @@
+amazon-kclpy==1.4.4
 boto3==1.4.4
+celery==4.0.2
 Flask==0.12.2
 jsonschema==2.6.0
 moto==1.0.1

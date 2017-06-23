@@ -6,8 +6,11 @@ import os
 class PDFStoreSession(object):
     URI = 'https://{bucket_name}.s3.amazonaws.com/{document_id}'
 
-    def __init__(self, bucket_name: str, endpoint_url: str = None) -> None:
-        self.s3 = boto3.client('s3', endpoint_url=endpoint_url)
+    def __init__(self, bucket_name: str, endpoint_url: str,
+                 aws_access_key: str, aws_secret_key: str) -> None:
+        self.s3 = boto3.client('s3', endpoint_url=endpoint_url,
+                               aws_access_key_id=aws_access_key,
+                               aws_secret_access_key=aws_secret_key)
         self.bucket_name = bucket_name
         try:    # Does the bucket exist? If not, create it.
             self.s3.get_bucket_location(Bucket=self.bucket_name)
@@ -79,4 +82,8 @@ def get_session() -> PDFStoreSession:
     """
     bucket_name = os.environ.get('REFLINK_S3_BUCKET', 'arxiv-reflink')
     endpoint_url = os.environ.get('REFLINK_S3_ENDPOINT', None)
-    return PDFStoreSession(bucket_name, endpoint_url)
+    aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
+    aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+
+    return PDFStoreSession(bucket_name, endpoint_url, aws_access_key,
+                           aws_secret_key)
