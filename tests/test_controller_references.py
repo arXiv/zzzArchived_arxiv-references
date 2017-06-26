@@ -3,7 +3,7 @@ sys.path.append('.')
 
 import unittest
 from unittest import mock
-from reflink.controllers import references
+from reflink.web.controllers import references
 from moto import mock_dynamodb2
 from reflink.services import data_store
 from reflink import status

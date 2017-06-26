@@ -3,7 +3,7 @@ sys.path.append('.')
 
 import unittest
 from unittest import mock
-from reflink.controllers import pdf
+from reflink.web.controllers import pdf
 from moto import mock_s3
 from reflink.services import object_store
 from reflink import status
