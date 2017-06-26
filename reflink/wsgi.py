@@ -1,3 +1,5 @@
-from .factory import create_app
+"""Web Server Gateway Interface entry-point."""
 
-application = create_app()
+from .factory import create_web_app
+
+application = create_web_app()

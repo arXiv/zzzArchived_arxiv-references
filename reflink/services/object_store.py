@@ -1,11 +1,14 @@
-import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+"""Service layer for link-injected PDF object storage."""
 
+import logging
 import boto3
 from botocore.exceptions import ClientError
 import os
+
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format,
+                    level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 class PDFStoreSession(object):
@@ -22,10 +25,12 @@ class PDFStoreSession(object):
     aws_access_key : str
     aws_secret_key : str
     """
+
     URI = 'https://{bucket_name}.s3.amazonaws.com/{document_id}'
 
     def __init__(self, bucket_name: str, endpoint_url: str,
                  aws_access_key: str, aws_secret_key: str) -> None:
+        """Establish an S3 client, and ensure that the bucket exists."""
         self.s3 = boto3.client('s3', endpoint_url=endpoint_url,
                                aws_access_key_id=aws_access_key,
                                aws_secret_access_key=aws_secret_key)
@@ -36,13 +41,12 @@ class PDFStoreSession(object):
             if 403 == e.response['ResponseMetadata']['HTTPStatusCode']:
                 logger.error('AWS S3 access denied; aborting.')
                 raise IOError('AWS S3 access denied; aborting.') from e
-            logger.info('Bucket %s does not exist. Will attempt to create.' % self.bucket_name)
+            logger.info('Bucket %s does not exist' % self.bucket_name)
             self._create_bucket()
 
-    def _create_bucket(self):
-        """
-        Create a new bucket.
-        """
+    def _create_bucket(self) -> None:
+        """Create a new bucket."""
+        logger.info('Attempting to create bucket %s' % self.bucket_name)
         try:
             self.s3.create_bucket(ACL='public-read', Bucket=self.bucket_name)
         except ClientError as e:
@@ -66,7 +70,6 @@ class PDFStoreSession(object):
         IOError
             Raised when there is a problem sending the file to S3.
         """
-
         try:
             with open(filepath, 'rb') as f:   # Must produce binary when read.
                 self.s3.upload_fileobj(f, self.bucket_name, document_id)

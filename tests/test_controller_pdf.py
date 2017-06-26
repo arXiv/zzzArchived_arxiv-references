@@ -1,18 +1,19 @@
-import sys
-sys.path.append('.')
-
+"""Tests for the :mod:`reflink.web.controllers.pdf` controller."""
 import unittest
 from unittest import mock
-from reflink.controllers import pdf
+from reflink.web.controllers import pdf
 from moto import mock_s3
 from reflink.services import object_store
 from reflink import status
 
 
 class TestPDFController(unittest.TestCase):
+    """Test the :class:`.pdf.PDFController` controller."""
+
     @mock_s3
     @mock.patch.object(object_store.PDFStoreSession, 'retrieve_url')
     def test_get_calls_datastore_session(self, retrieve_url_mock):
+        """Test the :meth:`.pdf.PDFController.get` method with a valid ID."""
         retrieve_url_mock.return_value = []
         controller = pdf.PDFController()
 
@@ -25,6 +26,7 @@ class TestPDFController(unittest.TestCase):
     @mock_s3
     @mock.patch.object(object_store.PDFStoreSession, 'retrieve_url')
     def test_get_handles_IOError(self, retrieve_url_mock):
+        """Test the case that the underlying object store raises an IOError."""
         def raise_ioerror(*args):
             raise IOError('Whoops!')
         retrieve_url_mock.side_effect = raise_ioerror
@@ -41,6 +43,7 @@ class TestPDFController(unittest.TestCase):
     @mock_s3
     @mock.patch.object(object_store.PDFStoreSession, 'retrieve_url')
     def test_get_handles_nonexistant_record(self, retrieve_url_mock):
+        """Test the case that a non-existant object is requested."""
         retrieve_url_mock.return_value = None
 
         controller = pdf.PDFController()

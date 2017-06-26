@@ -1,18 +1,20 @@
-import sys
-sys.path.append('.')
+"""Tests for the :mod:`reflink.web.controllers.references` module."""
 
 import unittest
 from unittest import mock
-from reflink.controllers import references
+from reflink.web.controllers import references
 from moto import mock_dynamodb2
 from reflink.services import data_store
 from reflink import status
 
 
 class TestReferenceMetadataController(unittest.TestCase):
+    """Test the :class:`.references.ReferenceMetadataController` controller."""
+
     @mock_dynamodb2
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
     def test_get_calls_datastore_session(self, retrieve_mock):
+        """Test :meth:`.references.ReferenceMetadataController.get` method."""
         retrieve_mock.return_value = []
         controller = references.ReferenceMetadataController()
 
@@ -25,6 +27,7 @@ class TestReferenceMetadataController(unittest.TestCase):
     @mock_dynamodb2
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
     def test_get_handles_IOError(self, retrieve_mock):
+        """Test the case that the underlying datastore raises an IOError."""
         def raise_ioerror(*args):
             raise IOError('Whoops!')
         retrieve_mock.side_effect = raise_ioerror
@@ -41,6 +44,7 @@ class TestReferenceMetadataController(unittest.TestCase):
     @mock_dynamodb2
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
     def test_get_handles_nonexistant_record(self, retrieve_mock):
+        """Test the case that a non-existant record is requested."""
         retrieve_mock.return_value = None
 
         controller = references.ReferenceMetadataController()

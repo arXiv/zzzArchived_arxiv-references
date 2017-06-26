@@ -1,17 +1,19 @@
+"""Provides a controller for PDF views."""
+
 import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 from reflink import types
 from reflink.services import object_store
 from reflink import status
 
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 
 class PDFController(object):
-    """
-    Controller for retrieving link-injected PDFs from arXiv documents.
-    """
+    """Controller for retrieving link-injected PDFs from arXiv documents."""
+
     def get(self, document_id: str) -> types.ControllerResponseData:
         """
         Get the URL of a link-injected PDF for an arXiv publication.
@@ -31,7 +33,7 @@ class PDFController(object):
             objects = object_store.get_session()
         except IOError as e:
             return {
-                'explanation': 'There was a problem accessing the object store.'
+                'explanation': 'Could not access the object store.'
             }, status.HTTP_500_INTERNAL_SERVER_ERROR
 
         try:
