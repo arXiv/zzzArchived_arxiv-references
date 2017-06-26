@@ -24,7 +24,6 @@ RUN apt update &&\
     apt purge -f -y "^texlive-.*-doc" &&\
     apt clean &&\
     apt autoclean -y &&\
-    apt autoremove -y &&\
     apt clean &&\
     rm -rf /tmp/* /var/tmp/* &&\
     rm -rf /var/lib/apt/lists/*
