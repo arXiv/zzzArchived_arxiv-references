@@ -11,7 +11,7 @@ import logging
 import os
 import json
 from reflink.types import IntOrNone, BytesOrNone
-from reflink.factory import get_process_app
+from reflink.factory import create_process_app
 from reflink.process import orchestrate
 
 # TODO: make this configurable.
@@ -46,7 +46,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
-        self.proc = get_process_app()
+        self.proc = create_process_app()
 
     def initialize(self, initialize_input):
         """
