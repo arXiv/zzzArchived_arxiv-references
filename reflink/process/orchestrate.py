@@ -6,10 +6,10 @@ logger = logging.getLogger(__name__)
 from celery.exceptions import TaskError
 from celery import chain
 
-from reflink.tasks.retrieve import retrieve
-from reflink.tasks.extract import extract
-from reflink.tasks.inject import inject
-from reflink.tasks.store import store_metadata, store_pdf
+from .retrieve import retrieve
+from .extract import extract
+from .inject import inject
+from .store import store_metadata, store_pdf
 
 
 def process_document(document_id: str) -> None:

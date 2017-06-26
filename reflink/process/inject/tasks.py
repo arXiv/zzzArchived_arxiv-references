@@ -12,4 +12,4 @@ Link injector:
 - Returns the location of the new link-injected PDF on the filesystem.
 """
 
-from reflink.tasks.inject.fake import fake_inject as inject
+from .fake import fake_inject as inject

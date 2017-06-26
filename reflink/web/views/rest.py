@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask.json import jsonify
 from flask import request, url_for, Blueprint
 
-from reflink.controllers import references, pdf
+from reflink.web.controllers import references, pdf
 from reflink.types import ViewResponseData
 
 blueprint = Blueprint('reflink_api', __name__, url_prefix='/api')

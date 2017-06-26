@@ -10,8 +10,9 @@ import time
 import logging
 import os
 import json
-from reflink.tasks import orchestrate
 from reflink.types import IntOrNone, BytesOrNone
+from reflink.factory import get_process_app
+from reflink.process import orchestrate
 
 # TODO: make this configurable.
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
@@ -45,6 +46,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
+        self.proc = get_process_app()
 
     def initialize(self, initialize_input):
         """

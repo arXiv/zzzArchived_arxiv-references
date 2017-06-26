@@ -11,11 +11,11 @@ from amazon_kclpy import kcl
 
 
 class TestRecordProcessor(unittest.TestCase):
-    @mock.patch('reflink.tasks.orchestrate.process_document')
+    @mock.patch('reflink.process.orchestrate.process_document')
     def test_process_document_called_for_each_record(self, process_document):
         """
         The document id from each record should be passed to
-        :func:`reflink.tasks.orchestrate.process_document`\.
+        :func:`reflink.process.orchestrate.process_document`\.
         """
 
         process_document.return_value = None
