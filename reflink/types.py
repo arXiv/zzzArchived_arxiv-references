@@ -1,9 +1,10 @@
 """
-Defines custom types for type hints.
+Custom types for type hints.
 """
 
 from typing import Tuple, TypeVar, List
 import flask
+
 
 ControllerResponseData = Tuple[dict, int]
 """

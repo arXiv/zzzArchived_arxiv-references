@@ -1,6 +1,13 @@
+"""
+Responsible for orchestrating asynchronous tasks. This is intended to be the
+primary entry-point into the processing component of the service.
+"""
+
 import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+    level=logging.DEBUG
+)
 logger = logging.getLogger(__name__)
 
 from celery.exceptions import TaskError

@@ -61,6 +61,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         """
         Checkpoints with retries on retryable exceptions.
         """
+
         for n in range(0, self._CHECKPOINT_RETRIES):
             try:
                 checkpointer.checkpoint(sequence_number, sub_sequence_number)
