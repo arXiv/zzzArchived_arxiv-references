@@ -47,11 +47,10 @@ class ReferenceStoreSession(object):
             self.schema = None
             self.table_name = 'ReferenceSet'
 
-
         try:
             self._create_table()
-        except Exception as e:    # The table already exists.
-            pass
+        except Exception as e:    # TODO: make this more specific.
+            pass    # The table already exists.
         self.table = self.dynamodb.Table(self.table_name)
 
 
