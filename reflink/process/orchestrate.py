@@ -21,7 +21,7 @@ from .store import store_metadata, store_pdf
 
 def process_document(document_id: str) -> None:
     """
-    Orchestrate an asynchronous processing chain for a single arXiv document.
+    Orchestrates an asynchronous processing chain for a single arXiv document.
 
     Parameters
     ----------
