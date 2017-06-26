@@ -13,5 +13,3 @@ Link injector:
   generate a PDF;
 - Returns the location of the new link-injected PDF on the filesystem.
 """
-
-from .tasks import *

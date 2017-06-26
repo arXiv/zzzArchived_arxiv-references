@@ -4,8 +4,8 @@ import unittest
 from moto import mock_s3, mock_dynamodb2
 from tempfile import mkstemp
 
-from reflink.process.store import store_pdf
-from reflink.process.store import store_metadata
+from reflink.process.store.tasks import store_pdf
+from reflink.process.store.tasks import store_metadata
 from reflink.services import object_store, data_store
 
 
@@ -23,7 +23,7 @@ class TestStore(unittest.TestCase):
         document_id = 'arxiv:1234.5678'
 
         _, fpath = mkstemp()
-        store_pdf(fpath, document_id)
+        store_pdf(({}, fpath), document_id)
 
         objects = object_store.get_session()
         url = objects.retrieve_url(document_id)
@@ -38,7 +38,7 @@ class TestStore(unittest.TestCase):
         Should generate a new record in the datastore.
         """
         document_id = 'arxiv:1234.5678'
-        store_metadata({'foo': 'bar'}, document_id)
+        store_metadata(({'foo': 'bar'}, ''), document_id)
 
         store = data_store.get_session()
         data = store.retrieve(document_id)

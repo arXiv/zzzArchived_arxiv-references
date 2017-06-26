@@ -1,6 +1,31 @@
 """Registry for retrieve tasks. Celery will look here for tasks to load."""
 
-from .fake import fake_retrieve as retrieve
-from celery import Task
+from celery import shared_task
 
-assert isinstance(retrieve, Task)
+from reflink.types import PathTuple
+
+import tempfile
+
+
+@shared_task
+def fake_retrieve(document_id: str) -> PathTuple:
+    """
+    A fake implementation of the retrieve task.
+
+    Emulate retrieving PDF and LaTeX source files for an arXiv document.
+
+    Parameters
+    ----------
+    document_id : str
+
+    Returns
+    -------
+    pdf_path : str
+    source_path : str
+    """
+    _, pdf_path = tempfile.mkstemp()
+    source_path = tempfile.mkdtemp()
+    return pdf_path, source_path
+
+
+retrieve = fake_retrieve

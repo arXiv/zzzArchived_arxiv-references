@@ -2,7 +2,6 @@
 
 import logging
 
-from reflink.types import ReferenceMetadata
 from reflink.services import data_store, object_store
 from celery import shared_task
 
@@ -12,19 +11,17 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def store_metadata(metadata: ReferenceMetadata,
-                   document_id: str) -> ReferenceMetadata:
+def store_metadata(extraction_injection_results: tuple,
+                   document_id: str) -> None:
     """
     Deposit extracted reference metadata in the datastore.
 
     Parameters
     ----------
+    extraction_injection_results : tuple
+        The final results from the extraction and injection process, comprised
+        of metadata (list) and the path to the link-injected PDF (str).
     document_id : str
-    metadata : list
-
-    Returns
-    -------
-    metadata : list
 
     Raises
     ------
@@ -32,6 +29,7 @@ def store_metadata(metadata: ReferenceMetadata,
         Raised when there is a problem storing the metadata. The caller should
         assume that nothing has been stored.
     """
+    metadata, _ = extraction_injection_results
     try:
         data_store.get_session().create(document_id, metadata)
     except IOError as e:    # Separating this out in case we want to retry.
@@ -46,13 +44,15 @@ def store_metadata(metadata: ReferenceMetadata,
 
 
 @shared_task
-def store_pdf(pdf_path: str, document_id: str) -> None:
+def store_pdf(extraction_injection_results: tuple, document_id: str) -> None:
     """
     Deposit link-injected PDF in the object store.
 
     Parameters
     ----------
-    pdf_path : str
+    extraction_injection_results : tuple
+        The final results from the extraction and injection process, comprised
+        of metadata (list) and the path to the link-injected PDF (str).
     document_id : str
 
     Raises
@@ -61,6 +61,7 @@ def store_pdf(pdf_path: str, document_id: str) -> None:
         Raised when there is a problem storing the PDF. The caller should
         assumethat nothing has been stored.
     """
+    _, pdf_path = extraction_injection_results
     try:
         object_store.get_session().create(document_id, pdf_path)
     except IOError as e:    # Separating this out in case we want to retry.

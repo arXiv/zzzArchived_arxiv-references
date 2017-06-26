@@ -11,5 +11,3 @@ Retriever:
 - Retrieves the PDF and TeX sources, and stores them on the filesystem;
 - Returns the location of the PDF and TeX sources on the filesystem.
 """
-
-from .tasks import *

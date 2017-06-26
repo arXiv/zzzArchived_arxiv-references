@@ -1,40 +1,39 @@
 """
-Responsible for orchestrating asynchronous tasks. This is intended to be the
-primary entry-point into the processing component of the service.
+Orchestration module for document processing logic.
+
+This is intended to be the primary entry-point into the processing component of
+the service.
 """
 
 import logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.DEBUG
-)
-logger = logging.getLogger(__name__)
 
 from celery.exceptions import TaskError
-from celery import chain
+from celery import group
 
-from .retrieve import retrieve
-from .extract import extract
-from .inject import inject
-from .store import store_metadata, store_pdf
+from reflink.process.retrieve.tasks import retrieve
+from reflink.process.extract.tasks import extract
+from reflink.process.inject.tasks import inject
+from reflink.process.store.tasks import store_metadata, store_pdf
+
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 def process_document(document_id: str) -> None:
     """
-    Orchestrates an asynchronous processing chain for a single arXiv document.
+    Orchestrate an asynchronous processing chain for a single arXiv document.
 
     Parameters
     ----------
     document_id : bytes
     """
     try:
-        res = (
-            retrieve.s(document_id)
-              | extract.s()
-              | store_metadata.s(document_id)
-              | inject.s()
-              | store_pdf.s(document_id)
-        ).apply_async()
+        (retrieve.s(document_id)
+         | extract.s()
+         | inject.s()
+         | group(store_metadata.s(document_id), store_pdf.s(document_id))
+         ).apply_async()
         logger.info('Started processing document %s' % document_id)
     except TaskError as e:
         msg = 'Could not create processing tasks for %s: %s' % (document_id, e)

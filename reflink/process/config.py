@@ -8,4 +8,5 @@ See `the celery docs
 import os
 
 broker_url = 'redis:///'
+result_backend = 'redis:///'
 task_always_eager = os.environ.get('CELERY_TASK_ALWAYS_EAGER') == 'yes'

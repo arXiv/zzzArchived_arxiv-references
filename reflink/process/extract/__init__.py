@@ -11,5 +11,3 @@ Extractor:
 - Extracts reference lines and structured reference metadata;
 - Returns reference lines and metadata.
 """
-
-from .tasks import *
