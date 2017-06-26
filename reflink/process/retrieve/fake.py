@@ -1,3 +1,5 @@
+"""A fake implementation of the retrieve task."""
+
 from celery import shared_task
 
 from reflink.types import PathTuple
@@ -8,8 +10,7 @@ import tempfile
 @shared_task
 def fake_retrieve(document_id: str) -> PathTuple:
     """
-    Emulates retrieving and storing PDF and LaTeX source files for an arXiv
-    document.
+    Emulate retrieving PDF and LaTeX source files for an arXiv document.
 
     Parameters
     ----------

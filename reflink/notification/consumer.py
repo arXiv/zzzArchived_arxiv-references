@@ -5,25 +5,22 @@ http://docs.aws.amazon.com/streams/latest/dev/kinesis-record-processor-implement
 https://github.com/awslabs/amazon-kinesis-client-python/blob/master/samples/sample_kclpy_app.py
 """
 
-import sys
 import time
 import logging
-import os
 import json
 from reflink.types import IntOrNone, BytesOrNone
 from reflink.factory import create_process_app
 from reflink.process import orchestrate
 
-# TODO: make this configurable.
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
-
 import amazon_kclpy
 from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
+
+# TODO: make this configurable.
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 class RecordProcessor(processor.RecordProcessorBase):
@@ -39,7 +36,9 @@ class RecordProcessor(processor.RecordProcessorBase):
     See the ``consumer.properties`` file for configuration details, including
     streams.
     """
+
     def __init__(self):
+        """Initialize checkpointing state and retry configuration."""
         self._SLEEP_SECONDS = 5
         self._CHECKPOINT_RETRIES = 5
         self._CHECKPOINT_FREQ = 60
@@ -49,19 +48,14 @@ class RecordProcessor(processor.RecordProcessorBase):
         self.proc = create_process_app()
 
     def initialize(self, initialize_input):
-        """
-        Called once by a KCLProcess before any calls to process_records.
-        """
+        """Called once by a KCLProcess before any calls to process_records."""
         self._largest_seq = (None, None)
         self._last_checkpoint_time = time.time()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
                    sequence_number: BytesOrNone = None,
                    sub_sequence_number: IntOrNone = None) -> None:
-        """
-        Checkpoints with retries on retryable exceptions.
-        """
-
+        """Make periodic checkpoints while processing records."""
         for n in range(0, self._CHECKPOINT_RETRIES):
             try:
                 checkpointer.checkpoint(sequence_number, sub_sequence_number)
@@ -73,7 +67,7 @@ class RecordProcessor(processor.RecordProcessorBase):
                     #  e.g. another MultiLangDaemon has taken the lease for
                     #  this shard.
                     logger.info("Encountered shutdown exception, skipping"
-                                 " checkpoint")
+                                " checkpoint")
                     return
                 elif 'ThrottlingException' == e.value:
                     # A ThrottlingException indicates that one of our
@@ -81,18 +75,18 @@ class RecordProcessor(processor.RecordProcessorBase):
                     #  writes. We will sleep temporarily to let it recover.
                     if self._CHECKPOINT_RETRIES - 1 == n:
                         logger.error("Failed to checkpoint after %i attempts,"
-                                      " giving up." % n)
+                                     " giving up." % n)
                         return
                     else:
                         logger.info("Was throttled while checkpointing, will"
-                                     " attempt again in %i seconds"
-                                     % self._SLEEP_SECONDS)
+                                    " attempt again in %i seconds"
+                                    % self._SLEEP_SECONDS)
                 elif 'InvalidStateException' == e.value:
                     logger.error("MultiLangDaemon reported an invalid state"
-                                  " while checkpointing.")
+                                 " while checkpointing.")
                 else:  # Some other error
                     logger.error("Encountered an error while checkpointing,"
-                                  " error was %s" % e)
+                                 " error was %s" % e)
             time.sleep(self._SLEEP_SECONDS)
 
     def process_record(self, data: bytes, partition_key: bytes,
@@ -107,7 +101,6 @@ class RecordProcessor(processor.RecordProcessorBase):
         sequence_number : int
         sub_sequence_number : int
         """
-
         try:
             deserialized = json.loads(data.decode('utf-8'))
         except Exception as e:
@@ -123,7 +116,7 @@ class RecordProcessor(processor.RecordProcessorBase):
     def should_update_sequence(self, sequence_number: int,
                                sub_sequence_number: int) -> bool:
         """
-        Determines whether a new larger sequence number is available
+        Determine whether a new larger sequence number is available.
 
         Parameters
         ----------
@@ -134,13 +127,15 @@ class RecordProcessor(processor.RecordProcessorBase):
         -------
         bool
         """
-        return self._largest_seq == (None, None) or \
-               sequence_number > self._largest_seq[0] or \
-               (sequence_number == self._largest_seq[0] and \
-                sub_sequence_number > self._largest_seq[1])
+        return (self._largest_seq == (None, None) or
+                sequence_number > self._largest_seq[0] or
+                (sequence_number == self._largest_seq[0] and
+                 sub_sequence_number > self._largest_seq[1]))
 
     def process_records(self, records: ProcessRecordsInput) -> None:
         """
+        Handle a series of records from the stream.
+
         Called by a KCLProcess with a list of records to be processed and a
         checkpointer which accepts sequence numbers from the records to
         indicate where in the byteseam to checkpoint.
@@ -160,7 +155,8 @@ class RecordProcessor(processor.RecordProcessorBase):
                     self._largest_seq = (seq, sub_seq)
 
             # Checkpoints every self._CHECKPOINT_FREQ seconds
-            if time.time() - self._last_checkpoint_time > self._CHECKPOINT_FREQ:
+            last_check = time.time() - self._last_checkpoint_time
+            if last_check > self._CHECKPOINT_FREQ:
                 self.checkpoint(records.checkpointer,
                                 bytes(self._largest_seq[0]),
                                 self._largest_seq[1])
@@ -168,10 +164,12 @@ class RecordProcessor(processor.RecordProcessorBase):
 
         except Exception as e:
             logger.error("Encountered an exception while processing records."
-                          " Exception was %s" % e)
+                         " Exception was %s" % e)
 
     def shutdown(self, shutdown: ShutdownInput) -> None:
         """
+        Shut down record processing gracefully, if possible.
+
         Called by a KCLProcess instance to indicate that this record processor
         should shutdown. After this is called, there will be no more calls to
         any other methods of this record processor.
@@ -189,7 +187,7 @@ class RecordProcessor(processor.RecordProcessorBase):
                 # shard id.
                 logger.info("Was told to terminate, attempting to checkpoint.")
                 self.checkpoint(shutdown.checkpointer, None)
-            else: # reason == 'ZOMBIE'
+            else:    # reason == 'ZOMBIE'
                 # **ATTEMPTING TO CHECKPOINT ONCE A LEASE IS LOST WILL FAIL**
                 logger.info("Shutting down due to failover. Won't checkpoint.")
         except Exception as e:

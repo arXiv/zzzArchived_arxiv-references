@@ -1,24 +1,24 @@
-import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+"""Service layer for reference metadata storage."""
 
+import logging
 import boto3
 from botocore.exceptions import ClientError
 import datetime
 import json
 import jsonschema
-import logging
 import os
 
 from typing import List
-
 Data = List[dict]
+
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 class ReferenceStoreSession(object):
     """
-    Provides a CRUD interface for the reference datastore.
+    Provide a CRUD interface for the reference datastore.
 
     Parameters
     ----------
@@ -31,8 +31,10 @@ class ReferenceStoreSession(object):
     aws_access_key : str
     aws_secret_key : str
     """
+
     def __init__(self, endpoint_url: str, schema_path: str,
                  aws_access_key: str, aws_secret_key: str) -> None:
+        """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb',
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
@@ -43,7 +45,8 @@ class ReferenceStoreSession(object):
                 self.schema = json.load(f)
             self.table_name = self.schema.get('title', 'ReferenceSet')
         except (FileNotFoundError, TypeError):
-            logger.error("Could not load schema at %s; validation is disabled." % schema_path)
+            logger.error("Could not load schema at %s." % schema_path)
+            logger.info("Validation is disabled")
             self.schema = None
             self.table_name = 'ReferenceSet'
 
@@ -53,11 +56,8 @@ class ReferenceStoreSession(object):
             pass    # The table already exists.
         self.table = self.dynamodb.Table(self.table_name)
 
-
     def _create_table(self) -> None:
-        """
-        Set up a new table in DynamoDB. Blocks until table is available.
-        """
+        """Set up a new table in DynamoDB. Blocks until table is available."""
         table = self.dynamodb.create_table(
             TableName=self.table_name,
             KeySchema=[
@@ -77,8 +77,8 @@ class ReferenceStoreSession(object):
                 'WriteCapacityUnits': 5
             }
         )
-        table.meta.client.get_waiter('table_exists').wait(TableName=self.table_name)
-
+        waiter = table.meta.client.get_waiter('table_exists')
+        waiter.wait(TableName=self.table_name)
 
     def validate(self, data: dict, raise_on_invalid: bool = True) -> bool:
         """
@@ -141,7 +141,6 @@ class ReferenceStoreSession(object):
         IOError
             Raised when the data was not successfully written to the database.
         """
-
         data = self._prepare(document_id, references)
         self.validate(data)    # Allow ValueError to percolate up.
 
@@ -178,10 +177,9 @@ class ReferenceStoreSession(object):
             return None
 
         if 'references' not in response['Item']:
-            raise IOError('Bad response from database: %s' % e) from e
+            raise IOError('Bad response from database')
 
         return response['Item']['references']
-
 
 
 def get_session() -> ReferenceStoreSession:

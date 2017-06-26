@@ -1,5 +1,3 @@
-"""
-Controllers for the web application component.
-"""
+"""Controllers for the web application component."""
 
-__all__ = ['pdf', 'references']
+__all__ = ('pdf', 'references')

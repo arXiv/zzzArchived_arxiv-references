@@ -1,5 +1,3 @@
-"""
-Provides views for the web application component.
-"""
+"""Provides views for the web application component."""
 
-__all__ = ['rest']
+__all__ = ('rest',)

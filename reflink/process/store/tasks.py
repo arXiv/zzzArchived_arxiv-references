@@ -1,12 +1,14 @@
-import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+"""Implements data storage tasks for the processing pipeline."""
 
+import logging
 
 from reflink.types import ReferenceMetadata
 from reflink.services import data_store, object_store
 from celery import shared_task
+
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 @shared_task
@@ -56,8 +58,8 @@ def store_pdf(pdf_path: str, document_id: str) -> None:
     Raises
     ------
     RuntimeError
-        Raised when there is a problem storing the PDF. The caller should assume
-        that nothing has been stored.
+        Raised when there is a problem storing the PDF. The caller should
+        assumethat nothing has been stored.
     """
     try:
         object_store.get_session().create(document_id, pdf_path)

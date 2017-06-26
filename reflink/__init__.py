@@ -1,3 +1,1 @@
-"""
-Reference linking service (prototype).
-"""
+"""Reference linking service (prototype)."""

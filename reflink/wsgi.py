@@ -1,6 +1,4 @@
-"""
-Web Server Gateway Interface entry-point.
-"""
+"""Web Server Gateway Interface entry-point."""
 
 from .factory import create_web_app
 

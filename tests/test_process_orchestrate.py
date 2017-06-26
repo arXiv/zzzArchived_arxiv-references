@@ -1,8 +1,6 @@
-"""
-Tests for :mod:`reflink.process.orchestrate`\.
-"""
+"""Tests for the :mod:`reflink.process.orchestrate` module."""
 
-import unittest, os
+import unittest
 from moto import mock_s3, mock_dynamodb2
 from tempfile import mkstemp
 
@@ -12,13 +10,16 @@ from reflink.services import object_store, data_store
 
 
 class TestStore(unittest.TestCase):
+    """Test tasks (functions) in the :mod:`reflink.process.store` module."""
+
     @mock_s3
     def test_store_pdf(self):
         """
+        Test the :func:`reflink.process.store.store_pdf` task (function).
+
         The task :func:`reflink.process.store.store_pdf` should generate a new
         object in the object store.
         """
-
         document_id = 'arxiv:1234.5678'
 
         _, fpath = mkstemp()
@@ -32,10 +33,10 @@ class TestStore(unittest.TestCase):
     @mock_dynamodb2
     def test_store_metadata(self):
         """
-        The task :func:`reflink.process.store.store_metadata` should generate a
-        new record in the datastore.
-        """
+        Test the :func:`reflink.process.store.store_metadata` task (function).
 
+        Should generate a new record in the datastore.
+        """
         document_id = 'arxiv:1234.5678'
         store_metadata({'foo': 'bar'}, document_id)
 

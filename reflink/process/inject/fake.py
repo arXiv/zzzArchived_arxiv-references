@@ -1,6 +1,6 @@
-from celery import shared_task
+"""Fake implementation of the inject task."""
 
-from reflink.types import PathTuple
+from celery import shared_task
 
 import tempfile
 
@@ -8,7 +8,7 @@ import tempfile
 @shared_task
 def fake_inject(source_path: str) -> str:
     """
-    Emulates injecting links into a PDF using reference metadata.
+    Emulate injecting links into a PDF using reference metadata.
 
     Parameters
     ----------
