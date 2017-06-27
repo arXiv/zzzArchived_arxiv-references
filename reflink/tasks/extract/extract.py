@@ -15,10 +15,56 @@ from reflink.tasks import util
 class ExtractionError(Exception):
     pass
 
+def _cxml_element_func(tagname):
+    """
+    Return a function which retrieves the text element associated with a
+    certain xml tag from an xml root element.
+
+    Can be used like a partial:
+
+    .. code-block:: python
+
+        func = _cxml_element_func(tagname='country')
+        countries = func(xmlroot)
+
+    Returns
+    -------
+    func : callable
+    """
+    def _inner(root):
+        return ' '.join([i.text.strip() for i in root.iter(tag=tagname)])
+    return _inner
+
+def _cxml_ref_authors(ref):
+    """
+    Given an xml element return the marked up information corresponding to
+    patterns that look like CERMINE authors. `ref` is the root of the reference
+    in the xml.
+    """
+    authors = []
+    
+    firstname = _cxml_element_func('given-names')
+    lastname = _cxml_element_func('surname')
+
+    for auth in ref.iter(tag='string-name'):
+        authors.append({'givenname': firstname(auth), 'surname': lastname(auth)})
+    return authors
+
 def _cxml_format_reference_line(elm):
     """
-    Convert a CERMINE XML element to a reference line i.e.
-    Bierbaum, Matt and Pierson, Erick arxiv:1706.0000
+    Convert a CERMINE XML element to a reference line i.e.:
+        
+        Bierbaum, Matt and Pierson, Erick arxiv:1706.0000
+
+    Parameters
+    ----------
+    elm : xml.etree.ElementTree
+        reference xml root from CERMINE
+
+    Returns
+    -------
+    line : str
+        The formatted reference line as seen in the PDF
     """
     # regex for cleaning up the extracted reference lines a little bit:
     #  1. re_multispace -- collapse 2+ spaces into a single one
@@ -35,36 +81,31 @@ def _cxml_format_reference_line(elm):
     out = re_numbering.sub(r'\2', out).strip()
     return out
 
-def _cxml_element_func(tagname):
-    """
-    Return the a function which retrieves the text element associated with a
-    certain xml tag from an xml root element.
-    """
-    def _inner(root):
-        return ' '.join([i.text.strip() for i in root.iter(tag=tagname)])
-    return _inner
-
-def _cxml_authors(root):
-    """
-    Given an xml element return the marked up information corresponding to
-    patterns that look like CERMINE authors.
-    """
-    authors = []
-    
-    firstname = _cxml_element_func('given-names')
-    lastname = _cxml_element_func('surname')
-
-    for auth in root.iter(tag='string-name'):
-        authors.append({'givenname': firstname(auth), 'surname': lastname(auth)})
-    return authors
-
 def _cxml_format_document(root):
     """
-    Convert a CERMINE XML element into a document i.e.
-    {"author": {"givenname": "Matt", "surname", "Bierbaum"}, "journal": "arxiv"}
+    Convert a CERMINE XML element into a reference document i.e.:
+
+        {
+            "author": {"givenname": "Matt", "surname", "Bierbaum"},
+            "journal": "arxiv",
+            "article-title": "Some bad paper",
+            "year": 2017,
+            "volume": 1,
+            "page": 1
+        }
+
+    Parameters
+    ----------
+    root : xml.etree.ElementTree
+        reference xml root from CERMINE
+
+    Returns
+    -------
+    doc : dictionary
+        Formatted reference document using CERMINE metadata
     """
     constructor = {
-        'authors': _cxml_authors,
+        'authors': _cxml_ref_authors,
         'article-title': _cxml_element_func('article-title'),
         'journal': _cxml_element_func('source'),
         'year': _cxml_element_func('year'),
@@ -82,7 +123,14 @@ def cermine_parse_xml(filename: str) -> dict:
         1. Reference lines i.e. the visual form in the paper
         2. JSON documents with separated metadata
 
-    See :func:`cermine_extract_references` for parameters 
+    Parameters
+    ----------
+    filename : str
+        Name of file containing .cermxml information
+
+    Returns
+    -------
+    see :func:`cermine_extract_references`
     """
     root = xml.etree.ElementTree.parse(filename).getroot()
 
