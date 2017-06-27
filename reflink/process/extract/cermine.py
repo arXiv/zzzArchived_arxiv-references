@@ -10,7 +10,7 @@ import subprocess
 import xml.etree.ElementTree
 from contextlib import contextmanager
 
-from reflink.tasks import util
+from reflink.process import util
 
 class ExtractionError(Exception):
     pass
@@ -187,5 +187,5 @@ def cermine_extract_references(filename: str, cleanup: bool = True) -> str:
             )
             raise IOError('{} not found, expected as output'.format(cxml))
 
-        return cermine_parse_xml(cxml)
+        return cermine_parse_xml(cxml)[1]
 

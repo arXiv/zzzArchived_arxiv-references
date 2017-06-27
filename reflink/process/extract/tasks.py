@@ -2,9 +2,10 @@
 
 from celery import shared_task
 
+from reflink.process.extract.cermine import cermine_extract_references
 
 @shared_task
-def fake_extract(paths: tuple) -> tuple:
+def extract_cermine(paths: tuple) -> tuple:
     """
     A fake implementation of the extraction task.
 
@@ -23,11 +24,8 @@ def fake_extract(paths: tuple) -> tuple:
         filesystem, and the extracted reference metadata (list), in that order.
     """
     pdf_path, source_path = paths
-    reference_metadata = [
-        {'the': 'first', 'original': 'The first one'},
-        {'the': 'second', 'original': 'The second one'}
-    ]
+    reference_metadata = cermine_extract_references(pdf_path)
     return pdf_path, source_path, reference_metadata
 
 
-extract = fake_extract
+extract = extract_cermine
