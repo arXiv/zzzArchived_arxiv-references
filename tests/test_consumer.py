@@ -1,23 +1,23 @@
-import sys
-sys.path.append('.')
-
+"""Unit tests for the :mod:`reflink.notification.consumer` module."""
 import unittest
 from unittest import mock
-
-from reflink.notification import consumer
-
 import json
 from amazon_kclpy import kcl
 
+from reflink.notification import consumer
+
 
 class TestRecordProcessor(unittest.TestCase):
-    @mock.patch('reflink.tasks.orchestrate.process_document')
+    """Test the :meth:`.consumer.RecordProcessor.process_records` method."""
+
+    @mock.patch('reflink.process.orchestrate.process_document')
     def test_process_document_called_for_each_record(self, process_document):
         """
-        The document id from each record should be passed to
-        :func:`reflink.tasks.orchestrate.process_document`\.
-        """
+        Ensure :func:`reflink.process.orchestrate.process_document` is called.
 
+        The document id from each record should be passed to the
+        :func:`reflink.process.orchestrate.process_document` function.
+        """
         process_document.return_value = None
 
         records = mock.MagicMock()
@@ -47,13 +47,18 @@ class TestRecordProcessor(unittest.TestCase):
 
 
 class TestRecordProcessorCheckpoint(unittest.TestCase):
+    """Test the functionality of the checkpoint mechanism."""
+    
     def test_checkpoint_handles_ShutdownException(self):
         """
-        When a CheckpointError (ShutdownException) is raised, should not attempt
-        to retry checkpointing.
+        Test the case that a ShutdownException is raised during processing.
+
+        When a CheckpointError (ShutdownException) is raised, should not
+        attempt to retry checkpointing.
         """
         checkpointer = mock.MagicMock()
-        def _side_effect (seq, subseq):
+
+        def _side_effect(seq, subseq):
             raise kcl.CheckpointError('ShutdownException')
         checkpointer.checkpoint = mock.MagicMock(side_effect=_side_effect)
 
@@ -65,11 +70,14 @@ class TestRecordProcessorCheckpoint(unittest.TestCase):
 
     def test_checkpoint_handles_InvalidStateException(self):
         """
+        Test the case that an InvalidStateException is raised.
+
         When a CheckpointError (InvalidStateException) is raised, should retry
         several times.
         """
         checkpointer = mock.MagicMock()
-        def _side_effect (seq, subseq):
+
+        def _side_effect(seq, subseq):
             raise kcl.CheckpointError('InvalidStateException')
         checkpointer.checkpoint = mock.MagicMock(side_effect=_side_effect)
 
@@ -84,11 +92,14 @@ class TestRecordProcessorCheckpoint(unittest.TestCase):
 
     def test_checkpoint_handles_ThrottlingException(self):
         """
+        Test the case that a ThrottlingException is raised.
+
         When a CheckpointError (ThrottlingException) is raised, should retry
         several times.
         """
         checkpointer = mock.MagicMock()
-        def _side_effect (seq, subseq):
+
+        def _side_effect(seq, subseq):
             raise kcl.CheckpointError('ThrottlingException')
         checkpointer.checkpoint = mock.MagicMock(side_effect=_side_effect)
 
@@ -103,8 +114,12 @@ class TestRecordProcessorCheckpoint(unittest.TestCase):
 
 
 class TestRecordProcessorShutdown(unittest.TestCase):
+    """Test the handling of Shutdown signals."""
+
     def test_shutdown_terminate(self):
         """
+        Test the case that a TERMINATE signal is passed.
+
         When :meth:`consumer.RecordProcessor` receives a TERMINATE shutdown
         signal, it should attempt to checkpoint.
         """
@@ -121,6 +136,8 @@ class TestRecordProcessorShutdown(unittest.TestCase):
 
     def test_shutdown_zombie(self):
         """
+        Test the case that a ZOMBIE signal is passed.
+
         When :meth:`consumer.RecordProcessor` receives a ZOMBIE shutdown
         signal, it should not attempt to checkpoint.
         """
@@ -134,8 +151,6 @@ class TestRecordProcessorShutdown(unittest.TestCase):
         processor.shutdown(shutdown)
 
         self.assertEqual(checkpointer.checkpoint.call_count, 0)
-
-
 
 
 if __name__ == '__main__':
