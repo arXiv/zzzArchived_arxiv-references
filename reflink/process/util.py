@@ -167,6 +167,52 @@ def find_arxiv_id(string: str) -> str:
             return match[0]
     return ''
 
+def rotating_backup_name(filename: str) -> str:
+    """
+
+    Create the next name in a series of rotating backup files beginning with
+    the root name `filename`. In particular, keeping appending `.bk-[0-9]+`
+    forever, beginning the first unused number.
+
+    Parameters
+    ----------
+    filename : str
+        Base filename from which to generate backup names
+
+    Returns
+    -------
+    backup_filename : str
+        Name of the next rotating file. If the first time called, it will be
+        <filename>.bk-0
+    """
+    def _genname(base):
+        index = 0
+        while True:
+            yield '{}.bk-{}'.format(base, index)
+            index += 1
+
+    for n in _genname(filename):
+        if os.path.exists(n):
+            continue
+        return n
+
+def backup(filename: str):
+    """
+    Perform a rotating backup on `filename` in the same directory by appending
+    <filename>.bk-[0-9]+
+
+    Parameters
+    ----------
+    filename : str
+        File to back up
+
+    Returns
+    -------
+    None
+    """
+    backup_name = rotating_backup_name(filename)
+    shutil.copy2(filename, backup_name)
+
 def ps2pdf(ps):
     subprocess.check_call(['ps2pdf', ps])
 
