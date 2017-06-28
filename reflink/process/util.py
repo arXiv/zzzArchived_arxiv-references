@@ -3,6 +3,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s'
                     level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+import re
 import os
 import shlex
 import shutil
@@ -140,6 +141,31 @@ def files_modified_since(fldr: str, timestamp: datetime.datetime,
             filenames.append(filename)
 
     return filenames
+
+def find_arxiv_id(string: str) -> str:
+    """
+    Try to extract an arxiv id from a string, looking for one of two forms:
+        1. New form -- 1603.00324
+        2. Old form -- hep-th/0002839
+
+    Parameters
+    ----------
+    string : str
+        String in which to perform the search
+
+    Returns
+    -------
+    id : str
+        The arxiv id found in the string, '' if none found.
+    """
+    oldform = re.compile(r'([a-z\-]{4,8}\/\d{7})')
+    newform = re.compile(r'(\d{4,}\.\d{5,})')
+
+    for regex in (newform, oldform):
+        match = regex.findall(string)
+        if len(match) > 0:
+            return match[0]
+    return ''
 
 def ps2pdf(ps):
     subprocess.check_call(['ps2pdf', ps])

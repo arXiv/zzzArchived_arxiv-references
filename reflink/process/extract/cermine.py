@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 import re
 import os
 import shutil
+import datetime
 import subprocess
 import xml.etree.ElementTree
 from contextlib import contextmanager
@@ -47,7 +48,14 @@ def _cxml_ref_authors(ref):
     lastname = _cxml_element_func('surname')
 
     for auth in ref.iter(tag='string-name'):
-        authors.append({'givenname': firstname(auth), 'surname': lastname(auth)})
+        authors.append(
+            {
+                'givennames': firstname(auth),
+                'surname': lastname(auth),
+                'prefix': '',
+                'suffix': ''
+            }
+        )
     return authors
 
 def _cxml_format_reference_line(elm):
@@ -81,7 +89,7 @@ def _cxml_format_reference_line(elm):
     out = re_numbering.sub(r'\2', out).strip()
     return out
 
-def _cxml_format_document(root):
+def cxml_format_document(root, documentid=''):
     """
     Convert a CERMINE XML element into a reference document i.e.:
 
@@ -104,20 +112,40 @@ def _cxml_format_document(root):
     doc : dictionary
         Formatted reference document using CERMINE metadata
     """
-    constructor = {
+    reference_constructor = {
         'authors': _cxml_ref_authors,
-        'article-title': _cxml_element_func('article-title'),
-        'journal': _cxml_element_func('source'),
+        'raw': _cxml_format_reference_line,
+        'title': _cxml_element_func('article-title'),
+        'source': _cxml_element_func('source'),
         'year': _cxml_element_func('year'),
         'volume': _cxml_element_func('volume'),
-        'page': _cxml_element_func('fpage'),
+        'pages': _cxml_element_func('fpage'),
+        'issue': _cxml_element_func('issue'),
     }
+
+    # things that cermine does not extract / FIXME -- get these somehow?!
+    unknown_properties = {
+        'identifiers': [{'identifier_type': '', 'identifier': ''}],
+        'reftype': '',
+        'doi': ''
+    }
+
+    references = []
+    for refroot in root.iter(tag='ref'):
+        reference = {
+            key: func(refroot) for key, func in reference_constructor.items()
+        }
+        reference.update(unknown_properties)
+        references.append(reference)
 
     return {
-        key: func(root) for key, func in constructor.items()
+        'created': str(datetime.datetime.now()),
+        'updated': str(datetime.datetime.now()),
+        'document': documentid,
+        'references': references
     }
 
-def cermine_parse_xml(filename: str) -> dict:
+def convert_cxml_json(filename: str) -> dict:
     """
     Transforms a CERMINE XML file into human and machine readable references:
         1. Reference lines i.e. the visual form in the paper
@@ -133,13 +161,10 @@ def cermine_parse_xml(filename: str) -> dict:
     see :func:`cermine_extract_references`
     """
     root = xml.etree.ElementTree.parse(filename).getroot()
+    documentid = util.find_arxiv_id(filename)
+    return cxml_format_document(root, documentid)
 
-    refs = list(root.iter(tag='ref'))
-    lines = [_cxml_format_reference_line(ref) for ref in refs]
-    docs = [_cxml_format_document(ref) for ref in refs]
-    return lines, docs
-
-def cermine_extract_references(filename: str, cleanup: bool = True) -> str:
+def extract_references(filename: str, cleanup: bool = True) -> str:
     """
     Copy the pdf to a temporary directory, run CERMINE and return the extracted
     references as a string. Cleans up all temporary files.
@@ -154,10 +179,6 @@ def cermine_extract_references(filename: str, cleanup: bool = True) -> str:
 
     Returns
     -------
-    reference_lines : list of strings
-        Simplified reference lines as extracted from the pdf (no markup, true
-        to visual representation in the PDF)
-
     reference_docs : list of dicts
         Dictionary of reference metadata with metadata separated into author,
         journal, year, etc
@@ -165,6 +186,10 @@ def cermine_extract_references(filename: str, cleanup: bool = True) -> str:
     filename = os.path.abspath(filename)
     fldr, name = os.path.split(filename)
     stub, ext = os.path.splitext(os.path.basename(filename))
+
+    if not os.path.exists(filename):
+        logger.error("{} does not exist".format(filename))
+        raise FileNotFoundError(filename)
 
     with util.tempdir(cleanup=cleanup) as tmpdir:
         # copy the pdf to our temporary location
@@ -185,7 +210,7 @@ def cermine_extract_references(filename: str, cleanup: bool = True) -> str:
             logger.error(
                 'CERMINE produced no output metadata for {}'.format(filename)
             )
-            raise IOError('{} not found, expected as output'.format(cxml))
+            raise FileNotFoundError('{} not found, expected as output'.format(cxml))
 
-        return cermine_parse_xml(cxml)[1]
+        return convert_cxml_json(cxml)
 

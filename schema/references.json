@@ -78,7 +78,7 @@
                         "type": "string"
                     },
                     "year": {
-                        "type": "integer"
+                        "type": "string"
                     },
                     "identifiers": {
                         "type": "array",

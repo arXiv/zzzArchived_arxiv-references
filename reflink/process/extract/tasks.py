@@ -2,7 +2,7 @@
 
 from celery import shared_task
 
-from reflink.process.extract.cermine import cermine_extract_references
+from reflink.process.extract import cermine
 
 @shared_task
 def extract_cermine(paths: tuple) -> tuple:
@@ -24,7 +24,7 @@ def extract_cermine(paths: tuple) -> tuple:
         filesystem, and the extracted reference metadata (list), in that order.
     """
     pdf_path, source_path = paths
-    reference_metadata = cermine_extract_references(pdf_path)
+    reference_metadata = cermine.extract_references(pdf_path)
     return pdf_path, source_path, reference_metadata
 
 
