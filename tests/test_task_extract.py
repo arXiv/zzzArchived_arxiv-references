@@ -3,12 +3,26 @@ sys.path.append('.')
 
 import json
 import jsonschema
+import datetime
 import subprocess
 import unittest
 from unittest import mock
+from moto import mock_dynamodb2
 
 from reflink.services import data_store
 from reflink.process.extract import cermine
+
+def mock_full_dock(references):
+    # there is no public way to format a document correctly
+    # (ReferenceStoreSession._prepare) so here it is duplicated for now
+    now = datetime.datetime.now().isoformat()
+    data = {
+        'document': 'arxiv:1703.00020',
+        'references': references,
+        'created': now,
+        'updated': now
+    }
+    return data
 
 def ordered(obj):
     """ A function for comparing json objects """
@@ -28,18 +42,19 @@ class TestCERMINEExtractor(unittest.TestCase):
         doc_test = cermine.convert_cxml_json(cxml_document_path)
         doc_orig = json.load(open(json_document_path))
 
-        valid_keys = ['document', 'references']
-        doc_test = {k: v for k, v in doc_test.items() if k in valid_keys}
-        doc_orig = {k: v for k, v in doc_orig.items() if k in valid_keys}
         self.assertEqual(ordered(doc_test), ordered(doc_orig))
 
+    @mock_dynamodb2
     def test_cxml_json_schema(self):
         cxml_document_path = 'tests/data/1702.07336.cermxml'
         jsondoc = cermine.convert_cxml_json(cxml_document_path)
 
+        # create the full document using the data_store
+        fulldoc = mock_full_dock(jsondoc)
+
         schema_path = 'schema/references.json'
         schemadoc = json.load(open(schema_path))
-        jsonschema.validate(jsondoc, schemadoc)
+        jsonschema.validate(fulldoc, schemadoc)
 
     def test_pdf_not_found(self):
         pdf_document_path = 'tests/data/1702.07335.pdf'

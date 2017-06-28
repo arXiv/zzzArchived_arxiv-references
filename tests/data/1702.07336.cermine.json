@@ -1,2465 +1,2460 @@
-{
-    "created": "2017-06-28 10:13:07.907105",
-    "document": "1702.07336",
-    "references": [
-        {
-            "authors": [
-                {
-                    "givennames": "E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Betzig"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "1642",
-            "pages": "",
-            "raw": "E. Betzig Science 313 1642 2006",
-            "reftype": "",
-            "source": "Science",
-            "title": "",
-            "volume": "313",
-            "year": "2006"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "M. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Rust"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Bates"
-                },
-                {
-                    "givennames": "X.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Zhuang"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "793",
-            "pages": "",
-            "raw": "M. J. Rust M. Bates X. Zhuang Nat. Methods 3 793 2006",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "3",
-            "year": "2006"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S. W.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hell"
-                },
-                {
-                    "givennames": "J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wichmann"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "780",
-            "pages": "",
-            "raw": "S. W. Hell J. Wichmann 19 780 1994",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "19",
-            "year": "1994"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "P.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Kner"
-                },
-                {
-                    "givennames": "B. B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Chhun"
-                },
-                {
-                    "givennames": "E. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gri s"
-                },
-                {
-                    "givennames": "M. G. L.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gustafsson"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "339",
-            "pages": "",
-            "raw": "P. Kner B. B. Chhun E. R. Gri s M. G. L. Gustafsson Nat. Methods 6 339 2009",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "6",
-            "year": "2009"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "B.-C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Chen"
-                },
-                {
-                    "givennames": "W. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Legant"
-                },
-                {
-                    "givennames": "K.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wang"
-                },
-                {
-                    "givennames": "L.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Shao"
-                },
-                {
-                    "givennames": "D. E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Milkie"
-                },
-                {
-                    "givennames": "M. W.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Davidson"
-                },
-                {
-                    "givennames": "C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Janetopoulos"
-                },
-                {
-                    "givennames": "X. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wu"
-                },
-                {
-                    "givennames": "J. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hammer"
-                },
-                {
-                    "givennames": "Z.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Liu"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "1257998",
-            "pages": "",
-            "raw": "B.-C. Chen W. R. Legant K. Wang L. Shao D. E. Milkie M. W. Davidson C. Janetopoulos X. S. Wu J. A. Hammer Z. Liu Science 346 1257998 2014",
-            "reftype": "",
-            "source": "Science",
-            "title": "",
-            "volume": "346",
-            "year": "2014"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Rogers"
-                },
-                {
-                    "givennames": "T. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Waigh"
-                },
-                {
-                    "givennames": "X.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Zhao"
-                },
-                {
-                    "givennames": "and J. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Lu"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "220",
-            "pages": "",
-            "raw": "S. S. Rogers T. A. Waigh X. Zhao and J. R. Lu Physical Biology 4 220 2007",
-            "reftype": "",
-            "source": "Physical Biology",
-            "title": "",
-            "volume": "4",
-            "year": "2007"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Pathasarathy"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "724",
-            "pages": "",
-            "raw": "R. Pathasarathy Nat. Methods 9 724 2012",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "9",
-            "year": "2012"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "F.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gru"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hausmann"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "5",
-            "raw": "F. Gru M. Hausmann Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE 2011 1 5",
-            "reftype": "",
-            "source": "Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE",
-            "title": "",
-            "volume": "1",
-            "year": "2011"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S. M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Anthony"
-                },
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Granick"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "8152",
-            "pages": "",
-            "raw": "S. M. Anthony S. Granick 25 8152 2009",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "25",
-            "year": "2009"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "C. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Smith"
-                },
-                {
-                    "givennames": "N.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Joseph"
-                },
-                {
-                    "givennames": "B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Rieger"
-                },
-                {
-                    "givennames": "K. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Lidke"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "373",
-            "pages": "",
-            "raw": "C. S. Smith N. Joseph B. Rieger K. A. Lidke Nat. Methods 7 373 2010",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "7",
-            "year": "2010"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Andersson"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "18714",
-            "pages": "",
-            "raw": "S. Andersson Optics express 16 18714 2008",
-            "reftype": "",
-            "source": "Optics express 16",
-            "title": "",
-            "volume": "",
-            "year": "2008"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "Y.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gao and M. L. Kilfoil"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "4685",
-            "pages": "",
-            "raw": "Y. Gao and M. L. Kilfoil 17 4685 2009",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "17",
-            "year": "2009"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "P. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Lu"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Shutman"
-                },
-                {
-                    "givennames": "A. V.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Butenko"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "30755",
-            "pages": "",
-            "raw": "P. J. Lu M. Shutman and A. V. Butenko 21 30755 2013",
-            "reftype": "",
-            "source": "",
-            "title": "and",
-            "volume": "21",
-            "year": "2013"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ram"
-                },
-                {
-                    "givennames": "E. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ward"
-                },
-                {
-                    "givennames": "R. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ober"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "4457",
-            "pages": "",
-            "raw": "S. Ram E. S. Ward R. J. Ober Proc. Natl. Acad. Sci 103 4457 2006",
-            "reftype": "",
-            "source": "Proc. Natl. Acad. Sci",
-            "title": "",
-            "volume": "103",
-            "year": "2006"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "C. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Rao"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "81",
-            "pages": "",
-            "raw": "C. R. Rao Bull Calcutta. Math. Soc 37 81 1945",
-            "reftype": "",
-            "source": "Bull Calcutta. Math. Soc",
-            "title": "",
-            "volume": "37",
-            "year": "1945"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "K.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Keville"
-                },
-                {
-                    "givennames": "J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Caruthers"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "103",
-            "pages": "",
-            "raw": "K. Keville J. Caruthers Journal of colloid and interface science 144 103 1991",
-            "reftype": "",
-            "source": "Journal of colloid and interface science 144",
-            "title": "",
-            "volume": "",
-            "year": "1991"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Mohraz and M. J. Solomon"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "5298",
-            "pages": "",
-            "raw": "A. Mohraz and M. J. Solomon 21 5298 2005",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "21",
-            "year": "2005"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Kuijk"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "A. van Blaaderen"
-                },
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Imhof"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "2346",
-            "pages": "",
-            "raw": "A. Kuijk A. van Blaaderen and A. Imhof Journal of the American Chemical Society 133 2346 2011",
-            "reftype": "",
-            "source": "Journal of the American Chemical Society",
-            "title": "and",
-            "volume": "133",
-            "year": "2011"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Guttman"
-                },
-                {
-                    "givennames": "Z.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Sapir"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Schultz"
-                },
-                {
-                    "givennames": "A. V.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Butenko"
-                },
-                {
-                    "givennames": "B. M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ocko"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Deutsch"
-                },
-                {
-                    "givennames": "E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Sloutskin"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "493",
-            "pages": "",
-            "raw": "S. Guttman Z. Sapir M. Schultz A. V. Butenko B. M. Ocko M. Deutsch E. Sloutskin Proceedings of the National Academy of Sciences 113 493 2016",
-            "reftype": "",
-            "source": "Proceedings of the National Academy of Sciences",
-            "title": "",
-            "volume": "113",
-            "year": "2016"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hell"
-                },
-                {
-                    "givennames": "C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Cremer"
-                },
-                {
-                    "givennames": "E. H. K.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Stelzer"
-                },
-                {
-                    "givennames": "J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Microsc"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "391",
-            "pages": "",
-            "raw": "S. Hell C. Cremer E. H. K. Stelzer J. Microsc 169 391 1993",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "169",
-            "year": "1993"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "T. D.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Visser"
-                },
-                {
-                    "givennames": "S. H.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wiersma"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "599",
-            "pages": "",
-            "raw": "T. D. Visser S. H. Wiersma J. Opt. Soc. Am. A 11 599 1994",
-            "reftype": "",
-            "source": "J. Opt. Soc. Am. A 11",
-            "title": "",
-            "volume": "",
-            "year": "1994"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Zhang"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "-C."
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "",
-            "raw": "B. Zhang -C. Appl. Optics 46 1819 2007",
-            "reftype": "",
-            "source": "Appl. Optics 46",
-            "title": "",
-            "volume": "",
-            "year": "1819 2007"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "M. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Nasse"
-                },
-                {
-                    "givennames": "J. C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Woehl"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "295",
-            "pages": "",
-            "raw": "M. J. Nasse J. C. Woehl J. Opt. Soc. Am. A 27 295 2010",
-            "reftype": "",
-            "source": "J. Opt. Soc. Am. A 27",
-            "title": "",
-            "volume": "",
-            "year": "2010"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J.-A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Conchello"
-                },
-                {
-                    "givennames": "J. W.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Lichtman"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "585",
-            "pages": "",
-            "raw": "J.-A. Conchello J. W. Lichtman 33 585 1994",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "33",
-            "year": "1994"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Dusch"
-                },
-                {
-                    "givennames": "T.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Dorval"
-                },
-                {
-                    "givennames": "N.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Vincent"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wachsmuth"
-                },
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Genovesio"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "132",
-            "pages": "",
-            "raw": "E. Dusch T. Dorval N. Vincent M. Wachsmuth and A. Genovesio Journal of Microscopy 228 132 2007",
-            "reftype": "",
-            "source": "Journal of Microscopy",
-            "title": "and",
-            "volume": "228",
-            "year": "2007"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wolleschensky"
-                },
-                {
-                    "givennames": "B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Zimmermann"
-                },
-                {
-                    "givennames": "R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ankerhold"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Kempe"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "58600N 58600N",
-            "raw": "R. Wolleschensky B. Zimmermann R. Ankerhold M. Kempe in European Conference on Biomedical Optics 2005 (International Society for Optics and Photonics 2005 58600N 58600N",
-            "reftype": "",
-            "source": "in European Conference on Biomedical Optics 2005 (International Society for Optics and Photonics",
-            "title": "",
-            "volume": "",
-            "year": "2005"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "E. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Botcherby"
-                },
-                {
-                    "givennames": "M. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Booth"
-                },
-                {
-                    "givennames": "R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Juskaitis"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "1504",
-            "pages": "",
-            "raw": "E. J. Botcherby M. J. Booth R. Juskaitis 34 1504 2009",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "34",
-            "year": "2009"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J. C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Crocker"
-                },
-                {
-                    "givennames": "D. G.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Grier"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "298",
-            "pages": "",
-            "raw": "J. C. Crocker D. G. Grier J. Colloid and Interface Science 179 298 1995",
-            "reftype": "",
-            "source": "J. Colloid and Interface Science",
-            "title": "",
-            "volume": "179",
-            "year": "1995"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "D. W.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Marquardt"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "431",
-            "pages": "",
-            "raw": "D. W. Marquardt J. Soc. Indust 11 431 1963",
-            "reftype": "",
-            "source": "J. Soc. Indust",
-            "title": "",
-            "volume": "11",
-            "year": "1963"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "B. B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "M. K. Transtrum"
-                },
-                {
-                    "givennames": "J. P.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Machta"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Sethna"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "060201",
-            "pages": "",
-            "raw": "M. K. Transtrum B. B. Machta J. P. Sethna Physical review letters 104 060201 2010",
-            "reftype": "",
-            "source": "Physical review letters 104",
-            "title": "",
-            "volume": "",
-            "year": "2010"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "B. B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "M. K. Transtrum"
-                },
-                {
-                    "givennames": "J. P.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Machta"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Sethna"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "036701",
-            "pages": "",
-            "raw": "M. K. Transtrum B. B. Machta J. P. Sethna 83 036701 2011",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "83",
-            "year": "2011"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J. P.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "M. K. Transtrum"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Sethna"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "",
-            "raw": "M. K. Transtrum J. P. Sethna 1201 2012",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "1201",
-            "year": "2012"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "R. M. Neal"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "705",
-            "pages": "",
-            "raw": "R. M. Neal 31 705 2003",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "31",
-            "year": "2003"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Einstein"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "549",
-            "pages": "",
-            "raw": "A. Einstein Annales der Physik 17 549 1905",
-            "reftype": "",
-            "source": "Annales der Physik",
-            "title": "",
-            "volume": "17",
-            "year": "1905"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "W. B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Russel"
-                },
-                {
-                    "givennames": "D. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Saville"
-                },
-                {
-                    "givennames": "W. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Schowalter"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Dispersions"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "",
-            "raw": "W. B. Russel D. A. Saville W. R. Schowalter Dispersions 1989",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "",
-            "year": "1989"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J. N.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Israelachvili"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "",
-            "raw": "J. N. Israelachvili 2011",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "",
-            "year": "2011"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J. N.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Israelachvili"
-                },
-                {
-                    "givennames": "G. E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Adams"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "975",
-            "pages": "",
-            "raw": "J. N. Israelachvili G. E. Adams Journal of the Chemical Society, Faraday Transactions 1: Physical Chemistry in Condensed Phases 74 975 1978",
-            "reftype": "",
-            "source": "Journal of the Chemical Society, Faraday Transactions 1: Physical Chemistry in Condensed Phases",
-            "title": "",
-            "volume": "74",
-            "year": "1978"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "W. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ducker"
-                },
-                {
-                    "givennames": "T. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Senden"
-                },
-                {
-                    "givennames": "R. M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Pashley"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "239",
-            "pages": "",
-            "raw": "W. A. Ducker T. J. Senden R. M. Pashley Nature 353 239 1991",
-            "reftype": "",
-            "source": "Nature",
-            "title": "",
-            "volume": "353",
-            "year": "1991"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "D. C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Prieve"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "93",
-            "pages": "",
-            "raw": "D. C. Prieve Colloid Interface Sci 82 93 1999",
-            "reftype": "",
-            "source": "Colloid Interface Sci",
-            "title": "",
-            "volume": "82",
-            "year": "1999"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "T. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "D. B. Allan"
-                },
-                {
-                    "givennames": "N. C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Caswell"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Keim"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "2014",
-            "pages": "",
-            "raw": "D. B. Allan T. A. Caswell N. C. Keim Trackpy v0.2 2014 URL github",
-            "reftype": "",
-            "source": "Trackpy v0.2",
-            "title": "URL github",
-            "volume": "",
-            "year": ""
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S. L.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Barnes"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "396",
-            "pages": "",
-            "raw": "S. L. Barnes Journal of Applied Meteorology 3 396 1964",
-            "reftype": "",
-            "source": "Journal of Applied Meteorology",
-            "title": "",
-            "volume": "3",
-            "year": "1964"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hell"
-                },
-                {
-                    "givennames": "C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Cremer"
-                },
-                {
-                    "givennames": "E. H.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Stelzer"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "391",
-            "pages": "",
-            "raw": "S. Hell C. Cremer E. H. Stelzer Journal of microscopy 169 391 1993",
-            "reftype": "",
-            "source": "Journal of microscopy 169",
-            "title": "",
-            "volume": "",
-            "year": "1993"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "D. J. MacKay"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "",
-            "raw": "D. J. MacKay Information theory, inference and learning algorithms 2003",
-            "reftype": "",
-            "source": "",
-            "title": "Information theory, inference and learning algorithms",
-            "volume": "",
-            "year": "2003"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J. C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Crocker"
-                },
-                {
-                    "givennames": "D. G.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Grier"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "298",
-            "pages": "",
-            "raw": "J. C. Crocker D. G. Grier Journal of colloid and interface science 179 298 1996",
-            "reftype": "",
-            "source": "Journal of colloid and interface science 179",
-            "title": "",
-            "volume": "",
-            "year": "1996"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "W. B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Russel"
-                },
-                {
-                    "givennames": "D. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Saville"
-                },
-                {
-                    "givennames": "W. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Schowalter"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "",
-            "raw": "W. B. Russel D. A. Saville W. R. Schowalter 1989",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "",
-            "year": "1989"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Betzig"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "1642",
-            "pages": "",
-            "raw": "[S1] E. Betzig Science 313 1642 2006",
-            "reftype": "",
-            "source": "Science",
-            "title": "",
-            "volume": "313",
-            "year": "2006"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "[S2] M. J. Rust"
-                },
-                {
-                    "givennames": "X.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Bates"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Zhuang"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "793",
-            "pages": "",
-            "raw": "[S2] M. J. Rust M. Bates X. Zhuang Nat. Methods 3 793 2006",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "3",
-            "year": "2006"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S. W.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hell"
-                },
-                {
-                    "givennames": "J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wichmann"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "780",
-            "pages": "",
-            "raw": "[S3] S. W. Hell J. Wichmann 19 780 1994",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "19",
-            "year": "1994"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "P.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Kner"
-                },
-                {
-                    "givennames": "B. B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Chhun"
-                },
-                {
-                    "givennames": "E. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gri s"
-                },
-                {
-                    "givennames": "M. G. L.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gustafsson"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "339",
-            "pages": "",
-            "raw": "[S4] P. Kner B. B. Chhun E. R. Gri s M. G. L. Gustafsson Nat. Methods 6 339 2009",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "6",
-            "year": "2009"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "W. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "[S5] B.-C. Chen"
-                },
-                {
-                    "givennames": "K.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Legant"
-                },
-                {
-                    "givennames": "L.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wang"
-                },
-                {
-                    "givennames": "D. E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Shao"
-                },
-                {
-                    "givennames": "M. W.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Milkie"
-                },
-                {
-                    "givennames": "C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Davidson"
-                },
-                {
-                    "givennames": "X. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Janetopoulos"
-                },
-                {
-                    "givennames": "J. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wu"
-                },
-                {
-                    "givennames": "Z.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hammer"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Liu"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "1257998",
-            "pages": "",
-            "raw": "[S5] B.-C. Chen W. R. Legant K. Wang L. Shao D. E. Milkie M. W. Davidson C. Janetopoulos X. S. Wu J. A. Hammer Z. Liu Science 346 1257998 2014",
-            "reftype": "",
-            "source": "Science",
-            "title": "",
-            "volume": "346",
-            "year": "2014"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Rogers"
-                },
-                {
-                    "givennames": "T. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Waigh"
-                },
-                {
-                    "givennames": "X.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Zhao"
-                },
-                {
-                    "givennames": "and J. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Lu"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "220",
-            "pages": "",
-            "raw": "[S6] S. S. Rogers T. A. Waigh X. Zhao and J. R. Lu Physical Biology 4 220 2007",
-            "reftype": "",
-            "source": "Physical Biology",
-            "title": "",
-            "volume": "4",
-            "year": "2007"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Pathasarathy"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "724",
-            "pages": "",
-            "raw": "[S7] R. Pathasarathy Nat. Methods 9 724 2012",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "9",
-            "year": "2012"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "F.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gru"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hausmann"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "5",
-            "raw": "[S8] F. Gru M. Hausmann Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE 2011 1 5",
-            "reftype": "",
-            "source": "Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE",
-            "title": "",
-            "volume": "1",
-            "year": "2011"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S. M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Anthony"
-                },
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Granick"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "8152",
-            "pages": "",
-            "raw": "[S9] S. M. Anthony S. Granick 25 8152 2009",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "25",
-            "year": "2009"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "C. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Smith"
-                },
-                {
-                    "givennames": "N.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Joseph"
-                },
-                {
-                    "givennames": "B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Rieger"
-                },
-                {
-                    "givennames": "K. A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Lidke"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "373",
-            "pages": "",
-            "raw": "[S10] C. S. Smith N. Joseph B. Rieger K. A. Lidke Nat. Methods 7 373 2010",
-            "reftype": "",
-            "source": "Nat. Methods",
-            "title": "",
-            "volume": "7",
-            "year": "2010"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Andersson"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "18714",
-            "pages": "",
-            "raw": "[S11] S. Andersson Optics express 16 18714 2008",
-            "reftype": "",
-            "source": "Optics express 16",
-            "title": "",
-            "volume": "",
-            "year": "2008"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "Y.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Gao and M. L. Kilfoil"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "4685",
-            "pages": "",
-            "raw": "[S12] Y. Gao and M. L. Kilfoil 17 4685 2009",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "17",
-            "year": "2009"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "[S13] P. J. Lu"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Shutman"
-                },
-                {
-                    "givennames": "A. V.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Butenko"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "30755",
-            "pages": "",
-            "raw": "[S13] P. J. Lu M. Shutman and A. V. Butenko 21 30755 2013",
-            "reftype": "",
-            "source": "",
-            "title": "and",
-            "volume": "21",
-            "year": "2013"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ram"
-                },
-                {
-                    "givennames": "E. S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ward"
-                },
-                {
-                    "givennames": "R. J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ober"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "4457",
-            "pages": "",
-            "raw": "[S14] S. Ram E. S. Ward R. J. Ober Proc. Natl. Acad. Sci 103 4457 2006",
-            "reftype": "",
-            "source": "Proc. Natl. Acad. Sci",
-            "title": "",
-            "volume": "103",
-            "year": "2006"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "C. R.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Rao"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "81",
-            "pages": "",
-            "raw": "[S15] C. R. Rao Bull Calcutta. Math. Soc 37 81 1945",
-            "reftype": "",
-            "source": "Bull Calcutta. Math. Soc",
-            "title": "",
-            "volume": "37",
-            "year": "1945"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "K.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Keville"
-                },
-                {
-                    "givennames": "J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Caruthers"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "103",
-            "pages": "",
-            "raw": "[S16] K. Keville J. Caruthers Journal of colloid and interface science 144 103 1991",
-            "reftype": "",
-            "source": "Journal of colloid and interface science 144",
-            "title": "",
-            "volume": "",
-            "year": "1991"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Mohraz and M. J. Solomon"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "5298",
-            "pages": "",
-            "raw": "[S17] A. Mohraz and M. J. Solomon 21 5298 2005",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "21",
-            "year": "2005"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Kuijk"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "A. van Blaaderen"
-                },
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Imhof"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "2346",
-            "pages": "",
-            "raw": "[S18] A. Kuijk A. van Blaaderen and A. Imhof Journal of the American Chemical Society 133 2346 2011",
-            "reftype": "",
-            "source": "Journal of the American Chemical Society",
-            "title": "and",
-            "volume": "133",
-            "year": "2011"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Guttman"
-                },
-                {
-                    "givennames": "Z.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Sapir"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Schultz"
-                },
-                {
-                    "givennames": "A. V.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Butenko"
-                },
-                {
-                    "givennames": "B. M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Ocko"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Deutsch"
-                },
-                {
-                    "givennames": "E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Sloutskin"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "493",
-            "pages": "",
-            "raw": "[S19] S. Guttman Z. Sapir M. Schultz A. V. Butenko B. M. Ocko M. Deutsch E. Sloutskin Proceedings of the National Academy of Sciences 113 493 2016",
-            "reftype": "",
-            "source": "Proceedings of the National Academy of Sciences",
-            "title": "",
-            "volume": "113",
-            "year": "2016"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "S.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Hell"
-                },
-                {
-                    "givennames": "C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Cremer"
-                },
-                {
-                    "givennames": "E. H. K.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Stelzer"
-                },
-                {
-                    "givennames": "J.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Microsc"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "391",
-            "pages": "",
-            "raw": "[S20] S. Hell C. Cremer E. H. K. Stelzer J. Microsc 169 391 1993",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "169",
-            "year": "1993"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "T. D.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Visser"
-                },
-                {
-                    "givennames": "S. H.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wiersma"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "599",
-            "pages": "",
-            "raw": "[S21] T. D. Visser S. H. Wiersma J. Opt. Soc. Am. A 11 599 1994",
-            "reftype": "",
-            "source": "J. Opt. Soc. Am. A 11",
-            "title": "",
-            "volume": "",
-            "year": "1994"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "B.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Zhang"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "-C."
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "",
-            "pages": "",
-            "raw": "[S22] B. Zhang -C. Appl. Optics 46 1819 2007",
-            "reftype": "",
-            "source": "Appl. Optics 46",
-            "title": "",
-            "volume": "",
-            "year": "1819 2007"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J. C.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "[S23] M. J. Nasse"
-                },
-                {
-                    "givennames": "",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Woehl"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "295",
-            "pages": "",
-            "raw": "[S23] M. J. Nasse J. C. Woehl J. Opt. Soc. Am. A 27 295 2010",
-            "reftype": "",
-            "source": "J. Opt. Soc. Am. A 27",
-            "title": "",
-            "volume": "",
-            "year": "2010"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "J.-A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Conchello"
-                },
-                {
-                    "givennames": "J. W.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Lichtman"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "585",
-            "pages": "",
-            "raw": "[S24] J.-A. Conchello J. W. Lichtman 33 585 1994",
-            "reftype": "",
-            "source": "",
-            "title": "",
-            "volume": "33",
-            "year": "1994"
-        },
-        {
-            "authors": [
-                {
-                    "givennames": "E.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Dusch"
-                },
-                {
-                    "givennames": "T.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Dorval"
-                },
-                {
-                    "givennames": "N.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Vincent"
-                },
-                {
-                    "givennames": "M.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Wachsmuth"
-                },
-                {
-                    "givennames": "A.",
-                    "prefix": "",
-                    "suffix": "",
-                    "surname": "Genovesio"
-                }
-            ],
-            "doi": "",
-            "identifiers": [
-                {
-                    "identifier": "",
-                    "identifier_type": ""
-                }
-            ],
-            "issue": "132",
-            "pages": "",
-            "raw": "[S25] E. Dusch T. Dorval N. Vincent M. Wachsmuth and A. Genovesio Journal of Microscopy 228 132 2007",
-            "reftype": "",
-            "source": "Journal of Microscopy",
-            "title": "and",
-            "volume": "228",
-            "year": "2007"
-        }
-    ],
-    "updated": "2017-06-28 10:13:07.907120"
-}
+[
+    {
+        "authors": [
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Betzig"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "1642",
+        "pages": "",
+        "raw": "E. Betzig Science 313 1642 2006",
+        "reftype": "",
+        "source": "Science",
+        "title": "",
+        "volume": "313",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "M. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rust"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Bates"
+            },
+            {
+                "givennames": "X.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Zhuang"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "793",
+        "pages": "",
+        "raw": "M. J. Rust M. Bates X. Zhuang Nat. Methods 3 793 2006",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "3",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hell"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wichmann"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "780",
+        "pages": "",
+        "raw": "S. W. Hell J. Wichmann 19 780 1994",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "19",
+        "year": "1994"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kner"
+            },
+            {
+                "givennames": "B. B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Chhun"
+            },
+            {
+                "givennames": "E. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gri s"
+            },
+            {
+                "givennames": "M. G. L.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gustafsson"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "339",
+        "pages": "",
+        "raw": "P. Kner B. B. Chhun E. R. Gri s M. G. L. Gustafsson Nat. Methods 6 339 2009",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "6",
+        "year": "2009"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.-C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Chen"
+            },
+            {
+                "givennames": "W. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Legant"
+            },
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wang"
+            },
+            {
+                "givennames": "L.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Shao"
+            },
+            {
+                "givennames": "D. E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Milkie"
+            },
+            {
+                "givennames": "M. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Davidson"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Janetopoulos"
+            },
+            {
+                "givennames": "X. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wu"
+            },
+            {
+                "givennames": "J. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hammer"
+            },
+            {
+                "givennames": "Z.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Liu"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "1257998",
+        "pages": "",
+        "raw": "B.-C. Chen W. R. Legant K. Wang L. Shao D. E. Milkie M. W. Davidson C. Janetopoulos X. S. Wu J. A. Hammer Z. Liu Science 346 1257998 2014",
+        "reftype": "",
+        "source": "Science",
+        "title": "",
+        "volume": "346",
+        "year": "2014"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rogers"
+            },
+            {
+                "givennames": "T. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Waigh"
+            },
+            {
+                "givennames": "X.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Zhao"
+            },
+            {
+                "givennames": "and J. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lu"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "220",
+        "pages": "",
+        "raw": "S. S. Rogers T. A. Waigh X. Zhao and J. R. Lu Physical Biology 4 220 2007",
+        "reftype": "",
+        "source": "Physical Biology",
+        "title": "",
+        "volume": "4",
+        "year": "2007"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Pathasarathy"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "724",
+        "pages": "",
+        "raw": "R. Pathasarathy Nat. Methods 9 724 2012",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "9",
+        "year": "2012"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "F.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gru"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hausmann"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "5",
+        "raw": "F. Gru M. Hausmann Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE 2011 1 5",
+        "reftype": "",
+        "source": "Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE",
+        "title": "",
+        "volume": "1",
+        "year": "2011"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Anthony"
+            },
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Granick"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "8152",
+        "pages": "",
+        "raw": "S. M. Anthony S. Granick 25 8152 2009",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "25",
+        "year": "2009"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "C. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Smith"
+            },
+            {
+                "givennames": "N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Joseph"
+            },
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rieger"
+            },
+            {
+                "givennames": "K. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lidke"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "373",
+        "pages": "",
+        "raw": "C. S. Smith N. Joseph B. Rieger K. A. Lidke Nat. Methods 7 373 2010",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "7",
+        "year": "2010"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Andersson"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "18714",
+        "pages": "",
+        "raw": "S. Andersson Optics express 16 18714 2008",
+        "reftype": "",
+        "source": "Optics express 16",
+        "title": "",
+        "volume": "",
+        "year": "2008"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "Y.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gao and M. L. Kilfoil"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "4685",
+        "pages": "",
+        "raw": "Y. Gao and M. L. Kilfoil 17 4685 2009",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "17",
+        "year": "2009"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "P. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lu"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Shutman"
+            },
+            {
+                "givennames": "A. V.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Butenko"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "30755",
+        "pages": "",
+        "raw": "P. J. Lu M. Shutman and A. V. Butenko 21 30755 2013",
+        "reftype": "",
+        "source": "",
+        "title": "and",
+        "volume": "21",
+        "year": "2013"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ram"
+            },
+            {
+                "givennames": "E. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ward"
+            },
+            {
+                "givennames": "R. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ober"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "4457",
+        "pages": "",
+        "raw": "S. Ram E. S. Ward R. J. Ober Proc. Natl. Acad. Sci 103 4457 2006",
+        "reftype": "",
+        "source": "Proc. Natl. Acad. Sci",
+        "title": "",
+        "volume": "103",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "C. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rao"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "81",
+        "pages": "",
+        "raw": "C. R. Rao Bull Calcutta. Math. Soc 37 81 1945",
+        "reftype": "",
+        "source": "Bull Calcutta. Math. Soc",
+        "title": "",
+        "volume": "37",
+        "year": "1945"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Keville"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Caruthers"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "103",
+        "pages": "",
+        "raw": "K. Keville J. Caruthers Journal of colloid and interface science 144 103 1991",
+        "reftype": "",
+        "source": "Journal of colloid and interface science 144",
+        "title": "",
+        "volume": "",
+        "year": "1991"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Mohraz and M. J. Solomon"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "5298",
+        "pages": "",
+        "raw": "A. Mohraz and M. J. Solomon 21 5298 2005",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "21",
+        "year": "2005"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kuijk"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "A. van Blaaderen"
+            },
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Imhof"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "2346",
+        "pages": "",
+        "raw": "A. Kuijk A. van Blaaderen and A. Imhof Journal of the American Chemical Society 133 2346 2011",
+        "reftype": "",
+        "source": "Journal of the American Chemical Society",
+        "title": "and",
+        "volume": "133",
+        "year": "2011"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Guttman"
+            },
+            {
+                "givennames": "Z.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sapir"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Schultz"
+            },
+            {
+                "givennames": "A. V.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Butenko"
+            },
+            {
+                "givennames": "B. M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ocko"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Deutsch"
+            },
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sloutskin"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "493",
+        "pages": "",
+        "raw": "S. Guttman Z. Sapir M. Schultz A. V. Butenko B. M. Ocko M. Deutsch E. Sloutskin Proceedings of the National Academy of Sciences 113 493 2016",
+        "reftype": "",
+        "source": "Proceedings of the National Academy of Sciences",
+        "title": "",
+        "volume": "113",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hell"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Cremer"
+            },
+            {
+                "givennames": "E. H. K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Stelzer"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Microsc"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "391",
+        "pages": "",
+        "raw": "S. Hell C. Cremer E. H. K. Stelzer J. Microsc 169 391 1993",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "169",
+        "year": "1993"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "T. D.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Visser"
+            },
+            {
+                "givennames": "S. H.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wiersma"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "599",
+        "pages": "",
+        "raw": "T. D. Visser S. H. Wiersma J. Opt. Soc. Am. A 11 599 1994",
+        "reftype": "",
+        "source": "J. Opt. Soc. Am. A 11",
+        "title": "",
+        "volume": "",
+        "year": "1994"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Zhang"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "-C."
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "B. Zhang -C. Appl. Optics 46 1819 2007",
+        "reftype": "",
+        "source": "Appl. Optics 46",
+        "title": "",
+        "volume": "",
+        "year": "1819 2007"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "M. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Nasse"
+            },
+            {
+                "givennames": "J. C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Woehl"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "295",
+        "pages": "",
+        "raw": "M. J. Nasse J. C. Woehl J. Opt. Soc. Am. A 27 295 2010",
+        "reftype": "",
+        "source": "J. Opt. Soc. Am. A 27",
+        "title": "",
+        "volume": "",
+        "year": "2010"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J.-A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Conchello"
+            },
+            {
+                "givennames": "J. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lichtman"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "585",
+        "pages": "",
+        "raw": "J.-A. Conchello J. W. Lichtman 33 585 1994",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "33",
+        "year": "1994"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Dusch"
+            },
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Dorval"
+            },
+            {
+                "givennames": "N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Vincent"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wachsmuth"
+            },
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Genovesio"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "132",
+        "pages": "",
+        "raw": "E. Dusch T. Dorval N. Vincent M. Wachsmuth and A. Genovesio Journal of Microscopy 228 132 2007",
+        "reftype": "",
+        "source": "Journal of Microscopy",
+        "title": "and",
+        "volume": "228",
+        "year": "2007"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wolleschensky"
+            },
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Zimmermann"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ankerhold"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kempe"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "58600N 58600N",
+        "raw": "R. Wolleschensky B. Zimmermann R. Ankerhold M. Kempe in European Conference on Biomedical Optics 2005 (International Society for Optics and Photonics 2005 58600N 58600N",
+        "reftype": "",
+        "source": "in European Conference on Biomedical Optics 2005 (International Society for Optics and Photonics",
+        "title": "",
+        "volume": "",
+        "year": "2005"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Botcherby"
+            },
+            {
+                "givennames": "M. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Booth"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Juskaitis"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "1504",
+        "pages": "",
+        "raw": "E. J. Botcherby M. J. Booth R. Juskaitis 34 1504 2009",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "34",
+        "year": "2009"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J. C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Crocker"
+            },
+            {
+                "givennames": "D. G.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Grier"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "298",
+        "pages": "",
+        "raw": "J. C. Crocker D. G. Grier J. Colloid and Interface Science 179 298 1995",
+        "reftype": "",
+        "source": "J. Colloid and Interface Science",
+        "title": "",
+        "volume": "179",
+        "year": "1995"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "D. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Marquardt"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "431",
+        "pages": "",
+        "raw": "D. W. Marquardt J. Soc. Indust 11 431 1963",
+        "reftype": "",
+        "source": "J. Soc. Indust",
+        "title": "",
+        "volume": "11",
+        "year": "1963"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B. B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "M. K. Transtrum"
+            },
+            {
+                "givennames": "J. P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Machta"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sethna"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "060201",
+        "pages": "",
+        "raw": "M. K. Transtrum B. B. Machta J. P. Sethna Physical review letters 104 060201 2010",
+        "reftype": "",
+        "source": "Physical review letters 104",
+        "title": "",
+        "volume": "",
+        "year": "2010"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B. B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "M. K. Transtrum"
+            },
+            {
+                "givennames": "J. P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Machta"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sethna"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "036701",
+        "pages": "",
+        "raw": "M. K. Transtrum B. B. Machta J. P. Sethna 83 036701 2011",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "83",
+        "year": "2011"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J. P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "M. K. Transtrum"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sethna"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "M. K. Transtrum J. P. Sethna 1201 2012",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "1201",
+        "year": "2012"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "R. M. Neal"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "705",
+        "pages": "",
+        "raw": "R. M. Neal 31 705 2003",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "31",
+        "year": "2003"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Einstein"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "549",
+        "pages": "",
+        "raw": "A. Einstein Annales der Physik 17 549 1905",
+        "reftype": "",
+        "source": "Annales der Physik",
+        "title": "",
+        "volume": "17",
+        "year": "1905"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "W. B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Russel"
+            },
+            {
+                "givennames": "D. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Saville"
+            },
+            {
+                "givennames": "W. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Schowalter"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Dispersions"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "W. B. Russel D. A. Saville W. R. Schowalter Dispersions 1989",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "",
+        "year": "1989"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J. N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Israelachvili"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "J. N. Israelachvili 2011",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "",
+        "year": "2011"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J. N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Israelachvili"
+            },
+            {
+                "givennames": "G. E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Adams"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "975",
+        "pages": "",
+        "raw": "J. N. Israelachvili G. E. Adams Journal of the Chemical Society, Faraday Transactions 1: Physical Chemistry in Condensed Phases 74 975 1978",
+        "reftype": "",
+        "source": "Journal of the Chemical Society, Faraday Transactions 1: Physical Chemistry in Condensed Phases",
+        "title": "",
+        "volume": "74",
+        "year": "1978"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "W. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ducker"
+            },
+            {
+                "givennames": "T. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Senden"
+            },
+            {
+                "givennames": "R. M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Pashley"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "239",
+        "pages": "",
+        "raw": "W. A. Ducker T. J. Senden R. M. Pashley Nature 353 239 1991",
+        "reftype": "",
+        "source": "Nature",
+        "title": "",
+        "volume": "353",
+        "year": "1991"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "D. C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Prieve"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "93",
+        "pages": "",
+        "raw": "D. C. Prieve Colloid Interface Sci 82 93 1999",
+        "reftype": "",
+        "source": "Colloid Interface Sci",
+        "title": "",
+        "volume": "82",
+        "year": "1999"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "T. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "D. B. Allan"
+            },
+            {
+                "givennames": "N. C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Caswell"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Keim"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "2014",
+        "pages": "",
+        "raw": "D. B. Allan T. A. Caswell N. C. Keim Trackpy v0.2 2014 URL github",
+        "reftype": "",
+        "source": "Trackpy v0.2",
+        "title": "URL github",
+        "volume": "",
+        "year": ""
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. L.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Barnes"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "396",
+        "pages": "",
+        "raw": "S. L. Barnes Journal of Applied Meteorology 3 396 1964",
+        "reftype": "",
+        "source": "Journal of Applied Meteorology",
+        "title": "",
+        "volume": "3",
+        "year": "1964"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hell"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Cremer"
+            },
+            {
+                "givennames": "E. H.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Stelzer"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "391",
+        "pages": "",
+        "raw": "S. Hell C. Cremer E. H. Stelzer Journal of microscopy 169 391 1993",
+        "reftype": "",
+        "source": "Journal of microscopy 169",
+        "title": "",
+        "volume": "",
+        "year": "1993"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "D. J. MacKay"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "D. J. MacKay Information theory, inference and learning algorithms 2003",
+        "reftype": "",
+        "source": "",
+        "title": "Information theory, inference and learning algorithms",
+        "volume": "",
+        "year": "2003"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J. C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Crocker"
+            },
+            {
+                "givennames": "D. G.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Grier"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "298",
+        "pages": "",
+        "raw": "J. C. Crocker D. G. Grier Journal of colloid and interface science 179 298 1996",
+        "reftype": "",
+        "source": "Journal of colloid and interface science 179",
+        "title": "",
+        "volume": "",
+        "year": "1996"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "W. B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Russel"
+            },
+            {
+                "givennames": "D. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Saville"
+            },
+            {
+                "givennames": "W. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Schowalter"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "W. B. Russel D. A. Saville W. R. Schowalter 1989",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "",
+        "year": "1989"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Betzig"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "1642",
+        "pages": "",
+        "raw": "[S1] E. Betzig Science 313 1642 2006",
+        "reftype": "",
+        "source": "Science",
+        "title": "",
+        "volume": "313",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "[S2] M. J. Rust"
+            },
+            {
+                "givennames": "X.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Bates"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Zhuang"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "793",
+        "pages": "",
+        "raw": "[S2] M. J. Rust M. Bates X. Zhuang Nat. Methods 3 793 2006",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "3",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hell"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wichmann"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "780",
+        "pages": "",
+        "raw": "[S3] S. W. Hell J. Wichmann 19 780 1994",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "19",
+        "year": "1994"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kner"
+            },
+            {
+                "givennames": "B. B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Chhun"
+            },
+            {
+                "givennames": "E. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gri s"
+            },
+            {
+                "givennames": "M. G. L.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gustafsson"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "339",
+        "pages": "",
+        "raw": "[S4] P. Kner B. B. Chhun E. R. Gri s M. G. L. Gustafsson Nat. Methods 6 339 2009",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "6",
+        "year": "2009"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "W. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "[S5] B.-C. Chen"
+            },
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Legant"
+            },
+            {
+                "givennames": "L.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wang"
+            },
+            {
+                "givennames": "D. E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Shao"
+            },
+            {
+                "givennames": "M. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Milkie"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Davidson"
+            },
+            {
+                "givennames": "X. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Janetopoulos"
+            },
+            {
+                "givennames": "J. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wu"
+            },
+            {
+                "givennames": "Z.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hammer"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Liu"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "1257998",
+        "pages": "",
+        "raw": "[S5] B.-C. Chen W. R. Legant K. Wang L. Shao D. E. Milkie M. W. Davidson C. Janetopoulos X. S. Wu J. A. Hammer Z. Liu Science 346 1257998 2014",
+        "reftype": "",
+        "source": "Science",
+        "title": "",
+        "volume": "346",
+        "year": "2014"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rogers"
+            },
+            {
+                "givennames": "T. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Waigh"
+            },
+            {
+                "givennames": "X.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Zhao"
+            },
+            {
+                "givennames": "and J. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lu"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "220",
+        "pages": "",
+        "raw": "[S6] S. S. Rogers T. A. Waigh X. Zhao and J. R. Lu Physical Biology 4 220 2007",
+        "reftype": "",
+        "source": "Physical Biology",
+        "title": "",
+        "volume": "4",
+        "year": "2007"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Pathasarathy"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "724",
+        "pages": "",
+        "raw": "[S7] R. Pathasarathy Nat. Methods 9 724 2012",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "9",
+        "year": "2012"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "F.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gru"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hausmann"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "5",
+        "raw": "[S8] F. Gru M. Hausmann Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE 2011 1 5",
+        "reftype": "",
+        "source": "Field Programmable Logic and Applications (FPL) 2011 International Conference on (IEEE",
+        "title": "",
+        "volume": "1",
+        "year": "2011"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Anthony"
+            },
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Granick"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "8152",
+        "pages": "",
+        "raw": "[S9] S. M. Anthony S. Granick 25 8152 2009",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "25",
+        "year": "2009"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "C. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Smith"
+            },
+            {
+                "givennames": "N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Joseph"
+            },
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rieger"
+            },
+            {
+                "givennames": "K. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lidke"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "373",
+        "pages": "",
+        "raw": "[S10] C. S. Smith N. Joseph B. Rieger K. A. Lidke Nat. Methods 7 373 2010",
+        "reftype": "",
+        "source": "Nat. Methods",
+        "title": "",
+        "volume": "7",
+        "year": "2010"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Andersson"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "18714",
+        "pages": "",
+        "raw": "[S11] S. Andersson Optics express 16 18714 2008",
+        "reftype": "",
+        "source": "Optics express 16",
+        "title": "",
+        "volume": "",
+        "year": "2008"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "Y.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gao and M. L. Kilfoil"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "4685",
+        "pages": "",
+        "raw": "[S12] Y. Gao and M. L. Kilfoil 17 4685 2009",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "17",
+        "year": "2009"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "[S13] P. J. Lu"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Shutman"
+            },
+            {
+                "givennames": "A. V.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Butenko"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "30755",
+        "pages": "",
+        "raw": "[S13] P. J. Lu M. Shutman and A. V. Butenko 21 30755 2013",
+        "reftype": "",
+        "source": "",
+        "title": "and",
+        "volume": "21",
+        "year": "2013"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ram"
+            },
+            {
+                "givennames": "E. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ward"
+            },
+            {
+                "givennames": "R. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ober"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "4457",
+        "pages": "",
+        "raw": "[S14] S. Ram E. S. Ward R. J. Ober Proc. Natl. Acad. Sci 103 4457 2006",
+        "reftype": "",
+        "source": "Proc. Natl. Acad. Sci",
+        "title": "",
+        "volume": "103",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "C. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rao"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "81",
+        "pages": "",
+        "raw": "[S15] C. R. Rao Bull Calcutta. Math. Soc 37 81 1945",
+        "reftype": "",
+        "source": "Bull Calcutta. Math. Soc",
+        "title": "",
+        "volume": "37",
+        "year": "1945"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Keville"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Caruthers"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "103",
+        "pages": "",
+        "raw": "[S16] K. Keville J. Caruthers Journal of colloid and interface science 144 103 1991",
+        "reftype": "",
+        "source": "Journal of colloid and interface science 144",
+        "title": "",
+        "volume": "",
+        "year": "1991"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Mohraz and M. J. Solomon"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "5298",
+        "pages": "",
+        "raw": "[S17] A. Mohraz and M. J. Solomon 21 5298 2005",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "21",
+        "year": "2005"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kuijk"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "A. van Blaaderen"
+            },
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Imhof"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "2346",
+        "pages": "",
+        "raw": "[S18] A. Kuijk A. van Blaaderen and A. Imhof Journal of the American Chemical Society 133 2346 2011",
+        "reftype": "",
+        "source": "Journal of the American Chemical Society",
+        "title": "and",
+        "volume": "133",
+        "year": "2011"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Guttman"
+            },
+            {
+                "givennames": "Z.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sapir"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Schultz"
+            },
+            {
+                "givennames": "A. V.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Butenko"
+            },
+            {
+                "givennames": "B. M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ocko"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Deutsch"
+            },
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sloutskin"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "493",
+        "pages": "",
+        "raw": "[S19] S. Guttman Z. Sapir M. Schultz A. V. Butenko B. M. Ocko M. Deutsch E. Sloutskin Proceedings of the National Academy of Sciences 113 493 2016",
+        "reftype": "",
+        "source": "Proceedings of the National Academy of Sciences",
+        "title": "",
+        "volume": "113",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hell"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Cremer"
+            },
+            {
+                "givennames": "E. H. K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Stelzer"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Microsc"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "391",
+        "pages": "",
+        "raw": "[S20] S. Hell C. Cremer E. H. K. Stelzer J. Microsc 169 391 1993",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "169",
+        "year": "1993"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "T. D.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Visser"
+            },
+            {
+                "givennames": "S. H.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wiersma"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "599",
+        "pages": "",
+        "raw": "[S21] T. D. Visser S. H. Wiersma J. Opt. Soc. Am. A 11 599 1994",
+        "reftype": "",
+        "source": "J. Opt. Soc. Am. A 11",
+        "title": "",
+        "volume": "",
+        "year": "1994"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Zhang"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "-C."
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "[S22] B. Zhang -C. Appl. Optics 46 1819 2007",
+        "reftype": "",
+        "source": "Appl. Optics 46",
+        "title": "",
+        "volume": "",
+        "year": "1819 2007"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J. C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "[S23] M. J. Nasse"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Woehl"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "295",
+        "pages": "",
+        "raw": "[S23] M. J. Nasse J. C. Woehl J. Opt. Soc. Am. A 27 295 2010",
+        "reftype": "",
+        "source": "J. Opt. Soc. Am. A 27",
+        "title": "",
+        "volume": "",
+        "year": "2010"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J.-A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Conchello"
+            },
+            {
+                "givennames": "J. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lichtman"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "585",
+        "pages": "",
+        "raw": "[S24] J.-A. Conchello J. W. Lichtman 33 585 1994",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "33",
+        "year": "1994"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Dusch"
+            },
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Dorval"
+            },
+            {
+                "givennames": "N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Vincent"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wachsmuth"
+            },
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Genovesio"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "132",
+        "pages": "",
+        "raw": "[S25] E. Dusch T. Dorval N. Vincent M. Wachsmuth and A. Genovesio Journal of Microscopy 228 132 2007",
+        "reftype": "",
+        "source": "Journal of Microscopy",
+        "title": "and",
+        "volume": "228",
+        "year": "2007"
+    }
+]

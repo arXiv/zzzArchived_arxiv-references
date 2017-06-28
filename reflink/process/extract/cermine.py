@@ -138,12 +138,7 @@ def cxml_format_document(root, documentid=''):
         reference.update(unknown_properties)
         references.append(reference)
 
-    return {
-        'created': str(datetime.datetime.now()),
-        'updated': str(datetime.datetime.now()),
-        'document': documentid,
-        'references': references
-    }
+    return references
 
 def convert_cxml_json(filename: str) -> dict:
     """

@@ -7,9 +7,7 @@ from reflink.process.extract import cermine
 @shared_task
 def extract_cermine(paths: tuple) -> tuple:
     """
-    A fake implementation of the extraction task.
-
-    Emulate extracting references from a PDF.
+    Extract the list of reference metadata from a PDF using CERMINE
 
     Parameters
     ----------
