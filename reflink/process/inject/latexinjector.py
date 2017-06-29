@@ -20,6 +20,9 @@ from typing import List, Generator
 from reflink.process import texconversions
 from reflink.process import util, textutil
 
+class InjectionProcessError(Exception):
+    pass
+
 def argmax(array):
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index
@@ -213,12 +216,13 @@ def bib_items_head(bibliography: str, marker=DEFAULT_MARKER) -> str:
         match = marker.search(line)
         if match:
             head += '{}\n'.format(line[:match.start()])
-            return head
+            return head.strip()
         else:
             head += '{}\n'.format(line)
 
 
-def bib_items_iter(bibliography: str, marker=DEFAULT_MARKER) -> Generator[str, None, None]:
+def bib_items_iter(bibliography: str, marker=DEFAULT_MARKER,
+        tailmarker=DEFAULT_TAIL) -> Generator[str, None, None]:
     """
     Generator which yields each individual reference from a raw bibliography
     text.  These elements are typically denoted by \\bibitem (though I'm not
@@ -246,19 +250,58 @@ def bib_items_iter(bibliography: str, marker=DEFAULT_MARKER) -> Generator[str, N
         line = LATEX_COMMENT.sub(r'\1', line)
 
         match = marker.search(line)
+        tail = tailmarker.search(line)
         if match:
             ind = match.start()
 
             if initem:
                 curbbl += '{}\n'.format(line[:ind])
-                yield curbbl
+                yield curbbl.strip()
 
             curbbl = '{}\n'.format(line[ind:])
             initem = True
+        elif tail:
+            ind = tail.start()
+            curbbl += '{}\n'.format(line[:ind])
         elif initem:
             curbbl += '{}\n'.format(line)
         else:
             continue
+
+    if initem:
+        yield curbbl.strip()
+
+def bib_items_tail(bibliography: str, marker=DEFAULT_TAIL) -> str:
+    """
+    Returns the tail section of the bibliography after all bibitems
+
+    Parameters
+    ----------
+    bibliography : str
+        Full text of the bibliography section
+
+    Returns
+    -------
+    tail : str
+    """
+    tail = ''
+    intail = False
+    contents = bibliography.split('\n')
+
+    for line in contents:
+        line = LATEX_COMMENT.sub(r'\1', line)
+
+        match = marker.search(line)
+        if match:
+            ind = match.start()
+            tail += '{}\n'.format(line[ind:])
+            intail = False
+        elif intail:
+            tail += '{}\n'.format(line)
+        else:
+            continue
+
+    return tail.strip()
 
 def url_formatter_arxiv(reference_line: str, baseurl: str='https://arxiv.org/lookup',
         queryparam: str='q', marker: str='GO') -> str:
@@ -270,7 +313,7 @@ def url_formatter_arxiv(reference_line: str, baseurl: str='https://arxiv.org/loo
     query = tex_escape(urlencode({'q': reference_line}))
     url = '{}?{}'.format(baseurl, query)
 
-    return '\href{{{url}}}{{{marker}}}\n\n'.format(url=url, marker=marker)
+    return '\\href{{{url}}}{{{marker}}}'.format(url=url, marker=marker)
 
 
 def bbl_inject_urls(text: str, references: List[str],
@@ -303,6 +346,7 @@ def bbl_inject_urls(text: str, references: List[str],
 
     for bbl in extract_bibs(text):
         head = bib_items_head(bbl)
+        tail = bib_items_tail(bbl)
         bibitems = list(bib_items_iter(bbl))
         inds = match_by_cost(
             cleaned_bib_entries(bibitems),
@@ -317,9 +361,11 @@ def bbl_inject_urls(text: str, references: List[str],
                 continue
             entry = _inject(entry, references[ind])
             out.append(entry)
-        replacement_bbls.append('{}\n\n{}'.format(head, '\n'.join(out)))
+        replacement_bbls.append('{}\n\n{}\n\n{}'.format(head, '\n\n'.join(out), tail))
 
-    return replace_bibs(text, replacement_bbls)
+    if replacement_bbls:
+        return replace_bibs(text, replacement_bbls)
+    return text
 
 def detect_encoding(filename: str) -> str:
     """ Use chardet to get the string encoding of a file """
@@ -359,7 +405,7 @@ def run_autotex(directory: str) -> str:
     """
     # FIXME -- this process will likely be greatly simplified by the newest AutoTeX
     # FIXME -- also, magic docker image names appearing again
-    def _find(extension):
+    def _find(extension, timestamp):
         filenames = util.files_modified_since(
             directory, timestamp, extension=extension
         )
@@ -370,21 +416,24 @@ def run_autotex(directory: str) -> str:
     timestamp = datetime.datetime.now()
     util.run_docker('mattbierbaum/autotex:v0.906.0-1', [(directory, '/autotex')], 'go')
 
-    pdf, dvi, ps = [_find(e) for e in ['pdf', 'dvi', 'ps']]
+    # run the conversion pipeline since autotex produces many types of files
+    pdf, dvi, ps = [_find(ext, timestamp) for ext in ['pdf', 'dvi', 'ps']]
     if pdf:
         return pdf
     if ps:
+        timestamp = datetime.datetime.now()
         with util.indir(directory):
             util.ps2pdf(ps)
-        return _find('pdf')
+        return _find('pdf', timestamp)
     if dvi:
+        timestamp = datetime.datetime.now()
         with util.indir(directory):
             util.dvi2ps(dvi)
-            ps = _find('ps')
+            ps = _find('ps', timestamp)
             util.ps2pdf(ps)
-        return _find('pdf')
+        return _find('pdf', timestamp)
 
-    raise Exception("No output found for autotex")
+    raise InjectionProcessError("No output found for autotex")
 
 def modify_source_with_urls(source_path: str, reference_lines: List[str]) -> None:
     """
