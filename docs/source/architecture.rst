@@ -30,13 +30,24 @@ Since reference extraction is time-consuming (several minutes per document),
 we isolate the reference extraction process from the REST API. The reference
 extraction process is responsible for processing notifications from the
 notification broker, extracting and storing reference metadata, and producing
-link-injected PDFs. This will be deployed on one or more dedicated EC2 virtual
-machines. The REST API is deployed separately as a WSGI web application running
-on ElasticBeanstalk.
+link-injected PDFs. We further isolate the notification consumption role from
+the actually execution of the reference extraction steps. This results in three
+independently deployable containers:
 
-Those two containers have access to a shared object store (S3) and a shared
-data store (DynamoDB). The REST API will only *read* from those object stores,
-and the reference extraction process will only *write* to those object stores.
+1. The notification consumer, which receives notifications from the broker and
+   generates processing tasks. This will be deployed on a dedicated EC2 virtual
+   machine.
+2. The reference extraction worker, which executes processing tasks and stores
+   the results. This will be deployed on one or more dedicated EC2 virtual
+   machines.
+3. The REST API, which responds to client requests for reference metadata and
+   link-injected PDFs. This is deployed as a WSGI web application running
+   on ElasticBeanstalk.
+
+Those second two containers have access to a shared object store (S3) and a
+shared data store (DynamoDB). The REST API will only *read* from those object
+stores, and the reference extraction process will only *write* to those object
+stores.
 
 .. image:: static/images/containers.png
 
@@ -45,12 +56,8 @@ Components
 
 .. image:: static/images/components.png
 
-Reference extraction
-````````````````````
-The reference extraction process is comprised of two main macro-components: a
-notification-handling process that listens for new publications, and an
-asynchronous task pipeline for processing individual documents.
-
+Notification Consumer
+`````````````````````
 Notification handling is provided by two components: a notification consumer
 provided by Amazon, implemented using the Java-based Kinesis Consumer
 Library, and a record processor component implemented in Python that
@@ -64,12 +71,21 @@ details.
 The entry point to the processing pipeline is the orchestrate component, which
 generates a series of tasks (more or less in series) for each arXiv publication.
 See :mod:`reflink.process.orchestrate` for details. Those tasks -- retrieve,
-extract, link inject -- are executed asynchronously. See
+extract, link inject -- are executed asynchronously. Asynchronous task
+management is performed by Celery, which relies on an external message broker.
+The orchestrate component is aware of the processing tasks, and requests
+(to Celery) their execution in a particular order. The Celery instance running
+in this container passes those requested tasks to the reference extraction
+container (worker processes) via a messaging broker (such as SQS) for
+execution.
+
+Reference extraction
+````````````````````
+A Celery instance running on the reference extraction (worker) container
+listens for new task requests coming through the messaging broker (e.g. SQS),
+and coordinates the execution of those tasks. See
 :mod:`reflink.process.retrieve`\, :mod:`reflink.process.extract`\, and
-:mod:`reflink.process.inject`\. Asynchronous task management is performed by
-Celery, which relies on an external message broker. The orchestrate component
-is also responsible for storing the extracted references and link-injected PDF.
-See :mod:`reflink.process.store`\.
+:mod:`reflink.process.inject`\. See :mod:`reflink.process.store`\.
 
 Access to the data store (for reference metadata) and object store (for link
 injected PDFs) are provided by corresponding service components that expose a
