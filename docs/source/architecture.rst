@@ -68,24 +68,25 @@ consumer, the MultiLangDaemon invokes the record processor, which in turn
 starts the processing pipeline. See :mod:`reflink.notification.consumer` for
 details.
 
-The entry point to the processing pipeline is the orchestrate component, which
-generates a series of tasks (more or less in series) for each arXiv publication.
-See :mod:`reflink.process.orchestrate` for details. Those tasks -- retrieve,
-extract, link inject -- are executed asynchronously. Asynchronous task
-management is performed by Celery, which relies on an external message broker.
-The orchestrate component is aware of the processing tasks, and requests
-(to Celery) their execution in a particular order. The Celery instance running
-in this container passes those requested tasks to the reference extraction
-container (worker processes) via a messaging broker (such as SQS) for
-execution.
+The :class:`reflink.notification.consumer.RecordProcessor` is responsible for
+creating a new processing task for each new publication. The Celery instance
+running in this container passes those requested tasks to the reference
+extraction container (worker processes) via a messaging broker (such as SQS)
+for execution.
 
 Reference extraction
 ````````````````````
 A Celery instance running on the reference extraction (worker) container
 listens for new task requests coming through the messaging broker (e.g. SQS),
-and coordinates the execution of those tasks. See
-:mod:`reflink.process.retrieve`\, :mod:`reflink.process.extract`\, and
-:mod:`reflink.process.inject`\. See :mod:`reflink.process.store`\.
+and coordinates the execution of those tasks. The entry point to the processing
+pipeline is the :mod:`reflink.process.orchestrate` component, which calls a
+series of functions in series for each arXiv publication.
+
+* :mod:`reflink.process.retrieve`
+* :mod:`reflink.process.extract`
+* :mod:`reflink.process.reconcile`
+* :mod:`reflink.process.store`
+* :mod:`reflink.process.inject`
 
 Access to the data store (for reference metadata) and object store (for link
 injected PDFs) are provided by corresponding service components that expose a
