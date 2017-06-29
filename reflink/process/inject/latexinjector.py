@@ -10,7 +10,6 @@ import shlex
 import datetime
 import shutil
 import subprocess
-import numpy as np
 from urllib.parse import urlencode
 
 import chardet
