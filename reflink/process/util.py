@@ -136,7 +136,7 @@ def files_modified_since(fldr: str, timestamp: datetime.datetime,
 
     filenames = []
     for filename in thelist:
-        stub, ext = os.path.splitext(f)
+        stub, ext = os.path.splitext(filename)
         if ext == '.{}'.format(extension):
             filenames.append(filename)
 

@@ -5,14 +5,19 @@ logger = logging.getLogger(__name__)
 
 import re
 import os
+import glob
+import shlex
 import datetime
 import shutil
 import subprocess
 import numpy as np
-import urllib
+from urllib.parse import urlencode
+
+import chardet
 
 from typing import List, Generator
 
+from reflink.process import texconversions
 from reflink.process import util, textutil
 
 def argmax(array):
@@ -21,7 +26,7 @@ def argmax(array):
 
 def extract_tar(tarfile, destination):
     """ Extract `tarfile` to the directory `destination` """
-    cmd = 'tar -xvf {} -C {}'.format(sourcetar_path, fldr)
+    cmd = 'tar -xvf {} -C {}'.format(tarfile, destination)
     cmd = shlex.split(cmd)
     subprocess.check_call(cmd)
 
@@ -75,15 +80,15 @@ def match_by_cost(l1, l2, cost=jacard):
 
 def cleaned_reference_lines(refs):
     """ Clean the raw text reference lines for better matching """
-    refc = [textutil.clean_blob(unicode(r), numok=True) for r in refs]
+    refc = [textutil.clean_blob(r, numok=True) for r in refs]
     return remove_repeated_words(refc)
 
 def cleaned_bib_entries(entries):
     """ Clean the raw latex source bibitems for better matching """
     bbls = []
     for entry in entries:
-        entry = entry.decode('ascii', 'ignore').encode('ascii', 'ignore')
-        entry = unicode(entry.strip())
+        #entry = entry.decode('ascii', 'ignore').encode('ascii', 'ignore')
+        #entry = unicode(entry.strip())
         #entry = textutil.remove_latex_markup(entry) # FIXME -- uses pandoc right now
         entry = textutil.clean_blob(entry, numok=True)
         entry = entry.split()
@@ -152,11 +157,11 @@ def extract_bibs(text: str) -> Generator[str, None, None]:
     bibliographies : generator[str]
         Each individual bibliography
     """
-    head = DEFAULT_HEAD.finditer(txt)
-    tail = DEFAULT_TAIL.finditer(txt)
+    head = DEFAULT_HEAD.finditer(text)
+    tail = DEFAULT_TAIL.finditer(text)
 
     for h,t in zip(head, tail):
-        yield txt[h.end():t.start()].strip()
+        yield text[h.end():t.start()].strip()
 
 def replace_bibs(text: str, replacements: List[str]) -> str:
     """
@@ -171,14 +176,14 @@ def replace_bibs(text: str, replacements: List[str]) -> str:
     lh = lt = None
     for i,(h,t) in enumerate(zip(head, tail)):
         if not lh:
-            out += txt[:h.end()]+'\n'
+            out += text[:h.end()]+'\n'
         else:
-            out += txt[lt.start():h.end()]+'\n'
+            out += text[lt.start():h.end()]+'\n'
         out += replacements[i]+'\n'
         lh = h
         lt = t
 
-    out += txt[lt.start():]+'\n'
+    out += text[lt.start():]+'\n'
     return out
 
 def bib_items_head(bibliography: str, marker=DEFAULT_MARKER) -> str:
@@ -261,16 +266,14 @@ def url_formatter_arxiv(reference_line: str, baseurl: str='https://arxiv.org/loo
     Create the latex for a URL given a `reference_line`. In the process, does
     basic encoding so that latex characters work in the URL and is urlencoded
     """
-    refline = refline.encode('ascii', 'ignore')
-    query = tex_escape(urllib.urlencode({'q': refline}))
+    reference_line = reference_line.encode('ascii', 'ignore')
+    query = tex_escape(urlencode({'q': reference_line}))
     url = '{}?{}'.format(baseurl, query)
 
-    return '\href{{{url}}}{marker}\n\n'.format(
-        entry=entry.strip(), url=url, marker=marker
-    )
+    return '\href{{{url}}}{{{marker}}}\n\n'.format(url=url, marker=marker)
 
 
-def bbl_inject_urls(txt: str, references: List[str],
+def bbl_inject_urls(text: str, references: List[str],
         formatter=url_formatter_arxiv) -> List[str]:
     """
     Given a particular bibliography (begin...end segment), inject each bibitem
@@ -279,7 +282,7 @@ def bbl_inject_urls(txt: str, references: List[str],
 
     Parameters
     ----------
-    txt : str
+    text : str
         Raw text of a bibliography to be modified with URLs
 
     references : list of str
@@ -294,11 +297,11 @@ def bbl_inject_urls(txt: str, references: List[str],
         Raw text for a replacement bibliography with URLs injected
     """
     def _inject(entry, refline):
-        return '{entry}\n{url}'.format(entry, formatter(refline))
+        return '{entry}\n{url}'.format(entry=entry, url=formatter(refline))
 
     replacement_bbls = []
 
-    for bbl in extract_bibs(txt):
+    for bbl in extract_bibs(text):
         head = bib_items_head(bbl)
         bibitems = list(bib_items_iter(bbl))
         inds = match_by_cost(
@@ -316,7 +319,14 @@ def bbl_inject_urls(txt: str, references: List[str],
             out.append(entry)
         replacement_bbls.append('{}\n\n{}'.format(head, '\n'.join(out)))
 
-    return replace_bibs(txt, replacement_bbls)
+    return replace_bibs(text, replacement_bbls)
+
+def detect_encoding(filename: str) -> str:
+    """ Use chardet to get the string encoding of a file """
+    with open(filename, 'rb') as f:
+        encoding = chardet.detect(f.read())
+
+    return encoding['encoding']
 
 def transform_bbl(filename: str, reference_lines: List[str]):
     """
@@ -325,10 +335,12 @@ def transform_bbl(filename: str, reference_lines: List[str]):
     """
     util.backup(filename)
 
-    with open(filename) as f:
-        out = bbl_inject_urls(f.read(), refs)
+    encoding = detect_encoding(filename)
+    with open(filename, 'r', encoding=encoding) as f:
+        content = f.read()
+        out = bbl_inject_urls(content, reference_lines)
 
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding=encoding) as f:
         f.write(out)
 
 def run_autotex(directory: str) -> str:
@@ -347,27 +359,29 @@ def run_autotex(directory: str) -> str:
     """
     # FIXME -- this process will likely be greatly simplified by the newest AutoTeX
     # FIXME -- also, magic docker image names appearing again
-    def _find(e):
-        f = files_modified_since(directory, timestamp, extension=e)
-        if f:
-            return os.path.join(directory, f)
+    def _find(extension):
+        filenames = util.files_modified_since(
+            directory, timestamp, extension=extension
+        )
+        if filenames:
+            return os.path.join(directory, filenames[0])
         return None
 
     timestamp = datetime.datetime.now()
-    run_docker('mattbierbaum/autotex:v0.906.0-1', {directory: '/autotex'}, 'go')
+    util.run_docker('mattbierbaum/autotex:v0.906.0-1', [(directory, '/autotex')], 'go')
 
     pdf, dvi, ps = [_find(e) for e in ['pdf', 'dvi', 'ps']]
     if pdf:
         return pdf
     if ps:
         with util.indir(directory):
-            ps2pdf(ps)
+            util.ps2pdf(ps)
         return _find('pdf')
     if dvi:
         with util.indir(directory):
-            dvi2ps(dvi)
+            util.dvi2ps(dvi)
             ps = _find('ps')
-            ps2pdf(ps)
+            util.ps2pdf(ps)
         return _find('pdf')
 
     raise Exception("No output found for autotex")
@@ -421,11 +435,11 @@ def inject_urls(pdf_path: str, source_path: str, metadata: dict,
     # extract the relevant information from the metadata
     reference_lines = []
     for reference in metadata.get('references', []):
-        if 'raw' in reference.ref['raw']:
+        if 'raw' in reference:
             reference_lines.append(reference['raw'])
 
     # do the transformation in a temporary directory
-    with tempdir(cleanup=cleanup) as fldr:
+    with util.tempdir(cleanup=cleanup) as fldr:
         extract_tar(source_path, fldr)
 
         os.chmod(fldr, 0o775)
