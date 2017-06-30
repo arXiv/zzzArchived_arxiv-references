@@ -1,0 +1,58 @@
+\begin{thebibliography}{5}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname bibnamefont\endcsname\relax
+  \def\bibnamefont#1{#1}\fi
+\expandafter\ifx\csname bibfnamefont\endcsname\relax
+  \def\bibfnamefont#1{#1}\fi
+\expandafter\ifx\csname citenamefont\endcsname\relax
+  \def\citenamefont#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem[{\citenamefont{Peirson}(2015)}]{peirson2015plasticity}
+\bibinfo{author}{\bibfnamefont{B.~E.} \bibnamefont{Peirson}},
+  \bibinfo{journal}{Studies in History and Philosophy of Science Part C:
+  Studies in History and Philosophy of Biological and Biomedical Sciences}
+  \textbf{\bibinfo{volume}{50}}, \bibinfo{pages}{51 } (\bibinfo{year}{2015}),
+  ISSN \bibinfo{issn}{1369-8486},
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S1369848615000072}.
+
+\bibitem[{\citenamefont{Alemi et~al.}(2015)\citenamefont{Alemi, Bierbaum,
+  Myers, and Sethna}}]{alemi2015you}
+\bibinfo{author}{\bibfnamefont{A.~A.} \bibnamefont{Alemi}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Bierbaum}},
+  \bibinfo{author}{\bibfnamefont{C.~R.} \bibnamefont{Myers}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{J.~P.} \bibnamefont{Sethna}},
+  \bibinfo{journal}{Physical Review E} \textbf{\bibinfo{volume}{92}},
+  \bibinfo{pages}{052801} (\bibinfo{year}{2015}).
+
+\bibitem[{\citenamefont{Kajikawa et~al.}(2007)\citenamefont{Kajikawa, Ohno,
+  Takeda, Matsushima, and Komiyama}}]{kajikawa2007creating}
+\bibinfo{author}{\bibfnamefont{Y.}~\bibnamefont{Kajikawa}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Ohno}},
+  \bibinfo{author}{\bibfnamefont{Y.}~\bibnamefont{Takeda}},
+  \bibinfo{author}{\bibfnamefont{K.}~\bibnamefont{Matsushima}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{H.}~\bibnamefont{Komiyama}},
+  \bibinfo{journal}{Sustainability Science} \textbf{\bibinfo{volume}{2}},
+  \bibinfo{pages}{221} (\bibinfo{year}{2007}).
+
+\bibitem[{\citenamefont{Hummon and Dereian}(1989)}]{hummon1989connectivity}
+\bibinfo{author}{\bibfnamefont{N.~P.} \bibnamefont{Hummon}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Dereian}},
+  \bibinfo{journal}{Social networks} \textbf{\bibinfo{volume}{11}},
+  \bibinfo{pages}{39} (\bibinfo{year}{1989}).
+
+\bibitem[{\citenamefont{Nerur et~al.}(2005)\citenamefont{Nerur, Sikora,
+  Mangalaraj, and Balijepally}}]{nerur2005assessing}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Nerur}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Sikora}},
+  \bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Mangalaraj}},
+  \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{V.}~\bibnamefont{Balijepally}},
+  \bibinfo{journal}{Communications of the ACM} \textbf{\bibinfo{volume}{48}},
+  \bibinfo{pages}{71} (\bibinfo{year}{2005}).
+
+\end{thebibliography}
