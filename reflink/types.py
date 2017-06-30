@@ -18,6 +18,4 @@ A Flask response and accompanying HTTP status code.
 IntOrNone = TypeVar('IntOrNone', int, None)
 BytesOrNone = TypeVar('BytesOrNone', bytes, None)
 
-PathTuple = Tuple[str, str]
-
 ReferenceMetadata = List[dict]

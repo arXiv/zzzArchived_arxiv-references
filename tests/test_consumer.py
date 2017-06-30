@@ -10,7 +10,7 @@ from reflink.notification import consumer
 class TestRecordProcessor(unittest.TestCase):
     """Test the :meth:`.consumer.RecordProcessor.process_records` method."""
 
-    @mock.patch('reflink.process.orchestrate.process_document')
+    @mock.patch('reflink.notification.process.process_document')
     def test_process_document_called_for_each_record(self, process_document):
         """
         Ensure :func:`reflink.process.orchestrate.process_document` is called.
@@ -48,7 +48,7 @@ class TestRecordProcessor(unittest.TestCase):
 
 class TestRecordProcessorCheckpoint(unittest.TestCase):
     """Test the functionality of the checkpoint mechanism."""
-    
+
     def test_checkpoint_handles_ShutdownException(self):
         """
         Test the case that a ShutdownException is raised during processing.

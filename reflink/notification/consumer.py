@@ -10,7 +10,7 @@ import logging
 import json
 from reflink.types import IntOrNone, BytesOrNone
 from reflink.factory import create_process_app
-from reflink.process import orchestrate
+from reflink.notification import process
 
 import amazon_kclpy
 from amazon_kclpy import kcl
@@ -108,8 +108,8 @@ class RecordProcessor(processor.RecordProcessorBase):
             logger.error("Data payload: %s" % data)
 
         try:
-            orchestrate.process_document(deserialized.get('document_id'))
-        except Exception as e:
+            process.process_document(deserialized.get('document_id'))
+        except RuntimeError as e:
             logger.error("Error while processing document: %s" % e)
             logger.error("Data payload: %s" % data)
 
