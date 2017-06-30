@@ -1,7 +1,6 @@
 import re
 import os
 import shutil
-import datetime
 import subprocess
 import xml.etree.ElementTree
 

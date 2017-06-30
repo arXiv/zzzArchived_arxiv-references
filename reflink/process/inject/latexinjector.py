@@ -26,10 +26,6 @@ DEFAULT_MARKER = re.compile(r'\\bibitem[^a-zA-Z0-9]')
 LATEX_COMMENT = re.compile(r'(^|.*[^\\])(\%.*$)')
 
 
-class InjectionProcessError(Exception):
-    pass
-
-
 def argmax(array):
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index
@@ -451,7 +447,7 @@ def run_autotex(directory: str) -> str:
             util.ps2pdf(ps)
         return _find('pdf', timestamp)
 
-    raise InjectionProcessError("No output found for autotex")
+    raise RuntimeError("No output found for autotex")
 
 
 def modify_source_with_urls(source_path: str,
@@ -514,5 +510,18 @@ def inject_urls(pdf_path: str, source_path: str, metadata: dict,
 
         os.chmod(fldr, 0o775)
         modify_source_with_urls(fldr, reference_lines)
-        pdf = run_autotex(fldr)
+
+        try:
+            pdf = run_autotex(fldr)
+        except subprocess.CalledProcessError as exc:
+            logger.error(
+                "AutoTeX build failed for source '{}'".format(source_path)
+            )
+            raise exc
+        except RuntimeError as exc:
+            logger.error(
+                "No output found from AutoTeX run for '{}'".format(source_path)
+            )
+            raise exc
+
         return pdf
