@@ -3,20 +3,22 @@ sys.path.append('.')
 
 import os
 import json
-import jsonschema
-import subprocess
 import unittest
-from unittest import mock
+from unittest.mock import patch
 
-from reflink.services import data_store
 from reflink.process.inject import latexinjector
 
 data_directory = 'tests/data'
-revtex_files = os.path.join(data_directory, 'revtex-article')
+
+
+def revfile(ext):
+    revtex_files = os.path.join(data_directory, 'revtex-article')
+    return '{}.{}'.format(revtex_files, ext)
+
 
 class TestLatexInjection(unittest.TestCase):
     def test_encoding_tex(self):
-        src = '{}.tex'.format(revtex_files)
+        src = revfile('tex')
         self.assertEqual(latexinjector.detect_encoding(src), 'ascii')
 
     def test_encoding_cermine(self):
@@ -24,15 +26,15 @@ class TestLatexInjection(unittest.TestCase):
         self.assertEqual(latexinjector.detect_encoding(src), 'ascii')
 
     def test_bib_element_head(self):
-        src = '{}.bbl'.format(revtex_files)
-        ans = '{}.bbl-head'.format(revtex_files)
+        src = revfile('bbl')
+        ans = revfile('bbl-head')
         with open(src) as fn, open(ans) as res:
             content = fn.read()
             answer = res.read().strip()
             self.assertEqual(latexinjector.bib_items_head(content), answer)
 
     def test_bib_element_length(self):
-        src = '{}.bbl'.format(revtex_files)
+        src = revfile('bbl')
         with open(src) as fn:
             content = fn.read()
             self.assertEqual(
@@ -40,8 +42,8 @@ class TestLatexInjection(unittest.TestCase):
             )
 
     def test_bib_element_tail(self):
-        src = '{}.bbl'.format(revtex_files)
-        ans = '{}.bbl-tail'.format(revtex_files)
+        src = revfile('bbl')
+        ans = revfile('bbl-tail')
         with open(src) as fn, open(ans) as res:
             content = fn.read()
             answer = res.read().strip()
@@ -55,8 +57,8 @@ class TestLatexInjection(unittest.TestCase):
         )
 
     def test_bibitem_reference_match(self):
-        file_ref = '{}.cermxml.json'.format(revtex_files)
-        file_bbl = '{}.bbl'.format(revtex_files)
+        file_ref = revfile('cermxml.json')
+        file_bbl = revfile('bbl')
         reference_lines = [r['raw'] for r in json.load(open(file_ref))]
         bibitems = list(latexinjector.bib_items_iter(open(file_bbl).read()))
 
@@ -64,8 +66,20 @@ class TestLatexInjection(unittest.TestCase):
             latexinjector.cleaned_bib_entries(bibitems),
             latexinjector.cleaned_reference_lines(reference_lines),
         )
-        self.assertEqual(ind, [0,1,2,3,4])
+        self.assertEqual(ind, [0, 1, 2, 3, 4])
 
+    def test_inject_urls(self):
+        file_ref = revfile('cermxml.json')
+        file_pdf = revfile('pdf')
+        file_src = revfile('tar.gz')
+        metadata = json.load(open(file_ref))
+
+        with patch('reflink.process.inject.latexinjector.inject_urls') as injectfunc:
+            injectfunc.return_value = 'new_pdf_name.pdf'
+            self.assertEqual(
+                latexinjector.inject_urls(file_pdf, file_src, metadata),
+                'new_pdf_name.pdf'
+            )
 
 if __name__ == '__main__':
     unittest.main()

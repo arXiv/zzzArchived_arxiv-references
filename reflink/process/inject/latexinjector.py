@@ -35,7 +35,10 @@ def extract_tar(tarfile, destination):
     """ Extract `tarfile` to the directory `destination` """
     cmd = 'tar -xvf {} -C {}'.format(tarfile, destination)
     cmd = shlex.split(cmd)
-    subprocess.check_call(cmd)
+    result = subprocess.run(
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
+    result.check_returncode()
 
 
 def jacard(str0, str1):
