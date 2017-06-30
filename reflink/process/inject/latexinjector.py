@@ -103,9 +103,6 @@ def cleaned_bib_entries(entries):
     """ Clean the raw latex source bibitems for better matching """
     bbls = []
     for entry in entries:
-        # entry = entry.decode('ascii', 'ignore').encode('ascii', 'ignore')
-        # entry = unicode(entry.strip())
-        # entry = textutil.remove_latex_markup(entry) # FIXME -- pandoc
         entry = textutil.clean_blob(entry, numok=True)
         entry = entry.split()
         entry = [l for l in entry if l]
