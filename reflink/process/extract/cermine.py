@@ -1,20 +1,23 @@
-import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 import re
 import os
 import shutil
 import datetime
 import subprocess
 import xml.etree.ElementTree
-from contextlib import contextmanager
 
 from reflink.process import util
 
+import logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+    level=logging.DEBUG
+)
+logger = logging.getLogger(__name__)
+
+
 class ExtractionError(Exception):
     pass
+
 
 def _cxml_element_func(tagname):
     """
@@ -36,6 +39,7 @@ def _cxml_element_func(tagname):
         return ' '.join([i.text.strip() for i in root.iter(tag=tagname)])
     return _inner
 
+
 def _cxml_ref_authors(ref):
     """
     Given an xml element return the marked up information corresponding to
@@ -43,7 +47,7 @@ def _cxml_ref_authors(ref):
     in the xml.
     """
     authors = []
-    
+
     firstname = _cxml_element_func('given-names')
     lastname = _cxml_element_func('surname')
 
@@ -58,10 +62,11 @@ def _cxml_ref_authors(ref):
         )
     return authors
 
+
 def _cxml_format_reference_line(elm):
     """
     Convert a CERMINE XML element to a reference line i.e.:
-        
+
         Bierbaum, Matt and Pierson, Erick arxiv:1706.0000
 
     Parameters
@@ -76,7 +81,8 @@ def _cxml_format_reference_line(elm):
     """
     # regex for cleaning up the extracted reference lines a little bit:
     #  1. re_multispace -- collapse 2+ spaces into a single one
-    #  2. re_numbering -- remove numbers at beginning of line matching 1., 1, [1], (1)
+    #  2. re_numbering -- remove numbers at beginning of line matching:
+    #                     1., 1, [1], (1)
     re_multispace = re.compile(r"\s{2,}")
     re_numbering = re.compile(r'^([\[\(]?\d+[\]\)]?\.?)(.*)')
 
@@ -88,6 +94,7 @@ def _cxml_format_reference_line(elm):
     out = re_multispace.subn(' ', out)[0].strip()
     out = re_numbering.sub(r'\2', out).strip()
     return out
+
 
 def cxml_format_document(root, documentid=''):
     """
@@ -140,6 +147,7 @@ def cxml_format_document(root, documentid=''):
 
     return references
 
+
 def convert_cxml_json(filename: str) -> dict:
     """
     Transforms a CERMINE XML file into human and machine readable references:
@@ -158,6 +166,7 @@ def convert_cxml_json(filename: str) -> dict:
     root = xml.etree.ElementTree.parse(filename).getroot()
     documentid = util.find_arxiv_id(filename)
     return cxml_format_document(root, documentid)
+
 
 def extract_references(filename: str, cleanup: bool = True) -> str:
     """
@@ -205,7 +214,8 @@ def extract_references(filename: str, cleanup: bool = True) -> str:
             logger.error(
                 'CERMINE produced no output metadata for {}'.format(filename)
             )
-            raise FileNotFoundError('{} not found, expected as output'.format(cxml))
+            raise FileNotFoundError(
+                '{} not found, expected as output'.format(cxml)
+            )
 
         return convert_cxml_json(cxml)
-

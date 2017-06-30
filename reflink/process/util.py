@@ -1,8 +1,3 @@
-import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 import re
 import os
 import shlex
@@ -13,7 +8,15 @@ import datetime
 from contextlib import contextmanager
 from typing import List
 
+import logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+    level=logging.DEBUG
+)
+logger = logging.getLogger(__name__)
+
 VolumeList = List[List[str]]
+
 
 @contextmanager
 def indir(directory: str) -> None:
@@ -38,6 +41,7 @@ def indir(directory: str) -> None:
         raise e
     finally:
         os.chdir(cwd)
+
 
 @contextmanager
 def tempdir(cleanup: bool = True) -> str:
@@ -65,7 +69,9 @@ def tempdir(cleanup: bool = True) -> str:
         if cleanup:
             shutil.rmtree(directory)
 
-def run_docker(image: str, volumes: VolumeList = [], args: str = '') -> (str, str):
+
+def run_docker(image: str, volumes: VolumeList = [],
+               args: str = '') -> (str, str):
     """
     Run a generic docker image. In our uses, we wish to set the userid to that
     of running process (getuid) by default. Additionally, we do not expose
@@ -77,7 +83,7 @@ def run_docker(image: str, volumes: VolumeList = [], args: str = '') -> (str, st
         Name of the docker image in the format 'repository/name:tag'
 
     volumes : list of tuple of str
-        List of volumes to mount in the format [host_dir, container_dir]. 
+        List of volumes to mount in the format [host_dir, container_dir].
 
     args : str
         Arguments to the image's run cmd (set by Dockerfile CMD)
@@ -86,25 +92,32 @@ def run_docker(image: str, volumes: VolumeList = [], args: str = '') -> (str, st
     # then split it so that it can be run by subprocess
     opt_user = '-u {}'.format(os.getuid())
     opt_volumes = ' '.join([
-        '-v {}:{}'.format(host_dir, container_dir) for host_dir, container_dir in volumes
+        '-v {}:{}'.format(hd, cd) for hd, cd in volumes
     ])
-    cmd = 'docker run --rm {} {} {} {}'.format(opt_user, opt_volumes, image, args)
+    cmd = 'docker run --rm {} {} {} {}'.format(
+        opt_user, opt_volumes, image, args
+    )
     cmd = shlex.split(cmd)
 
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = subprocess.run(
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
     if result.returncode:
         logger.error(
             "Docker image call '{}' returned error {}".format(
                 ' '.join(cmd), result.returncode
             )
         )
-        logger.error("STDOUT: {}\nSTDERR: {}".format(result.stdout, result.stderr))
+        logger.error(
+            "STDOUT: {}\nSTDERR: {}".format(result.stdout, result.stderr)
+        )
         result.check_returncode()
 
-    return result 
+    return result
+
 
 def files_modified_since(fldr: str, timestamp: datetime.datetime,
-        extension: str = 'pdf'):
+                         extension: str = 'pdf'):
     """
     Get a list of files modified since a particular timestamp, which also match
     the given extension.
@@ -126,10 +139,10 @@ def files_modified_since(fldr: str, timestamp: datetime.datetime,
         Filenames of those modified
     """
     thelist = []
-    for root, dirs, files in os.walk(fldr):  
+    for root, dirs, files in os.walk(fldr):
         for fname in files:
             path = os.path.join(root, fname)
-            st = os.stat(path)    
+            st = os.stat(path)
             mtime = datetime.datetime.fromtimestamp(st.st_mtime)
             if mtime > timestamp:
                 thelist.append(fname)
@@ -141,6 +154,7 @@ def files_modified_since(fldr: str, timestamp: datetime.datetime,
             filenames.append(filename)
 
     return filenames
+
 
 def find_arxiv_id(string: str) -> str:
     """
@@ -166,6 +180,7 @@ def find_arxiv_id(string: str) -> str:
         if len(match) > 0:
             return match[0]
     return ''
+
 
 def rotating_backup_name(filename: str) -> str:
     """
@@ -196,6 +211,7 @@ def rotating_backup_name(filename: str) -> str:
             continue
         return n
 
+
 def backup(filename: str):
     """
     Perform a rotating backup on `filename` in the same directory by appending
@@ -213,10 +229,10 @@ def backup(filename: str):
     backup_name = rotating_backup_name(filename)
     shutil.copy2(filename, backup_name)
 
+
 def ps2pdf(ps):
     subprocess.check_call(['ps2pdf', ps])
 
+
 def dvi2ps(dvi):
     subprocess.check_call(['dvi2ps', dvi])
-
-

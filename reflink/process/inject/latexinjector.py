@@ -1,36 +1,46 @@
-import logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 import re
 import os
 import glob
 import shlex
 import datetime
-import shutil
 import subprocess
 from urllib.parse import urlencode
+from typing import List, Generator
 
 import chardet
-
-from typing import List, Generator
 
 from reflink.process import texconversions
 from reflink.process import util, textutil
 
+import logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+    level=logging.DEBUG
+)
+logger = logging.getLogger(__name__)
+
+# regex which are used to extract bibliographies
+DEFAULT_HEAD = re.compile(r'(\\begin{thebibliography}(\{.*\})?)')
+DEFAULT_TAIL = re.compile(r'(\\end{thebibliography}(\{.*\})?)')
+DEFAULT_MARKER = re.compile(r'\\bibitem[^a-zA-Z0-9]')
+LATEX_COMMENT = re.compile(r'(^|.*[^\\])(\%.*$)')
+
+
 class InjectionProcessError(Exception):
     pass
+
 
 def argmax(array):
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index
+
 
 def extract_tar(tarfile, destination):
     """ Extract `tarfile` to the directory `destination` """
     cmd = 'tar -xvf {} -C {}'.format(tarfile, destination)
     cmd = shlex.split(cmd)
     subprocess.check_call(cmd)
+
 
 def jacard(str0, str1):
     """
@@ -56,10 +66,12 @@ def jacard(str0, str1):
         return 0.0
     return shared_words/all_words
 
+
 def match_by_cost(l1, l2, cost=jacard):
     """
     Calculate the matching `ind` between l1 and l2 where l1 is similar to
-    l2[ind]. That is, we return `ind` such that cost(l1 - l2[ind]) is minimized.
+    l2[ind]. That is, we return `ind` such that cost(l1 - l2[ind]) is
+    minimized.
 
     Parameters
     ----------
@@ -80,34 +92,37 @@ def match_by_cost(l1, l2, cost=jacard):
 
     return inds
 
+
 def cleaned_reference_lines(refs):
     """ Clean the raw text reference lines for better matching """
     refc = [textutil.clean_blob(r, numok=True) for r in refs]
     return remove_repeated_words(refc)
 
+
 def cleaned_bib_entries(entries):
     """ Clean the raw latex source bibitems for better matching """
     bbls = []
     for entry in entries:
-        #entry = entry.decode('ascii', 'ignore').encode('ascii', 'ignore')
-        #entry = unicode(entry.strip())
-        #entry = textutil.remove_latex_markup(entry) # FIXME -- uses pandoc right now
+        # entry = entry.decode('ascii', 'ignore').encode('ascii', 'ignore')
+        # entry = unicode(entry.strip())
+        # entry = textutil.remove_latex_markup(entry) # FIXME -- pandoc
         entry = textutil.clean_blob(entry, numok=True)
         entry = entry.split()
         entry = [l for l in entry if l]
         bbls.append(' '.join(entry))
     return remove_repeated_words(bbls)
 
+
 def remove_repeated_words(docs):
     """
-    For purposes of comparing perhaps only partially cleaned bibitems, we remove
-    words that are shared amongst all items so that they don't bias the jacard
-    similarity score.
+    For purposes of comparing perhaps only partially cleaned bibitems, we
+    remove words that are shared amongst all items so that they don't bias the
+    jacard similarity score.
 
     Parameters
     ----------
     docs : list of str
-    
+
     Returns
     -------
     modified_docs : list of str
@@ -130,6 +145,7 @@ def remove_repeated_words(docs):
         newdocs.append(newdoc)
     return newdocs
 
+
 def tex_escape(text: str) -> str:
     """
     Prepare symbols common to latex to be included in a URL. Uses sphinx list
@@ -137,11 +153,6 @@ def tex_escape(text: str) -> str:
     """
     return text.translate(texconversions.tex_escape_map)
 
-# regex which are used to extract bibliographies
-DEFAULT_HEAD = re.compile(r'(\\begin{thebibliography}(\{.*\})?)')
-DEFAULT_TAIL = re.compile(r'(\\end{thebibliography}(\{.*\})?)')
-DEFAULT_MARKER = re.compile(r'\\bibitem[^a-zA-Z0-9]')
-LATEX_COMMENT = re.compile(r'(^|.*[^\\])(\%.*$)')
 
 def extract_bibs(text: str) -> Generator[str, None, None]:
     """
@@ -151,7 +162,7 @@ def extract_bibs(text: str) -> Generator[str, None, None]:
     Parameters
     ----------
     text : str
-        The full text from which to extract bibliographies, perhaps the 
+        The full text from which to extract bibliographies, perhaps the
         contents of a bbl or tex file.
 
     Returns
@@ -162,8 +173,9 @@ def extract_bibs(text: str) -> Generator[str, None, None]:
     head = DEFAULT_HEAD.finditer(text)
     tail = DEFAULT_TAIL.finditer(text)
 
-    for h,t in zip(head, tail):
+    for h, t in zip(head, tail):
         yield text[h.end():t.start()].strip()
+
 
 def replace_bibs(text: str, replacements: List[str]) -> str:
     """
@@ -176,7 +188,7 @@ def replace_bibs(text: str, replacements: List[str]) -> str:
     tail = DEFAULT_TAIL.finditer(text)
 
     lh = lt = None
-    for i,(h,t) in enumerate(zip(head, tail)):
+    for i, (h, t) in enumerate(zip(head, tail)):
         if not lh:
             out += text[:h.end()]+'\n'
         else:
@@ -187,6 +199,7 @@ def replace_bibs(text: str, replacements: List[str]) -> str:
 
     out += text[lt.start():]+'\n'
     return out
+
 
 def bib_items_head(bibliography: str, marker=DEFAULT_MARKER) -> str:
     """
@@ -208,8 +221,6 @@ def bib_items_head(bibliography: str, marker=DEFAULT_MARKER) -> str:
         The header of the bibliography
     """
     head = ''
-    initem = False
-
     contents = bibliography.split('\n')
     for line in contents:
         match = marker.search(line)
@@ -221,7 +232,7 @@ def bib_items_head(bibliography: str, marker=DEFAULT_MARKER) -> str:
 
 
 def bib_items_iter(bibliography: str, marker=DEFAULT_MARKER,
-        tailmarker=DEFAULT_TAIL) -> Generator[str, None, None]:
+                   tailmarker=DEFAULT_TAIL) -> Generator[str, None, None]:
     """
     Generator which yields each individual reference from a raw bibliography
     text.  These elements are typically denoted by \\bibitem (though I'm not
@@ -270,6 +281,7 @@ def bib_items_iter(bibliography: str, marker=DEFAULT_MARKER,
     if initem:
         yield curbbl.strip()
 
+
 def bib_items_tail(bibliography: str, marker=DEFAULT_TAIL) -> str:
     """
     Returns the tail section of the bibliography after all bibitems
@@ -302,8 +314,10 @@ def bib_items_tail(bibliography: str, marker=DEFAULT_TAIL) -> str:
 
     return tail.strip()
 
-def url_formatter_arxiv(reference_line: str, baseurl: str='https://arxiv.org/lookup',
-        queryparam: str='q', marker: str='GO') -> str:
+
+def url_formatter_arxiv(reference_line: str, marker: str='GO',
+                        baseurl: str='https://arxiv.org/lookup',
+                        queryparam: str='q') -> str:
     """
     Create the latex for a URL given a `reference_line`. In the process, does
     basic encoding so that latex characters work in the URL and is urlencoded
@@ -316,7 +330,7 @@ def url_formatter_arxiv(reference_line: str, baseurl: str='https://arxiv.org/loo
 
 
 def bbl_inject_urls(text: str, references: List[str],
-        formatter=url_formatter_arxiv) -> List[str]:
+                    formatter=url_formatter_arxiv) -> List[str]:
     """
     Given a particular bibliography (begin...end segment), inject each bibitem
     with URLs from a list of references and return the section again, but
@@ -360,11 +374,15 @@ def bbl_inject_urls(text: str, references: List[str],
                 continue
             entry = _inject(entry, references[ind])
             out.append(entry)
-        replacement_bbls.append('{}\n\n{}\n\n{}'.format(head, '\n\n'.join(out), tail))
+
+        replacement_bbls.append(
+            '{}\n\n{}\n\n{}'.format(head, '\n\n'.join(out), tail)
+        )
 
     if replacement_bbls:
         return replace_bibs(text, replacement_bbls)
     return text
+
 
 def detect_encoding(filename: str) -> str:
     """ Use chardet to get the string encoding of a file """
@@ -372,6 +390,7 @@ def detect_encoding(filename: str) -> str:
         encoding = chardet.detect(f.read())
 
     return encoding['encoding']
+
 
 def transform_bbl(filename: str, reference_lines: List[str]):
     """
@@ -388,6 +407,7 @@ def transform_bbl(filename: str, reference_lines: List[str]):
     with open(filename, 'w', encoding=encoding) as f:
         f.write(out)
 
+
 def run_autotex(directory: str) -> str:
     """
     Run the AutoTeX docker image on the directory `fldr`.
@@ -402,7 +422,7 @@ def run_autotex(directory: str) -> str:
     output : str
         Filename of the final output created by the AutoTeX process
     """
-    # FIXME -- this process will likely be greatly simplified by the newest AutoTeX
+    # FIXME -- this process will likely be simplified by the newest AutoTeX
     # FIXME -- also, magic docker image names appearing again
     def _find(extension, timestamp):
         filenames = util.files_modified_since(
@@ -413,7 +433,9 @@ def run_autotex(directory: str) -> str:
         return None
 
     timestamp = datetime.datetime.now()
-    util.run_docker('mattbierbaum/autotex:v0.906.0-1', [(directory, '/autotex')], 'go')
+    util.run_docker(
+        'mattbierbaum/autotex:v0.906.0-1', [(directory, '/autotex')], 'go'
+    )
 
     # run the conversion pipeline since autotex produces many types of files
     pdf, dvi, ps = [_find(ext, timestamp) for ext in ['pdf', 'dvi', 'ps']]
@@ -434,7 +456,9 @@ def run_autotex(directory: str) -> str:
 
     raise InjectionProcessError("No output found for autotex")
 
-def modify_source_with_urls(source_path: str, reference_lines: List[str]) -> None:
+
+def modify_source_with_urls(source_path: str,
+                            reference_lines: List[str]) -> None:
     """
     Perform the URL injection into latex source (both .tex, .bbl) and modify
     files in place, making backups before doing so.
@@ -457,8 +481,9 @@ def modify_source_with_urls(source_path: str, reference_lines: List[str]) -> Non
     for fn in files:
         transform_bbl(fn, reference_lines)
 
+
 def inject_urls(pdf_path: str, source_path: str, metadata: dict,
-        cleanup: bool=True) -> str:
+                cleanup: bool=True) -> str:
     """
     Given a tarfile of latex source, inject references, and build a new pdf.
 
@@ -482,7 +507,7 @@ def inject_urls(pdf_path: str, source_path: str, metadata: dict,
 
     # extract the relevant information from the metadata
     reference_lines = []
-    for reference in metadata.get('references', []):
+    for reference in metadata:
         if 'raw' in reference:
             reference_lines.append(reference['raw'])
 
@@ -494,4 +519,3 @@ def inject_urls(pdf_path: str, source_path: str, metadata: dict,
         modify_source_with_urls(fldr, reference_lines)
         pdf = run_autotex(fldr)
         return pdf
-
