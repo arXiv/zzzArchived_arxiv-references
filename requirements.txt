@@ -6,3 +6,5 @@ jsonschema==2.6.0
 redis==2.10.5
 moto==1.0.1
 chardet==2.3.0
+unidecode==0.4.21
+ftfy==5.0.2

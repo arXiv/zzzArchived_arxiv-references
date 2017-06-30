@@ -2,20 +2,27 @@ import re
 import ftfy
 import string
 import unidecode
-import unicodedata
 
-def normalize_unicode(txt):
-    return unicodedata.normalize('NFKD', txt).encode('ascii','ignore').decode('ascii')
+STOP = [
+    "own", "s", "from", "mustn", "whom", "for", "on", "here", "yours", "isn",
+    "both", "having", "of", "a", "during", "those", "above", "theirs", "who",
+    "won", "just", "d", "about", "haven", "his", "o", "weren", "such", "they",
+    "mightn", "can", "hasn", "she", "any", "ll", "then", "nor", "ourselves",
+    "what", "t", "its", "needn", "more", "all", "under", "our", "ve", "which",
+    "m", "doing", "further", "off", "you", "does", "when", "yourselves", "ain",
+    "or", "down", "again", "between", "didn", "doesn", "an", "am", "in", "is",
+    "up", "only", "each", "being", "my", "her", "once", "against", "through",
+    "did", "was", "with", "do", "him", "before", "few", "myself", "are", "not",
+    "why", "been", "will", "this", "them", "ours", "your", "i", "itself", "so",
+    "hadn", "where", "very", "and", "to", "as", "had", "most", "into", "no",
+    "don", "should", "me", "y", "re", "these", "out", "ma", "hers", "too",
+    "he", "now", "by", "yourself", "himself", "has", "after", "than", "couldn",
+    "until", "aren", "be", "have", "the", "over", "other", "while", "same",
+    "wasn", "herself", "some", "at", "if", "wouldn", "shan", "were", "how",
+    "but", "that", "their", "it", "below", "themselves", "because", "shouldn",
+    "there", "we"
+]
 
-def normalize_unicode2(txt):
-    return unidecode.unidecode(txt)
-
-from nltk.corpus import stopwords
-from nltk.tokenize import wordpunct_tokenize
-
-import numpy as np
-
-stop = set(stopwords.words('english'))
 RE_PUNC = re.compile(r'[{}]'.format(re.escape(string.punctuation)))
 RE_2LET = re.compile(r'\b[a-z]{1,2}\b')
 RE_NUMS = re.compile(r'\b[0-9]+\b')
@@ -23,11 +30,17 @@ RE_ALPHA_NUMERIC = re.compile(r'[^a-zA-Z0-9]+')
 RE_NONBLANK = re.compile(r'.*[0-9a-zA-Z]+.*')
 RE_WORDS_WITH_SYMBOLS = re.compile(r'\b[0-9{}]\b'.format(re.escape(string.punctuation)))
 
-def not_blank(txt):
-    return RE_NONBLANK.match(txt) is not None
+
+def wordpunct_split(txt):
+    splitter = re.compile(
+        r"""([{}\s\n\t\r])""".format(re.escape(string.punctuation))
+    )
+    return [w for w in splitter.split(txt) if w and w != ' ']
+
 
 def remove_latex(txt):
     return re.subn(r"(\$.*?\$)", '', txt)[0]
+
 
 def clean_text(txt):
     """ Removes stop words, punctuation, makes lower case """
@@ -39,17 +52,8 @@ def clean_text(txt):
     txt = RE_NUMS.subn(' ', txt)[0]
     txt = RE_ALPHA_NUMERIC.subn(' ', txt)[0]
 
-    words = [i for i in wordpunct_tokenize(txt) if i not in stop]
+    words = [i for i in wordpunct_split(txt) if i not in STOP]
     return ' '.join(words)
-
-def re_contains(words, flags=re.IGNORECASE, dirty=True):
-    # look-ahead assertion, contains all words in any order
-    f = lambda w: r'(?=.*\b{}\b)'.format(w)
-    a = ''.join([f(w) for w in words])
-    return re.compile(r"^"+a+r".+", flags=flags)
-
-def re_atleast(words, flags=re.IGNORECASE, dirty=True):
-    return re.compile(r"({})".format('|'.join([re.escape(w) for w in words])), re.I)
 
 
 punctuation_pat = re.compile(r"""([!"#$%&\'()*+,-./:;<=>?@[\\\]^_`{|}~])""")
@@ -73,6 +77,7 @@ def clean_text(txt, numok=False):
     txt = multiwhite_pat.sub(" ", txt)
     txt = txt.encode('utf-8').decode('utf-8')
     return txt.strip()
+
 
 def clean_blob(blob, numok=False):
     output = []
