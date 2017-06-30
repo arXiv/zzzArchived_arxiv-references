@@ -98,3 +98,8 @@ ENV/
 # mypy
 .mypy_cache/
 .DS_Store
+.vagrant
+
+
+ansible/roles/consumer/files/java
+*.zip

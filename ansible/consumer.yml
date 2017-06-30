@@ -1,0 +1,35 @@
+---
+
+# - hosts: localhost
+#   connection: local
+#   gather_facts: False
+#
+#   tasks:
+#     - name: Provision a set of instances
+#       ec2:
+#          key_name: erick-arxiv
+#          group_id: sg-2655d157
+#          vpc_subnet_id: subnet-ed7c6c88
+#          region: us-east-1
+#          instance_type: t2.micro
+#          image: ami-a4c7edb2
+#          wait: true
+#          wait_timeout: 1200
+#          exact_count: 1
+#          count_tag:
+#             Name: reflinkTest
+#          instance_tags:
+#             Name: reflinkTest
+#       register: ec2
+#
+#     - name: Add all instance public IPs to host group
+#       add_host: hostname={{ item.public_ip }} groups=ec2hosts
+#       with_items: "{{ ec2.instances }}"
+
+
+- hosts: ec2hosts
+  name: configuration play
+  user: ec2-user
+  gather_facts: true
+  roles:
+    - consumer
