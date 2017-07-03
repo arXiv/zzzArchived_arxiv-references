@@ -1,0 +1,11 @@
+[Unit]
+Description=Notification Consumer for Reflink Service
+
+[Service]
+Type=notify
+ExecStart=/opt/reflink/bin/start_worker
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+RestartPreventExitStatus=255

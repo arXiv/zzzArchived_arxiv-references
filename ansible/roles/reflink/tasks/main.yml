@@ -1,0 +1,81 @@
+- include_vars: vars/secrets.yml
+
+# - name: create user
+#   user:
+#     name: "{{ reflink_user }}"
+#     state: present
+#     createhome: yes
+  #become: yes
+
+# - name: make sure yum is up to date
+#   yum:
+#     name: '*'
+#     state: latest
+#   #become: yes
+
+- name: enable epel repos
+  yum:
+    name: epel-release
+    state: present
+  #become: yes
+
+- name: install git
+  yum:
+    name: git
+    state: present
+  #become: yes
+
+- name: install virtualenv
+  pip:
+    executable: /opt/bin/pip3.6
+    name: virtualenv
+  #become: yes
+
+- name: create app tree
+  file:
+    path: "{{ item }}"
+    state: directory
+    #owner: "{{ reflink_user }}"
+    #group: "{{ reflink_user }}"
+  with_items:
+    - /opt/reflink
+    - /opt/reflink/jars
+    - /opt/reflink/bin
+  #become: yes
+
+- name: make sure zip/unzip are installed
+  yum:
+    name:
+      - zip
+      - unzip
+    state: present
+  #become: yes
+
+- name: unarchive reflink source
+  unarchive:
+    src: files/reflink.zip
+    dest: /opt/reflink
+    creates: /opt/reflink/arxiv-reflink
+  #become: yes
+  #become_user: "{{ reflink_user }}"
+
+- name: create app virtualenv
+  command: /opt/bin/python3.6 /opt/lib/python3.6/site-packages/virtualenv.py /opt/reflink/venv --python=/opt/bin/python3.6
+  args:
+    creates: /opt/reflink/venv
+  #become: yes
+  #become_user: "{{ reflink_user }}"
+
+- name: install python dependencies for app
+  pip:
+    requirements: /opt/reflink/arxiv-reflink/requirements.txt
+    virtualenv: /opt/reflink/venv
+  #become: yes
+  #become_user: "{{ reflink_user }}"
+
+- name: copy secrets
+  template:
+    src: templates/secrets
+    dest: /opt/reflink/secrets
+  #become: yes
+  #become_user: "{{ reflink_user }}"

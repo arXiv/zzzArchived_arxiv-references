@@ -1,0 +1,106 @@
+---
+
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  environment:
+    PYTHONPATH: /usr/local/lib/python2.7/site-packages/:$PYTHONPATH
+    TMPDIR: /tmp
+  tasks:
+    - name: get the latest version of localstack
+      git:
+        repo: https://github.com/atlassian/localstack.git
+        dest: /tmp/localstack
+        depth: 1
+    - name: launch localstack with docker-compose
+      environment:
+        TMPDIR: /tmp
+      docker_service:
+        project_src: /tmp/localstack
+        debug: yes
+        timeout: 30
+
+- name: Bring up reflink docker containers.
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: create containers
+      docker_container:
+        name: "{{ item.name }}"
+        image: "{{ item.image }}"
+        state: started
+        expose: 22
+        privileged: true
+        published_ports: "{{ item.ssh_port }}:22"
+        tls: true
+        tty: true
+        volumes:
+          - /tmp/containers:/tmp/host:rw
+      with_items:
+        - name: consumer_container
+          image: "amazonlinux"
+          ssh_port: 2222
+        - name: worker_container
+          image: "amazonlinux"
+          ssh_port: 2223
+        - name: web_container
+          image: "amazonlinux"
+          ssh_port: 2224
+
+    - name: Define host groups
+      add_host:
+        name: "{{ item.name }}"
+        ansible_connection: docker
+        groups: "{{ item.group }}"
+      with_items:
+        - name: consumer_container
+          group: consumer
+        - name: worker_container
+          group: worker
+        - name: web_container
+          group: web
+
+- name: Install base configuration on reflink hosts.
+  hosts: consumer:worker:web
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - dynamodb_endpoint: "http://localhost:4569"
+    - s3_endpoint: "http://localhost:4572"
+    - s3_bucket: "reflink"
+    - sqs_endpoint: "http://{{ aws_access_key }}:{{ aws_secret_key }}@localhost:4576"
+    - kinesis_endpoint: "http://localhost:4568"
+  roles:
+    - python
+    - reflink
+
+- name: Install consumer role
+  hosts: consumer
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - dynamodb_endpoint: "http://localhost:4569"
+    - s3_endpoint: "http://localhost:4572"
+    - s3_bucket: "reflink"
+    - sqs_endpoint: "http://{{ aws_access_key }}:{{ aws_secret_key }}@localhost:4576"
+    - kinesis_endpoint: "http://localhost:4568"
+  roles:
+    - consumer
+
+- name: Install worker role
+  hosts: worker
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - dynamodb_endpoint: "http://localhost:4569"
+    - s3_endpoint: "http://localhost:4572"
+    - s3_bucket: "reflink"
+    - sqs_endpoint: "http://{{ aws_access_key }}:{{ aws_secret_key }}@localhost:4576"
+    - kinesis_endpoint: "http://localhost:4568"
+  roles:
+    - worker
+
+- name: Install web role
+  hosts: web
+  roles:
+    - web
