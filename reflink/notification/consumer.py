@@ -192,8 +192,3 @@ class RecordProcessor(processor.RecordProcessorBase):
                 logger.info("Shutting down due to failover. Won't checkpoint.")
         except Exception as e:
             logger.error("Encountered exception while shutting down: %s" % e)
-
-
-if __name__ == "__main__":
-    kcl_process = kcl.KCLProcess(RecordProcessor())
-    kcl_process.run()
