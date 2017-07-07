@@ -18,6 +18,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
     ansible.ask_vault_pass = true
-    ansible.playbook = "consumer.yml"
+    ansible.playbook = "worker.yml"
   end
 end

@@ -110,8 +110,8 @@ def get_session() -> PDFStoreSession:
     """
     bucket_name = os.environ.get('REFLINK_S3_BUCKET', 'arxiv-reflink')
     endpoint_url = os.environ.get('REFLINK_S3_ENDPOINT', None)
-    aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
-    aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+    aws_access_key = os.environ.get('AWS_ACCESS_KEY', 'asdf1234')
+    aws_secret_key = os.environ.get('AWS_SECRET_KEY', 'fdsa5678')
 
     return PDFStoreSession(bucket_name, endpoint_url, aws_access_key,
                            aws_secret_key)
