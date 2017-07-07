@@ -192,7 +192,7 @@ def get_session() -> ReferenceStoreSession:
     """
     schema_path = os.environ.get('REFLINK_SCHEMA', None)
     endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
-    aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
-    aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+    aws_access_key = os.environ.get('AWS_ACCESS_KEY', 'asdf1234')
+    aws_secret_key = os.environ.get('AWS_SECRET_KEY', 'fdsa5678')
     return ReferenceStoreSession(endpoint_url, schema_path, aws_access_key,
                                  aws_secret_key)
