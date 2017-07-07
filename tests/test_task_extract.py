@@ -1,6 +1,3 @@
-import sys
-sys.path.append('.')
-
 import json
 import jsonschema
 import datetime
@@ -11,6 +8,7 @@ from moto import mock_dynamodb2
 
 from reflink.services import data_store
 from reflink.process.extract import cermine
+
 
 def mock_full_dock(references):
     # there is no public way to format a document correctly
@@ -24,6 +22,7 @@ def mock_full_dock(references):
     }
     return data
 
+
 def ordered(obj):
     """ A function for comparing json objects """
     if isinstance(obj, dict):
@@ -32,6 +31,7 @@ def ordered(obj):
         return sorted(ordered(x) for x in obj)
     else:
         return obj
+
 
 class TestCERMINEExtractor(unittest.TestCase):
     def test_cxml_to_json_formatter(self):
