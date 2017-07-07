@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# reflink-consumer          Reflink Service Notification Consumer
+# reflink-worker          Reflink Service Worker
 #
 # chkconfig: 2345 90 60
-# description: Runs the Kinesis notification consumer for the Reflink service.
+# description: Performs reference extraction and link injection.
 #
 
 case "$1" in

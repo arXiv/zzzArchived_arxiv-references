@@ -14,5 +14,5 @@ def create_web_app():
 
 def create_process_app():
     """Initialize an instance of the processing application."""
-    from reflink.process.celery import app
+    from reflink.celery import app
     return app

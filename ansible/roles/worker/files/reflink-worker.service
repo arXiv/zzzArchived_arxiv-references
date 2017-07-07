@@ -1,5 +1,5 @@
 [Unit]
-Description=Notification Consumer for Reflink Service
+Description=Worker for Reflink Service
 
 [Service]
 Type=notify

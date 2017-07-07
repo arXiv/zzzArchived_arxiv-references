@@ -1,17 +1,24 @@
 ---
 
-- hosts: 127.0.0.1
+- hosts: localhost
   connection: local
   gather_facts: no
   environment:
-    PYTHONPATH: /usr/local/lib/python2.7/site-packages/:$PYTHONPATH
+    PYTHONPATH: /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/:$PYTHONPATH
     TMPDIR: /tmp
   tasks:
+    - name: create docker network
+      docker_network:
+        name: reflink_network
+        ipam_options:
+          subnet: 192.168.0.0/24
+          gateway: 192.168.0.1
     - name: get the latest version of localstack
       git:
-        repo: https://github.com/atlassian/localstack.git
+        repo: http://github.com/atlassian/localstack.git
         dest: /tmp/localstack
         depth: 1
+        force: yes
     - name: launch localstack with docker-compose
       environment:
         TMPDIR: /tmp
@@ -19,9 +26,39 @@
         project_src: /tmp/localstack
         debug: yes
         timeout: 30
+    - name: create kinsesis stream
+      command: /Library/Frameworks/Python.framework/Versions/2.7/bin/aws --no-verify-ssl --endpoint-url=http://localhost:4568 kinesis create-stream --stream-name PDFIsAvailable --shard-count 1
+      ignore_errors: yes
+
+- name: Bring up redis container.
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: create container
+      docker_container:
+        name: redis_container
+        image: "redis"
+        state: started
+        expose: 6379
+        tls: true
+        tty: true
+        networks:
+          - name: reflink_network
+            ipv4_address: "192.168.0.104"
+            aliases:
+              - "redis_container"
+            purge_networks: yes
+        volumes:
+          - /tmp/containers:/tmp/host:rw
+    - name: Define host group
+      add_host:
+        name: redis_container
+        ansible_connection: docker
+        groups: redis
+
 
 - name: Bring up reflink docker containers.
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
   tasks:
     - name: create containers
@@ -34,18 +71,27 @@
         published_ports: "{{ item.ssh_port }}:22"
         tls: true
         tty: true
+        networks:
+          - name: reflink_network
+            ipv4_address: "{{ item.ip }}"
+            aliases:
+              - "{{ item.name }}"
+            purge_networks: yes
         volumes:
           - /tmp/containers:/tmp/host:rw
       with_items:
-        - name: consumer_container
+        - name: consumer__container
           image: "amazonlinux"
           ssh_port: 2222
-        - name: worker_container
+          ip: "192.168.0.101"
+        - name: worker__container
           image: "amazonlinux"
           ssh_port: 2223
-        - name: web_container
+          ip: "192.168.0.102"
+        - name: web__container
           image: "amazonlinux"
           ssh_port: 2224
+          ip: "192.168.0.103"
 
     - name: Define host groups
       add_host:
@@ -53,11 +99,11 @@
         ansible_connection: docker
         groups: "{{ item.group }}"
       with_items:
-        - name: consumer_container
+        - name: consumer__container
           group: consumer
-        - name: worker_container
+        - name: worker__container
           group: worker
-        - name: web_container
+        - name: web__container
           group: web
 
 - name: Install base configuration on reflink hosts.
@@ -65,13 +111,14 @@
   vars:
     - reflink_user: bob
     - aws_region: us-east-1
-    - dynamodb_endpoint: "http://localhost:4569"
-    - s3_endpoint: "http://localhost:4572"
+    - dynamodb_endpoint: "http://192.168.0.1:4569"
+    - s3_endpoint: "http://192.168.0.1:4572"
     - s3_bucket: "reflink"
-    - sqs_endpoint: "http://{{ aws_access_key }}:{{ aws_secret_key }}@localhost:4576"
-    - kinesis_endpoint: "http://localhost:4568"
+    # - sqs_endpoint: "sqs://{{ aws_access_key }}:{{ aws_secret_key }}@192.168.0.1:4576"
+    - sqs_endpoint: "redis://192.168.0.104/0"
+    - kinesis_endpoint: "http://192.168.0.1:4568"
+    - cloudwatch_endpoint: "http://192.168.0.1:4582"
   roles:
-    - python
     - reflink
 
 - name: Install consumer role
@@ -79,11 +126,13 @@
   vars:
     - reflink_user: bob
     - aws_region: us-east-1
-    - dynamodb_endpoint: "http://localhost:4569"
-    - s3_endpoint: "http://localhost:4572"
+    - dynamodb_endpoint: "http://192.168.0.1:4569"
+    - s3_endpoint: "http://192.168.0.1:4572"
     - s3_bucket: "reflink"
-    - sqs_endpoint: "http://{{ aws_access_key }}:{{ aws_secret_key }}@localhost:4576"
-    - kinesis_endpoint: "http://localhost:4568"
+    # - sqs_endpoint: "sqs://{{ aws_access_key }}:{{ aws_secret_key }}@192.168.0.1:4576"
+    - sqs_endpoint: "redis://192.168.0.104:6379/0"
+    - kinesis_endpoint: "http://192.168.0.1:4568"
+    - cloudwatch_endpoint: "http://192.168.0.1:4582"
   roles:
     - consumer
 
@@ -92,15 +141,17 @@
   vars:
     - reflink_user: bob
     - aws_region: us-east-1
-    - dynamodb_endpoint: "http://localhost:4569"
-    - s3_endpoint: "http://localhost:4572"
+    - dynamodb_endpoint: "http://192.168.0.1:4569"
+    - s3_endpoint: "http://192.168.0.1:4572"
     - s3_bucket: "reflink"
-    - sqs_endpoint: "http://{{ aws_access_key }}:{{ aws_secret_key }}@localhost:4576"
-    - kinesis_endpoint: "http://localhost:4568"
+    # - sqs_endpoint: "sqs://{{ aws_access_key }}:{{ aws_secret_key }}@192.168.0.1:4576"
+    - sqs_endpoint: "redis://192.168.0.104/0"
+    - kinesis_endpoint: "http://192.168.0.1:4568"
+    - cloudwatch_endpoint: "http://192.168.0.1:4582"
   roles:
     - worker
-
-- name: Install web role
-  hosts: web
-  roles:
-    - web
+#
+# - name: Install web role
+#   hosts: web
+#   roles:
+#     - web

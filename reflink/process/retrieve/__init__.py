@@ -30,22 +30,20 @@ def retrieve(document_id: str) -> tuple:
     pdf_path : str
     source_path : str
     """
-    pdf_url = 'https://arxiv.org/pdf/%s.pdf' % document_id
-    response = requests.get(pdf_url)
-    if response.status_code != requests.codes.ok:
+    pdf_response = requests.get('https://arxiv.org/pdf/%s.pdf' % document_id)
+    if pdf_response.status_code != requests.codes.ok:
         raise IOError('Could not retrieve PDF for %s' % document_id)
 
     _, pdf_path = tempfile.mkstemp(prefix=document_id, suffix='.pdf')
     with open(pdf_path, 'wb') as f:
-        f.write(response.content)
+        f.write(pdf_response.content)
 
-    source_url = 'https://arxiv.org/e-print/%s' % document_id
-    response = requests.get(source_url)
-    if response.status_code != requests.codes.ok:
+    src_response = requests.get('https://arxiv.org/e-print/%s' % document_id)
+    if src_response.status_code != requests.codes.ok:
         raise IOError('Could not retrieve source for %s' % document_id)
 
     _, source_path = tempfile.mkstemp(prefix=document_id, suffix='.tar.gz')
     with open(source_path, 'wb') as f:
-        f.write(response.content)
+        f.write(src_response.content)
 
     return pdf_path, source_path

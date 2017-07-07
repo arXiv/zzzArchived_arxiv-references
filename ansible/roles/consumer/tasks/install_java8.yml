@@ -1,6 +1,6 @@
 - name: unarchive java
   unarchive:
-    src: files/java/jdk-8u131-linux-x64.tar.gz
+    src: files/jdk-8u131-linux-x64.tar.gz
     dest: /opt
     creates: /opt/jdk-8u131-linux-x64
   #become: yes

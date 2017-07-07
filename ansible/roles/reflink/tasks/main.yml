@@ -1,5 +1,21 @@
 - include_vars: vars/secrets.yml
 
+- name: install python3
+  yum:
+    name: python35
+    state: present
+
+- name: get pip installer
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /usr/src
+  #become: yes
+
+- name: install pip
+  command: python3 /usr/src/get-pip.py
+  #become: yes
+
+
 # - name: create user
 #   user:
 #     name: "{{ reflink_user }}"
@@ -27,7 +43,7 @@
 
 - name: install virtualenv
   pip:
-    executable: /opt/bin/pip3.6
+    executable: pip3
     name: virtualenv
   #become: yes
 
@@ -55,12 +71,13 @@
   unarchive:
     src: files/reflink.zip
     dest: /opt/reflink
-    creates: /opt/reflink/arxiv-reflink
+    force: yes
+    # creates: /opt/reflink/arxiv-reflink
   #become: yes
   #become_user: "{{ reflink_user }}"
 
 - name: create app virtualenv
-  command: /opt/bin/python3.6 /opt/lib/python3.6/site-packages/virtualenv.py /opt/reflink/venv --python=/opt/bin/python3.6
+  command: virtualenv /opt/reflink/venv --python=python3
   args:
     creates: /opt/reflink/venv
   #become: yes
@@ -72,6 +89,11 @@
     virtualenv: /opt/reflink/venv
   #become: yes
   #become_user: "{{ reflink_user }}"
+
+- name: copy endpoints config (testing/dev only)
+  copy:
+    src: files/endpoints.json
+    dest: /opt/reflink/endpoints.json
 
 - name: copy secrets
   template:
