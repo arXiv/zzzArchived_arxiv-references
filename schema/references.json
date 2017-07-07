@@ -8,6 +8,10 @@
         "references"
     ],
     "properties": {
+        "version": {
+            "description": "The reference extraction application version.",
+            "type": "string"
+        },
         "created": {
             "description": "The datetime when the reference was created.",
             "type": "string",
@@ -27,9 +31,14 @@
             "items": {
                 "required": [
                     "raw",
-                    "reftype"
+                    "reftype",
+                    "hash"
                 ],
                 "properties": {
+                    "hash": {
+                        "description": "Unique hash id for the reference.",
+                        "type": "string"
+                    },
                     "title": {
                         "description": "The title of the reference.",
                         "type": "string"

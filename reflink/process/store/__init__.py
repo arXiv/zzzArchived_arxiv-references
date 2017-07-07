@@ -28,8 +28,10 @@ def store_metadata(metadata: ReferenceMetadata, document_id: str) -> None:
         Raised when there is a problem storing the metadata. The caller should
         assume that nothing has been stored.
     """
+    data_session = data_store.get_session()
     try:
-        data_store.get_session().create(document_id, metadata)
+        # Should return the data with reference hashes inserted.
+        metadata = data_session.create(document_id, metadata)
     except IOError as e:    # Separating this out in case we want to retry.
         msg = 'Could not store metadata for document %s: %s' % (document_id, e)
         logger.error(msg)

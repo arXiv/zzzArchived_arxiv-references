@@ -36,7 +36,8 @@ def process_document(document_id: str) -> None:
         metadata = extract(pdf_path)    # TODO: add reconciliation step.
         logger.info('Extracted metadata for %s' % document_id)
 
-        store_metadata(metadata, document_id)
+        # Should return the data with reference hashes inserted.
+        metadata = store_metadata(metadata, document_id)
         logger.info('Stored metadata for %s' % document_id)
 
         new_pdf_path = inject(tex_path, metadata)
