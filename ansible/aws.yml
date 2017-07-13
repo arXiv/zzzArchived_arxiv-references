@@ -1,14 +1,14 @@
 ---
 
-# - name: Install base configuration on reflink hosts.
-#   hosts: reflink-consumer:reflink-worker:reflink-web
-#   vars:
-#     - reflink_user: bob
-#     - aws_region: us-east-1
-#     - s3_bucket: "reflink"
-#     - application_root: "/references"
-#   roles:
-#     - reflink
+- name: Install base configuration on reflink hosts.
+  hosts: reflink-consumer:reflink-worker:reflink-web
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - s3_bucket: "reflink"
+    - application_root: "/references"
+  roles:
+    - reflink
 #
 # - name: Install consumer role
 #   hosts: reflink-consumer
