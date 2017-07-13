@@ -4,50 +4,29 @@
   file:
     path: /var/log/reflinkconsumer.log
     state: touch
-  #become: yes
 
 - name: copy startup script
   copy:
     src: files/start_kcl
     dest: /opt/reflink/bin/start_kcl
-    #owner: "{{ reflink_user }}"
-    #group: "{{ reflink_user }}"
     mode: "u=rwx,g=r,o=r"
-  #become: yes
-  #become_user: "{{ reflink_user }}"
 
 - name: populate consumer properties
   template:
     src: templates/consumer.properties
     dest: /opt/reflink/bin/consumer.properties
-    #owner: "{{ reflink_user }}"
-    #group: "{{ reflink_user }}"
     mode: "u=rwx,g=r,o=r"
-  #become: yes
-  #become_user: "{{ reflink_user }}"
-
-# - name: copy service script (for Centos/RHEL 7)
-#   copy:
-#     src: files/reflink-consumer.service
-#     dest: /usr/lib/systemd/system/reflink-consumer.service
-#     mode: 0755
-  #become: yes
-  #when: "'vagrant' in group_names"
 
 - name: copy oldschool service script (for AWS AMI, Centos/RHEL <=6)
   copy:
     src: files/reflink-consumer
     dest: /etc/init.d/reflink-consumer
     mode: 0755
-  #become: yes
-  # when: "'ec2hosts' in group_names"
 
 - name: get kinesis client library
   git:
     repo: https://github.com/awslabs/amazon-kinesis-client-python.git
     dest: /tmp/amazon-kinesis-client-python
-  #become: yes
-  #become_user: "{{ reflink_user }}"
 
 - name: download jars for KCL
   get_url:
@@ -120,32 +99,9 @@
     - group: commons-logging
       artifact_id: commons-logging
       version: 1.1.3
-  #become: yes
-  #become_user: "{{ reflink_user }}"
-
 
 - name: enable and start service
   service:
     name: reflink-consumer
     enabled: yes
-    state: started
-  #become: yes
-
-
-# - name: make sure redis is installed
-#   yum:
-#     name: redis
-#     state: present
-#   #become: yes
-#
-# - name: make sure redis is running
-#   systemd:
-#     state: restarted
-#     name: redis
-#   #become: yes
-#
-# - name: make sure redis is enabled
-#   systemd:
-#     enabled: yes
-#     name: redis
-#   #become: yes
+    state: restarted

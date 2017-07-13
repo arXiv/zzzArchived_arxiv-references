@@ -6,11 +6,15 @@ See `the celery docs
 """
 
 import os
+import urllib
 
-broker_url = os.environ.get('REFLINK_SQS_ENDPOINT', 'redis:///')
+# broker_url = os.environ.get('REFLINK_SQS_ENDPOINT', 'redis:///')
+AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
+AWS_SECRET_KEY = urllib.quote(os.environ.get('AWS_SECRET_KEY'))
+BROKER_URL = "sqs://{}:{}@".format(AWS_ACCESS_KEY, AWS_SECRET_KEY)
 broker_transport_options = {
     'region': os.environ.get('AWS_REGION', 'us-east-1'),
     'queue_name_prefix': 'reflink-',
 }
-result_backend = 'redis:///'
-task_always_eager = os.environ.get('CELERY_TASK_ALWAYS_EAGER') == 'yes'
+# result_backend = 'redis:///'
+# task_always_eager = os.environ.get('CELERY_TASK_ALWAYS_EAGER') == 'yes'

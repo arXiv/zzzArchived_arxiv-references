@@ -2,19 +2,19 @@
 #   yum:
 #     name: redis
 #     state: present
-#   #become: yes
+#
 #
 # - name: make sure redis is running
 #   systemd:
 #     state: restarted
 #     name: redis
-#   #become: yes
+#
 #
 # - name: make sure redis is enabled
 #   systemd:
 #     enabled: yes
 #     name: redis
-#   #become: yes
+#
 
 - name: copy startup assets
   copy:
@@ -23,7 +23,7 @@
     #owner: "{{ reflink_user }}"
     #group: "{{ reflink_user }}"
     mode: "u=rwx,g=r,o=r"
-  #become: yes
+
   #become_user: "{{ reflink_user }}"
 
 # - name: copy service script (for Centos/RHEL 7)
@@ -31,7 +31,7 @@
 #     src: files/reflink-worker.service
 #     dest: /usr/lib/systemd/system/reflink-worker.service
 #     mode: 0755
-  #become: yes
+
   #when: "'ec2hosts' not in group_names"
 
 - name: copy oldschool service script (for AWS AMI, Centos/RHEL <=6)
@@ -39,18 +39,17 @@
     src: files/reflink-worker
     dest: /etc/init.d/reflink-worker
     mode: 0755
-  #become: yes
+
   # when: "'ec2hosts' in group_names"
 
 - name: create log file
   file:
     path: /var/log/reflink-worker.log
     state: touch
-  #become: yes
+
 
 - name: enable and start service
   service:
     name: reflink-worker
     enabled: yes
-    state: started
-  #become: yes
+    state: restarted

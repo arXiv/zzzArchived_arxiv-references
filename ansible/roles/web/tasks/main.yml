@@ -1,0 +1,4 @@
+- name: make sure apache is installed
+  yum:
+    name: httpd24
+    state: present

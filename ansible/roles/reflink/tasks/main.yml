@@ -9,11 +9,11 @@
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /usr/src
-  #become: yes
+
 
 - name: install pip
   command: python3 /usr/src/get-pip.py
-  #become: yes
+
 
 
 # - name: create user
@@ -21,31 +21,31 @@
 #     name: "{{ reflink_user }}"
 #     state: present
 #     createhome: yes
-  #become: yes
+
 
 # - name: make sure yum is up to date
 #   yum:
 #     name: '*'
 #     state: latest
-#   #become: yes
+#
 
 - name: enable epel repos
   yum:
     name: epel-release
     state: present
-  #become: yes
+
 
 - name: install git
   yum:
     name: git
     state: present
-  #become: yes
+
 
 - name: install virtualenv
   pip:
-    executable: pip3
+    executable: pip
     name: virtualenv
-  #become: yes
+
 
 - name: create app tree
   file:
@@ -57,7 +57,7 @@
     - /opt/reflink
     - /opt/reflink/jars
     - /opt/reflink/bin
-  #become: yes
+
 
 - name: make sure zip/unzip are installed
   yum:
@@ -65,7 +65,7 @@
       - zip
       - unzip
     state: present
-  #become: yes
+
 
 - name: unarchive reflink source
   unarchive:
@@ -73,21 +73,21 @@
     dest: /opt/reflink
     force: yes
     # creates: /opt/reflink/arxiv-reflink
-  #become: yes
+
   #become_user: "{{ reflink_user }}"
 
 - name: create app virtualenv
   command: virtualenv /opt/reflink/venv --python=python3
   args:
     creates: /opt/reflink/venv
-  #become: yes
+
   #become_user: "{{ reflink_user }}"
 
 - name: install python dependencies for app
   pip:
     requirements: /opt/reflink/arxiv-reflink/requirements.txt
     virtualenv: /opt/reflink/venv
-  #become: yes
+
   #become_user: "{{ reflink_user }}"
 
 - name: copy endpoints config (testing/dev only)
@@ -99,5 +99,5 @@
   template:
     src: templates/secrets
     dest: /opt/reflink/secrets
-  #become: yes
+
   #become_user: "{{ reflink_user }}"
