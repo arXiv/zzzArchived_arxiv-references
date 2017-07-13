@@ -1,38 +1,12 @@
 {
     "$schema": "http://json-schema.org/schema#",
-    "title": "Reference",
+    "title": "ExtractedReference",
     "type": "object",
     "required": [
-        "created",
-        "document",
-        "version",
-        "hash",
         "reftype",
         "raw"
     ],
     "properties": {
-        "version": {
-            "description": "The reference extraction application version.",
-            "type": "string"
-        },
-        "created": {
-            "description": "The datetime when the reference was created.",
-            "type": "string",
-            "format": "date-time"
-        },
-        "updated": {
-            "description": "The datetime when the reference was last updated.",
-            "type": "string",
-            "format": "date-time"
-        },
-        "document": {
-            "description": "arXiv identifier for the source document.",
-            "type": "string"
-        },
-        "hash": {
-            "description": "Unique hash id for the reference.",
-            "type": "string"
-        },
         "title": {
             "description": "The title of the reference.",
             "type": "string"

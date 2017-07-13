@@ -47,9 +47,10 @@ class TestStore(unittest.TestCase):
 
         document_id = 'arxiv:1234.5678'
         data = [{'foo': 'bar'}]
-        store_metadata(data, document_id)
+        version = '0.1'
+        store_metadata(data, document_id, version)
         self.assertEqual(mock_session.create.call_count, 1)
         try:
-            mock_session.create.assert_called_with(document_id, data)
+            mock_session.create.assert_called_with(document_id, data, version)
         except AssertionError as e:
             self.fail(str(e))

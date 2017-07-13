@@ -7,6 +7,7 @@ the service.
 
 import logging
 
+from reflink.config import VERSION
 from reflink.process.retrieve import retrieve
 from reflink.process.extract import extract
 from reflink.process.inject import inject
@@ -37,7 +38,7 @@ def process_document(document_id: str) -> None:
         logger.info('Extracted metadata for %s' % document_id)
 
         # Should return the data with reference hashes inserted.
-        metadata = store_metadata(metadata, document_id)
+        metadata = store_metadata(metadata, document_id, VERSION)
         logger.info('Stored metadata for %s' % document_id)
 
         new_pdf_path = inject(tex_path, metadata)

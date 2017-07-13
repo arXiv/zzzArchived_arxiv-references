@@ -6,6 +6,9 @@ Docstrings are from the `Flask configuration documentation
 """
 import os
 
+VERSION = 0.1
+"""The application version, used to sign extracted references."""
+
 ON = 'yes'
 OFF = 'no'
 

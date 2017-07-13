@@ -2,18 +2,141 @@
 
 import logging
 import boto3
+from boto3.dynamodb.conditions import Key, Attr
 from botocore.exceptions import ClientError
+# from botocore.errorfactory import ResourceInUseException
 import datetime
 import json
 import jsonschema
 import os
+from base64 import b64encode
+from decimal import Decimal
 
 from typing import List
-Data = List[dict]
+ReferenceData = List[dict]
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+
+
+
+class ExtractionSession(object):
+    """Commemorates extraction work performed on arXiv documents."""
+
+    table_name = 'Extractions'
+
+    def __init__(self, endpoint_url: str, aws_access_key: str,
+                 aws_secret_key: str) -> None:
+        """Load JSON schema for reference metadata, and set up remote table."""
+        self.dynamodb = boto3.resource('dynamodb',
+                                       endpoint_url=endpoint_url,
+                                       aws_access_key_id=aws_access_key,
+                                       aws_secret_access_key=aws_secret_key)
+        try:
+            self._create_table()
+        except ClientError as e:
+            logger.info('Table already exists: %s' % self.table_name)
+        self.table = self.dynamodb.Table(self.table_name)
+
+    def _create_table(self) -> None:
+        """Set up a new table in DynamoDB. Blocks until table is available."""
+        table = self.dynamodb.create_table(
+            TableName=self.table_name,
+            KeySchema=[
+                {'AttributeName': 'document', 'KeyType': 'HASH'},
+                {'AttributeName': 'version', 'KeyType': 'RANGE'}
+            ],
+            AttributeDefinitions=[
+                {"AttributeName": 'document', "AttributeType": "S"},
+                # {
+                #     "AttributeName": 'extraction',
+                #     "AttributeType": "S"
+                # },
+                {"AttributeName": 'version', "AttributeType": "N"}
+            ],
+            ProvisionedThroughput={    # TODO: make this configurable.
+                'ReadCapacityUnits': 5,
+                'WriteCapacityUnits': 5
+            }
+        )
+        waiter = table.meta.client.get_waiter('table_exists')
+        waiter.wait(TableName=self.table_name)
+
+    def _prepare(self, entry: dict) -> dict:
+        extraction = self.hash(entry['document'], entry['version'],
+                               entry['created'])
+        entry.update({
+            'extraction': extraction,
+            'version': Decimal(entry['version'])
+        })
+        return entry
+
+    def hash(self, document_id: str, version: float, created: str) -> str:
+        """
+        Generate a unique ID for the extraction entry.
+
+        Parameters
+        ----------
+        document_id : str
+        version : float
+        created : str
+
+        Returns
+        -------
+        str
+            Base64 encoded hash.
+        """
+        to_encode = '%s:%s:%s' % (document_id, version, created)
+        hash_string = bytes(to_encode, encoding='ascii')
+        return str(b64encode(hash_string), encoding='utf-8')
+
+    def create(self, document_id: str, version: str, created: str) -> None:
+        """
+        Create a new extraction entry.
+
+        Parameters
+        ----------
+        document_id : str
+        version : float
+        created : str
+            ISO-8601 datetime string.
+
+        Raises
+        ------
+        IOError
+        """
+        entry = self._prepare({
+            'created': created,
+            'document': document_id,
+            'version': version,
+        })
+        try:
+            self.table.put_item(Item=entry)
+        except ClientError as e:
+            raise IOError('Failed to create: %s' % e) from e
+
+    def latest(self, document_id: str) -> dict:
+        """
+        Retrieve the most recent extraction for a document.
+
+        Parameters
+        ----------
+        document_id : str
+
+        Returns
+        -------
+        dict
+        """
+        response = self.table.query(
+            Limit=1,
+            ScanIndexForward=False,
+            KeyConditionExpression=Key('document').eq(document_id)
+        )
+        if len(response['Items']) == 0:
+            return None
+        return response['Items'][0]
 
 
 class ReferenceStoreSession(object):
@@ -25,15 +148,19 @@ class ReferenceStoreSession(object):
     endpoint_url : str
         If ``None``, uses AWS defaults. Mostly useful for local development
         and testing.
-    schema_path : str
-        Location of the JSON schema for references metadata. If this file does
+    extracted_schema_path : str
+        Location of the JSON schema for reference metadata. If this file does
+        not exist, no validation will occur.
+    stored_schema_path : str
+        Location of the JSON schema for reference metadata. If this file does
         not exist, no validation will occur.
     aws_access_key : str
     aws_secret_key : str
     """
 
-    def __init__(self, endpoint_url: str, schema_path: str,
-                 aws_access_key: str, aws_secret_key: str) -> None:
+    def __init__(self, endpoint_url: str, extracted_schema_path: str,
+                 stored_schema_path: str, aws_access_key: str,
+                 aws_secret_key: str) -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb',
                                        endpoint_url=endpoint_url,
@@ -41,36 +168,67 @@ class ReferenceStoreSession(object):
                                        aws_secret_access_key=aws_secret_key)
 
         try:
-            with open(schema_path) as f:
-                self.schema = json.load(f)
-            self.table_name = self.schema.get('title', 'ReferenceSet')
+            with open(stored_schema_path) as f:
+                self.stored_schema = json.load(f)
+            self.table_name = self.stored_schema.get('title',
+                                                     'StoredReference')
         except (FileNotFoundError, TypeError):
-            logger.error("Could not load schema at %s." % schema_path)
-            logger.info("Validation is disabled")
-            self.schema = None
-            self.table_name = 'ReferenceSet'
+            logger.error("Could not load schema at %s." % stored_schema_path)
+            logger.info("Stored reference validation is disabled")
+            self.stored_schema = None
+            self.table_name = 'StoredReference'
+
+        try:
+            with open(extracted_schema_path) as f:
+                self.extracted_schema = json.load(f)
+            self.table_name = self.extracted_schema.get('title',
+                                                        'ExtractedReference')
+        except (FileNotFoundError, TypeError):
+            logger.error("Could not load schema at %s" % extracted_schema_path)
+            logger.info("Extracted reference validation is disabled")
+            self.extracted_schema = None
+            self.table_name = 'ExtractedReference'
 
         try:
             self._create_table()
-        except Exception as e:    # TODO: make this more specific.
-            pass    # The table already exists.
+        except ClientError as e:
+            logger.info('Table already exists: %s' % self.table_name)
         self.table = self.dynamodb.Table(self.table_name)
+
+        self.extractions = ExtractionSession(endpoint_url, aws_access_key,
+                                             aws_secret_key)
 
     def _create_table(self) -> None:
         """Set up a new table in DynamoDB. Blocks until table is available."""
         table = self.dynamodb.create_table(
             TableName=self.table_name,
             KeySchema=[
-                {
-                    'AttributeName': 'document',
-                    'KeyType': 'HASH'
-                }
+                {'AttributeName': 'document_extraction', 'KeyType': 'HASH'},
+                {'AttributeName': 'order', 'KeyType': 'RANGE'}
             ],
             AttributeDefinitions=[
+                {"AttributeName": 'document_extraction', "AttributeType": "S"},
+                {"AttributeName": 'document', "AttributeType": "S"},
+                # {"AttributeName": 'extraction', "AttributeType": "S"},
+                {"AttributeName": 'identifier', "AttributeType": "S"},
+                {"AttributeName": 'order', "AttributeType": "N"},
+                # {"AttributeName": 'version', "AttributeType": "N"}
+            ],
+            GlobalSecondaryIndexes=[
                 {
-                    "AttributeName": 'document',
-                    "AttributeType": "S"
-                }
+                    'IndexName': 'DocumentVersionIndex',
+                    'KeySchema': [
+                        {'AttributeName': 'document', 'KeyType': 'HASH'},
+                        {'AttributeName': 'identifier', 'KeyType': 'RANGE'}
+                    ],
+                    'ProvisionedThroughput': {
+                        'ReadCapacityUnits': 5,
+                        'WriteCapacityUnits': 5
+                    },
+                    'Projection': {
+                        "ProjectionType" : 'ALL'
+                    }
+                },
             ],
             ProvisionedThroughput={    # TODO: make this configurable.
                 'ReadCapacityUnits': 5,
@@ -80,13 +238,14 @@ class ReferenceStoreSession(object):
         waiter = table.meta.client.get_waiter('table_exists')
         waiter.wait(TableName=self.table_name)
 
-    def validate(self, data: dict, raise_on_invalid: bool = True) -> bool:
+    def validate_extracted(self, reference: dict,
+                           raise_on_invalid: bool = True) -> bool:
         """
         Validate reference data against the configured JSON schema.
 
         Parameters
         ----------
-        data : dict
+        data : list
         raise_on_invalid : bool
             If True, a ValueError will be raised if invalid. Otherwise, just
             returns False.
@@ -100,12 +259,13 @@ class ReferenceStoreSession(object):
         ValueError
             Raised when the data in ``references`` is invalid.
         """
-        if self.schema is None:
+        if self.extracted_schema is None:
             logger.info("No schema available; skipping validation.")
             return True
 
+        # for reference in data:
         try:
-            jsonschema.validate(data, self.schema)
+            jsonschema.validate(reference, self.extracted_schema)
         except jsonschema.ValidationError as e:
             logger.error("Invalid data: %s" % e)
             if raise_on_invalid:
@@ -113,17 +273,63 @@ class ReferenceStoreSession(object):
             return False
         return True
 
-    def _prepare(self, document_id: str, references: Data) -> dict:
-        now = datetime.datetime.now().isoformat()
-        data = {
-            'document': document_id,
-            'references': references,
-            'created': now,
-            'updated': now
-        }
-        return data
+    def validate_stored(self, reference: dict,
+                        raise_on_invalid: bool = True) -> bool:
+        """
+        Validate reference data against the configured JSON schema.
 
-    def create(self, document_id: str, references: Data) -> None:
+        Parameters
+        ----------
+        data : list
+        raise_on_invalid : bool
+            If True, a ValueError will be raised if invalid. Otherwise, just
+            returns False.
+
+        Returns
+        -------
+        bool
+
+        Raises
+        ------
+        ValueError
+            Raised when the data in ``references`` is invalid.
+        """
+        if self.stored_schema is None:
+            logger.info("No schema available; skipping validation.")
+            return True
+
+        # for reference in data:
+        try:
+            jsonschema.validate(reference, self.stored_schema)
+        except jsonschema.ValidationError as e:
+            logger.error("Invalid data: %s" % e)
+            if raise_on_invalid:
+                raise ValueError('%s' % e) from e
+            return False
+        return True
+
+    def hash(self, document_id: str, raw: str, version: str):
+        """
+        Generate a unique hash for an extracted reference.
+
+        Parameters
+        ----------
+        document_id : str
+        raw : str
+            Raw reference string.
+        version: str
+
+        Returns
+        -------
+        bytes
+            Base64-encoded identifier.
+        """
+        to_encode = '%s:%s:%s' % (document_id, raw, version)
+        hash_string = bytes(to_encode, encoding='ascii')
+        return str(b64encode(hash_string), encoding='utf-8')
+
+    def create(self, document_id: str, references: ReferenceData,
+               version: str) -> None:
         """
         Insert a new reference data set into the data store.
 
@@ -133,6 +339,15 @@ class ReferenceStoreSession(object):
             arXiv identifier for a document.
         references : list
             A list of references (dicts) extracted from a document.
+        version : str
+            The application version for this extraction.
+
+        Returns
+        -------
+        str
+            Extraction identifier.
+        list
+            Reference data, updated with identifiers.
 
         Raises
         ------
@@ -141,17 +356,53 @@ class ReferenceStoreSession(object):
         IOError
             Raised when the data was not successfully written to the database.
         """
-        data = self._prepare(document_id, references)
-        self.validate(data)    # Allow ValueError to percolate up.
+        created = datetime.datetime.now().isoformat()
+        extraction = self.extractions.hash(document_id, version, created)
+        document_extraction = '%s#%s' % (document_id, extraction)
 
         try:
-            self.table.put_item(Item=data)
+            with self.table.batch_writer() as batch:
+                for order, reference in enumerate(references):
+                    self.validate_extracted(reference)
+                    identifier = self.hash(document_id, reference['raw'],
+                                           version)
+                    reference.update({
+                        'document': document_id,
+                        'document_extraction': document_extraction,
+                        'created': created,
+                        'version': Decimal(version),
+                        'identifier': identifier,
+                        'order': order
+                    })
+                    self.validate_stored(reference)
+                    # self.table.put_item(Item=reference)
+                    batch.put_item(Item=reference)
         except ClientError as e:
             raise IOError('Failed to create: %s' % e) from e
 
-    def retrieve(self, document_id: str) -> dict:
+        self.extractions.create(document_id, version, created)
+        return extraction, references
+
+    def retrieve(self, document_id: str, identifier: str) -> dict:
         """
-        Retrieve reference data for an arXiv document.
+        """
+        expression = Key('document').eq(document_id) \
+            & Key('identifier').eq(identifier)
+
+        response = self.table.query(
+            IndexName='DocumentVersionIndex',
+            KeyConditionExpression=expression,
+            Limit=1
+        )
+        if len(response['Items']) == 0:
+            msg = 'No such reference %s for document %s' %\
+                (identifier, document_id)
+            raise IOError(msg)
+        return response['Items'][0]
+
+    def retrieve_latest(self, document_id: str) -> dict:
+        """
+        Retrieve the most recent extracted references for a document.
 
         Parameters
         ----------
@@ -160,7 +411,27 @@ class ReferenceStoreSession(object):
 
         Returns
         -------
-        dict
+        list or None
+        """
+        latest = self.extractions.latest(document_id)
+        if latest is None:
+            return None    # No extractions for this document.
+        return self.retrieve_all(document_id, latest.get('extraction'))
+
+    def retrieve_all(self, document_id: str, extraction: str = None) -> dict:
+        """
+        Retrieve reference data for an arXiv document.
+
+        Parameters
+        ----------
+        document_id : str
+            Document identifier, e.g. ``arxiv:1234.5678``.
+        extraction : str
+            Extraction version.
+
+        Returns
+        -------
+        list or None
 
         Raises
         ------
@@ -168,18 +439,21 @@ class ReferenceStoreSession(object):
             Raised when we are unable to read from the DynamoDB database, or
             when the database returns a malformed response.
         """
+        document_extraction = '%s#%s' % (document_id, extraction)
+        expression = Key('document_extraction').eq(document_extraction)
         try:
-            response = self.table.get_item(Key={'document': document_id})
+            response = self.table.query(
+                # IndexName='DocumentOrderIndex',
+                Select='ALL_ATTRIBUTES',
+                KeyConditionExpression=expression
+            )
         except ClientError as e:
             raise IOError('Failed to read: %s' % e) from e
 
-        if 'Item' not in response:   # No such record.
-            return None
+        if 'Items' not in response or len(response['Items']) == 0:
+            return None    # No such record.
 
-        if 'references' not in response['Item']:
-            raise IOError('Bad response from database')
-
-        return response['Item']['references']
+        return response['Items']
 
 
 def get_session() -> ReferenceStoreSession:
@@ -190,9 +464,13 @@ def get_session() -> ReferenceStoreSession:
     -------
     :class:`.ReferenceStoreSession`
     """
-    schema_path = os.environ.get('REFLINK_SCHEMA', None)
+    extracted_schema_path = os.environ.get('REFLINK_EXTRACTED_SCHEMA', None)
+    stored_schema_path = os.environ.get('REFLINK_STORED_SCHEMA', None)
     endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
-    aws_access_key = os.environ.get('AWS_ACCESS_KEY', 'asdf1234')
-    aws_secret_key = os.environ.get('AWS_SECRET_KEY', 'fdsa5678')
-    return ReferenceStoreSession(endpoint_url, schema_path, aws_access_key,
-                                 aws_secret_key)
+    aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
+    aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+    return ReferenceStoreSession(endpoint_url,
+                                 extracted_schema_path=extracted_schema_path,
+                                 stored_schema_path=stored_schema_path,
+                                 aws_access_key=aws_access_key,
+                                 aws_secret_key=aws_secret_key)

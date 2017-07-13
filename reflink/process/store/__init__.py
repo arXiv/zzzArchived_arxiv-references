@@ -11,7 +11,8 @@ logging.basicConfig(format=log_format, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-def store_metadata(metadata: ReferenceMetadata, document_id: str) -> None:
+def store_metadata(metadata: ReferenceMetadata, document_id: str,
+                   version: str) -> None:
     """
     Deposit extracted reference metadata in the datastore.
 
@@ -21,6 +22,9 @@ def store_metadata(metadata: ReferenceMetadata, document_id: str) -> None:
         A list of reference metadata (dict) extracted from an arXiv
         publication.
     document_id : str
+        ArXiv identifier, including paper version.
+    version: str
+        The reference extraction application version.
 
     Raises
     ------
@@ -31,7 +35,7 @@ def store_metadata(metadata: ReferenceMetadata, document_id: str) -> None:
     data_session = data_store.get_session()
     try:
         # Should return the data with reference hashes inserted.
-        metadata = data_session.create(document_id, metadata)
+        metadata = data_session.create(document_id, metadata, version)
     except IOError as e:    # Separating this out in case we want to retry.
         msg = 'Could not store metadata for document %s: %s' % (document_id, e)
         logger.error(msg)
