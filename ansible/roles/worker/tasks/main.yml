@@ -24,7 +24,7 @@
     #group: "{{ reflink_user }}"
     mode: "u=rwx,g=r,o=r"
 
-  #become_user: "{{ reflink_user }}"
+
 
 # - name: copy service script (for Centos/RHEL 7)
 #   copy:

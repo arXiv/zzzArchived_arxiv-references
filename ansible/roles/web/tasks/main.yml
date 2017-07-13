@@ -2,3 +2,15 @@
   yum:
     name: httpd24
     state: present
+
+- name: send apache configuration file
+  copy:
+    src: files/arxiv-reflink.conf
+    dest: /etc/httpd/conf.modules.d/arxiv-reflink.conf
+    force: yes
+
+- name: enable and start service
+  service:
+    name: httpd
+    enabled: yes
+    state: restarted
