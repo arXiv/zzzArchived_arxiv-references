@@ -1,7 +1,62 @@
-- name: make sure apache is installed
+- name: make sure apache, other libraries are installed
   yum:
-    name: httpd24
+    name:
+      - httpd24
+      - make
+      - uuid
+      - libuuid-devel
+      - python35-devel
+      - gcc
+      - gcc-c++
+      - httpd24-devel
     state: present
+
+- name: unarchive mod_wsgi
+  unarchive:
+    src: files/mod_wsgi-4.5.15.tar.gz
+    dest: /opt
+    creates: /opt/mod_wsgi-4.5.15
+
+
+- name: clean up mod_wsgi
+  command: make clean
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+
+- name: clean up mod_wsgi,
+  command: make distclean
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+
+- name: configure mod_wsgi build
+  command: ./configure --with-python=/usr/bin/python3
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+    # creates: /opt/mod_wsgi-4.5.15/Makefile
+
+- name: build mod_wsgi
+  command: make
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+
+- name: install mod_wsgi
+  command: make install
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+
+# - name: symlink to mod_wsgi
+#   file:
+#     src: /usr/lib64/httpd/modules/mod_wsgi.so
+#     dest: /etc/httpd/libexec/httpd/mod_wsgi.so
+#     state: link
+
+- name: give apache execute access
+  file:
+    path: /opt/reflink/arxiv-reflink
+    owner: apache
+    group: apache
+    recurse: yes
+    mode: 0755
 
 - name: send apache configuration file
   copy:

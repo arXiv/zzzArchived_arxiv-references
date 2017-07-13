@@ -45,7 +45,6 @@
     chdir: /usr/src/Python-3.6.1
     creates: /opt/bin/python3.6
 
-
 - name: get pip installer
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
