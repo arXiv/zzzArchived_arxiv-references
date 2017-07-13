@@ -6,11 +6,11 @@ See `the celery docs
 """
 
 import os
-import urllib
+from urllib import parse
 
 # broker_url = os.environ.get('REFLINK_SQS_ENDPOINT', 'redis:///')
 AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
-AWS_SECRET_KEY = urllib.parse.quote(os.environ.get('AWS_SECRET_KEY'), safe='')
+AWS_SECRET_KEY = parse.quote(os.environ.get('AWS_SECRET_KEY'), safe='')
 broker_url = "sqs://{}:{}@".format(AWS_ACCESS_KEY, AWS_SECRET_KEY)
 broker_transport_options = {
     'region': os.environ.get('AWS_REGION', 'us-east-1'),
