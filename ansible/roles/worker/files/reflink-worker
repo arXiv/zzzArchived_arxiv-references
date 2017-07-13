@@ -21,9 +21,9 @@ restart)
    ;;
 status)
    if [ -e /var/run/hit.pid ]; then
-      echo reflink consumer is running, pid=`cat /var/run/hit.pid`
+      echo reflink worker is running, pid=`cat /var/run/hit.pid`
    else
-      echo reflink consumer is NOT running
+      echo reflink worker is NOT running
       exit 1
    fi
    ;;
