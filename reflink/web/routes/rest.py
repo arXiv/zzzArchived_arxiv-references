@@ -10,7 +10,7 @@ from reflink import status
 blueprint = Blueprint('reflink_api', __name__, url_prefix='/api')
 
 
-@blueprint.route('', methods=['GET'])
+@blueprint.route('/status', methods=['GET'])
 def ok() -> ViewResponseData:
     return jsonify({'hello': 'world'}), status.HTTP_200_OK
 
