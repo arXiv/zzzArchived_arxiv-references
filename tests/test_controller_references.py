@@ -8,18 +8,67 @@ from reflink.services import data_store
 from reflink import status
 
 
-class TestReferenceMetadataController(unittest.TestCase):
-    """Test the :class:`.references.ReferenceMetadataController` controller."""
+class TestReferenceMetadataControllerList(unittest.TestCase):
+    """Test the references.ReferenceMetadataController.list method."""
 
     @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
+    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
     def test_get_calls_datastore_session(self, retrieve_mock):
-        """Test :meth:`.references.ReferenceMetadataController.get` method."""
+        """Test references.ReferenceMetadataController.list method."""
         retrieve_mock.return_value = []
         controller = references.ReferenceMetadataController()
 
         try:
-            response, status_code = controller.get('arxiv:1234.5678')
+            response, status_code = controller.list('arxiv:1234.5678')
+        except TypeError:
+            self.fail('ReferenceMetadataController.list should return a tuple')
+        self.assertEqual(retrieve_mock.call_count, 1)
+
+    @mock_dynamodb2
+    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
+    def test_get_handles_IOError(self, retrieve_mock):
+        """Test the case that the underlying datastore raises an IOError."""
+        def raise_ioerror(*args):
+            raise IOError('Whoops!')
+        retrieve_mock.side_effect = raise_ioerror
+
+        controller = references.ReferenceMetadataController()
+
+        try:
+            response, status_code = controller.list('arxiv:1234.5678')
+        except TypeError:
+            self.fail('ReferenceMetadataController.list should return a tuple')
+
+        self.assertEqual(status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @mock_dynamodb2
+    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
+    def test_get_handles_nonexistant_record(self, retrieve_mock):
+        """Test the case that a non-existant record is requested."""
+        retrieve_mock.return_value = None
+
+        controller = references.ReferenceMetadataController()
+
+        try:
+            response, status_code = controller.list('arxiv:1234.5678')
+        except TypeError:
+            self.fail('ReferenceMetadataController.list should return a tuple')
+
+        self.assertEqual(status_code, status.HTTP_404_NOT_FOUND)
+
+
+class TestReferenceMetadataControllerGet(unittest.TestCase):
+    """Test the references.ReferenceMetadataController.get method."""
+
+    @mock_dynamodb2
+    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
+    def test_get_calls_datastore_session(self, retrieve_mock):
+        """Test references.ReferenceMetadataController.get method."""
+        retrieve_mock.return_value = []
+        controller = references.ReferenceMetadataController()
+
+        try:
+            response, status_code = controller.get('arxiv:1234.5678', 'asdf')
         except TypeError:
             self.fail('ReferenceMetadataController.get should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
@@ -35,7 +84,7 @@ class TestReferenceMetadataController(unittest.TestCase):
         controller = references.ReferenceMetadataController()
 
         try:
-            response, status_code = controller.get('arxiv:1234.5678')
+            response, status_code = controller.get('arxiv:1234.5678', 'asdf')
         except TypeError:
             self.fail('ReferenceMetadataController.get should return a tuple')
 
@@ -50,7 +99,7 @@ class TestReferenceMetadataController(unittest.TestCase):
         controller = references.ReferenceMetadataController()
 
         try:
-            response, status_code = controller.get('arxiv:1234.5678')
+            response, status_code = controller.get('arxiv:1234.5678', 'asdf')
         except TypeError:
             self.fail('ReferenceMetadataController.get should return a tuple')
 

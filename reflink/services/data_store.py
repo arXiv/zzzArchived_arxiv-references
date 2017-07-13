@@ -50,10 +50,6 @@ class ExtractionSession(object):
             ],
             AttributeDefinitions=[
                 {"AttributeName": 'document', "AttributeType": "S"},
-                # {
-                #     "AttributeName": 'extraction',
-                #     "AttributeType": "S"
-                # },
                 {"AttributeName": 'version', "AttributeType": "N"}
             ],
             ProvisionedThroughput={    # TODO: make this configurable.
@@ -187,7 +183,7 @@ class ReferenceStoreSession(object):
             logger.error("Could not load schema at %s" % extracted_schema_path)
             logger.info("Extracted reference validation is disabled")
             self.extracted_schema = None
-            self.table_name = 'ExtractedReference'
+            # self.table_name = 'ExtractedReference'
 
         try:
             self._create_table()
