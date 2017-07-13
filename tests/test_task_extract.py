@@ -52,9 +52,10 @@ class TestCERMINEExtractor(unittest.TestCase):
         # create the full document using the data_store
         fulldoc = mock_full_dock(jsondoc)
 
-        schema_path = 'schema/references.json'
+        schema_path = 'schema/ExtractedReference.json'
         schemadoc = json.load(open(schema_path))
-        jsonschema.validate(fulldoc, schemadoc)
+        for ref in jsondoc:
+            jsonschema.validate(ref, schemadoc)
 
     def test_pdf_not_found(self):
         pdf_document_path = 'tests/data/1702.07335.pdf'

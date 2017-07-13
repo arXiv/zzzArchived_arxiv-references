@@ -1,13 +1,46 @@
 """Tests for the :mod:`reflink.services.data_store` module."""
 import unittest
-import boto3
 import os
 from moto import mock_dynamodb2
 
 from reflink.services import data_store
+import logging
+for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
+             'botocore.credentials', 'botocore.client',
+             'botocore.retryhandler', 'botocore.parsers', 'botocore.waiter',
+             'botocore.args']:
+    logger = logging.getLogger(name)
+    logger.setLevel('ERROR')
 
 
-schema_path = 'schema/references.json'
+schema_path = 'schema/StoredReference.json'
+extracted_path = 'schema/ExtractedReference.json'
+dynamodb_endpoint = 'http://localhost:4569'
+os.environ.setdefault('REFLINK_STORED_SCHEMA', schema_path)
+os.environ.setdefault('REFLINK_EXTRACTED_SCHEMA', extracted_path)
+# os.environ.setdefault('REFLINK_DYNAMODB_ENDPOINT', dynamodb_endpoint)
+
+
+valid_data = [
+    {
+        "raw": "Peirson et al 2015 blah blah",
+        "reftype": "journalArticle"
+    },
+    {
+        "raw": "Jones 2012",
+        "reftype": "journalArticle"
+    },
+    {
+        "raw": "Majumbdar 1968 etc",
+        "reftype": "journalArticle"
+    },
+    {
+        "raw": "The brown fox, 1921",
+        "reftype": "journalArticle"
+    },
+]
+document_id = 'arxiv:1234.5678'
+version = '0.1'
 
 
 class StoreReference(unittest.TestCase):
@@ -22,16 +55,10 @@ class StoreReference(unittest.TestCase):
         a ValueError.
         """
         invalid_data = [{"foo": "bar", "baz": 347}]
-        document_id = 'arxiv:1234.5678'
-        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
 
         session = data_store.get_session()
         with self.assertRaises(ValueError):
-            session.create(document_id, invalid_data)
-
-        dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('ReferenceSet')
-        table.get_item(Key={'document': document_id})
+            session.create(document_id, invalid_data, version)
 
     @mock_dynamodb2
     def test_valid_data_is_stored(self):
@@ -40,53 +67,73 @@ class StoreReference(unittest.TestCase):
 
         If the data is valid, it should be inserted into the database.
         """
-        valid_data = [
-            {
-                "raw": "Peirson et al 2015 blah blah",
-                "reftype": "journalArticle"
-            }
-        ]
-        document_id = 'arxiv:1234.5678'
-        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
-
         session = data_store.get_session()
-        session.create(document_id, valid_data)
+        extraction, data = session.create(document_id, valid_data, version)
 
         # Get the data that we just inserted.
-        dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('ReferenceSet')
-        item = table.get_item(Key={'document': document_id})
-        self.assertIsInstance(item, dict)
-        self.assertEqual(item['ResponseMetadata']['HTTPStatusCode'], 200)
+        retrieved = session.retrieve_all(document_id, extraction)
+        self.assertEqual(len(data), len(retrieved))
+        self.assertEqual(len(valid_data), len(retrieved))
 
 
 class RetrieveReference(unittest.TestCase):
     """Test retrieving data from the datastore."""
 
     @mock_dynamodb2
-    def test_retrieve_by_arxiv_id(self):
+    def test_retrieve_by_arxiv_id_and_extraction(self):
         """
-        Test retrieving data from the datastore.
+        Test retrieving data for a specific document from the datastore.
 
         After a set of references are saved, we should be able to retrieve
-        those references using the arXiv identifier.
+        those references using the arXiv identifier and extraction id.
         """
-        valid_data = [
-            {
-                "raw": "Peirson et al 2015 blah blah",
-                "reftype": "journalArticle"
-            }
-        ]
-        document_id = 'arxiv:1234.5678'
-        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
-
         session = data_store.get_session()
-        session.create(document_id, valid_data)
+        extraction, data = session.create(document_id, valid_data, version)
 
-        data = session.retrieve(document_id)
-        # self.assertEqual(data['document'], document_id)
-        self.assertEqual(data[0]['raw'], valid_data[0]['raw'])
-        self.assertEqual(data[0]['reftype'], valid_data[0]['reftype'])
+        retrieved = session.retrieve_all(document_id, extraction)
+        self.assertEqual(len(data), len(valid_data))
+
+        # Order should be preserved.
+        for original, returned, final in zip(valid_data, data, retrieved):
+            self.assertEqual(original['raw'], returned['raw'])
+            self.assertEqual(original['raw'], final['raw'])
+
+    @mock_dynamodb2
+    def test_retrieve_latest_by_arxiv_id(self):
+        """
+        Test retrieving data for the latest extraction from a document.
+
+        After a set of references are saved, we should be able to retrieve
+        the latest references using the arXiv identifier.
+        """
+        session = data_store.get_session()
+        first_extraction, _ = session.create(document_id, valid_data, version)
+        new_version = '0.2'
+        second_extraction, _ = session.create(document_id, valid_data[::-1],
+                                              new_version)
+
+        data = session.retrieve_latest(document_id)
+        self.assertEqual(len(data), len(valid_data),
+                         "Only one set of references should be retrieved.")
+
+        # Order should be preserved.
+        for first, second, final in zip(valid_data, valid_data[::-1], data):
+            self.assertNotEqual(first['raw'], final['raw'])
+            self.assertEqual(second['raw'], final['raw'])
+
+    @mock_dynamodb2
+    def test_retrieve_specific_reference(self):
+        """
+        Test retrieving data for a specific reference in a document.
+
+        After a set of references are saved, we should be able to retrieve
+        a specific reference by its document id and identifier.
+        """
+        session = data_store.get_session()
+        extraction, data = session.create(document_id, valid_data, version)
+        identifier = data[0]['identifier']
+        retrieved = session.retrieve(document_id, identifier)
+        self.assertEqual(data[0]['raw'], retrieved['raw'])
 
     @mock_dynamodb2
     def test_retrieving_nonexistant_record_returns_none(self):
@@ -96,11 +143,8 @@ class RetrieveReference(unittest.TestCase):
         If the record does not exist, attempting to retrieve it should simply
         return ``None``.
         """
-        document_id = 'arxiv:1234.5678'
-        os.environ.setdefault('REFLINK_SCHEMA', schema_path)
-
         session = data_store.get_session()
-        data = session.retrieve(document_id)
+        data = session.retrieve_latest('nonsense')
         self.assertEqual(data, None)
 
 

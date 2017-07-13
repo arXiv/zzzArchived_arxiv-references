@@ -9,10 +9,34 @@ from reflink.types import ViewResponseData
 blueprint = Blueprint('reflink_api', __name__, url_prefix='/api')
 
 
-@blueprint.route('/references/<string:document_id>', methods=['GET'])
+@blueprint.route('/references/<string:document_id>/ref/<string:reference_id>',
+                 methods=['GET'])
 def get_reference_metadata(document_id: str) -> ViewResponseData:
     """
-    Retrieve reference metadata for an arXiv publication.
+    Retrieve metadata for a specific reference in an arXiv publication.
+
+    Parameters
+    ----------
+    document_id : str
+    reference_id : str
+
+    Returns
+    -------
+    :class:`flask.Response`
+        JSON response.
+    int
+        HTTP status code. See :mod:`reflink.status` for details.
+    """
+    controller = references.ReferenceMetadataController()
+    response, status = controller.get(document_id)
+    return jsonify(response), status
+
+
+@blueprint.route('/references/<string:document_id>',
+                 methods=['GET'])
+def get_reference_metadata_list(document_id: str) -> ViewResponseData:
+    """
+    Retrieve all reference metadata for an arXiv publication.
 
     Parameters
     ----------
@@ -26,7 +50,7 @@ def get_reference_metadata(document_id: str) -> ViewResponseData:
         HTTP status code. See :mod:`reflink.status` for details.
     """
     controller = references.ReferenceMetadataController()
-    response, status = controller.get(document_id)
+    response, status = controller.list(document_id)
     return jsonify(response), status
 
 
@@ -46,5 +70,5 @@ def get_pdf_location(document_id: str) -> ViewResponseData:
     int
         HTTP status code. See :mod:`reflink.status` for details.
     """
-    response, status = pdf.PDFController().get(document_id)
+    response, status = pdf.PDFController().list(document_id)
     return jsonify(response), status
