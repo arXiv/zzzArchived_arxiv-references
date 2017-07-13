@@ -70,3 +70,8 @@
   template:
     src: templates/secrets
     dest: /opt/reflink/secrets
+
+- name: copy Python secrets for webapp
+  template:
+    src: templates/secrets.py
+    dest: /opt/reflink/arxiv-reflink/reflink/secrets.py
