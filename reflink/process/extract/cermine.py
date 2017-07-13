@@ -5,6 +5,7 @@ import subprocess
 import xml.etree.ElementTree
 
 from reflink.process import util
+from reflink.process.extract import regex_identifiers
 
 import logging
 logging.basicConfig(
@@ -142,6 +143,12 @@ def cxml_format_document(root, documentid=''):
             key: func(refroot) for key, func in reference_constructor.items()
         }
         reference.update(unknown_properties)
+
+        # add regex extracted information to the metadata (not CERMINE's)
+        rawline = reference.get('raw', '')
+        identifiers = regex_identifiers.extract_identifiers(rawline)
+        reference.update(identifiers)
+
         references.append(reference)
 
     return references
