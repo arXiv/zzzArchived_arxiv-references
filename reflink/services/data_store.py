@@ -222,7 +222,7 @@ class ReferenceStoreSession(object):
                         'WriteCapacityUnits': 5
                     },
                     'Projection': {
-                        "ProjectionType" : 'ALL'
+                        "ProjectionType": 'ALL'
                     }
                 },
             ],

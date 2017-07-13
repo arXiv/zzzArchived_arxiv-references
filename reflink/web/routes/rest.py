@@ -1,4 +1,4 @@
-"""Provides REST API views."""
+"""Provides REST API routes."""
 
 from flask.json import jsonify
 from flask import Blueprint
