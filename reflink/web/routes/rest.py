@@ -5,8 +5,14 @@ from flask import Blueprint
 
 from reflink.web.controllers import references, pdf
 from reflink.types import ViewResponseData
+from reflink import status
 
 blueprint = Blueprint('reflink_api', __name__, url_prefix='/api')
+
+
+@blueprint.route('', methods=['GET'])
+def ok() -> ViewResponseData:
+    return jsonify({'hello': 'world'}), status.HTTP_200_OK
 
 
 @blueprint.route('/references/<string:document_id>/ref/<string:reference_id>',
@@ -32,8 +38,7 @@ def get_reference_metadata(document_id: str) -> ViewResponseData:
     return jsonify(response), status
 
 
-@blueprint.route('/references/<string:document_id>',
-                 methods=['GET'])
+@blueprint.route('/references/<string:document_id>', methods=['GET'])
 def get_reference_metadata_list(document_id: str) -> ViewResponseData:
     """
     Retrieve all reference metadata for an arXiv publication.
