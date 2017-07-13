@@ -15,6 +15,11 @@ Retriever:
 
 import tempfile
 import requests
+import logging
+
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 def retrieve(document_id: str) -> tuple:
@@ -31,19 +36,26 @@ def retrieve(document_id: str) -> tuple:
     source_path : str
     """
     pdf_response = requests.get('https://arxiv.org/pdf/%s.pdf' % document_id)
-    if pdf_response.status_code != requests.codes.ok:
-        raise IOError('Could not retrieve PDF for %s' % document_id)
+    if pdf_response.status_code == requests.codes.NOT_FOUND:
+        logger.info('Could not retrieve PDF for %s' % document_id)
+        return None, None
+    elif pdf_response.status_code != requests.codes.ok:
+        raise IOError('Unexpected status for %s PDF' % document_id)
 
     _, pdf_path = tempfile.mkstemp(prefix=document_id, suffix='.pdf')
     with open(pdf_path, 'wb') as f:
         f.write(pdf_response.content)
 
+    # Retrieve the document source, if it exists.
     src_response = requests.get('https://arxiv.org/e-print/%s' % document_id)
-    if src_response.status_code != requests.codes.ok:
-        raise IOError('Could not retrieve source for %s' % document_id)
-
-    _, source_path = tempfile.mkstemp(prefix=document_id, suffix='.tar.gz')
-    with open(source_path, 'wb') as f:
-        f.write(src_response.content)
+    if src_response.status_code == requests.codes.NOT_FOUND:
+        logger.info('Could not retrieve source for %s' % document_id)
+        source_path = None
+    elif src_response.status_code != requests.codes.ok:
+        raise IOError('Unexpected status for %s source' % document_id)
+    else:
+        _, source_path = tempfile.mkstemp(prefix=document_id, suffix='.tar.gz')
+        with open(source_path, 'wb') as f:
+            f.write(src_response.content)
 
     return pdf_path, source_path
