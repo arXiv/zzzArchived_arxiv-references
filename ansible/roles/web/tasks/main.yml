@@ -44,12 +44,6 @@
   args:
     chdir: /opt/mod_wsgi-4.5.15
 
-# - name: symlink to mod_wsgi
-#   file:
-#     src: /usr/lib64/httpd/modules/mod_wsgi.so
-#     dest: /etc/httpd/libexec/httpd/mod_wsgi.so
-#     state: link
-
 - name: give apache execute access
   file:
     path: /opt/reflink/arxiv-reflink
@@ -58,10 +52,22 @@
     recurse: yes
     mode: 0755
 
-- name: send apache configuration file
+- name: send custom apache configuration file
+  copy:
+    src: files/httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+    force: yes
+
+- name: send mod_wsgi configuration file
+  copy:
+    src: files/mod_wsgi.conf
+    dest: /etc/httpd/conf.modules.d/mod_wsgi.conf
+    force: yes
+
+- name: send reflink configuration file
   copy:
     src: files/arxiv-reflink.conf
-    dest: /etc/httpd/conf.modules.d/arxiv-reflink.conf
+    dest: /etc/httpd/conf.d/arxiv-reflink.conf
     force: yes
 
 - name: enable and start service
