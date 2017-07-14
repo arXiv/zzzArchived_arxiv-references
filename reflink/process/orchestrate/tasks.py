@@ -37,13 +37,13 @@ def process_document(document_id: str) -> None:
         logger.info('Extracting metadata for %s' % document_id)
         metadata = extract(pdf_path)    # TODO: add reconciliation step.
         logger.info('Extracted metadata for %s' % document_id)
-        logger.debug('Extracted: %s' % metadata)
+        # logger.debug('Extracted: %s' % metadata)
 
         # Should return the data with reference hashes inserted.
         logger.info('Storing metadata for %s' % document_id)
-        metadata = store_metadata(metadata, document_id, VERSION)
+        extraction, metadata = store_metadata(metadata, document_id, VERSION)
         logger.info('Stored metadata for %s' % document_id)
-        logger.debug('Stored: %s' % metadata)
+        # logger.debug('Stored: %s' % str(metadata))
 
         logger.info('Injecting links for %s' % document_id)
         logger.debug('Injecting in source: %s' % tex_path)
