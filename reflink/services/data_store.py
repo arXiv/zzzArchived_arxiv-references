@@ -473,4 +473,5 @@ def get_session() -> ReferenceStoreSession:
                                  extracted_schema_path=extracted_schema_path,
                                  stored_schema_path=stored_schema_path,
                                  aws_access_key=aws_access_key,
-                                 aws_secret_key=aws_secret_key)
+                                 aws_secret_key=aws_secret_key,
+                                 region_name=region_name)
