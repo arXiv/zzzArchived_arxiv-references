@@ -1,8 +1,13 @@
 - name: make sure that docker-py is installed
-  pip: name=docker-py state=latest executable=/usr/local/bin/pip
+  pip: name=docker-py state=latest
 
 - name: make sure docker is installed
   yum: name=docker state=latest
+
+- name: make sure docker is running
+  service:
+    name: docker
+    state: started
 
 - name: create worker user
   user: name=reflinkworker groups=docker state=present
@@ -17,26 +22,28 @@
   file:
     path: /var/log/reflink-worker.log
     owner: reflinkworker
+    state: touch
+    mode: 0666
 
-- name: copy cermine jar
-  copy:
-    src: files/cermine-impl-1.12-jar-with-dependencies.jar
-    dest: /opt/reflink/arxiv-reflink/docker/cermine/cermine-impl-1.12-jar-with-dependencies.jar
+# - name: copy cermine jar
+#   copy:
+#     src: files/cermine-impl-1.12-jar-with-dependencies.jar
+#     dest: /opt/reflink/arxiv-reflink/docker/cermine/cermine-impl-1.12-jar-with-dependencies.jar
 
-- name: build cermine docker image
-  docker_image:
-     path: /opt/reflink/arxiv-reflink/docker/cermine
-     name: mattbierbaum/cermine
+# - name: build cermine docker image
+#   docker_image:
+#      path: /opt/reflink/arxiv-reflink/docker/cermine
+#      name: mattbierbaum/cermine
 
-- name: prepare autotex docker
-  command: ./prepare-autotex.sh
-  args:
-    chdir: /opt/reflink/arxiv-reflink/docker/autotex
+# - name: prepare autotex docker
+#   command: ./prepare-autotex.sh
+#   args:
+#     chdir: /opt/reflink/arxiv-reflink/docker/autotex
 
-- name: build autotex docker image
-  docker_image:
-    path: /opt/reflink/arxiv-reflink/docker/autotex
-    name: mattbierbaum/autotex
+# - name: build autotex docker image
+#   docker_image:
+#     path: /opt/reflink/arxiv-reflink/docker/autotex
+#     name: mattbierbaum/autotex
 
 - name: copy startup assets
   copy:
@@ -49,6 +56,7 @@
     src: files/reflink-worker
     dest: /etc/init.d/reflink-worker
     mode: 0755
+    owner: reflinkworker
 
   # when: "'ec2hosts' in group_names"
 

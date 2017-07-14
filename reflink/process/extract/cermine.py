@@ -6,6 +6,9 @@ import xml.etree.ElementTree
 
 from reflink.process import util
 
+CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
+                                      'mattbierbaum/cermine')
+
 import logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
@@ -201,7 +204,7 @@ def extract_references(filename: str, cleanup: bool = True) -> str:
 
         try:
             # FIXME: magic string for cermine container
-            util.run_docker('mattbierbaum/cermine', [[tmpdir, '/pdfs']])
+            util.run_docker('arxiv/cermine:latest', [[tmpdir, '/pdfs']])
         except subprocess.CalledProcessError as exc:
             logger.error(
                 'CERMINE failed to extract references for {}'.format(filename)

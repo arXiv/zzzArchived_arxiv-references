@@ -9,3 +9,4 @@ os.environ['REFLINK_SQS_ENDPOINT'] = "sqs://{{ aws_access_key }}:{{ aws_secret_k
 os.environ['REFLINK_S3_BUCKET'] = "{{ s3_bucket }}"
 os.environ['APPLICATION_ROOT'] = '{{ application_root }}'
 os.environ['PYCURL_SSL_LIBRARY'] = 'nss'
+os.environ['REFLINK_CERMINE_DOCKER_IMAGE'] = "{{ cermine_docker_image }}"

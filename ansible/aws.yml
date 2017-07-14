@@ -7,6 +7,7 @@
     - aws_region: us-east-1
     - s3_bucket: "arxiv-reflink-proto"
     - application_root: "/"
+    - cermine_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/autotex"
   roles:
     - reflink
 #
@@ -20,23 +21,23 @@
 #     - consumer
 #   become: true
 #
-# - name: Install worker role
-#   hosts: reflink-worker
-#   vars:
-#     - reflink_user: bob
-#     - aws_region: us-east-1
-#     - s3_bucket: "reflink"
-#   roles:
-#     - worker
-#   become: true
-
-- name: Install web role
-  hosts: reflink-web
+- name: Install worker role
+  hosts: reflink-worker
   vars:
     - reflink_user: bob
     - aws_region: us-east-1
-    - s3_bucket: "arxiv-reflink-proto"
-    - application_root: "/"
+    - s3_bucket: "reflink"
   roles:
-    - web
+    - worker
   become: true
+
+# - name: Install web role
+#   hosts: reflink-web
+#   vars:
+#     - reflink_user: bob
+#     - aws_region: us-east-1
+#     - s3_bucket: "arxiv-reflink-proto"
+#     - application_root: "/"
+#   roles:
+#     - web
+#   become: true

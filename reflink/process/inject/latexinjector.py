@@ -354,8 +354,6 @@ def bbl_inject_urls(text: str, references: List[str],
     replacement_bbls = []
 
     for bbl in extract_bibs(text):
-        if not bbl:
-            continue
         head = bib_items_head(bbl)
         tail = bib_items_tail(bbl)
         bibitems = list(bib_items_iter(bbl))
@@ -432,7 +430,7 @@ def run_autotex(directory: str) -> str:
 
     timestamp = datetime.datetime.now()
     util.run_docker(
-        'mattbierbaum/autotex:v0.906.0-1', [(directory, '/autotex')], 'go'
+        'arxiv/autotex:v0.906.0-1', [(directory, '/autotex')], 'go'
     )
 
     # run the conversion pipeline since autotex produces many types of files
