@@ -362,6 +362,7 @@ class ReferenceStoreSession(object):
         try:
             with self.table.batch_writer() as batch:
                 for order, reference in enumerate(references):
+                    reference = {k: v for k, v in reference.iteritems() if v}
                     self.validate_extracted(reference)
                     identifier = self.hash(document_id, reference['raw'],
                                            version)
@@ -377,7 +378,7 @@ class ReferenceStoreSession(object):
                     # self.table.put_item(Item=reference)
                     batch.put_item(Item=reference)
         except ClientError as e:
-            raise IOError('Failed to create: %s' % e) from e
+            raise IOError('Failed to create: %s; %s' % (e, reference)) from e
 
         self.extractions.create(document_id, version, created)
         return extraction, references
