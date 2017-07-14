@@ -354,6 +354,8 @@ def bbl_inject_urls(text: str, references: List[str],
     replacement_bbls = []
 
     for bbl in extract_bibs(text):
+        if not bbl:
+            continue
         head = bib_items_head(bbl)
         tail = bib_items_tail(bbl)
         bibitems = list(bib_items_iter(bbl))

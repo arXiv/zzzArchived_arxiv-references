@@ -14,7 +14,7 @@ Link injector:
 - Returns the location of the new link-injected PDF on the filesystem.
 """
 import tempfile
-from reflink.process.inject import inject_urls
+from reflink.process.inject.latexinjector import inject_urls
 
 
 def fake_inject(source_path: str, metadata: list) -> str:
