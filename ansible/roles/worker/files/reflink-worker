@@ -8,7 +8,7 @@
 
 case "$1" in
 start)
-   /sbin/runuser reflinkworker -s /bin/bash -c "/opt/reflink/bin/start_worker && echo $!>/tmp/reflinkworker.pid" &
+   sudo /sbin/runuser reflinkworker -s /bin/bash -c "/opt/reflink/bin/start_worker > /tmp/reflinkworker.pid"
    ;;
 stop)
    kill `cat /tmp/reflinkworker.pid`

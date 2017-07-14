@@ -5,41 +5,25 @@
   yum: name=docker state=latest
 
 - name: make sure docker is running
-  service:
-    name: docker
-    state: started
+  service: name=docker state=started
 
 - name: create worker user
   user: name=reflinkworker groups=docker state=present
 
-- name: register with docker registry
-  shell: |
-    export AWS_ACCESS_KEY_ID="{{ aws_acecss_key }}"
-    export AWS_SECRET_ACCESS_KEY="{{ aws_secret_key }}"
-    $(aws ecr get-login --region=us-east-1)
-
 - name: give worker user ownership
-  file:
-    path: /opt/reflink
-    owner: reflinkworker
-    recurse: yes
+  file: path=/opt/reflink owner=reflinkworker recurse=yes
 
 - name: give worker ownership of log file
-  file:
-    path: /var/log/reflink-worker.log
-    owner: reflinkworker
-    state: touch
-    mode: 0666
+  file: path=/var/log/reflink-worker.log owner=reflinkworker state=touch mode=0666
 
-# - name: copy cermine jar
-#   copy:
-#     src: files/cermine-impl-1.12-jar-with-dependencies.jar
-#     dest: /opt/reflink/arxiv-reflink/docker/cermine/cermine-impl-1.12-jar-with-dependencies.jar
+- name: register with docker registry
+  shell: |
+    export AWS_ACCESS_KEY_ID="{{ aws_access_key }}"
+    export AWS_SECRET_ACCESS_KEY="{{ aws_secret_key }}"
+    $(aws ecr get-login --region=us-east-1)
+  become_user: reflinkworker
 
-# - name: build cermine docker image
-#   docker_image:
-#      path: /opt/reflink/arxiv-reflink/docker/cermine
-#      name: mattbierbaum/cermine
+
 
 # - name: prepare autotex docker
 #   command: ./prepare-autotex.sh
