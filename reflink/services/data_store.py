@@ -259,7 +259,7 @@ class ReferenceStoreSession(object):
             Raised when the data in ``references`` is invalid.
         """
         if self.extracted_schema is None:
-            logger.info("No schema available; skipping validation.")
+            logger.debug("No schema available; skipping validation.")
             return True
 
         # for reference in data:
@@ -294,7 +294,7 @@ class ReferenceStoreSession(object):
             Raised when the data in ``references`` is invalid.
         """
         if self.stored_schema is None:
-            logger.info("No schema available; skipping validation.")
+            logger.debug("No schema available; skipping validation.")
             return True
 
         # for reference in data:

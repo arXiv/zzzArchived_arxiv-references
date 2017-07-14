@@ -75,5 +75,5 @@ def get_pdf_location(document_id: str) -> ViewResponseData:
     int
         HTTP status code. See :mod:`reflink.status` for details.
     """
-    response, status = pdf.PDFController().list(document_id)
+    response, status = pdf.PDFController().get(document_id)
     return jsonify(response), status

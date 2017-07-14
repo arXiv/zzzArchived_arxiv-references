@@ -70,9 +70,10 @@ class PDFStoreSession(object):
         IOError
             Raised when there is a problem sending the file to S3.
         """
+        fname = '%s.pdf' % document_id
         try:
             with open(filepath, 'rb') as f:   # Must produce binary when read.
-                self.s3.upload_fileobj(f, self.bucket_name, document_id)
+                self.s3.upload_fileobj(f, self.bucket_name, fname)
         except ClientError as e:
             raise IOError('Failed to upload: %s' % e)
 
@@ -90,14 +91,15 @@ class PDFStoreSession(object):
         str
             URL for PDF, e.g. to provide to a client.
         """
+        fname = '%s.pdf' % document_id
         try:
-            self.s3.head_object(Bucket=self.bucket_name, Key=document_id)
+            self.s3.head_object(Bucket=self.bucket_name, Key=fname)
         except ClientError as e:
             if e.response['Error']['Code'] == '404':    # Object doesn't exist.
                 return None
             raise IOError('Failed to retrieve URL: %s' % e) from e
         return self.URI.format(bucket_name=self.bucket_name,
-                               document_id=document_id)
+                               document_id=fname)
 
 
 def get_session() -> PDFStoreSession:

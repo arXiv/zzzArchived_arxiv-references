@@ -60,7 +60,7 @@
     force: yes
 
 - name: create app virtualenv
-  command: virtualenv /opt/reflink/venv --python=python3 --pip=/usr/local/bin/pip3
+  command: virtualenv /opt/reflink/venv --python=python3
   args:
     creates: /opt/reflink/venv
 
@@ -68,6 +68,12 @@
   pip:
     executable: /opt/reflink/venv/bin/pip3
     name: pip
+    state: latest
+
+- name: upgrade setuptools
+  pip:
+    executable: /opt/reflink/venv/bin/pip3
+    name: setuptools
     state: latest
 
 - name: install python dependencies for app

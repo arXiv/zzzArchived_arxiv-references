@@ -5,7 +5,7 @@
   vars:
     - reflink_user: bob
     - aws_region: us-east-1
-    - s3_bucket: "reflink"
+    - s3_bucket: "arxiv-reflink-proto"
     - application_root: "/"
   roles:
     - reflink
@@ -35,7 +35,7 @@
   vars:
     - reflink_user: bob
     - aws_region: us-east-1
-    - s3_bucket: "reflink"
+    - s3_bucket: "arxiv-reflink-proto"
     - application_root: "/"
   roles:
     - web
