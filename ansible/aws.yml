@@ -20,23 +20,23 @@
 #     - consumer
 #   become: true
 
-- name: Install worker role
-  hosts: reflink-worker
-  vars:
-    - reflink_user: bob
-    - aws_region: us-east-1
-    - s3_bucket: "reflink"
-  roles:
-    - worker
-  become: true
-
-# - name: Install web role
-#   hosts: reflink-web
+# - name: Install worker role
+#   hosts: reflink-worker
 #   vars:
 #     - reflink_user: bob
 #     - aws_region: us-east-1
 #     - s3_bucket: "reflink"
-#     - application_root: "/"
 #   roles:
-#     - web
+#     - worker
 #   become: true
+
+- name: Install web role
+  hosts: reflink-web
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - s3_bucket: "reflink"
+    - application_root: "/"
+  roles:
+    - web
+  become: true
