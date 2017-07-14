@@ -340,7 +340,7 @@ class ReferenceStoreSession(object):
         dict
         """
         def _inner_clean(datum):
-            return {k: v for k, v in datum if v}
+            return {k: v for k, v in datum.items() if v}
 
         return {k: v if v and k not in ['authors', 'identifiers']
                 else [_inner_clean(datum) for datum in v]

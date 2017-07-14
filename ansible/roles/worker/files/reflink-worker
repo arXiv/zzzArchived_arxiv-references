@@ -8,19 +8,19 @@
 
 case "$1" in
 start)
-   /sbin/runuser reflinkworker -s /bin/bash -c "/opt/reflink/bin/start_worker && echo $!>/var/run/reflinkworker.pid" &
+   /sbin/runuser reflinkworker -s /bin/bash -c "/opt/reflink/bin/start_worker && echo $!>/tmp/reflinkworker.pid" &
    ;;
 stop)
-   kill `cat /var/run/reflinkworker.pid`
-   rm /var/run/reflinkworker.pid
+   kill `cat /tmp/reflinkworker.pid`
+   rm /tmp/reflinkworker.pid
    ;;
 restart)
    $0 stop
    $0 start
    ;;
 status)
-   if [ -e /var/run/reflinkworker.pid ]; then
-      echo reflink worker is running, pid=`cat /var/run/reflinkworker.pid`
+   if [ -e /tmp/reflinkworker.pid ]; then
+      echo reflink worker is running, pid=`cat /tmp/reflinkworker.pid`
    else
       echo reflink worker is NOT running
       exit 1
