@@ -8,3 +8,4 @@ os.environ['REFLINK_AWS_REGION'] = "{{ aws_region }}"
 os.environ['REFLINK_SQS_ENDPOINT'] = "sqs://{{ aws_access_key }}:{{ aws_secret_key }}@"
 os.environ['REFLINK_S3_BUCKET'] = "{{ s3_bucket }}"
 os.environ['APPLICATION_ROOT'] = '{{ application_root }}'
+os.environ['PYCURL_SSL_LIBRARY'] = 'nss'

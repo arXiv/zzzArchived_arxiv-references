@@ -1,8 +1,16 @@
 - include_vars: vars/secrets.yml
 
+- name: make sure that gcc is installed
+  yum: name=gcc state=present
+
+- name: install libcurl-devel.x86_64
+  yum: name=libcurl-devel.x86_64 state=present
+
 - name: install python3
   yum:
-    name: python35
+    name:
+      - python35
+      - python35-devel
     state: present
 
 - name: get pip installer
@@ -15,9 +23,7 @@
   yum: name=epel-release state=present
 
 - name: install git
-  yum:
-    name: git
-    state: present
+  yum: name=git state=present
 
 - name: install virtualenv
   pip:
