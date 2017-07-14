@@ -13,6 +13,10 @@ categories = [
 ]
 _c = r'|'.join(categories)
 
+# this one does not include the mixed form cs.AI/1204.0123 but correctly gets
+# either pure old (cs/0123456) or pure new (arXiv:1702.01235). also allows
+# pure number format 1204.1234:
+#       cs/0123456 arXiv:1702.01235 1204.1234
 REGEX_ARXIV = (
     r'(?i:arxiv[\:\/])?'    # optional prefix of arxiv: | arXiv(:|/)
 
@@ -25,6 +29,37 @@ REGEX_ARXIV = (
       r'(?:v\d+)?'            # optional version number
     r')'                    # close match
 )
+
+# this one rejects number only 1204.0123 but does allow for pure new, pure old,
+# as well as mixed formats. due to the need to strip parts of the matched
+# format, there are two groups returned, (old match, new match)
+#       cs/0123456 arXiv:1702.01235 cs.AI/1204.0123
+REGEX_ARXIV_FULL = (
+    r'\b(?:'
+      r'(?:'
+        r'(?:'                    # IDs that include forms like 1010.01234
+          r'(?i:arxiv[:/])'         # prefix of arxiv: | arXiv(:/)
+            r'|'                      # OR
+          r'(?:'                    # prefix of cat.MIN/
+            r'(?:'+_c+r')'            # category (cs, math)
+            r'(?:[.][A-Z]{2})?/'      # subcategory (NT, AI)
+          r')'
+        r')'
+        r'('
+          r'\d{4}[.]\d{4,5}'        # numerical identifier
+          r'(?:v\d+)?'              # version number
+        r')'
+      r')'
+    r'|'                            # OR 
+      r'('
+        r'(?:'+_c+r')'            # category identifier (cs, math)
+        r'(?:[.][A-Z]{2})?/'      # optional minor category (AI, NT)
+        r'\d{7}'                  # 7 digit identifier
+        r'(?:v\d+)?'              # version number
+      r')'
+    r')\b'
+)
+
 REGEX_DOI = (
     r'(?:'                  # optional prefix / url
       r'(?:doi\://)'          # doi://
@@ -40,6 +75,16 @@ REGEX_DOI = (
     r')'                    # end match
 )
 
+REGEX_ISBN_10 = (
+    r'\b(?:ISBN(?:-10)?:?\ )?'
+    r'(?=[0-9X]{10}$|(?=(?:[0-9]+[-\ ]){3})[-\ 0-9X]{13}$)'
+    r'[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9X]\b'
+)
+REGEX_ISBN_13 = (
+    r'\b(?:ISBN(?:-13)?:?\ )?'
+    r'(?=[0-9]{13}$|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17}$)'
+    r'97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]\b'
+)
 
 def extract_identifiers(text):
     """
@@ -67,24 +112,22 @@ def extract_identifiers(text):
                 ]
             }
     """
-    arxiv_match = re.match(REGEX_ARXIV, text)
-    doi_match = re.match(REGEX_DOI, text)
+    arxivids = re.findall(REGEX_ARXIV_FULL, text)
+    dois = re.findall(REGEX_DOI, text)
 
     arxivdoc = {}
     doidoc = {}
 
-    if arxiv_match:
-        arxivid = arxiv_match.groups()[0]
+    if arxivids:
         arxivdoc = {
-            'identifiers': [{
-                'identifier_type': 'arxiv',
-                'identifier': arxivid
-             }]
+            'identifiers': [
+                {'identifier_type': 'arxiv', 'identifier': (ID[0] or ID[1])}
+                for ID in arxivids
+            ]
         }
-    if doi_match:
-        doi = doi_match.groups()[0]
+    if dois:
         doidoc = {
-            'doi': doi
+            'doi': dois[0]
         }
 
     return dict(doidoc, **arxivdoc)
