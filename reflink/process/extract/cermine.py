@@ -204,7 +204,7 @@ def extract_references(filename: str, cleanup: bool = True) -> str:
 
         try:
             # FIXME: magic string for cermine container
-            util.run_docker('arxiv/cermine:latest', [[tmpdir, '/pdfs']])
+            util.run_docker(CERMINE_DOCKER_IMAGE, [[tmpdir, '/pdfs']])
         except subprocess.CalledProcessError as exc:
             logger.error(
                 'CERMINE failed to extract references for {}'.format(filename)
