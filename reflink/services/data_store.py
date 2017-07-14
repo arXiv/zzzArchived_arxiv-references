@@ -362,7 +362,7 @@ class ReferenceStoreSession(object):
         try:
             with self.table.batch_writer() as batch:
                 for order, reference in enumerate(references):
-                    reference = {k: v for k, v in reference.iteritems() if v}
+                    reference = {k: v for k, v in reference.items() if v}
                     self.validate_extracted(reference)
                     identifier = self.hash(document_id, reference['raw'],
                                            version)
