@@ -327,6 +327,26 @@ class ReferenceStoreSession(object):
         hash_string = bytes(to_encode, encoding='ascii')
         return str(b64encode(hash_string), encoding='utf-8')
 
+    def _clean(self, reference: dict) -> dict:
+        """
+        Remove empty values.
+
+        Parameters
+        ----------
+        reference : dict
+
+        Returns
+        -------
+        dict
+        """
+        def _inner_clean(datum):
+            return {k: v for k, v in datum if v}
+
+        return {k: v if v and k not in ['authors', 'identifiers']
+                else [_inner_clean(datum) for datum in v]
+                for k, v in reference.items()}
+
+
     def create(self, document_id: str, references: ReferenceData,
                version: str) -> None:
         """
@@ -362,7 +382,7 @@ class ReferenceStoreSession(object):
         try:
             with self.table.batch_writer() as batch:
                 for order, reference in enumerate(references):
-                    reference = {k: v for k, v in reference.items() if v}
+                    reference = self._clean(reference)
                     self.validate_extracted(reference)
                     identifier = self.hash(document_id, reference['raw'],
                                            version)
