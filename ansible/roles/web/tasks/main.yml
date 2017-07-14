@@ -2,13 +2,13 @@
   yum:
     name:
       - httpd24
-      - make
+      - httpd24-devel
       - uuid
       - libuuid-devel
-      - python35-devel
+      - make
       - gcc
       - gcc-c++
-      - httpd24-devel
+      - python35-devel
     state: present
 
 - name: unarchive mod_wsgi
@@ -16,7 +16,6 @@
     src: files/mod_wsgi-4.5.15.tar.gz
     dest: /opt
     creates: /opt/mod_wsgi-4.5.15
-
 
 - name: clean up mod_wsgi
   command: make clean

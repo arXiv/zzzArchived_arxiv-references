@@ -28,9 +28,10 @@ class ExtractionSession(object):
     table_name = 'Extractions'
 
     def __init__(self, endpoint_url: str, aws_access_key: str,
-                 aws_secret_key: str) -> None:
+                 aws_secret_key: str, region_name: str) -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb',
+                                       region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
@@ -465,6 +466,7 @@ def get_session() -> ReferenceStoreSession:
     endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
     aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
     aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+    region_name = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
     return ReferenceStoreSession(endpoint_url,
                                  extracted_schema_path=extracted_schema_path,
                                  stored_schema_path=stored_schema_path,
