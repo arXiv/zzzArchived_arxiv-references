@@ -1,66 +1,11 @@
 import re
 
-categories = [
-    "acc-phys", "adap-org", "alg-geom", "ao-sci", "astro-ph", "atom-ph",
-    "bayes-an", "chao-dyn", "chem-ph", "cmp-lg", "comp-gas", "cond-mat", "cs",
-    "dg-ga", "funct-an", "gr-qc", "hep-ex", "hep-lat", "hep-ph", "hep-th",
-    "math", "math-ph", "mtrl-th", "nlin", "nucl-ex", "nucl-th", "patt-sol",
-    "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int", "supr-con"
-]
-_c = r'|'.join(categories)
-
-# this one does not include the mixed form cs.AI/1204.0123 but correctly gets
-# either pure old (cs/0123456) or pure new (arXiv:1702.01235). also allows
-# pure number format 1204.1234:
-#       cs/0123456 arXiv:1702.01235 1204.1234
-REGEX_ARXIV = (
-    r'(?i:arxiv[\:\/])?'    # optional prefix of arxiv: | arXiv(:|/)
-
-    r'('                    # begin match
-      r'(?:'                  # id vs version
-        r'(?:'+_c+r')\/\d{7}'   # IDs of the form hep-th/0123456
-          r'|'                    # OR
-        r'(?:\d{4}\.\d{4,5})'   # IDs of the form 1703.04422
-      r')'
-      r'(?:v\d+)?'            # optional version number
-    r')'                    # close match
-)
-
-# this one rejects number only 1204.0123 but does allow for pure new, pure old,
-# as well as mixed formats. due to the need to strip parts of the matched
-# format, there are two groups returned, (old match, new match)
-#       cs/0123456 arXiv:1702.01235 cs.AI/1204.0123
-REGEX_ARXIV_FULL = (
-    r'\b(?:'
-      r'(?:'
-        r'(?:'                    # IDs that include forms like 1010.01234
-          r'(?i:arxiv[:/])'         # prefix of arxiv: | arXiv(:/)
-            r'|'                      # OR
-          r'(?:'                    # prefix of cat.MIN/
-            r'(?:'+_c+r')'            # category (cs, math)
-            r'(?:[.][A-Z]{2})?/'      # subcategory (NT, AI)
-          r')'
-        r')'
-        r'('
-          r'\d{4}[.]\d{4,5}'        # numerical identifier
-          r'(?:v\d+)?'              # version number
-        r')'
-      r')'
-    r'|'                            # OR
-      r'(?i:arxiv[:/])?'          # prefix of arxiv: | arXiv(:/)
-      r'('
-        r'(?:'+_c+r')'              # category identifier (cs, math)
-        r'(?:[.][A-Z]{2})?/'        # optional minor category (AI, NT)
-        r'\d{7}'                    # 7 digit identifier
-        r'(?:v\d+)?'                # version number
-      r')'
-    r')\b'
-)
+from regex_arxiv import REGEX_ARXIV_SIMPLE, REGEX_ARXIV_FLEXIBLE
 
 # https://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 REGEX_DOI = (
     r'(?:'                      # optional prefix / url
-      r'(?:doi\://)'              # doi://
+      r'(?:doi\:(?://)?)'         # doi:(//)
         r'|'                        # OR
       r'(?:http[s]?\://'          # http[s]://
       r'(?:dx\.)?doi\.org\/)'     # (dx.)doi.org/
@@ -84,6 +29,12 @@ REGEX_ISBN_13 = (
     r'(?=[0-9]{13}$|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17}$)'
     r'97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]\b'
 )
+
+
+def longest_string(strings):
+    """ Return the longest string from the bunch """
+    index, value = max(enumerate(strings), key=lambda x: len(x[1]))
+    return value
 
 
 def extract_identifiers(text):
@@ -112,7 +63,7 @@ def extract_identifiers(text):
                 ]
             }
     """
-    arxivids = re.findall(REGEX_ARXIV_FULL, text)
+    arxivids = re.findall(REGEX_ARXIV_FLEXIBLE, text)
     dois = re.findall(REGEX_DOI, text)
     isbn10 = re.findall(REGEX_ISBN_10, text)
     isbn13 = re.findall(REGEX_ISBN_13, text)
@@ -121,7 +72,7 @@ def extract_identifiers(text):
     identifiers = []
     if arxivids:
         identifiers.extend([
-            {'identifier_type': 'arxiv', 'identifier': (ID[0] or ID[1])}
+            {'identifier_type': 'arxiv', 'identifier': longest_string(ID)}
             for ID in arxivids
         ])
 
@@ -145,3 +96,4 @@ def extract_identifiers(text):
     doidoc = {'doi': dois[0]} if dois else blank_doi
     idsdoc = {'identifiers': identifiers} if identifiers else blank_ids
     return dict(doidoc, **idsdoc)
+
