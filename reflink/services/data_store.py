@@ -153,13 +153,15 @@ class ReferenceStoreSession(object):
         not exist, no validation will occur.
     aws_access_key : str
     aws_secret_key : str
+    region_name : str
     """
 
     def __init__(self, endpoint_url: str, extracted_schema_path: str,
                  stored_schema_path: str, aws_access_key: str,
-                 aws_secret_key: str) -> None:
+                 aws_secret_key: str, region_name: str) -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb',
+                                       region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
@@ -193,7 +195,7 @@ class ReferenceStoreSession(object):
         self.table = self.dynamodb.Table(self.table_name)
 
         self.extractions = ExtractionSession(endpoint_url, aws_access_key,
-                                             aws_secret_key)
+                                             aws_secret_key, region_name)
 
     def _create_table(self) -> None:
         """Set up a new table in DynamoDB. Blocks until table is available."""
