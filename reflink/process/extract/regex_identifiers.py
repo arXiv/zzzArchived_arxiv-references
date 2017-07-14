@@ -1,6 +1,6 @@
 import re
 
-from regex_arxiv import REGEX_ARXIV_SIMPLE, REGEX_ARXIV_FLEXIBLE
+from reflink.process.extract.regex_arxiv import REGEX_ARXIV_SIMPLE, REGEX_ARXIV_FLEXIBLE
 
 # https://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 REGEX_DOI = (
