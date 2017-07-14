@@ -1,15 +1,11 @@
 import re
 
-# FIXME -- remove bib walking parts from latexinjector and make more general
-# https://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-from reflink.process.inject import latexinjector
-
 categories = [
     "acc-phys", "adap-org", "alg-geom", "ao-sci", "astro-ph", "atom-ph",
     "bayes-an", "chao-dyn", "chem-ph", "cmp-lg", "comp-gas", "cond-mat", "cs",
     "dg-ga", "funct-an", "gr-qc", "hep-ex", "hep-lat", "hep-ph", "hep-th",
     "math", "math-ph", "mtrl-th", "nlin", "nucl-ex", "nucl-th", "patt-sol",
-    "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int", "supr-con" 
+    "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int", "supr-con"
 ]
 _c = r'|'.join(categories)
 
@@ -50,29 +46,32 @@ REGEX_ARXIV_FULL = (
           r'(?:v\d+)?'              # version number
         r')'
       r')'
-    r'|'                            # OR 
+    r'|'                            # OR
+      r'(?i:arxiv[:/])?'          # prefix of arxiv: | arXiv(:/)
       r'('
-        r'(?:'+_c+r')'            # category identifier (cs, math)
-        r'(?:[.][A-Z]{2})?/'      # optional minor category (AI, NT)
-        r'\d{7}'                  # 7 digit identifier
-        r'(?:v\d+)?'              # version number
+        r'(?:'+_c+r')'              # category identifier (cs, math)
+        r'(?:[.][A-Z]{2})?/'        # optional minor category (AI, NT)
+        r'\d{7}'                    # 7 digit identifier
+        r'(?:v\d+)?'                # version number
       r')'
     r')\b'
 )
 
+# https://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 REGEX_DOI = (
-    r'(?:'                  # optional prefix / url
-      r'(?:doi\://)'          # doi://
-        r'|'                    # OR
-      r'(?:http[s]?\://(?:dx\.)?doi\.org\/)' # http[s]://(dx.)doi.org
-    r')?'                   # end optional
+    r'(?:'                      # optional prefix / url
+      r'(?:doi\://)'              # doi://
+        r'|'                        # OR
+      r'(?:http[s]?\://'          # http[s]://
+      r'(?:dx\.)?doi\.org\/)'     # (dx.)doi.org/
+    r')?'                       # end optional
 
-    r'('                    # begin match
-      r'10[.]'                # directory indicator is 10.
-      r'[0-9]{3,}'            # registrant code, numeric 3+ digits
-      r'(?:[.][0-9]+)*'       # registrant sub-element
-      r'/(?:(?!["&\'#%])\S)+' # actual document identifier now (#% not formal)
-    r')'                    # end match
+    r'('                        # begin match
+      r'10[.]'                    # directory indicator is 10.
+      r'[0-9]{3,}'                # registrant code, numeric 3+ digits
+      r'(?:[.][0-9]+)*'           # registrant sub-element
+      r'/(?:(?!["&\'#%])\S)+'     # actual document identifier now (#% not STD)
+    r')'                        # end match
 )
 
 REGEX_ISBN_10 = (
@@ -85,6 +84,7 @@ REGEX_ISBN_13 = (
     r'(?=[0-9]{13}$|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17}$)'
     r'97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]\b'
 )
+
 
 def extract_identifiers(text):
     """
@@ -114,20 +114,34 @@ def extract_identifiers(text):
     """
     arxivids = re.findall(REGEX_ARXIV_FULL, text)
     dois = re.findall(REGEX_DOI, text)
+    isbn10 = re.findall(REGEX_ISBN_10, text)
+    isbn13 = re.findall(REGEX_ISBN_13, text)
 
-    arxivdoc = {}
-    doidoc = {}
-
+    # gather the identifiers one at a time
+    identifiers = []
     if arxivids:
-        arxivdoc = {
-            'identifiers': [
-                {'identifier_type': 'arxiv', 'identifier': (ID[0] or ID[1])}
-                for ID in arxivids
-            ]
-        }
-    if dois:
-        doidoc = {
-            'doi': dois[0]
-        }
+        identifiers.extend([
+            {'identifier_type': 'arxiv', 'identifier': (ID[0] or ID[1])}
+            for ID in arxivids
+        ])
 
-    return dict(doidoc, **arxivdoc)
+    if isbn10:
+        identifiers.extend([
+            {'identifier_type': 'ISBN', 'identifier': ID}
+            for ID in isbn10
+        ])
+
+    if isbn13:
+        identifiers.extend([
+            {'identifier_type': 'ISBN', 'identifier': ID}
+            for ID in isbn13
+        ])
+
+    # blank documents in case nothing was found
+    blank_ids = {'identifiers': [{'identifier_type': '', 'identifier': ''}]}
+    blank_doi = {'doi': ''}
+
+    # form the actual documents / blank if nothing found
+    doidoc = {'doi': dois[0]} if dois else blank_doi
+    idsdoc = {'identifiers': identifiers} if identifiers else blank_ids
+    return dict(doidoc, **idsdoc)
