@@ -6,17 +6,13 @@
     state: present
 
 - name: get pip installer
-  get_url:
-    url: https://bootstrap.pypa.io/get-pip.py
-    dest: /usr/src
+  get_url: url=https://bootstrap.pypa.io/get-pip.py dest=/usr/src
 
 - name: install pip
   command: python3 /usr/src/get-pip.py
 
 - name: enable epel repos
-  yum:
-    name: epel-release
-    state: present
+  yum: name=epel-release state=present
 
 - name: install git
   yum:
@@ -61,10 +57,10 @@
     requirements: /opt/reflink/arxiv-reflink/requirements.txt
     virtualenv: /opt/reflink/venv
 
-- name: copy endpoints config (testing/dev only)
-  copy:
-    src: files/endpoints.json
-    dest: /opt/reflink/endpoints.json
+# - name: copy endpoints config (testing/dev only)
+#   copy:
+#     src: files/endpoints.json
+#     dest: /opt/reflink/endpoints.json
 
 - name: copy secrets
   template:

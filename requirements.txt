@@ -8,3 +8,4 @@ moto==1.0.1
 chardet==3.0.4
 unidecode==0.4.21
 ftfy==5.0.2
+pycurl==7.43.0

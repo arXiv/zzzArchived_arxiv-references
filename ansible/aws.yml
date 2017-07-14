@@ -6,7 +6,7 @@
     - reflink_user: bob
     - aws_region: us-east-1
     - s3_bucket: "reflink"
-    - application_root: "/references"
+    - application_root: "/"
   roles:
     - reflink
 

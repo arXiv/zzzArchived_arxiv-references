@@ -46,6 +46,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
         self.proc = create_process_app()
+        logger.info('%s' % self.proc.conf)
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
