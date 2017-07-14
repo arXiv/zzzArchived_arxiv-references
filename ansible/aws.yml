@@ -1,24 +1,24 @@
 ---
 
-- name: Install base configuration on reflink hosts.
-  hosts: reflink-consumer:reflink-worker:reflink-web
-  vars:
-    - reflink_user: bob
-    - aws_region: us-east-1
-    - s3_bucket: "reflink"
-    - application_root: "/"
-  roles:
-    - reflink
-
-- name: Install consumer role
-  hosts: reflink-consumer
-  vars:
-    - reflink_user: bob
-    - aws_region: us-east-1
-    - s3_bucket: "reflink"
-  roles:
-    - consumer
-  become: true
+# - name: Install base configuration on reflink hosts.
+#   hosts: reflink-consumer:reflink-worker:reflink-web
+#   vars:
+#     - reflink_user: bob
+#     - aws_region: us-east-1
+#     - s3_bucket: "reflink"
+#     - application_root: "/"
+#   roles:
+#     - reflink
+#
+# - name: Install consumer role
+#   hosts: reflink-consumer
+#   vars:
+#     - reflink_user: bob
+#     - aws_region: us-east-1
+#     - s3_bucket: "reflink"
+#   roles:
+#     - consumer
+#   become: true
 
 - name: Install worker role
   hosts: reflink-worker
@@ -30,13 +30,13 @@
     - worker
   become: true
 
-- name: Install web role
-  hosts: reflink-web
-  vars:
-    - reflink_user: bob
-    - aws_region: us-east-1
-    - s3_bucket: "reflink"
-    - application_root: "/"
-  roles:
-    - web
-  become: true
+# - name: Install web role
+#   hosts: reflink-web
+#   vars:
+#     - reflink_user: bob
+#     - aws_region: us-east-1
+#     - s3_bucket: "reflink"
+#     - application_root: "/"
+#   roles:
+#     - web
+#   become: true

@@ -19,6 +19,12 @@
 - name: install pip
   command: python3 /usr/src/get-pip.py
 
+- name: upgrade pip
+  pip:
+    executable: /usr/local/bin/pip3
+    name: pip
+    state: latest
+
 - name: enable epel repos
   yum: name=epel-release state=present
 
@@ -27,7 +33,7 @@
 
 - name: install virtualenv
   pip:
-    executable: pip
+    executable: /usr/local/bin/pip3
     name: virtualenv
 
 - name: create app tree
@@ -54,14 +60,20 @@
     force: yes
 
 - name: create app virtualenv
-  command: virtualenv /opt/reflink/venv --python=python3
+  command: virtualenv /opt/reflink/venv --python=python3 --pip=/usr/local/bin/pip3
   args:
     creates: /opt/reflink/venv
+
+- name: upgrade pip
+  pip:
+    executable: /opt/reflink/venv/bin/pip3
+    name: pip
+    state: latest
 
 - name: install python dependencies for app
   pip:
     requirements: /opt/reflink/arxiv-reflink/requirements.txt
-    virtualenv: /opt/reflink/venv
+    executable: /opt/reflink/venv/bin/pip3
 
 # - name: copy endpoints config (testing/dev only)
 #   copy:

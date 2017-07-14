@@ -1,40 +1,38 @@
-# - name: make sure redis is installed
-#   yum:
-#     name: redis
-#     state: present
-#
-#
-# - name: make sure redis is running
-#   systemd:
-#     state: restarted
-#     name: redis
-#
-#
-# - name: make sure redis is enabled
-#   systemd:
-#     enabled: yes
-#     name: redis
-#
+- name: make sure that docker-py is installed
+  pip: name=docker-py state=latest executable=/usr/local/bin/pip
 
+- name: make sure docker is installed
+  yum: name=docker state=latest
 
+- name: create worker user
+  user: name=reflinkworker groups=docker state=present
+
+- name: give worker user ownership
+  file:
+    path: /opt/reflink
+    owner: reflinkworker
+    recurse: yes
+
+- name: give worker ownership of log file
+  file:
+    path: /var/log/reflink-worker.log
+    owner: reflinkworker
+
+- name: copy cermine jar
+  copy:
+    src: files/cermine-impl-1.12-jar-with-dependencies.jar
+    dest: /opt/reflink/arxiv-reflink/docker/cermine/cermine-impl-1.12-jar-with-dependencies.jar
+
+- name: build cermine docker image
+  docker_image:
+     path: /opt/reflink/arxiv-reflink/docker/cermine
+     name: mattbierbaum/cermine
 
 - name: copy startup assets
   copy:
     src: files/start_worker
     dest: /opt/reflink/bin/start_worker
-    #owner: "{{ reflink_user }}"
-    #group: "{{ reflink_user }}"
     mode: "u=rwx,g=r,o=r"
-
-
-
-# - name: copy service script (for Centos/RHEL 7)
-#   copy:
-#     src: files/reflink-worker.service
-#     dest: /usr/lib/systemd/system/reflink-worker.service
-#     mode: 0755
-
-  #when: "'ec2hosts' not in group_names"
 
 - name: copy oldschool service script (for AWS AMI, Centos/RHEL <=6)
   copy:
@@ -48,7 +46,6 @@
   file:
     path: /var/log/reflink-worker.log
     state: touch
-
 
 - name: enable and start service
   service:
