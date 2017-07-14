@@ -70,6 +70,7 @@ class PDFStoreSession(object):
         IOError
             Raised when there is a problem sending the file to S3.
         """
+        logger.info('Store PDF for %s: %s' % (document_id, filepath))
         fname = '%s.pdf' % document_id
         try:
             with open(filepath, 'rb') as f:   # Must produce binary when read.

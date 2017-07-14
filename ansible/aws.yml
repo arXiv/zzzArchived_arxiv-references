@@ -19,7 +19,7 @@
 #   roles:
 #     - consumer
 #   become: true
-
+#
 # - name: Install worker role
 #   hosts: reflink-worker
 #   vars:

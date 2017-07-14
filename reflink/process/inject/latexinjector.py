@@ -478,16 +478,12 @@ def modify_source_with_urls(source_path: str,
         transform_bbl(fn, reference_lines)
 
 
-def inject_urls(pdf_path: str, source_path: str, metadata: dict,
-                cleanup: bool=True) -> str:
+def inject_urls(source_path: str, metadata: dict, cleanup: bool=True) -> str:
     """
     Given a tarfile of latex source, inject references, and build a new pdf.
 
     Parameters
     ----------
-    pdf_path : str
-        Local filepath for the pdf being modified
-
     source_path : str
         Location of the source tarfile that will be injected
 
