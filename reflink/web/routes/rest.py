@@ -7,7 +7,7 @@ from reflink.web.controllers import references, pdf
 from reflink.types import ViewResponseData
 from reflink import status
 
-blueprint = Blueprint('reflink_api', __name__, url_prefix='/api')
+blueprint = Blueprint('reflink_api', __name__, url_prefix='')
 
 
 @blueprint.route('/status', methods=['GET'])
