@@ -9,26 +9,26 @@
     - application_root: "/references"
   roles:
     - reflink
-#
-# - name: Install consumer role
-#   hosts: reflink-consumer
-#   vars:
-#     - reflink_user: bob
-#     - aws_region: us-east-1
-#     - s3_bucket: "reflink"
-#   roles:
-#     - consumer
-#   become: true
-#
-# - name: Install worker role
-#   hosts: reflink-worker
-#   vars:
-#     - reflink_user: bob
-#     - aws_region: us-east-1
-#     - s3_bucket: "reflink"
-#   roles:
-#     - worker
-#   become: true
+
+- name: Install consumer role
+  hosts: reflink-consumer
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - s3_bucket: "reflink"
+  roles:
+    - consumer
+  become: true
+
+- name: Install worker role
+  hosts: reflink-worker
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - s3_bucket: "reflink"
+  roles:
+    - worker
+  become: true
 
 - name: Install web role
   hosts: reflink-web

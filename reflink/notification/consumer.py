@@ -106,6 +106,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         except Exception as e:
             logger.error("Error while deserializing data: %s" % e)
             logger.error("Data payload: %s" % data)
+            return   # Don't bring down the whole batch.
 
         try:
             process.process_document(deserialized.get('document_id'))
