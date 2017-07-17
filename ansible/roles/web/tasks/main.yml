@@ -64,7 +64,7 @@
     force: yes
 
 - name: send reflink configuration file
-  copy:
+  template:
     src: files/arxiv-reflink.conf
     dest: /etc/httpd/conf.d/arxiv-reflink.conf
     force: yes

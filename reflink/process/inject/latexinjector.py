@@ -25,6 +25,8 @@ DEFAULT_TAIL = re.compile(r'(\\end{thebibliography}(\{.*\})?)')
 DEFAULT_MARKER = re.compile(r'\\bibitem[^a-zA-Z0-9]')
 LATEX_COMMENT = re.compile(r'(^|.*[^\\])(\%.*$)')
 
+AUTOTEX_DOCKER_IMAGE = os.environ.get('REFLINK_AUTOTEX_DOCKER_IMAGE',
+                                      'arxiv/autotex:v0.906.0-1')
 
 def argmax(array):
     index, value = max(enumerate(array), key=lambda x: x[1])
@@ -430,7 +432,7 @@ def run_autotex(directory: str) -> str:
 
     timestamp = datetime.datetime.now()
     util.run_docker(
-        'arxiv/autotex:v0.906.0-1', [(directory, '/autotex')], 'go'
+        AUTOTEX_DOCKER_IMAGE, [(directory, '/autotex')], 'go'
     )
 
     # run the conversion pipeline since autotex produces many types of files

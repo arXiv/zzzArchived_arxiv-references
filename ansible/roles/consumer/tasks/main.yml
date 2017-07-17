@@ -1,7 +1,7 @@
 - include: install_java8.yml
 
 - name: create consumer user
-  user: name=reflinkconsumer groups=docker state=present
+  user: name=reflinkconsumer state=present
 
 - name: give consumer user ownership
   file: path=/opt/reflink owner=reflinkconsumer recurse=yes

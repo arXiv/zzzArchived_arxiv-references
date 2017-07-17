@@ -23,18 +23,6 @@
     $(aws ecr get-login --region=us-east-1)
   become_user: reflinkworker
 
-
-
-# - name: prepare autotex docker
-#   command: ./prepare-autotex.sh
-#   args:
-#     chdir: /opt/reflink/arxiv-reflink/docker/autotex
-
-# - name: build autotex docker image
-#   docker_image:
-#     path: /opt/reflink/arxiv-reflink/docker/autotex
-#     name: mattbierbaum/autotex
-
 - name: copy startup assets
   copy:
     src: files/start_worker

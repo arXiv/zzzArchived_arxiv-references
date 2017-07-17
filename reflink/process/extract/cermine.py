@@ -8,7 +8,7 @@ from reflink.process import util
 from reflink.process.extract import regex_identifiers
 
 CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
-                                      'mattbierbaum/cermine')
+                                      'arxiv/cermine')
 
 import logging
 logging.basicConfig(
