@@ -28,6 +28,7 @@ LATEX_COMMENT = re.compile(r'(^|.*[^\\])(\%.*$)')
 
 AUTOTEX_DOCKER_IMAGE = os.environ.get('REFLINK_AUTOTEX_DOCKER_IMAGE',
                                       'arxiv/autotex:v0.906.0-1')
+REFLINK_BASE_URL = os.environ.get('REFLINK_BASE_URL')
 
 def argmax(array):
     index, value = max(enumerate(array), key=lambda x: x[1])
@@ -314,21 +315,22 @@ def bib_items_tail(bibliography: str, marker=DEFAULT_TAIL) -> str:
     return tail.strip()
 
 
-def url_formatter_arxiv(reference_line: str, marker: str='GO',
-                        baseurl: str='https://arxiv.org/lookup',
+def url_formatter_arxiv(reference: dict, marker: str='GO',
+                        baseurl: str=REFLINK_BASE_URL,
                         queryparam: str='q') -> str:
     """
     Create the latex for a URL given a `reference_line`. In the process, does
     basic encoding so that latex characters work in the URL and is urlencoded
     """
-    reference_line = reference_line.encode('ascii', 'ignore')
-    query = tex_escape(urlencode({'q': reference_line}))
-    url = '{}?{}'.format(baseurl, query)
-
+    # reference_line = reference_line.encode('ascii', 'ignore')
+    # query = tex_escape(urlencode({'q': reference_line}))
+    document = reference['document']
+    identifier = reference['identifier']
+    url = '%s/%s/ref/%s' % (baseurl, document, identifier)
     return '\\href{{{url}}}{{{marker}}}'.format(url=url, marker=marker)
 
 
-def bbl_inject_urls(text: str, references: List[str],
+def bbl_inject_urls(text: str, references: List[dict],
                     formatter=url_formatter_arxiv) -> List[str]:
     """
     Given a particular bibliography (begin...end segment), inject each bibitem
@@ -340,8 +342,8 @@ def bbl_inject_urls(text: str, references: List[str],
     text : str
         Raw text of a bibliography to be modified with URLs
 
-    references : list of str
-        Reference lines which are used for matching and URL formation
+    references : list of dict
+        Reference metadata.
 
     formatter : callable
         Formatter function which takes a reference_line and returns a latex URL
@@ -362,7 +364,7 @@ def bbl_inject_urls(text: str, references: List[str],
         bibitems = list(bib_items_iter(bbl))
         inds = match_by_cost(
             cleaned_bib_entries(bibitems),
-            cleaned_reference_lines(references)
+            cleaned_reference_lines([ref['raw'] for ref in references])
         )
 
         out = []
@@ -391,7 +393,7 @@ def detect_encoding(filename: str) -> str:
     return encoding['encoding']
 
 
-def transform_bbl(filename: str, reference_lines: List[str]):
+def transform_bbl(filename: str, reference_lines: List[dict]):
     """
     Take a .bbl/.tex filename and a set of reference lines, save the filename
     to a backup and rewrite with links in the bibliography section.
@@ -436,10 +438,6 @@ def run_autotex(directory: str) -> str:
 
     # run the conversion pipeline since autotex produces many types of files
     pdf, dvi, ps = [_find(ext, timestamp) for ext in ['pdf', 'dvi', 'ps']]
-    print (pdf)
-    print (dvi)
-    print (ps)
-
     if pdf:
         pass
     elif ps:
@@ -512,7 +510,7 @@ def inject_urls(source_path: str, metadata: dict, cleanup: bool=True) -> str:
     reference_lines = []
     for reference in metadata:
         if 'raw' in reference:
-            reference_lines.append(reference['raw'])
+            reference_lines.append(reference)
 
     # do the transformation in a temporary directory
     with util.tempdir(cleanup=cleanup) as fldr:

@@ -43,15 +43,16 @@ def process_document(document_id: str) -> None:
         extraction, metadata = store_metadata(metadata, document_id, VERSION)
         logger.info('Stored metadata for %s' % document_id)
 
-        logger.info('Injecting links for %s' % document_id)
-        logger.debug('Injecting in source: %s' % tex_path)
-        new_pdf_path = inject(tex_path, metadata)
-        logger.info('Created injected PDF for %s' % document_id)
-        logger.debug('PDF at %s' % new_pdf_path)
+        if tex_path:
+            logger.info('Injecting links for %s' % document_id)
+            logger.debug('Injecting in source: %s' % tex_path)
+            new_pdf_path = inject(tex_path, metadata)
+            logger.info('Created injected PDF for %s' % document_id)
+            logger.debug('PDF at %s' % new_pdf_path)
 
-        logger.info('Storing injected PDF for %s' % document_id)
-        store_pdf(new_pdf_path, document_id)
-        logger.info('Stored injected PDF for %s' % document_id)
+            logger.info('Storing injected PDF for %s' % document_id)
+            store_pdf(new_pdf_path, document_id)
+            logger.info('Stored injected PDF for %s' % document_id)
     except Exception as e:
         msg = 'Failed to process %s: %s' % (document_id, e)
         logger.error(msg)
