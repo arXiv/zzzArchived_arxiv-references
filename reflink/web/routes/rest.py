@@ -17,7 +17,7 @@ def ok() -> ViewResponseData:
 
 @blueprint.route('/references/<string:document_id>/ref/<string:reference_id>',
                  methods=['GET'])
-def get_reference_metadata(document_id: str) -> ViewResponseData:
+def get_reference_metadata(document_id: str, reference_id: str) -> ViewResponseData:
     """
     Retrieve metadata for a specific reference in an arXiv publication.
 
@@ -34,7 +34,7 @@ def get_reference_metadata(document_id: str) -> ViewResponseData:
         HTTP status code. See :mod:`reflink.status` for details.
     """
     controller = references.ReferenceMetadataController()
-    response, status = controller.get(document_id)
+    response, status = controller.get(document_id, reference_id)
     return jsonify(response), status
 
 
