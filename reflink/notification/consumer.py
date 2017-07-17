@@ -17,6 +17,9 @@ from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 
+logging.getLogger('boto3').setLevel(logging.WARNING)
+logging.getLogger('botocore').setLevel(logging.WARNING)
+
 # TODO: make this configurable.
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format, level=logging.DEBUG)
@@ -167,6 +170,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         except Exception as e:
             logger.error("Encountered an exception while processing records."
                          " Exception was %s" % e)
+            logger.error("Seq: %i; Sub seq: %i; Key: %s" % (seq, sub_seq, key))
+            logger.error("{}".format(data))
 
     def shutdown(self, shutdown: ShutdownInput) -> None:
         """

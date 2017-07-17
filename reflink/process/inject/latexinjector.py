@@ -431,28 +431,35 @@ def run_autotex(directory: str) -> str:
         return None
 
     timestamp = datetime.datetime.now()
-    util.run_docker(
-        AUTOTEX_DOCKER_IMAGE, [(directory, '/autotex')], 'go'
-    )
+    util.run_docker(AUTOTEX_DOCKER_IMAGE, [(directory, '/autotex')], 'go')
 
     # run the conversion pipeline since autotex produces many types of files
     pdf, dvi, ps = [_find(ext, timestamp) for ext in ['pdf', 'dvi', 'ps']]
-    if pdf:
-        return pdf
-    if ps:
-        timestamp = datetime.datetime.now()
-        with util.indir(directory):
-            util.ps2pdf(ps)
-        return _find('pdf', timestamp)
-    if dvi:
-        timestamp = datetime.datetime.now()
-        with util.indir(directory):
-            util.dvi2ps(dvi)
-            ps = _find('ps', timestamp)
-            util.ps2pdf(ps)
-        return _find('pdf', timestamp)
+    with util.tempdir(cleanup=False) as outdir:
+        if pdf:
+            fname = os.path.split(pdf)[-1]
+            dest = os.path.join(outdir, fname)
+            shutil.copyfileobj(pdf, dest)
+            return dest
+        elif ps:
+            timestamp = datetime.datetime.now()
+            with util.indir(directory):
+                util.ps2pdf(ps)
+            pdf = _find('pdf', timestamp)
+        elif dvi:
+            timestamp = datetime.datetime.now()
+            with util.indir(directory):
+                util.dvi2ps(dvi)
+                ps = _find('ps', timestamp)
+                util.ps2pdf(ps)
+            pdf = _find('pdf', timestamp)
+        else:
+            raise RuntimeError("No output found for autotex")
 
-    raise RuntimeError("No output found for autotex")
+        fname = os.path.split(pdf)[-1]
+        dest = os.path.join(outdir, fname)
+        shutil.copyfileobj(pdf, dest)
+        return dest
 
 
 def modify_source_with_urls(source_path: str,
