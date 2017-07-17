@@ -5,6 +5,7 @@ import subprocess
 import xml.etree.ElementTree
 
 from reflink.process import util
+from reflink.process.extract import regex_identifiers
 
 CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
                                       'mattbierbaum/cermine')
@@ -81,21 +82,35 @@ def _cxml_format_reference_line(elm):
     line : str
         The formatted reference line as seen in the PDF
     """
+
     # regex for cleaning up the extracted reference lines a little bit:
     #  1. re_multispace -- collapse 2+ spaces into a single one
     #  2. re_numbering -- remove numbers at beginning of line matching:
-    #                     1., 1, [1], (1)
+    #       1., 1, [1], (1)
+    #  3. re_punc_spaces_left -- cermxml doesn't properly format the tags
+    #       (adds too many spaces). so lets try to get rid of the obvious
+    #       ones like ' ,' ' )' ' .'
+    #  4. re_punc_spaces_right -- same on the other side
+    #  5. re_arxiv_colon -- a big thing we are trying to extract (ids) gets
+    #       mangled by cermine as well. try to fix it as well
     re_multispace = re.compile(r"\s{2,}")
-    re_numbering = re.compile(r'^([\[\(]?\d+[\]\)]?\.?)(.*)')
+    re_numbering = re.compile(r'^([[(]?\d+[])]?\.?)(.*)')
+    re_punc_spaces_left = re.compile(r'\s([,.)])')
+    re_punc_spaces_right = re.compile(r'([(])\s')
+    re_arxiv_colon = re.compile(r'((?i:arxiv\:))\s+')
+    re_trailing_punc = re.compile(r"[,.]$")
 
-    if len(elm) == 0:
-        return elm.text.strip()
-
-    children = ' '.join([_cxml_format_reference_line(i) for i in elm])
-    out = '{} {}'.format(elm.text.strip(), children)
-    out = re_multispace.subn(' ', out)[0].strip()
-    out = re_numbering.sub(r'\2', out).strip()
-    return out
+    text = ' '.join([
+        txt.strip() for txt in elm.itertext()
+    ])
+    text = text.strip()
+    text = re_multispace.subn(' ', text)[0].strip()
+    text = re_numbering.sub(r'\2', text).strip()
+    text = re_punc_spaces_left.subn(r'\1', text)[0].strip()
+    text = re_punc_spaces_right.subn(r'\1', text)[0].strip()
+    text = re_arxiv_colon.subn(r'\1', text)[0].strip()
+    text = re_trailing_punc.sub('', text)
+    return text
 
 
 def cxml_format_document(root, documentid=''):
@@ -145,6 +160,12 @@ def cxml_format_document(root, documentid=''):
             key: func(refroot) for key, func in reference_constructor.items()
         }
         reference.update(unknown_properties)
+
+        # add regex extracted information to the metadata (not CERMINE's)
+        rawline = reference.get('raw', '') or ''
+        identifiers = regex_identifiers.extract_identifiers(rawline)
+        reference.update(identifiers)
+
         references.append(reference)
 
     return references
