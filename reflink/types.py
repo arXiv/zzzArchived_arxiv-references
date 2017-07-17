@@ -1,6 +1,22 @@
 """Custom types for type hints."""
 
-from typing import Tuple, TypeVar, List
+try:
+    from typing import Tuple, TypeVar, List, Generator
+except ImportError:
+    class Generic(object):
+        """Mocks the typing generic types for Python versions < 3.5."""
+        
+        def __getitem__(self, *args):
+            return Generic()
+
+        def __call__(self, *args):
+            return Generic()
+
+    Tuple = Generic()
+    TypeVar = Generic()
+    List = Generic()
+    Generator = Generic()
+
 import flask
 
 

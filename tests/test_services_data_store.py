@@ -131,6 +131,7 @@ class RetrieveReference(unittest.TestCase):
         """
         session = data_store.get_session()
         extraction, data = session.create(document_id, valid_data, version)
+        print(data)
         identifier = data[0]['identifier']
         retrieved = session.retrieve(document_id, identifier)
         self.assertEqual(data[0]['raw'], retrieved['raw'])

@@ -13,7 +13,7 @@ from base64 import b64encode
 from decimal import Decimal
 from unidecode import unidecode
 
-from typing import List
+from reflink.types import List
 ReferenceData = List[dict]
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
@@ -347,7 +347,6 @@ class ReferenceStoreSession(object):
                 else [_inner_clean(datum) for datum in v]
                 for k, v in reference.items()}
 
-
     def create(self, document_id: str, references: ReferenceData,
                version: str) -> None:
         """
@@ -379,7 +378,7 @@ class ReferenceStoreSession(object):
         created = datetime.datetime.now().isoformat()
         extraction = self.extractions.hash(document_id, version, created)
         document_extraction = '%s#%s' % (document_id, extraction)
-
+        stored_references = []
         try:
             with self.table.batch_writer() as batch:
                 for order, reference in enumerate(references):
@@ -396,13 +395,14 @@ class ReferenceStoreSession(object):
                         'order': order
                     })
                     self.validate_stored(reference)
+                    stored_references.append(reference)
                     # self.table.put_item(Item=reference)
                     batch.put_item(Item=reference)
         except ClientError as e:
             raise IOError('Failed to create: %s; %s' % (e, reference)) from e
 
         self.extractions.create(document_id, version, created)
-        return extraction, references
+        return extraction, stored_references
 
     def retrieve(self, document_id: str, identifier: str) -> dict:
         """

@@ -1,4 +1,4 @@
-- include: tasks/install_java8.yml
+# - include: tasks/install_java8.yml
 
 - name: create consumer user
   user: name=reflinkconsumer state=present

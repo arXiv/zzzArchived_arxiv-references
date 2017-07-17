@@ -9,6 +9,7 @@
     - aws_region: us-east-1
     - s3_bucket: "arxiv-reflink-proto"
     - application_root: "/"
+    - reflink_base_url: "{{ groups['reflink-web'][0] }}/references"
     - cermine_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/cermine"
     - autotex_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/autotex"
   roles:
@@ -30,6 +31,7 @@
     - reflink_user: bob
     - aws_region: us-east-1
     - s3_bucket: "arxiv-reflink-proto"
+    - reflink_base_url: "{{ groups['web'][0] }}"
   vars_files:
     - vars/secrets.yml
   roles:

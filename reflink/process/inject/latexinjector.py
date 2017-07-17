@@ -6,7 +6,7 @@ import shlex
 import datetime
 import subprocess
 from urllib.parse import urlencode
-from typing import List, Generator
+from reflink.types import List, Generator
 
 import chardet
 
@@ -393,7 +393,7 @@ def detect_encoding(filename: str) -> str:
     return encoding['encoding']
 
 
-def transform_bbl(filename: str, reference_lines: List[dict]):
+def transform_bbl(filename: str, references: List[dict]):
     """
     Take a .bbl/.tex filename and a set of reference lines, save the filename
     to a backup and rewrite with links in the bibliography section.
@@ -403,7 +403,7 @@ def transform_bbl(filename: str, reference_lines: List[dict]):
     encoding = detect_encoding(filename)
     with open(filename, 'r', encoding=encoding) as f:
         content = f.read()
-        out = bbl_inject_urls(content, reference_lines)
+        out = bbl_inject_urls(content, references)
 
     with open(filename, 'w', encoding=encoding) as f:
         f.write(out)
@@ -463,7 +463,7 @@ def run_autotex(directory: str) -> str:
 
 
 def modify_source_with_urls(source_path: str,
-                            reference_lines: List[str]) -> None:
+                            references: List[dict]) -> None:
     """
     Perform the URL injection into latex source (both .tex, .bbl) and modify
     files in place, making backups before doing so.
@@ -474,7 +474,7 @@ def modify_source_with_urls(source_path: str,
         The root directory in which to search for tex and bbl files
         and to run autotex
 
-    reference_lines : list of str
+    references : list of dict
         The references to match and inject into the list
     """
     join = os.path.join
@@ -484,7 +484,7 @@ def modify_source_with_urls(source_path: str,
         glob.glob(join(join(source_path, "**"), "*.bbl"), recursive=True)
     )
     for fn in files:
-        transform_bbl(fn, reference_lines)
+        transform_bbl(fn, references)
 
 
 def inject_urls(source_path: str, metadata: dict, cleanup: bool=True) -> str:
