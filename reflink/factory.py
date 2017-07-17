@@ -7,6 +7,7 @@ import logging
 def create_web_app():
     """Initialize an instance of the web application."""
     from reflink.web.routes import rest
+    logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
     logging.getLogger('botocore').setLevel(logging.ERROR)
 
@@ -19,6 +20,7 @@ def create_web_app():
 def create_process_app():
     """Initialize an instance of the processing application."""
     from reflink.celery import app
+    logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
     logging.getLogger('botocore').setLevel(logging.ERROR)
     return app

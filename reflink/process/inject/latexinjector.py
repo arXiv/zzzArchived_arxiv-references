@@ -1,4 +1,5 @@
 import re
+import shutil
 import os
 import glob
 import shlex
@@ -435,30 +436,31 @@ def run_autotex(directory: str) -> str:
 
     # run the conversion pipeline since autotex produces many types of files
     pdf, dvi, ps = [_find(ext, timestamp) for ext in ['pdf', 'dvi', 'ps']]
-    with util.tempdir(cleanup=False) as outdir:
-        if pdf:
-            fname = os.path.split(pdf)[-1]
-            dest = os.path.join(outdir, fname)
-            shutil.copyfileobj(pdf, dest)
-            return dest
-        elif ps:
-            timestamp = datetime.datetime.now()
-            with util.indir(directory):
-                util.ps2pdf(ps)
-            pdf = _find('pdf', timestamp)
-        elif dvi:
-            timestamp = datetime.datetime.now()
-            with util.indir(directory):
-                util.dvi2ps(dvi)
-                ps = _find('ps', timestamp)
-                util.ps2pdf(ps)
-            pdf = _find('pdf', timestamp)
-        else:
-            raise RuntimeError("No output found for autotex")
+    print (pdf)
+    print (dvi)
+    print (ps)
 
+    if pdf:
+        pass
+    elif ps:
+        timestamp = datetime.datetime.now()
+        with util.indir(directory):
+            util.ps2pdf(ps)
+        pdf = _find('pdf', timestamp)
+    elif dvi:
+        timestamp = datetime.datetime.now()
+        with util.indir(directory):
+            util.dvi2ps(dvi)
+            ps = _find('ps', timestamp)
+            util.ps2pdf(ps)
+        pdf = _find('pdf', timestamp)
+    else:
+        raise RuntimeError("No output found for autotex")
+
+    with util.tempdir(cleanup=False) as outdir:
         fname = os.path.split(pdf)[-1]
         dest = os.path.join(outdir, fname)
-        shutil.copyfileobj(pdf, dest)
+        shutil.copyfile(pdf, dest)
         return dest
 
 
@@ -522,14 +524,12 @@ def inject_urls(source_path: str, metadata: dict, cleanup: bool=True) -> str:
         try:
             pdf = run_autotex(fldr)
         except subprocess.CalledProcessError as exc:
-            logger.error(
-                "AutoTeX build failed for source '{}'".format(source_path)
-            )
-            raise exc
+            msg = "AutoTeX build failed for source %s" % source_path
+            logger.error(msg)
+            raise RuntimeError(msg) from exc
         except RuntimeError as exc:
-            logger.error(
-                "No output found from AutoTeX run for '{}'".format(source_path)
-            )
-            raise exc
+            msg = "No output found from AutoTeX run for %s" % source_path
+            logger.error(msg)
+            raise RuntimeError(msg) from exc
 
         return pdf

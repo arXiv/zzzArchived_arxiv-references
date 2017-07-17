@@ -4,6 +4,9 @@
 - name: make sure docker is installed
   yum: name=docker state=latest
 
+- name: make sure that ghostscript is installed (provides ps2pdf)
+  yum: name=ghostscript state=latest
+
 - name: make sure docker is running
   service: name=docker state=started
 
