@@ -17,9 +17,6 @@ from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 
-logging.getLogger('boto3').setLevel(logging.ERROR)
-logging.getLogger('botocore').setLevel(logging.ERROR)
-
 # TODO: make this configurable.
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format, level=logging.DEBUG)
@@ -163,8 +160,7 @@ class RecordProcessor(processor.RecordProcessorBase):
             last_check = time.time() - self._last_checkpoint_time
             if last_check > self._CHECKPOINT_FREQ:
                 self.checkpoint(records.checkpointer,
-                                bytes(str(self._largest_seq[0]),
-                                      encoding='ascii'),
+                                str(self._largest_seq[0]),
                                 self._largest_seq[1])
                 self._last_checkpoint_time = time.time()
 

@@ -59,5 +59,8 @@
 - name: send reflink configuration file
   template: src=templates/arxiv-reflink.conf dest=/etc/httpd/conf.d/arxiv-reflink.conf force=yes
 
+- name: copy Python secrets for webapp
+  template: src=templates/secrets.py dest=/opt/reflink/arxiv-reflink/reflink/secrets.py
+
 - name: enable and start service
   service: name=httpd enabled=yes state=restarted

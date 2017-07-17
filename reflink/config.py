@@ -5,6 +5,10 @@ Docstrings are from the `Flask configuration documentation
 <http://flask.pocoo.org/docs/0.12/config/>`_.
 """
 import os
+try:
+    from reflink import secrets
+except ImportError:
+    pass
 
 VERSION = '0.1'
 """The application version, used to sign extracted references."""
