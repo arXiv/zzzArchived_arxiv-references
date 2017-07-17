@@ -12,26 +12,25 @@
     state: present
 
 - name: unarchive mod_wsgi
-  unarchive:
-    src: files/mod_wsgi-4.5.15.tar.gz
-    dest: /opt
-    creates: /opt/mod_wsgi-4.5.15
+  unarchive: src=files/mod_wsgi-4.5.15.tar.gz dest=/opt creates=/opt/mod_wsgi-4.5.15
 
-- name: clean up mod_wsgi
+- name: make sure that mod_wsgi source is clean before building
   command: make clean
   args:
     chdir: /opt/mod_wsgi-4.5.15
+  ignore_errors: yes
 
-- name: clean up mod_wsgi,
+- name: make sure that mod_wsgi source is clean before building
   command: make distclean
   args:
     chdir: /opt/mod_wsgi-4.5.15
+  ignore_errors: yes
 
 - name: configure mod_wsgi build
   command: ./configure --with-python=/usr/bin/python3
   args:
     chdir: /opt/mod_wsgi-4.5.15
-    # creates: /opt/mod_wsgi-4.5.15/Makefile
+    creates: /opt/mod_wsgi-4.5.15/Makefile
 
 - name: build mod_wsgi
   command: make
@@ -52,25 +51,13 @@
     mode: 0755
 
 - name: send custom apache configuration file
-  copy:
-    src: files/httpd.conf
-    dest: /etc/httpd/conf/httpd.conf
-    force: yes
+  copy: src=files/httpd.conf dest=/etc/httpd/conf/httpd.conf force=yes
 
 - name: send mod_wsgi configuration file
-  copy:
-    src: files/mod_wsgi.conf
-    dest: /etc/httpd/conf.modules.d/mod_wsgi.conf
-    force: yes
+  copy: src=files/mod_wsgi.conf dest=/etc/httpd/conf.modules.d/mod_wsgi.conf force=yes
 
 - name: send reflink configuration file
-  template:
-    src: files/arxiv-reflink.conf
-    dest: /etc/httpd/conf.d/arxiv-reflink.conf
-    force: yes
+  template: src=templates/arxiv-reflink.conf dest=/etc/httpd/conf.d/arxiv-reflink.conf force=yes
 
 - name: enable and start service
-  service:
-    name: httpd
-    enabled: yes
-    state: restarted
+  service: name=httpd enabled=yes state=restarted

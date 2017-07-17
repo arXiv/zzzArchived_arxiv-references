@@ -11,6 +11,7 @@ import jsonschema
 import os
 from base64 import b64encode
 from decimal import Decimal
+from unidecode import unidecode
 
 from typing import List
 ReferenceData = List[dict]
@@ -86,7 +87,7 @@ class ExtractionSession(object):
             Base64 encoded hash.
         """
         to_encode = '%s:%s:%s' % (document_id, version, created)
-        hash_string = bytes(to_encode, encoding='ascii')
+        hash_string = bytes(unidecode(to_encode), encoding='ascii')
         return str(b64encode(hash_string), encoding='utf-8')
 
     def create(self, document_id: str, version: str, created: str) -> None:
@@ -324,7 +325,7 @@ class ReferenceStoreSession(object):
             Base64-encoded identifier.
         """
         to_encode = '%s:%s:%s' % (document_id, raw, version)
-        hash_string = bytes(to_encode, encoding='ascii')
+        hash_string = bytes(unidecode(to_encode), encoding='ascii')
         return str(b64encode(hash_string), encoding='utf-8')
 
     def _clean(self, reference: dict) -> dict:

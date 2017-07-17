@@ -1,10 +1,10 @@
-import re
+import regex as re
 
-__all__ = [
+__all__ = (
     'REGEX_ARXIV_SIMPLE',
     'REGEX_ARXIV_STRICT',
     'REGEX_ARXIV_FLEXIBLE'
-]
+)
 
 categories = [
     "acc-phys", "adap-org", "alg-geom", "ao-sci", "astro-ph", "atom-ph",

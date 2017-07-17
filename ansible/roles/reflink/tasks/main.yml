@@ -1,5 +1,3 @@
-- include_vars: vars/secrets.yml
-
 - name: make sure that gcc is installed
   yum: name=gcc state=present
 
@@ -61,7 +59,8 @@
 
 - name: create app virtualenv
   command: virtualenv /opt/reflink/venv --python=python3
-  args: creates=/opt/reflink/venv
+  args:
+    creates: /opt/reflink/venv
 
 - name: upgrade pip
   pip: executable=/opt/reflink/venv/bin/pip3 name=pip state=latest

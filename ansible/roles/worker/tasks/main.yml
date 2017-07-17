@@ -10,9 +10,6 @@
 - name: create worker user
   user: name=reflinkworker groups=docker state=present
 
-- name: give worker user ownership
-  file: path=/opt/reflink owner=reflinkworker recurse=yes
-
 - name: give worker ownership of log file
   file: path=/var/log/reflink-worker.log owner=reflinkworker state=touch mode=0666
 
@@ -43,8 +40,9 @@
     path: /var/log/reflink-worker.log
     state: touch
 
+- name: give worker user ownership of the application tree
+  file: path=/opt/reflink owner=reflinkworker recurse=yes
+
+
 - name: enable and start service
-  service:
-    name: reflink-worker
-    enabled: yes
-    state: restarted
+  service: name=reflink-worker enabled=yes state=restarted
