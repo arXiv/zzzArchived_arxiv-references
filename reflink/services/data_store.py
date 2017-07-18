@@ -426,7 +426,7 @@ class ReferenceStoreSession(object):
         if len(response['Items']) == 0:
             msg = 'No such reference %s for document %s' %\
                 (identifier, document_id)
-            raise IOError(msg)
+            return None
         return response['Items'][0]
 
     def retrieve_latest(self, document_id: str) -> dict:

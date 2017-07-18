@@ -49,6 +49,18 @@ class TestLatexInjection(unittest.TestCase):
             answer = res.read().strip()
             self.assertEqual(latexinjector.bib_items_tail(content), answer)
 
+    def test_url_replacement(self):
+        reference = {
+            'document': 'foo',
+            'identifier': 'bar',
+        }
+
+        baseurl = 'https://arxiv.org/references'
+        self.assertEqual(
+            latexinjector.url_formatter_arxiv(reference, baseurl=baseurl),
+            '\\href{%s/foo/ref/bar/resolve}{GO}' % (baseurl)
+        )
+
     def test_bibitem_reference_match(self):
         file_ref = revfile('cermxml.json')
         file_bbl = revfile('bbl')

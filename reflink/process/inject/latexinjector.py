@@ -28,7 +28,6 @@ LATEX_COMMENT = re.compile(r'(^|.*[^\\])(\%.*$)')
 
 AUTOTEX_DOCKER_IMAGE = os.environ.get('REFLINK_AUTOTEX_DOCKER_IMAGE',
                                       'arxiv/autotex:v0.906.0-1')
-REFLINK_BASE_URL = os.environ.get('REFLINK_BASE_URL')
 
 
 def argmax(array):
@@ -317,8 +316,7 @@ def bib_items_tail(bibliography: str, marker=DEFAULT_TAIL) -> str:
 
 
 def url_formatter_arxiv(reference: dict, marker: str='GO',
-                        baseurl: str=REFLINK_BASE_URL,
-                        queryparam: str='q') -> str:
+                        baseurl: str=None, queryparam: str='q') -> str:
     """
     Create the latex for a URL given a `reference_line`. In the process, does
     basic encoding so that latex characters work in the URL and is urlencoded
@@ -354,8 +352,11 @@ def bbl_inject_urls(text: str, references: List[dict],
     bibliography : str
         Raw text for a replacement bibliography with URLs injected
     """
+
+    baseurl = os.environ.get('REFLINK_BASE_URL')
     def _inject(entry, refline):
-        return '{entry}\n{url}'.format(entry=entry, url=formatter(refline))
+        return '{entry}\n{url}'.format(entry=entry, url=formatter(refline),
+                                       baseurl=baseurl)
 
     replacement_bbls = []
 
