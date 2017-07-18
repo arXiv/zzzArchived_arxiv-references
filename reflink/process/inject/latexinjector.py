@@ -30,6 +30,7 @@ AUTOTEX_DOCKER_IMAGE = os.environ.get('REFLINK_AUTOTEX_DOCKER_IMAGE',
                                       'arxiv/autotex:v0.906.0-1')
 REFLINK_BASE_URL = os.environ.get('REFLINK_BASE_URL')
 
+
 def argmax(array):
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index
@@ -326,7 +327,7 @@ def url_formatter_arxiv(reference: dict, marker: str='GO',
     # query = tex_escape(urlencode({'q': reference_line}))
     document = reference['document']
     identifier = reference['identifier']
-    url = '%s/%s/ref/%s' % (baseurl, document, identifier)
+    url = '%s/%s/ref/%s/resolve' % (baseurl, document, identifier)
     return '\\href{{{url}}}{{{marker}}}'.format(url=url, marker=marker)
 
 
