@@ -7,12 +7,6 @@ import xml.etree.ElementTree
 from reflink.process import util
 from reflink.process.extract import regex_identifiers
 
-import logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.DEBUG
-)
-logger = logging.getLogger(__name__)
 
 
 class ExtractionError(Exception):
