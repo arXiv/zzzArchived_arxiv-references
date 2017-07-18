@@ -15,3 +15,4 @@ broker_transport_options = {
     'region': os.environ.get('AWS_REGION', 'us-east-1'),
     'queue_name_prefix': 'reflink-',
 }
+worker_prefetch_multiplier = 0

@@ -18,6 +18,15 @@ class ReferenceMetadataController(object):
             -> types.ControllerResponseData:
         """
         Get metadata for a specific reference in a document.
+
+        Parameters
+        ----------
+        document_id : str
+        reference_id : str
+
+        Returns
+        -------
+        dict
         """
         data = data_store.get_session()
 
@@ -36,7 +45,7 @@ class ReferenceMetadataController(object):
             return {
                 'explanation': "No reference data exists for %s" % document_id
             }, status.HTTP_404_NOT_FOUND
-        return {"references": reference}, status.HTTP_200_OK
+        return reference, status.HTTP_200_OK
 
     def list(self, document_id: str) -> types.ControllerResponseData:
         """

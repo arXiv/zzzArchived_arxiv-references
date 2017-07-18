@@ -21,8 +21,6 @@ logging.basicConfig(format=log_format, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-
-
 class ExtractionSession(object):
     """Commemorates extraction work performed on arXiv documents."""
 
@@ -406,6 +404,16 @@ class ReferenceStoreSession(object):
 
     def retrieve(self, document_id: str, identifier: str) -> dict:
         """
+        Retrieve metadata for a specific reference in a document.
+
+        Parameters
+        ----------
+        document_id : str
+        identifier: str
+
+        Returns
+        -------
+        dict
         """
         expression = Key('document').eq(document_id) \
             & Key('identifier').eq(identifier)
@@ -441,7 +449,7 @@ class ReferenceStoreSession(object):
 
     def retrieve_all(self, document_id: str, extraction: str = None) -> dict:
         """
-        Retrieve reference data for an arXiv document.
+        Retrieve reference metadata for an arXiv document.
 
         Parameters
         ----------
