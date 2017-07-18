@@ -68,6 +68,13 @@
 - name: upgrade setuptools
   pip: executable=/opt/reflink/venv/bin/pip3 name=setuptools state=latest
 
+- name: install pycurl
+  pip:
+    executable: /opt/reflink/venv/bin/pip3
+    name: pycurl
+    state: latest
+    extra_args: --install-option='--with-nss'
+
 - name: install python dependencies for app
   pip: executable=/opt/reflink/venv/bin/pip3 requirements=/opt/reflink/arxiv-reflink/requirements.txt
 

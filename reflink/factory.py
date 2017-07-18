@@ -11,7 +11,8 @@ def create_web_app():
     logging.getLogger('boto3').setLevel(logging.ERROR)
     logging.getLogger('botocore').setLevel(logging.ERROR)
 
-    app = Flask('reflink')
+    app = Flask('reflink', static_folder='web/static',
+                template_folder='web/templates')
     app.config.from_pyfile('config.py')
     app.register_blueprint(rest.blueprint)
     return app
