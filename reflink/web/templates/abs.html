@@ -182,6 +182,14 @@ Cite&nbsp;as:
     <h2>References</h2>
     <ul id="reference-list"></ul>
     <style>
+    #reference-list {
+        list-style: none;
+    }
+
+    .reference {
+        margin-bottom: 12px;
+    }
+
     .reference-author::after {
         content: ', ';
     }
@@ -221,6 +229,12 @@ Cite&nbsp;as:
     .reference-author-givennames::after {
         content: ' ';
     }
+    .reference-identifier {
+        font-weight: bold;
+    }
+    .reference-identifier-type::after {
+        content: ': ';
+    }
     </style>
     <script>
         var references_elem = $('#reference-list');
@@ -233,7 +247,7 @@ Cite&nbsp;as:
 
         var renderReferences = function(data) {
             data.references.forEach(function(reference) {
-                var reference_elem = $('<li id="reference-' + reference.identifier + '"></li>');
+                var reference_elem = $('<li class="reference" id="reference-' + reference.identifier + '"></li>');
                 if (reference.authors != null) {
                     var authors_elem = $('<span class="reference-authors"></span>');
                     reference.authors.forEach(function(author) {
@@ -251,7 +265,7 @@ Cite&nbsp;as:
 
                 reference_elem.append('<span class="reference-year">' + reference.year + '</span>');
                 if (reference.title != null) {
-                    if (reference.doi == null) {   // No DOI, so we'll link back to our endpoint.
+                    if (reference.doi == null && reference.identifiers == null) {   // No DOI, so we'll link back to our endpoint.
                         reference_elem.append('<span class="reference-title"><a href="' + getURLforReference(reference) + '">' + reference.title + '</a></span>');
                     } else {
                         reference_elem.append('<span class="reference-title">' + reference.title + '</span>');
@@ -276,6 +290,17 @@ Cite&nbsp;as:
                 }
                 if (reference.doi != null) {
                     reference_elem.append('<span class="reference-doi"><a href="' + getURLforReference(reference) + '">' + reference.doi + '</a></span>');
+                }
+                if (reference.identifiers != null) {
+                    reference.identifiers.forEach(function(identifier) {
+                        var identifier_elem = $('<span class="reference-identifier"></span>');
+                        identifier_elem.append('<span class="reference-identifier-type">' + identifier.identifier_type + '</span>');
+                        if (identifier.identifier_type == 'arxiv') {
+                            identifier_elem.append('<span class="reference-identifier-value"><a href="' + getURLforReference(reference) + '">' + identifier.identifier + '</a></span>');
+                        }
+                        reference_elem.append(identifier_elem);
+                    });
+
                 }
 
                 references_elem.append(reference_elem);

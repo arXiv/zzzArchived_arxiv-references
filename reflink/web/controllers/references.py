@@ -119,7 +119,11 @@ class ReferenceMetadataController(object):
         # Missing values should be null.
         for reference in references:
             for key, value in reference.items():
+                if type(value) is list:
+                    value = [obj for obj in value if obj]
                 if not value:
                     reference[key] = None
+                else:
+                    reference[key] = value
 
         return {"references": references}, status.HTTP_200_OK
