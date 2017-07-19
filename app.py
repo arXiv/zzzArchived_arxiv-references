@@ -1,3 +1,3 @@
-from reflink.factory import create_app
+from reflink.factory import create_web_app
 
-app = create_app()
+app = create_web_app()

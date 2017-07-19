@@ -1,56 +1,51 @@
-# - name: make sure redis is installed
-#   yum:
-#     name: redis
-#     state: present
-#   #become: yes
-#
-# - name: make sure redis is running
-#   systemd:
-#     state: restarted
-#     name: redis
-#   #become: yes
-#
-# - name: make sure redis is enabled
-#   systemd:
-#     enabled: yes
-#     name: redis
-#   #become: yes
+- name: make sure that docker-py is installed
+  pip: name=docker-py state=latest
+
+- name: make sure docker is installed
+  yum: name=docker state=latest
+
+- name: make sure that ghostscript is installed (provides ps2pdf)
+  yum: name=ghostscript state=latest
+
+- name: make sure docker is running
+  service: name=docker state=started
+
+- name: create worker user
+  user: name=reflinkworker groups=docker state=present
+
+- name: give worker ownership of log file
+  file: path=/var/log/reflink-worker.log owner=reflinkworker state=touch mode=0666
+
+- name: register with docker registry
+  shell: |
+    export AWS_ACCESS_KEY_ID="{{ aws_access_key }}"
+    export AWS_SECRET_ACCESS_KEY="{{ aws_secret_key }}"
+    $(aws ecr get-login --region=us-east-1)
+  become_user: reflinkworker
 
 - name: copy startup assets
   copy:
     src: files/start_worker
     dest: /opt/reflink/bin/start_worker
-    #owner: "{{ reflink_user }}"
-    #group: "{{ reflink_user }}"
     mode: "u=rwx,g=r,o=r"
-  #become: yes
-  #become_user: "{{ reflink_user }}"
-
-# - name: copy service script (for Centos/RHEL 7)
-#   copy:
-#     src: files/reflink-worker.service
-#     dest: /usr/lib/systemd/system/reflink-worker.service
-#     mode: 0755
-  #become: yes
-  #when: "'ec2hosts' not in group_names"
 
 - name: copy oldschool service script (for AWS AMI, Centos/RHEL <=6)
   copy:
     src: files/reflink-worker
     dest: /etc/init.d/reflink-worker
     mode: 0755
-  #become: yes
+    owner: reflinkworker
+
   # when: "'ec2hosts' in group_names"
 
 - name: create log file
   file:
     path: /var/log/reflink-worker.log
     state: touch
-  #become: yes
+
+- name: give worker user ownership of the application tree
+  file: path=/opt/reflink owner=reflinkworker recurse=yes
+
 
 - name: enable and start service
-  service:
-    name: reflink-worker
-    enabled: yes
-    state: started
-  #become: yes
+  service: name=reflink-worker enabled=yes state=restarted

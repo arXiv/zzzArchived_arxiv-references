@@ -8,14 +8,14 @@
       - openssl-devel
       - ncurses-devel
     state: present
-  #become: yes
+
 
 - name: make sure tar is installed
   yum:
     name:
       - tar
     state: present
-  #become: yes
+
 
 - name: get Python3.6 source
   unarchive:
@@ -23,35 +23,33 @@
     dest: /usr/src
     creates: /usr/src/Python-3.6.1
     remote_src: yes
-  #become: yes
+
 
 - name: configure Python build
   command: ./configure --prefix=/opt/
   args:
     chdir: /usr/src/Python-3.6.1
     creates: /usr/src/Python-3.6.1/Makefile
-  #become: yes
+
 
 - name: build Python from source
   command: make
   args:
     chdir: /usr/src/Python-3.6.1
     creates: /usr/src/Python-3.6.1/libpython3.6m.a
-  #become: yes
+
 
 - name: install Python (as root)
   command: make altinstall
   args:
     chdir: /usr/src/Python-3.6.1
     creates: /opt/bin/python3.6
-  #become: yes
 
 - name: get pip installer
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /usr/src
-  #become: yes
+
 
 - name: install pip
   command: /opt/bin/python3.6 /usr/src/get-pip.py
-  #become: yes

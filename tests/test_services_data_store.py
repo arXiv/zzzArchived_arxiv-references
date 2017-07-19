@@ -131,6 +131,7 @@ class RetrieveReference(unittest.TestCase):
         """
         session = data_store.get_session()
         extraction, data = session.create(document_id, valid_data, version)
+        print(data)
         identifier = data[0]['identifier']
         retrieved = session.retrieve(document_id, identifier)
         self.assertEqual(data[0]['raw'], retrieved['raw'])
@@ -145,6 +146,18 @@ class RetrieveReference(unittest.TestCase):
         """
         session = data_store.get_session()
         data = session.retrieve_latest('nonsense')
+        self.assertEqual(data, None)
+
+    @mock_dynamodb2
+    def test_retrieving_nonexistant_reference_returns_none(self):
+        """
+        Test retrieving a record that does not exist.
+
+        If the record does not exist, attempting to retrieve it should simply
+        return ``None``.
+        """
+        session = data_store.get_session()
+        data = session.retrieve('nonsense', 'gibberish')
         self.assertEqual(data, None)
 
 

@@ -19,7 +19,7 @@ from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 
 # TODO: make this configurable.
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.DEBUG)
+logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
@@ -46,6 +46,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
         self.proc = create_process_app()
+        logger.info('%s' % self.proc.conf)
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
@@ -106,6 +107,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         except Exception as e:
             logger.error("Error while deserializing data: %s" % e)
             logger.error("Data payload: %s" % data)
+            return   # Don't bring down the whole batch.
 
         try:
             process.process_document(deserialized.get('document_id'))
@@ -158,13 +160,15 @@ class RecordProcessor(processor.RecordProcessorBase):
             last_check = time.time() - self._last_checkpoint_time
             if last_check > self._CHECKPOINT_FREQ:
                 self.checkpoint(records.checkpointer,
-                                bytes(self._largest_seq[0]),
+                                str(self._largest_seq[0]),
                                 self._largest_seq[1])
                 self._last_checkpoint_time = time.time()
 
         except Exception as e:
             logger.error("Encountered an exception while processing records."
                          " Exception was %s" % e)
+            logger.error("Seq: %i; Sub seq: %i; Key: %s" % (seq, sub_seq, key))
+            logger.error("{}".format(data))
 
     def shutdown(self, shutdown: ShutdownInput) -> None:
         """
