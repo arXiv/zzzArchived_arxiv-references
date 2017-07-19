@@ -13,7 +13,7 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
 
     @mock_dynamodb2
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
-    def test_get_calls_datastore_session(self, retrieve_mock):
+    def test_list_calls_datastore_session(self, retrieve_mock):
         """Test references.ReferenceMetadataController.list method."""
         retrieve_mock.return_value = []
         controller = references.ReferenceMetadataController()
@@ -26,7 +26,7 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
 
     @mock_dynamodb2
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
-    def test_get_handles_IOError(self, retrieve_mock):
+    def test_list_handles_IOError(self, retrieve_mock):
         """Test the case that the underlying datastore raises an IOError."""
         def raise_ioerror(*args):
             raise IOError('Whoops!')
@@ -43,7 +43,7 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
 
     @mock_dynamodb2
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
-    def test_get_handles_nonexistant_record(self, retrieve_mock):
+    def test_list_handles_nonexistant_record(self, retrieve_mock):
         """Test the case that a non-existant record is requested."""
         retrieve_mock.return_value = None
 
@@ -64,7 +64,7 @@ class TestReferenceMetadataControllerGet(unittest.TestCase):
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
     def test_get_calls_datastore_session(self, retrieve_mock):
         """Test references.ReferenceMetadataController.get method."""
-        retrieve_mock.return_value = []
+        retrieve_mock.return_value = {}
         controller = references.ReferenceMetadataController()
 
         try:

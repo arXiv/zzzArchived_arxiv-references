@@ -34,18 +34,25 @@ def process_document(document_id: str) -> None:
         pdf_path, tex_path = retrieve(document_id)
         logger.info('Retrieved content for %s' % document_id)
 
+        logger.info('Extracting metadata for %s' % document_id)
         metadata = extract(pdf_path)    # TODO: add reconciliation step.
         logger.info('Extracted metadata for %s' % document_id)
 
         # Should return the data with reference hashes inserted.
-        metadata = store_metadata(metadata, document_id, VERSION)
+        logger.info('Storing metadata for %s' % document_id)
+        extraction, metadata = store_metadata(metadata, document_id, VERSION)
         logger.info('Stored metadata for %s' % document_id)
 
-        new_pdf_path = inject(tex_path, metadata)
-        logger.info('Created injected PDF for %s' % document_id)
+        if tex_path:
+            logger.info('Injecting links for %s' % document_id)
+            logger.debug('Injecting in source: %s' % tex_path)
+            new_pdf_path = inject(tex_path, metadata)
+            logger.info('Created injected PDF for %s' % document_id)
+            logger.debug('PDF at %s' % new_pdf_path)
 
-        store_pdf(new_pdf_path, document_id)
-        logger.info('Stored injected PDF for %s' % document_id)
+            logger.info('Storing injected PDF for %s' % document_id)
+            store_pdf(new_pdf_path, document_id)
+            logger.info('Stored injected PDF for %s' % document_id)
     except Exception as e:
         msg = 'Failed to process %s: %s' % (document_id, e)
         logger.error(msg)

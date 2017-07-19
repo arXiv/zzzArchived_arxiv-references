@@ -50,10 +50,15 @@ class TestLatexInjection(unittest.TestCase):
             self.assertEqual(latexinjector.bib_items_tail(content), answer)
 
     def test_url_replacement(self):
-        reference_line = 'matt & erick'
+        reference = {
+            'document': 'foo',
+            'identifier': 'bar',
+        }
+
+        baseurl = 'https://arxiv.org/references'
         self.assertEqual(
-            latexinjector.url_formatter_arxiv(reference_line),
-            '\\href{https://arxiv.org/lookup?q=matt+\\%26+erick}{GO}'
+            latexinjector.url_formatter_arxiv(reference, baseurl=baseurl),
+            '\\href{%s/foo/ref/bar/resolve}{GO}' % (baseurl)
         )
 
     def test_bibitem_reference_match(self):

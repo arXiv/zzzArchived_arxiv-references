@@ -1,4 +1,4 @@
-import re
+import regex as re
 
 from reflink.process.extract.regex_arxiv import REGEX_ARXIV_SIMPLE, REGEX_ARXIV_FLEXIBLE
 
@@ -96,4 +96,3 @@ def extract_identifiers(text):
     doidoc = {'doi': dois[0]} if dois else blank_doi
     idsdoc = {'identifiers': identifiers} if identifiers else blank_ids
     return dict(doidoc, **idsdoc)
-

@@ -1,4 +1,4 @@
-import re
+import regex as re
 import os
 import shutil
 import subprocess
@@ -7,6 +7,15 @@ import xml.etree.ElementTree
 from reflink.process import util
 from reflink.process.extract import regex_identifiers
 
+CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
+                                      'arxiv/cermine')
+
+import logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+    level=logging.DEBUG
+)
+logger = logging.getLogger(__name__)
 
 
 class ExtractionError(Exception):
@@ -216,7 +225,7 @@ def extract_references(filename: str, cleanup: bool = True) -> str:
 
         try:
             # FIXME: magic string for cermine container
-            util.run_docker('mattbierbaum/cermine', [[tmpdir, '/pdfs']])
+            util.run_docker(CERMINE_DOCKER_IMAGE, [[tmpdir, '/pdfs']])
         except subprocess.CalledProcessError as exc:
             logger.error(
                 'CERMINE failed to extract references for {}'.format(filename)

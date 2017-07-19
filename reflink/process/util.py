@@ -6,7 +6,7 @@ import tempfile
 import subprocess
 import datetime
 from contextlib import contextmanager
-from typing import List
+from reflink.types import List
 
 import logging
 logging.basicConfig(

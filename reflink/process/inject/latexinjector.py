@@ -1,11 +1,12 @@
 import re
+import shutil
 import os
 import glob
 import shlex
 import datetime
 import subprocess
 from urllib.parse import urlencode
-from typing import List, Generator
+from reflink.types import List, Generator
 
 import chardet
 
@@ -24,6 +25,9 @@ DEFAULT_HEAD = re.compile(r'(\\begin{thebibliography}(\{.*\})?)')
 DEFAULT_TAIL = re.compile(r'(\\end{thebibliography}(\{.*\})?)')
 DEFAULT_MARKER = re.compile(r'\\bibitem[^a-zA-Z0-9]')
 LATEX_COMMENT = re.compile(r'(^|.*[^\\])(\%.*$)')
+
+AUTOTEX_DOCKER_IMAGE = os.environ.get('REFLINK_AUTOTEX_DOCKER_IMAGE',
+                                      'arxiv/autotex:v0.906.0-1')
 
 
 def argmax(array):
@@ -311,21 +315,21 @@ def bib_items_tail(bibliography: str, marker=DEFAULT_TAIL) -> str:
     return tail.strip()
 
 
-def url_formatter_arxiv(reference_line: str, marker: str='GO',
-                        baseurl: str='https://arxiv.org/lookup',
-                        queryparam: str='q') -> str:
+def url_formatter_arxiv(reference: dict, marker: str='GO',
+                        baseurl: str=None, queryparam: str='q') -> str:
     """
     Create the latex for a URL given a `reference_line`. In the process, does
     basic encoding so that latex characters work in the URL and is urlencoded
     """
-    reference_line = reference_line.encode('ascii', 'ignore')
-    query = tex_escape(urlencode({'q': reference_line}))
-    url = '{}?{}'.format(baseurl, query)
-
+    # reference_line = reference_line.encode('ascii', 'ignore')
+    # query = tex_escape(urlencode({'q': reference_line}))
+    document = reference['document']
+    identifier = reference['identifier']
+    url = '%s/%s/ref/%s/resolve' % (baseurl, document, identifier)
     return '\\href{{{url}}}{{{marker}}}'.format(url=url, marker=marker)
 
 
-def bbl_inject_urls(text: str, references: List[str],
+def bbl_inject_urls(text: str, references: List[dict],
                     formatter=url_formatter_arxiv) -> List[str]:
     """
     Given a particular bibliography (begin...end segment), inject each bibitem
@@ -337,8 +341,8 @@ def bbl_inject_urls(text: str, references: List[str],
     text : str
         Raw text of a bibliography to be modified with URLs
 
-    references : list of str
-        Reference lines which are used for matching and URL formation
+    references : list of dict
+        Reference metadata.
 
     formatter : callable
         Formatter function which takes a reference_line and returns a latex URL
@@ -348,8 +352,11 @@ def bbl_inject_urls(text: str, references: List[str],
     bibliography : str
         Raw text for a replacement bibliography with URLs injected
     """
+
+    baseurl = os.environ.get('REFLINK_BASE_URL')
     def _inject(entry, refline):
-        return '{entry}\n{url}'.format(entry=entry, url=formatter(refline))
+        return '{entry}\n{url}'.format(entry=entry, url=formatter(refline),
+                                       baseurl=baseurl)
 
     replacement_bbls = []
 
@@ -359,7 +366,7 @@ def bbl_inject_urls(text: str, references: List[str],
         bibitems = list(bib_items_iter(bbl))
         inds = match_by_cost(
             cleaned_bib_entries(bibitems),
-            cleaned_reference_lines(references)
+            cleaned_reference_lines([ref['raw'] for ref in references])
         )
 
         out = []
@@ -388,7 +395,7 @@ def detect_encoding(filename: str) -> str:
     return encoding['encoding']
 
 
-def transform_bbl(filename: str, reference_lines: List[str]):
+def transform_bbl(filename: str, references: List[dict]):
     """
     Take a .bbl/.tex filename and a set of reference lines, save the filename
     to a backup and rewrite with links in the bibliography section.
@@ -398,7 +405,7 @@ def transform_bbl(filename: str, reference_lines: List[str]):
     encoding = detect_encoding(filename)
     with open(filename, 'r', encoding=encoding) as f:
         content = f.read()
-        out = bbl_inject_urls(content, reference_lines)
+        out = bbl_inject_urls(content, references)
 
     with open(filename, 'w', encoding=encoding) as f:
         f.write(out)
@@ -429,32 +436,36 @@ def run_autotex(directory: str) -> str:
         return None
 
     timestamp = datetime.datetime.now()
-    util.run_docker(
-        'mattbierbaum/autotex:v0.906.0-1', [(directory, '/autotex')], 'go'
-    )
+    util.run_docker(AUTOTEX_DOCKER_IMAGE, [(directory, '/autotex')], 'go')
 
     # run the conversion pipeline since autotex produces many types of files
     pdf, dvi, ps = [_find(ext, timestamp) for ext in ['pdf', 'dvi', 'ps']]
     if pdf:
-        return pdf
-    if ps:
+        pass
+    elif ps:
         timestamp = datetime.datetime.now()
         with util.indir(directory):
             util.ps2pdf(ps)
-        return _find('pdf', timestamp)
-    if dvi:
+        pdf = _find('pdf', timestamp)
+    elif dvi:
         timestamp = datetime.datetime.now()
         with util.indir(directory):
             util.dvi2ps(dvi)
             ps = _find('ps', timestamp)
             util.ps2pdf(ps)
-        return _find('pdf', timestamp)
+        pdf = _find('pdf', timestamp)
+    else:
+        raise RuntimeError("No output found for autotex")
 
-    raise RuntimeError("No output found for autotex")
+    with util.tempdir(cleanup=False) as outdir:
+        fname = os.path.split(pdf)[-1]
+        dest = os.path.join(outdir, fname)
+        shutil.copyfile(pdf, dest)
+        return dest
 
 
 def modify_source_with_urls(source_path: str,
-                            reference_lines: List[str]) -> None:
+                            references: List[dict]) -> None:
     """
     Perform the URL injection into latex source (both .tex, .bbl) and modify
     files in place, making backups before doing so.
@@ -465,7 +476,7 @@ def modify_source_with_urls(source_path: str,
         The root directory in which to search for tex and bbl files
         and to run autotex
 
-    reference_lines : list of str
+    references : list of dict
         The references to match and inject into the list
     """
     join = os.path.join
@@ -475,19 +486,15 @@ def modify_source_with_urls(source_path: str,
         glob.glob(join(join(source_path, "**"), "*.bbl"), recursive=True)
     )
     for fn in files:
-        transform_bbl(fn, reference_lines)
+        transform_bbl(fn, references)
 
 
-def inject_urls(pdf_path: str, source_path: str, metadata: dict,
-                cleanup: bool=True) -> str:
+def inject_urls(source_path: str, metadata: dict, cleanup: bool=True) -> str:
     """
     Given a tarfile of latex source, inject references, and build a new pdf.
 
     Parameters
     ----------
-    pdf_path : str
-        Local filepath for the pdf being modified
-
     source_path : str
         Location of the source tarfile that will be injected
 
@@ -505,7 +512,7 @@ def inject_urls(pdf_path: str, source_path: str, metadata: dict,
     reference_lines = []
     for reference in metadata:
         if 'raw' in reference:
-            reference_lines.append(reference['raw'])
+            reference_lines.append(reference)
 
     # do the transformation in a temporary directory
     with util.tempdir(cleanup=cleanup) as fldr:
@@ -517,14 +524,12 @@ def inject_urls(pdf_path: str, source_path: str, metadata: dict,
         try:
             pdf = run_autotex(fldr)
         except subprocess.CalledProcessError as exc:
-            logger.error(
-                "AutoTeX build failed for source '{}'".format(source_path)
-            )
-            raise exc
+            msg = "AutoTeX build failed for source %s" % source_path
+            logger.error(msg)
+            raise RuntimeError(msg) from exc
         except RuntimeError as exc:
-            logger.error(
-                "No output found from AutoTeX run for '{}'".format(source_path)
-            )
-            raise exc
+            msg = "No output found from AutoTeX run for %s" % source_path
+            logger.error(msg)
+            raise RuntimeError(msg) from exc
 
         return pdf
