@@ -11,15 +11,14 @@ import jsonschema
 import os
 from base64 import b64encode
 from decimal import Decimal
+from unidecode import unidecode
 
-from typing import List
+from reflink.types import List
 ReferenceData = List[dict]
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
-
 
 
 class ExtractionSession(object):
@@ -28,9 +27,10 @@ class ExtractionSession(object):
     table_name = 'Extractions'
 
     def __init__(self, endpoint_url: str, aws_access_key: str,
-                 aws_secret_key: str) -> None:
+                 aws_secret_key: str, region_name: str) -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb',
+                                       region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
@@ -85,7 +85,7 @@ class ExtractionSession(object):
             Base64 encoded hash.
         """
         to_encode = '%s:%s:%s' % (document_id, version, created)
-        hash_string = bytes(to_encode, encoding='ascii')
+        hash_string = bytes(unidecode(to_encode), encoding='ascii')
         return str(b64encode(hash_string), encoding='utf-8')
 
     def create(self, document_id: str, version: str, created: str) -> None:
@@ -152,13 +152,15 @@ class ReferenceStoreSession(object):
         not exist, no validation will occur.
     aws_access_key : str
     aws_secret_key : str
+    region_name : str
     """
 
     def __init__(self, endpoint_url: str, extracted_schema_path: str,
                  stored_schema_path: str, aws_access_key: str,
-                 aws_secret_key: str) -> None:
+                 aws_secret_key: str, region_name: str) -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb',
+                                       region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
@@ -192,7 +194,7 @@ class ReferenceStoreSession(object):
         self.table = self.dynamodb.Table(self.table_name)
 
         self.extractions = ExtractionSession(endpoint_url, aws_access_key,
-                                             aws_secret_key)
+                                             aws_secret_key, region_name)
 
     def _create_table(self) -> None:
         """Set up a new table in DynamoDB. Blocks until table is available."""
@@ -222,7 +224,7 @@ class ReferenceStoreSession(object):
                         'WriteCapacityUnits': 5
                     },
                     'Projection': {
-                        "ProjectionType" : 'ALL'
+                        "ProjectionType": 'ALL'
                     }
                 },
             ],
@@ -256,7 +258,7 @@ class ReferenceStoreSession(object):
             Raised when the data in ``references`` is invalid.
         """
         if self.extracted_schema is None:
-            logger.info("No schema available; skipping validation.")
+            logger.debug("No schema available; skipping validation.")
             return True
 
         # for reference in data:
@@ -291,7 +293,7 @@ class ReferenceStoreSession(object):
             Raised when the data in ``references`` is invalid.
         """
         if self.stored_schema is None:
-            logger.info("No schema available; skipping validation.")
+            logger.debug("No schema available; skipping validation.")
             return True
 
         # for reference in data:
@@ -321,8 +323,27 @@ class ReferenceStoreSession(object):
             Base64-encoded identifier.
         """
         to_encode = '%s:%s:%s' % (document_id, raw, version)
-        hash_string = bytes(to_encode, encoding='ascii')
+        hash_string = bytes(unidecode(to_encode), encoding='ascii')
         return str(b64encode(hash_string), encoding='utf-8')
+
+    def _clean(self, reference: dict) -> dict:
+        """
+        Remove empty values.
+
+        Parameters
+        ----------
+        reference : dict
+
+        Returns
+        -------
+        dict
+        """
+        def _inner_clean(datum):
+            return {k: v for k, v in datum.items() if v}
+
+        return {k: v if v and k not in ['authors', 'identifiers']
+                else [_inner_clean(datum) for datum in v]
+                for k, v in reference.items()}
 
     def create(self, document_id: str, references: ReferenceData,
                version: str) -> None:
@@ -355,10 +376,11 @@ class ReferenceStoreSession(object):
         created = datetime.datetime.now().isoformat()
         extraction = self.extractions.hash(document_id, version, created)
         document_extraction = '%s#%s' % (document_id, extraction)
-
+        stored_references = []
         try:
             with self.table.batch_writer() as batch:
                 for order, reference in enumerate(references):
+                    reference = self._clean(reference)
                     self.validate_extracted(reference)
                     identifier = self.hash(document_id, reference['raw'],
                                            version)
@@ -371,16 +393,27 @@ class ReferenceStoreSession(object):
                         'order': order
                     })
                     self.validate_stored(reference)
+                    stored_references.append(reference)
                     # self.table.put_item(Item=reference)
                     batch.put_item(Item=reference)
         except ClientError as e:
-            raise IOError('Failed to create: %s' % e) from e
+            raise IOError('Failed to create: %s; %s' % (e, reference)) from e
 
         self.extractions.create(document_id, version, created)
-        return extraction, references
+        return extraction, stored_references
 
     def retrieve(self, document_id: str, identifier: str) -> dict:
         """
+        Retrieve metadata for a specific reference in a document.
+
+        Parameters
+        ----------
+        document_id : str
+        identifier: str
+
+        Returns
+        -------
+        dict
         """
         expression = Key('document').eq(document_id) \
             & Key('identifier').eq(identifier)
@@ -393,7 +426,7 @@ class ReferenceStoreSession(object):
         if len(response['Items']) == 0:
             msg = 'No such reference %s for document %s' %\
                 (identifier, document_id)
-            raise IOError(msg)
+            return None
         return response['Items'][0]
 
     def retrieve_latest(self, document_id: str) -> dict:
@@ -416,7 +449,7 @@ class ReferenceStoreSession(object):
 
     def retrieve_all(self, document_id: str, extraction: str = None) -> dict:
         """
-        Retrieve reference data for an arXiv document.
+        Retrieve reference metadata for an arXiv document.
 
         Parameters
         ----------
@@ -465,8 +498,10 @@ def get_session() -> ReferenceStoreSession:
     endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
     aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
     aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+    region_name = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
     return ReferenceStoreSession(endpoint_url,
                                  extracted_schema_path=extracted_schema_path,
                                  stored_schema_path=stored_schema_path,
                                  aws_access_key=aws_access_key,
-                                 aws_secret_key=aws_secret_key)
+                                 aws_secret_key=aws_secret_key,
+                                 region_name=region_name)

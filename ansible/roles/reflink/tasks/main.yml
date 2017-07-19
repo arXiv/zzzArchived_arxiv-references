@@ -1,63 +1,48 @@
-- include_vars: vars/secrets.yml
+- name: make sure that gcc is installed
+  yum: name=gcc state=present
+
+- name: install libcurl-devel.x86_64
+  yum: name=libcurl-devel.x86_64 state=present
 
 - name: install python3
   yum:
-    name: python35
+    name:
+      - python35
+      - python35-devel
     state: present
 
 - name: get pip installer
-  get_url:
-    url: https://bootstrap.pypa.io/get-pip.py
-    dest: /usr/src
-  #become: yes
+  get_url: url=https://bootstrap.pypa.io/get-pip.py dest=/usr/src
 
 - name: install pip
   command: python3 /usr/src/get-pip.py
-  #become: yes
 
-
-# - name: create user
-#   user:
-#     name: "{{ reflink_user }}"
-#     state: present
-#     createhome: yes
-  #become: yes
-
-# - name: make sure yum is up to date
-#   yum:
-#     name: '*'
-#     state: latest
-#   #become: yes
+- name: upgrade pip
+  pip:
+    executable: /usr/local/bin/pip3
+    name: pip
+    state: latest
 
 - name: enable epel repos
-  yum:
-    name: epel-release
-    state: present
-  #become: yes
+  yum: name=epel-release state=present
 
 - name: install git
-  yum:
-    name: git
-    state: present
-  #become: yes
+  yum: name=git state=present
 
 - name: install virtualenv
   pip:
-    executable: pip3
+    executable: /usr/local/bin/pip3
     name: virtualenv
-  #become: yes
 
 - name: create app tree
   file:
     path: "{{ item }}"
     state: directory
-    #owner: "{{ reflink_user }}"
-    #group: "{{ reflink_user }}"
   with_items:
     - /opt/reflink
     - /opt/reflink/jars
     - /opt/reflink/bin
-  #become: yes
+    - /opt/reflink/arxiv-reflink
 
 - name: make sure zip/unzip are installed
   yum:
@@ -65,39 +50,33 @@
       - zip
       - unzip
     state: present
-  #become: yes
 
 - name: unarchive reflink source
   unarchive:
     src: files/reflink.zip
-    dest: /opt/reflink
+    dest: /opt/reflink/arxiv-reflink
     force: yes
-    # creates: /opt/reflink/arxiv-reflink
-  #become: yes
-  #become_user: "{{ reflink_user }}"
 
 - name: create app virtualenv
   command: virtualenv /opt/reflink/venv --python=python3
   args:
     creates: /opt/reflink/venv
-  #become: yes
-  #become_user: "{{ reflink_user }}"
+
+- name: upgrade pip
+  pip: executable=/opt/reflink/venv/bin/pip3 name=pip state=latest
+
+- name: upgrade setuptools
+  pip: executable=/opt/reflink/venv/bin/pip3 name=setuptools state=latest
+
+- name: install pycurl
+  pip:
+    executable: /opt/reflink/venv/bin/pip3
+    name: pycurl
+    state: latest
+    extra_args: --install-option='--with-nss'
 
 - name: install python dependencies for app
-  pip:
-    requirements: /opt/reflink/arxiv-reflink/requirements.txt
-    virtualenv: /opt/reflink/venv
-  #become: yes
-  #become_user: "{{ reflink_user }}"
+  pip: executable=/opt/reflink/venv/bin/pip3 requirements=/opt/reflink/arxiv-reflink/requirements.txt
 
-- name: copy endpoints config (testing/dev only)
-  copy:
-    src: files/endpoints.json
-    dest: /opt/reflink/endpoints.json
-
-- name: copy secrets
-  template:
-    src: templates/secrets
-    dest: /opt/reflink/secrets
-  #become: yes
-  #become_user: "{{ reflink_user }}"
+- name: copy configuration secrets
+  template: src=templates/secrets dest=/opt/reflink/secrets

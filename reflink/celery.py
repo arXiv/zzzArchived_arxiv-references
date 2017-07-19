@@ -1,10 +1,15 @@
 """Initialize the Celery application."""
 
 from celery import Celery
-from . import celeryconfig
+# from flask import Flask
+
+from reflink import celeryconfig
+# flask_app = Flask('reflink')
+# flask_app.config.from_pyfile('config.py')
 
 
-app = Celery()
+app = Celery('reflink')
 app.config_from_object(celeryconfig)
-app.autodiscover_tasks(['reflink.process.store', 'reflink.process.retrieve',
-                        'reflink.process.extract', 'reflink.process.inject'])
+app.autodiscover_tasks(['reflink.process.orchestrate'])
+app.conf.task_default_queue = 'reflink-worker'
+print(app.conf.__dict__)

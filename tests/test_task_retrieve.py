@@ -16,6 +16,7 @@ class TestRetrieve(unittest.TestCase):
         mock_response = mock.MagicMock()
         mock_response.content = b'foo'
         mock_response.status_code = 200
+        mock_response.headers = {'content-type': 'application/x-eprint-tar'}
         mock_get.return_value = mock_response
 
         try:

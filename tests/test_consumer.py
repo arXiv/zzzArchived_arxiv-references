@@ -45,6 +45,10 @@ class TestRecordProcessor(unittest.TestCase):
         self.assertEqual(process_document.call_count, 5)
         self.assertEqual(process_document.call_args[0][0], last)
 
+    def test_bad_data_ends_execution(self):
+        """Test the case that the notification data is malformed."""
+        pass
+
 
 class TestRecordProcessorCheckpoint(unittest.TestCase):
     """Test the functionality of the checkpoint mechanism."""
