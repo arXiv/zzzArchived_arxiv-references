@@ -16,6 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 VolumeList = List[List[str]]
+PortList = List[List[int]]
 
 
 @contextmanager
@@ -70,8 +71,8 @@ def tempdir(cleanup: bool = True) -> str:
             shutil.rmtree(directory)
 
 
-def run_docker(image: str, volumes: VolumeList = [],
-               args: str = '') -> (str, str):
+def run_docker(image: str, volumes: VolumeList = [], ports: PortList = [],
+               args: str = '', daemon: bool = False) -> (str, str):
     """
     Run a generic docker image. In our uses, we wish to set the userid to that
     of running process (getuid) by default. Additionally, we do not expose
@@ -87,17 +88,24 @@ def run_docker(image: str, volumes: VolumeList = [],
 
     args : str
         Arguments to the image's run cmd (set by Dockerfile CMD)
+
+    daemon : boolean
+        If True, launches the task to be run forever
     """
     # we are only running strings formatted by us, so let's build the command
     # then split it so that it can be run by subprocess
     opt_user = '-u {}'.format(os.getuid())
-    opt_volumes = ' '.join([
-        '-v {}:{}'.format(hd, cd) for hd, cd in volumes
-    ])
-    cmd = 'docker run --rm {} {} {} {}'.format(
-        opt_user, opt_volumes, image, args
+    opt_volumes = ' '.join(['-v {}:{}'.format(hd, cd) for hd, cd in volumes])
+    opt_ports = ' '.join(['-p {}:{}'.format(hp, cp) for hp, cp in ports])
+    cmd = 'docker run --rm {} {} {} {} {}'.format(
+        opt_user, opt_ports, opt_volumes, image, args
     )
     cmd = shlex.split(cmd)
+
+    if daemon:
+        return subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
 
     result = subprocess.run(
         cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE
