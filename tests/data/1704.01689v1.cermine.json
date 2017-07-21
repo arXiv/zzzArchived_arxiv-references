@@ -1,0 +1,1155 @@
+[
+    {
+        "authors": [
+            {
+                "givennames": "L.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Del Zanna"
+            },
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Amato"
+            },
+            {
+                "givennames": "N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Bucciantini"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "astro-ph/0404355",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "1063",
+        "pages": "0004",
+        "raw": "L. Del Zanna, E. Amato, and N. Bucciantini, Astron. Astrophys. 421, 1063 (2004), doi:10.1051/ 0004 - 6361:20035936 [astro-ph/0404355]",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "421",
+        "year": "2004"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "L. W.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Astrophys"
+            }
+        ],
+        "doi": "10.1086/342824",
+        "identifiers": [
+            {
+                "identifier": "astro-ph/0205337",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "671",
+        "pages": "",
+        "raw": "L. W. et al., Astrophys. J. 579, 671 (2002), doi:10.1086/342824 [astro-ph/0205337]",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "579",
+        "year": "2002"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Radu"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.65.044005",
+        "identifiers": [
+            {
+                "identifier": "gr-qc/0109015",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "044005",
+        "pages": "",
+        "raw": "E. Radu, Phys. Rev. D 65, 044005 (2002), doi:10.1103/PhysRevD.65.044005 [gr-qc/0109015]",
+        "reftype": "",
+        "source": "Phys. Rev. D 65",
+        "title": "",
+        "volume": "",
+        "year": "2002"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hartmann"
+            },
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kleihaus"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kunz"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.65.024027",
+        "identifiers": [
+            {
+                "identifier": "hep-th/0108129",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "024027",
+        "pages": "",
+        "raw": "B. Hartmann, B. Kleihaus, and J. Kunz, Phys. Rev. D 65, 024027 (2001), doi:10.1103/PhysRevD.65.024027 [hep-th/0108129]",
+        "reftype": "",
+        "source": "Phys. Rev. D 65",
+        "title": "",
+        "volume": "",
+        "year": "2001"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kleihaus"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kunz"
+            }
+        ],
+        "doi": "10.1103/PhysRevLett.78.2527",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "2527",
+        "pages": "",
+        "raw": "B. Kleihaus and J. Kunz, Phys. Rev. Lett. 78, 2527 (1997), doi:10.1103/PhysRevLett.78.2527 [hepth/9612101]",
+        "reftype": "",
+        "source": "Phys. Rev. Lett",
+        "title": "",
+        "volume": "78",
+        "year": "1997"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kleihaus"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kunz"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.57.6138",
+        "identifiers": [
+            {
+                "identifier": "gr-qc/9712086",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "6138",
+        "pages": "",
+        "raw": "B. Kleihaus and J. Kunz, Phys. Rev. D 57, 6138 (1998), doi:10.1103/PhysRevD.57.6138 [gr-qc/9712086]",
+        "reftype": "",
+        "source": "Phys. Rev. D 57",
+        "title": "",
+        "volume": "",
+        "year": "1998"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kleihaus"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kunz"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.57.834",
+        "identifiers": [
+            {
+                "identifier": "gr-qc/9707045",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "834",
+        "pages": "",
+        "raw": "B. Kleihaus and J. Kunz, Phys. Rev. D 57, 834 (1998), doi:10.1103/PhysRevD.57.834 [gr-qc/9707045]",
+        "reftype": "",
+        "source": "Phys. Rev. D 57",
+        "title": "",
+        "volume": "",
+        "year": "1998"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Capozziello"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "M. De Laurentis"
+            },
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Stabile"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "0912.5286",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "165008",
+        "pages": "0264 0912",
+        "raw": "S. Capozziello, M. De Laurentis, and A. Stabile, Class. Quant. Grav. 27, 165008 (2010), doi:10.1088/ 0264 - 9381/27/16/165008 [arXiv:0912.5286 [gr-qc]]",
+        "reftype": "",
+        "source": "",
+        "title": "and",
+        "volume": "27",
+        "year": "2010"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "P. K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kuhfittig"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.67.064015",
+        "identifiers": [
+            {
+                "identifier": "gr-qc/0401028",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "064015",
+        "pages": "",
+        "raw": "P. K. Kuhfittig, Phys. Rev. D 67, 064015 (2003), doi:10.1103/PhysRevD.67.064015 [gr-qc/0401028]",
+        "reftype": "",
+        "source": "Phys. Rev. D 67",
+        "title": "",
+        "volume": "",
+        "year": "2003"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "D. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Reddy"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Naidu"
+            },
+            {
+                "givennames": "V. U.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rao"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "185",
+        "pages": "",
+        "raw": "D. R. Reddy, R. Naidu, and V. U. Rao, Astrophys. Space Sci. 306, 185 (2006)",
+        "reftype": "",
+        "source": "Space Sci",
+        "title": "",
+        "volume": "306",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "D. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Reddy"
+            },
+            {
+                "givennames": "M. V. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Rao"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "157",
+        "pages": "",
+        "raw": "D. R. Reddy and M. V. S. Rao, Astrophys. Space Sci. 302, 157 (2006)",
+        "reftype": "",
+        "source": "Space Sci",
+        "title": "",
+        "volume": "302",
+        "year": "2006"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Vlachynsky"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Tresguerres"
+            },
+            {
+                "givennames": "Y. N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Obukhov"
+            },
+            {
+                "givennames": "F.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hehl"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "gr-qc/9604035",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "3253",
+        "pages": "0264",
+        "raw": "E. Vlachynsky, R. Tresguerres, Y. N. Obukhov, and F. Hehl, Class. Quant. Grav. 13, 3253 (1996), doi:10.1088/ 0264 -9381/13/12/016 [gr-qc/9604035]",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "13",
+        "year": "1996"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abbott"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abbott"
+            },
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abbott"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abernathy"
+            },
+            {
+                "givennames": "F.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Acernese"
+            },
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ackley"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Adams"
+            },
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Adams"
+            },
+            {
+                "givennames": "P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Addesso"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Adhikari"
+            }
+        ],
+        "doi": "10.1103/PhysRevLett.116.061102",
+        "identifiers": [
+            {
+                "identifier": "1602.03837",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "061102",
+        "pages": "1602",
+        "raw": "B. Abbott, R. Abbott, T. Abbott, M. Abernathy, F. Acernese, K. Ackley, C. Adams, T. Adams, P. Addesso, R. Adhikari, et al., Phys. Rev. Lett. 116, 061102 (2016), doi:10.1103/PhysRevLett.116.061102 [arXiv:1602.03837 [gr-qc]]",
+        "reftype": "",
+        "source": "Phys. Rev. Lett",
+        "title": "",
+        "volume": "116",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abbott"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abbott"
+            },
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abbott"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abernathy"
+            },
+            {
+                "givennames": "F.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Acernese"
+            },
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ackley"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Adams"
+            },
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Adams"
+            },
+            {
+                "givennames": "P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Addesso"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Adhikari"
+            }
+        ],
+        "doi": "10.1103/PhysRevLett.116.241103",
+        "identifiers": [
+            {
+                "identifier": "1606.04855",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "241103",
+        "pages": "1606",
+        "raw": "B. Abbott, R. Abbott, T. Abbott, M. Abernathy, F. Acernese, K. Ackley, C. Adams, T. Adams, P. Addesso, R. Adhikari, et al., Phys. Rev. Lett. 116, 241103 (2016), doi:10.1103/PhysRevLett.116.241103 [arXiv:1606.04855 [gr-qc]]",
+        "reftype": "",
+        "source": "Phys. Rev. Lett",
+        "title": "",
+        "volume": "116",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hackmann"
+            },
+            {
+                "givennames": "C.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "L\u00e4mmerzahl"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.85.044049",
+        "identifiers": [
+            {
+                "identifier": "1107.5250",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "044049",
+        "pages": "1107",
+        "raw": "E. Hackmann and C. L\u00e4mmerzahl, Phys. Rev. D 85, 044049 (2012), doi:10.1103/PhysRevD.85.044049 [arXiv:1107.5250 [gr-qc]]",
+        "reftype": "",
+        "source": "Phys. Rev. D 85",
+        "title": "",
+        "volume": "",
+        "year": "2012"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Thomas"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Saglia"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Bender"
+            },
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gebhardt"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Magorrian"
+            },
+            {
+                "givennames": "D.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Richstone"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.94.064042",
+        "identifiers": [
+            {
+                "identifier": "1605.05816",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "391",
+        "pages": "1605",
+        "raw": "J. Thomas, R. Saglia, R. Bender, D. Thomas, K. Gebhardt, J. Magorrian, and D. Richstone, Mon. Not. Roy. Aston. Soc. 353, 391 (2004), doi:10.1103/PhysRevD.94.064042 [arXiv:1605.05816 [grqc]]",
+        "reftype": "",
+        "source": "Not. Roy. Aston. Soc",
+        "title": "",
+        "volume": "353",
+        "year": "2004"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Shibata"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sasaki"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.58.104011",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "104011",
+        "pages": "",
+        "raw": "M. Shibata and M. Sasaki, Phys. Rev. D 58, 104011 (1998), doi:10.1103/PhysRevD.58.104011 [grqc/9807046]",
+        "reftype": "",
+        "source": "Phys. Rev. D 58",
+        "title": "",
+        "volume": "",
+        "year": "1998"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "F.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "J.-F. Donati"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Paletou"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Bouvier"
+            },
+            {
+                "givennames": "",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ferreira"
+            }
+        ],
+        "doi": "10.1038/nature04253",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "466",
+        "pages": "",
+        "raw": "J.-F. Donati, F. Paletou, J. Bouvier, and J. Ferreira, Nature 438, 466 (2005), doi:10.1038/nature04253 [astroph/0511695]",
+        "reftype": "",
+        "source": "Nature",
+        "title": "",
+        "volume": "438",
+        "year": "2005"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "M. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Abramowicz"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Jaroszy\u0144ski"
+            },
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kato"
+            },
+            {
+                "givennames": "J.- P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Lasota"
+            },
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "R\u00f3\u017ca\u0144ska"
+            },
+            {
+                "givennames": "A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "S\u0105dowski"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "1003.3887",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "A15",
+        "pages": "0004 1003",
+        "raw": "M. A. Abramowicz, M. Jaroszy\u0144ski, S. Kato, J.- P. Lasota, A. R\u00f3\u017ca\u0144ska, and A. S\u0105dowski, Astron. Astrophys. 521, A15 (2010), doi:10.1051/ 0004 - 6361/201014467 [arXiv:1003.3887 [astro-ph. HE]]",
+        "reftype": "",
+        "source": "HE]].",
+        "title": "and",
+        "volume": "521",
+        "year": "2010"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Jia"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Liu"
+            },
+            {
+                "givennames": "X.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Liu"
+            },
+            {
+                "givennames": "Z.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Mo"
+            },
+            {
+                "givennames": "X.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Pang"
+            },
+            {
+                "givennames": "Y.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Wang"
+            },
+            {
+                "givennames": "N.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Yang"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "1702.05889",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "",
+        "pages": "1702",
+        "raw": "J. Jia, J. Liu, X. Liu, Z. Mo, X. Pang, Y. Wang, and N. Yang, arXiv:1702.05889 (2017)",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "",
+        "year": "2017"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "P. S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Letelier"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.68.104002",
+        "identifiers": [
+            {
+                "identifier": "gr-qc/0309033",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "104002",
+        "pages": "",
+        "raw": "P. S. Letelier, Phys. Rev. D 68, 104002 (2003), doi:10.1103/PhysRevD.68.104002 [gr-qc/0309033]",
+        "reftype": "",
+        "source": "Phys. Rev. D 68",
+        "title": "",
+        "volume": "",
+        "year": "2003"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "F.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "L\u00f3pez-Suspes"
+            },
+            {
+                "givennames": "G. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gonz\u00e1lez"
+            },
+            {
+                "givennames": "Braz. J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Phys"
+            }
+        ],
+        "doi": "10.1007/s13538-014-0216-8",
+        "identifiers": [
+            {
+                "identifier": "1104.0346",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "385",
+        "pages": "1104",
+        "raw": "F. L\u00f3pez-Suspes and G. A. Gonz\u00e1lez, Braz. J. Phys. 44, 385 (2014), doi:10.1007/s13538-014-0216-8 [arXiv:1104.0346 [gr-qc]]",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "44",
+        "year": "2014"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Dolan"
+            },
+            {
+                "givennames": "J. O.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Shipley"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.94.044038",
+        "identifiers": [
+            {
+                "identifier": "1104.0346",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "044038",
+        "pages": "1104",
+        "raw": "S. R. Dolan and J. O. Shipley, Phys. Rev. D 94, 044038 (2016), doi:10.1103/PhysRevD.94.044038 [arXiv:1104.0346 [gr-qc]]",
+        "reftype": "",
+        "source": "Phys. Rev. D 94",
+        "title": "",
+        "volume": "",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Beheshti"
+            },
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Gasper\u00edn"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.94.024015",
+        "identifiers": [
+            {
+                "identifier": "1512.08707",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "024015",
+        "pages": "1512",
+        "raw": "S. Beheshti and E. Gasper\u00edn, Phys. Rev. D 94, 024015 (2016), doi:10.1103/PhysRevD.94.024015 [arXiv:1512.08707 [gr-qc]]",
+        "reftype": "",
+        "source": "Phys. Rev. D 94",
+        "title": "",
+        "volume": "",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Beig"
+            },
+            {
+                "givennames": "B.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Schmidt"
+            }
+        ],
+        "doi": "10.1007/3-540-46580-4",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "325",
+        "pages": "",
+        "raw": "R. Beig and B. Schmidt, Lect. Notes Phys. 540, 325 (2000), doi:10.1007/3-540-46580-4 p342, Sec. 3",
+        "reftype": "",
+        "source": "Notes Phys doi:10.1007/3-540-46580-4 p342, Sec. 3.",
+        "title": "",
+        "volume": "540",
+        "year": "2000"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "O.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Semer\u00e1k"
+            }
+        ],
+        "doi": "10.1142/9789812776938_0004",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "O. Semer\u00e1k, Gravitation: following the Prague inspiration p. 111 (2002), doi:10.1142/9789812776938_0004 grqc/0204025",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "111",
+        "year": "2002"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Mars"
+            }
+        ],
+        "doi": "10.1007/978-3-",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "191 2",
+        "pages": "319 8",
+        "raw": "M. Mars, Fundam. Theor. Phys. 177, 191 (2014), doi:10.1007/978-3- 319 -06349- 2 _ 8",
+        "reftype": "",
+        "source": "Theor. Phys",
+        "title": "",
+        "volume": "177",
+        "year": "2014"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Pradhan"
+            }
+        ],
+        "doi": "10.1007/s12043-",
+        "identifiers": [
+            {
+                "identifier": "1205.5656",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "1",
+        "pages": "1205",
+        "raw": "P. Pradhan, Pramana 87, 1 (2016), doi:10.1007/s12043- 016-1214-x [arXiv:1205.5656 [gr-qc]]",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "87",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ono"
+            },
+            {
+                "givennames": "T.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Suzuki"
+            },
+            {
+                "givennames": "H.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Asada"
+            }
+        ],
+        "doi": "10.1103/PhysRevD.94.064042",
+        "identifiers": [
+            {
+                "identifier": "1605.05816",
+                "identifier_type": "arxiv"
+            }
+        ],
+        "issue": "064042",
+        "pages": "1605",
+        "raw": "T. Ono, T. Suzuki, and H. Asada, Phys. Rev. D 94, 064042 (2016), doi:10.1103/PhysRevD.94.064042 [arXiv:1605.05816 [gr-qc]]",
+        "reftype": "",
+        "source": "Phys. Rev. D 94",
+        "title": "",
+        "volume": "",
+        "year": "2016"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "E. M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Izhikevich"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "E. M. Izhikevich, Dynamical systems in neuroscience (MIT press, 2007)",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "",
+        "year": "2007"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "H.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Stephani"
+            },
+            {
+                "givennames": "D.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kramer"
+            },
+            {
+                "givennames": "E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Herlt"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "",
+        "pages": "",
+        "raw": "H. Stephani, D. Kramer, M. MacCallum, C. Hoenselaers, and E. Herlt, Exact solutions of Einstein's field equations (Cambridge University Press, 2009)",
+        "reftype": "",
+        "source": "",
+        "title": "Exact solutions of Einstein's field equations",
+        "volume": "",
+        "year": "2009"
+    }
+]

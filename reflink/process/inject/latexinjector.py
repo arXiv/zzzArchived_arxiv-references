@@ -5,7 +5,6 @@ import glob
 import shlex
 import datetime
 import subprocess
-from urllib.parse import urlencode
 from reflink.types import List, Generator
 
 import chardet
@@ -352,8 +351,8 @@ def bbl_inject_urls(text: str, references: List[dict],
     bibliography : str
         Raw text for a replacement bibliography with URLs injected
     """
-
     baseurl = os.environ.get('REFLINK_BASE_URL')
+
     def _inject(entry, refline):
         return '{entry}\n{url}'.format(entry=entry, url=formatter(refline),
                                        baseurl=baseurl)
