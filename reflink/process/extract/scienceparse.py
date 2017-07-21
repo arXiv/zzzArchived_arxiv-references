@@ -77,7 +77,7 @@ def format_scienceparse_output(output: dict) -> types.ReferenceMetadata:
         ]
         newform = {
             'title': ref.get('title'),
-            'year': ref.get('year'),
+            'year': str(ref.get('year')),
             'source': ref.get('venue'),
             'authors': authors
         }
