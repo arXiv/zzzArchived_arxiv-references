@@ -1,0 +1,356 @@
+{
+    "abstractText": "We investigate the existence and stability of timelike and null circular orbits (COs) in the equatorial plane of general static and axisymmetric (SAS) spacetime. We first obtained a necessary and sufficient condition for the non-existence of timelike COs. It is then proven that there will always exist timelike COs at large \u03c1 in an asymptotically flat SAS spacetime with a positive ADM mass and moreover, these timelike COs are stable. Some other sufficient conditions on the stability of timelike COs are also solved. We then found the necessary and sufficient condition on the existence of null COs. It is generally shown that existence of timelike COs in SAS spacetime does not imply the existence of null COs, and vice-versa, regardless whether the spacetime is asymptotically flat or the ADM mass is positive or not. These results are then used to show the existence of timelike COs and their stability in an SAS Einstein-Yang-Mills-Dilaton spacetimes whose metric is not completely known. We also used the theorems to deduce the existence of timelike and null COs in some known SAS spacetimes.",
+    "authors": [
+        {
+            "affiliations": [],
+            "name": "Junji Jia"
+        },
+        {
+            "affiliations": [],
+            "name": "Xiankai Pang"
+        },
+        {
+            "affiliations": [],
+            "name": "Nan Yang"
+        },
+        {
+            "affiliations": [],
+            "name": "Glyn O. Phillips"
+        }
+    ],
+    "id": "SP:992935b0564aa66f4f8bd834a4b8769a8df55685",
+    "references": [
+        {
+            "authors": [
+                "L. Del Zanna",
+                "E. Amato",
+                "N. Bucciantini"
+            ],
+            "title": "Astron",
+            "venue": "Astrophys. 421, 1063 ",
+            "year": 2004
+        },
+        {
+            "authors": [
+                "E. Radu"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 65, 044005 ",
+            "year": 2002
+        },
+        {
+            "authors": [
+                "B. Hartmann",
+                "B. Kleihaus",
+                "J. Kunz"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 65, 024027 ",
+            "year": 2001
+        },
+        {
+            "authors": [
+                "B. Kleihaus",
+                "J. Kunz"
+            ],
+            "title": "Phys",
+            "venue": "Rev. Lett. 78, 2527 ",
+            "year": 1997
+        },
+        {
+            "authors": [
+                "B. Kleihaus",
+                "J. Kunz"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 57, 6138 ",
+            "year": 1998
+        },
+        {
+            "authors": [
+                "B. Kleihaus",
+                "J. Kunz"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 57, 834 ",
+            "year": 1998
+        },
+        {
+            "authors": [
+                "S. Capozziello",
+                "M. De Laurentis",
+                "A. Stabile"
+            ],
+            "title": "Class",
+            "venue": "Quant. Grav. 27, 165008 ",
+            "year": 2010
+        },
+        {
+            "authors": [
+                "P.K. Kuhfittig"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 67, 064015 ",
+            "year": 2003
+        },
+        {
+            "authors": [
+                "D.R. Reddy",
+                "R. Naidu",
+                "V.U. Rao"
+            ],
+            "title": "Astrophys",
+            "venue": "Space Sci. 306, 185 ",
+            "year": 2006
+        },
+        {
+            "authors": [
+                "D.R. Reddy",
+                "M.V.S. Rao"
+            ],
+            "title": "Astrophys",
+            "venue": "Space Sci. 302, 157 ",
+            "year": 2006
+        },
+        {
+            "authors": [
+                "E. Vlachynsky",
+                "R. Tresguerres",
+                "Y.N. Obukhov",
+                "F. Hehl"
+            ],
+            "title": "Class",
+            "venue": "Quant. Grav. 13, 3253 ",
+            "year": 1996
+        },
+        {
+            "authors": [
+                "B. Abbott",
+                "R. Abbott",
+                "T. Abbott",
+                "M. Abernathy",
+                "F. Acernese",
+                "K. Ackley",
+                "C. Adams",
+                "T. Adams",
+                "P. Addesso"
+            ],
+            "title": "R",
+            "venue": "Adhikari, et al., Phys. Rev. Lett. 116, 061102 ",
+            "year": 2016
+        },
+        {
+            "authors": [
+                "B. Abbott",
+                "R. Abbott",
+                "T. Abbott",
+                "M. Abernathy",
+                "F. Acernese",
+                "K. Ackley",
+                "C. Adams",
+                "T. Adams",
+                "P. Addesso"
+            ],
+            "title": "R",
+            "venue": "Adhikari, et al., Phys. Rev. Lett. 116, 241103 ",
+            "year": 2016
+        },
+        {
+            "authors": [
+                "E. Hackmann",
+                "C. L\u00e4mmerzahl"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 85, 044049 ",
+            "year": 2012
+        },
+        {
+            "authors": [
+                "J. Thomas",
+                "R. Saglia",
+                "R. Bender",
+                "D. Thomas",
+                "K. Gebhardt",
+                "J. Magorrian",
+                "D. Richstone"
+            ],
+            "title": "Mon",
+            "venue": "Not. Roy. Aston. Soc. 353, 391 ",
+            "year": 2004
+        },
+        {
+            "authors": [
+                "M. Shibata",
+                "M. Sasaki"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 58, 104011 ",
+            "year": 1998
+        },
+        {
+            "authors": [
+                "J.-F. Donati",
+                "F. Paletou",
+                "J. Bouvier",
+                "J. Ferreira"
+            ],
+            "title": "Nature 438",
+            "venue": "466 ",
+            "year": 2005
+        },
+        {
+            "authors": [
+                "M.A. Abramowicz",
+                "M. Jaroszy\u0144ski"
+            ],
+            "title": "S",
+            "venue": "Kato, J.- P. Lasota, A. R\u00f3\u017ca\u0144ska, and A. S\u0105dowski, Astron. Astrophys. 521, A15 ",
+            "year": 2010
+        },
+        {
+            "authors": [
+                "J. Jia",
+                "J. Liu",
+                "X. Liu",
+                "Z. Mo",
+                "X. Pang",
+                "Y. Wang"
+            ],
+            "title": "and N",
+            "venue": "Yang, arXiv:1702.05889 ",
+            "year": 2017
+        },
+        {
+            "authors": [
+                "P.S. Letelier"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 68, 104002 ",
+            "year": 2003
+        },
+        {
+            "authors": [
+                "F. L\u00f3pez-Suspes",
+                "G.A. Gonz\u00e1lez"
+            ],
+            "title": "Braz",
+            "venue": "J. Phys. 44, 385 ",
+            "year": 2014
+        },
+        {
+            "authors": [
+                "S.R. Dolan",
+                "J.O. Shipley"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 94, 044038 ",
+            "year": 2016
+        },
+        {
+            "authors": [
+                "S. Beheshti",
+                "E. Gasper\u00edn"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D 94, 024015 ",
+            "year": 2016
+        },
+        {
+            "authors": [
+                "R. Beig",
+                "B. Schmidt"
+            ],
+            "title": "Lect",
+            "venue": "Notes Phys. 540, 325 ",
+            "year": 2000
+        },
+        {
+            "authors": [
+                "O. Semer\u00e1k"
+            ],
+            "title": "Gravitation: following the Prague inspiration p",
+            "venue": "111 ",
+            "year": 2002
+        },
+        {
+            "authors": [
+                "M. Mars"
+            ],
+            "title": "Fundam",
+            "venue": "Theor. Phys. 177, 191 ",
+            "year": 2014
+        },
+        {
+            "authors": [
+                "P. Pradhan"
+            ],
+            "title": "Pramana 87",
+            "venue": "1 ",
+            "year": 2016
+        },
+        {
+            "authors": [
+                "T. Ono",
+                "T. Suzuki",
+                "H. Asada"
+            ],
+            "title": "Phys",
+            "venue": "Rev. D  11 94, 064042 ",
+            "year": 2016
+        },
+        {
+            "authors": [
+                "E.M. Izhikevich"
+            ],
+            "title": "Dynamical systems in neuroscience",
+            "venue": "(MIT press,",
+            "year": 2007
+        },
+        {
+            "authors": [
+                "H. Stephani",
+                "D. Kramer",
+                "M. MacCallum",
+                "C. Hoenselaers"
+            ],
+            "title": "and E",
+            "venue": "Herlt, Exact solutions of Einstein\u2019s field equations ",
+            "year": 2009
+        }
+    ],
+    "sections": [
+        {
+            "text": "ar X\niv :1\n70 4.\n01 68\n9v 1\n[ gr\n-q c]\n6 A\npr 2\n01 7\nExistence and stability of circular orbits in general static and axisymmetric spacetimes\nJunji Jia and Xiankai Pang MOE Key Laboratory of Artificial Micro- and Nano-structures, Wuhan University, 430072, China and\nCenter for Theoretical Physics, School of Physics and Technology, Wuhan University, Wuhan, 430072, China\u2217\nNan Yang Glyn O. Phillips Hydrocolloid Research Centre, Hubei University of Technology, Wuhan 430068, China\n(Dated: April 7, 2017)\nWe investigate the existence and stability of timelike and null circular orbits (COs) in the equatorial plane of general static and axisymmetric (SAS) spacetime. We first obtained a necessary and sufficient condition for the non-existence of timelike COs. It is then proven that there will always exist timelike COs at large \u03c1 in an asymptotically flat SAS spacetime with a positive ADM mass and moreover, these timelike COs are stable. Some other sufficient conditions on the stability of timelike COs are also solved. We then found the necessary and sufficient condition on the existence of null COs. It is generally shown that existence of timelike COs in SAS spacetime does not imply the existence of null COs, and vice-versa, regardless whether the spacetime is asymptotically flat or the ADM mass is positive or not. These results are then used to show the existence of timelike COs and their stability in an SAS Einstein-Yang-Mills-Dilaton spacetimes whose metric is not completely known. We also used the theorems to deduce the existence of timelike and null COs in some known SAS spacetimes.\nKeywords: Axisymmetric spacetime; Circular orbit; Fixed point; Stability\nI. INTRODUCTION\nAxisymmetric spacetimes are of special interests in observational astrophysics and theoretical study of spacetime and gravitational theories. This symmetry is crucial to some important observable phenomena such as torus or jet-like features [1], fast rotating objects, supernova ejecta [2] and binary systems that generates gravitational waves. On the other hand, many theoretical work such as Einstein-Yang-Mills (EYM) [3], EYM-Higgs [4], EYM-Dilaton [5\u20137] solutions, f(R) gravity [8], traversable wormholes [9], cosmic strings [10] and domain walls [11], and metric affine gravity [12] can be carried out in this symmetry due to its simplicity and yet non-triviality. In particular, the recent direct observation of gravitational waves [13, 14] are believed to originate from binary system whose spacetime in the far region during the merging and spacetime in the entire space after complete merging, are indeed axisymmetric.\nIn the spacetimes possessing axisymmetry, it is often desirable to know the existence and stability of circular orbits (COs) in the equatorial plane. These orbits for example can be used to characterize the properties of the central object [15] or in numerical modeling of stellar systems [16]. They are also of huge importance to the study of flow of matter in the accretion disk around rotating black holes (BHs) or binary systems [17\u201319]. For these reasons, these COs, including the ones that are more special such as marginal stability COs (MSCOs), have been studied by many authors over the years for various axisymmetric spacetimes, including both static\n\u2217Electronic address: junjijia@whu.edu.cn\nand stationary ones (see Ref. [15] and papers therein).\nIn this paper, we study the existence and stabilities of COs for general static and axisymmetric (SAS) spacetimes. This work is a natural extension of the authors\u2019 recent results on the existence and stability of COs in general spherically symmetric spacetimes [20]. Previously, there have been work on the solution of COs and their stabilities in particular SAS spacetimes. Letelier [21] studied the stability of BH + disk/ring/multipolar systems using the Rayleigh criteria. Gonz\u00e1lez and L\u00f3pezSuspes considered the stability of COs in Weyl (vacuum) spacetimes [22]. Dolan and Shipley studied the stable photon orbits in a few spacetimes [23]. In addition, Beheshti and Gasper\u00edn studied the MSCO in particular stationary and static axisymmetric spacetimes [24]. We emphasis that unlike works by these authors, in this work the metric function of the SAS spacetimes are kept general, i.e., the results that we obtained are not restricted to a particular forms of metric functions. Rather, our methodology deals with general SAS spacetimes and our results are even applicable to metrics whose explicit expression is not yet known.\nWe organize the paper in a few sections. In section II we setup the SAS metric, and derive the geodesic equations in the equatorial plane and the CO conditions in terms of the metric functions and first integral constants. In section III we analyze the existence of non-trivial timelike COs and give the results in the form of a theorem. We then show in section IV that asymptotically flat SAS spacetimes with a positive ADM mass will always allow timelike COs. The stabilities of these timelike COs are studied and some sufficient conditions for the COs to be stable (or unstable) are obtained. The existence and stability issue for null CO are studied in section VI. It is found that there can exist metrics allowing timelike CO\n2 while no null COs, and metrics that allowing null CO but no timelike COs. Finally, in section VII we first show that the results in this work match those in Ref. [20]. And then a very powerful application of our results, to assert the existence and stability of COs for SAS EYMD spacetime whose metric functions\u2019 exact expression are not known, is illustrated. We also use our results to study the existence of COs in a few other known SAS spacetimes and discuss possible extensions of the current work."
+        },
+        {
+            "heading": "II. METRIC, GEODESIC EQUATIONS AND CO CONDITIONS",
+            "text": "In this section, we setup the metric and derive the geodesic equations and conditions for the COs in the equatorial plane of a stationary and axisymmetric spacetime, although what we need in later sections are only these quantities in a static and axisymmetric spacetime. Our notations in this section follow that of Ref. [24].\nFor stationary and axisymmetric spacetimes, the most general form of the metric can be given in local coordinates by the Weyl-Lewis-Papapetrou line element [24]\nds2 = e2U (dt\u2212\u03c9d\u03c6)2\u2212e\u22122U [e2\u03b3(d\u03c12+dz2)+\u03c12d\u03c62] (1)\nwhere (t, \u03c1, z, \u03c6) are the coordinates and U, \u03c9 and \u03b3 are the metric functions depending on \u03c1 and z only. Equivalently, and for easier reference to the metric functions, we can rewrite it as\nds2 = A(\u03c1, z)dt2 \u2212B(\u03c1, z)dtd\u03c1 \u2212C(\u03c1, z)d\u03c62 \u2212D(\u03c1, z)(d\u03c12 + dz2) (2)\nwhere we have set A(\u03c1, z) = e2U , B(\u03c1, z) = 2\u03c9e2U , C(\u03c1, z) = \u03c12e\u22122U \u2212 \u03c92e2U and D(\u03c1, z) = e2(\u03b3\u2212U). Note there is a relation between these functions\nC = ( \u03c12 \u2212B2/4 ) /A. (3)\nWe further assume that the spacetime possesses a local reflection symmetry at some fixed z value and we shift the z coordinate so that it becomes the z = 0 plane, which is also called the equatorial plane. This way any orbit of a particle with zero initial off-plane momentum will remain in the plane and the motion becomes effectively 2+1 dimensional whose metric is described after changing from A(\u03c1, z) etc. to A(\u03c1) etc. by\nds2 = A(\u03c1)dt2 \u2212B(\u03c1)dtd\u03c1\u2212 C(\u03c1)d\u03c62 \u2212D(\u03c1)d\u03c12. (4)\nTo obtain the geodesic equations, we can start from\nthe following Lagrangian of a free particle\nL = 1 2 gik\ndxi\nd\u03c4\ndxk\nd\u03c4 =\n1 2 \u01eb\n= 1\n2\n[\nB\u03c6\u03072\n4A \u2212 \u03c1\n2\u03c6\u03072 A +At\u03072 \u2212Bt\u0307\u03c6\u0307\u2212D\u03c1\u03072\n]\n(5)\nwhere \u02d9 denotes the derivative with respect to the proper time (or affine parameter) \u03c4 and we have substituted (3). Here \u01eb = 1, 0 respectively for timelike and null geodesics. Because t and \u03c6 are cyclic coordinates in Lagrangian, we can obtain two first integrals\nE = \u2202L \u2202t\u0307 = 1 2 ( 2A(\u03c1)t\u0307\u2212B(\u03c1)\u03c6\u0307 ) , (6) L = \u2202L \u2202\u03c6\u0307 = 1 2 [ 1 2A(\u03c1) ( B(\u03c1)2 \u2212 4\u03c12 ) \u03c6\u0307\u2212B(\u03c1)t\u0307 ] , (7)\nwhere E and L are real constants identified as the specific energy and angular momentum of the particle at infinite \u03c1. These equations can be inverted to express t\u0307 and \u03c6\u0307 in terms of E and L as\nt\u0307 = E\nA(\u03c1)\n(\n1\u2212 B(\u03c1) 2\n4\u03c12\n)\n\u2212 LB(\u03c1) 2\u03c12 , (8)\n\u03c6\u0307 = \u2212LA(\u03c1) \u03c12 \u2212 EB(\u03c1) 2\u03c12 . (9)\nThese are equivalent to the geodesic equations of t and \u03c6 but with \u03c4 integrated once. Substituting Eqs. (8) and (9) into Lagrangian (5) yields the last geodesic equation, for \u03c1(\u03c4), as\n\u03c1\u03072 =\n[ \u22124A ( ELB + \u01eb\u03c12 ) \u2212 4L2A2 + E2 ( 4\u03c12 \u2212B2 )]\n4\u03c12AD (10)\n\u2261 \u03a6(\u03c1) 4\u03c12A(\u03c1)D(\u03c1) \u2261 V (\u03c1) (11)\nwhere \u03a6(\u03c1) is defined as the numerator and V (\u03c1) as the entire right hand side of Eq. (10) and plays the role of an effective potential.\nTo establish the condition for a CO, we can first compute the conjugate momentum p\u03c1 of \u03c1 as\np\u03c1 = \u2202L \u2202\u03c1\u0307 = \u2212D(\u03c1)\u03c1\u0307 (12)\nTaking derivative with respect to \u03c4 , we obtain\np\u0307\u03c1 = d d\u03c4 (\u2212D(\u03c1)\u03c1\u0307) = \u2212\u03c1\u0307 d d\u03c1 (D(\u03c1)\u03c1\u0307)\n= \u2212 1 2D(\u03c1) d d\u03c1 (D2(\u03c1)\u03c1\u03072) = \u2212D(\u03c1) ( D\u2032(\u03c1)V (\u03c1)\u2212 V \u2032(\u03c1)\n2\n)\n(13)\nwhere in the last step we used Eq. (11) and \u2032 here\n3 and henceforth denotes the derivative with respect to \u03c1. Mathematically, Eqs. (12) and (13) can be thought as an autonomous system in 2-dimensional phase space spanned by \u03c1 and p\u03c1. Then the fixed point (FP) of this system, denoted by (\u03c1\u2217, p\u03c1\u2217), satisfies\n\n  \n  \n\u03c1\u0307|(\u03c1\u2217,p\u03c1\u2217) = \u2212 p\u03c1\u2217\nD(\u03c1\u2217) = 0,\np\u0307\u03c1|(\u03c1\u2217,p\u03c1\u2217) = \u2212D(\u03c1\u2217) [ D\u2032(\u03c1\u2217)V (\u03c1\u2217)\u2212 V \u2032(\u03c1\u2217)\n2\n] = 0 (14)\nat some instantaneous time and all times after. Noting (11), this is equivalent to require that at (\u03c1\u2217, p\u03c1\u2217)\n\u03a6(\u03c1\u2217) = 0 and \u03a6 \u2032(\u03c1\u2217) = 0. (15)\nClearly any solution of Eq. (14) or equivalently (15) defines a CO of the spacetime with orbit radius given by \u03c1\u2217. Conversely, it is also easy to show that any CO in this spacetime will satisfy these equation systems. Therefore COs of the metric (4) and FP defined by the system (14) or (15) are equivalent. For this work, we then restrict ourselves to the case of static metric, mainly due to its simplicity and the solvability of the desired equations. This allows us to set B(\u03c1) = 0 in all the equations above, including metric (4) and Eqs. (14) and (15). These two systems then will be our starting point for the analysis of the existence and stability of COs in the spacetime described by metric\nds2 = A(\u03c1)dt2 \u2212 \u03c12/A(\u03c1)d\u03c62 \u2212D(\u03c1)d\u03c12. (16)\nIII. EXISTENCE OF TIMELIKE COs\nWe consider the existence of COs for timelike geodesics in this section, while the null case will be considered in section VI. First we write out Eq. (15) explicitly in terms of the parameters E, L and the metric function A(\u03c1), as\n(\n\u03c12\u2217 \u2212A2 \u03c13\u2217A \u2032 [\u03c1\u2217A \u2032 \u2212 2A]A2\n)(\nE2 L2\n)\n=\n(\n\u03c12\u2217A 0\n)\n. (17)\nFor a given A(\u03c1), if in the space spanned by energy E and angular momentum L there exists a non-empty set S for whose element (E, L) the solution to Eqs. (17) does exist, then we say for that A(\u03c1) the COs can exist (for that (E, L) at \u03c1 = \u03c1\u2217). If the set S is empty then we say that there exist no COs for the spacetime described by that A(\u03c1). Apparently, if COs exist for some (E, L) then the two equations in Eq. (17) will both have solutions simultaneously. If either of the equations is not satisfied by any \u03c1, then the COs do not exist for that (E, L). Therefore the form of A(\u03c1) is crucial in determining the existence of COs. Before proceeding further however, a remark is in order regarding A(\u03c1). Even though it is possible for A(\u03c1) to be negative in some region of the spacetime, in this paper we assume that A(\u03c1) is positive in\nthe range of \u03c1 in which we seek the FP (or CO), because otherwise according to the metric (16) the \u03c1 coordinate should have to be interpreted as time, not radius and a FP in time is not of our interest. We also assume that in the range of \u03c1 the spacetime is not singular so that it is always possible to do coordinate transformation to make A(\u03c1) differentiable if it was not in the first place. Therefore throughout this paper, we will assume that A(\u03c1) is already made differentiable.\nEq. (17) is a linear system for E2 and L2. It will have no solution to E2 and L2 if and only if the rank of the augmented matrix is larger than that of the coefficient matrix, which we solved to find\nA(\u03c1\u2217)\u2212 \u03c1A\u2032(\u03c1\u2217) = 0. (18)\nOtherwise, there always exist the following solution\nE2 = A(\u03c1\u2217) [2A(\u03c1\u2217)\u2212 \u03c1\u2217A\u2032(\u03c1\u2217)]\n2 (A(\u03c1\u2217)\u2212 \u03c1\u2217A\u2032(\u03c1\u2217)) , (19)\nL2 = \u03c13\u2217A \u2032(\u03c1\u2217)\n2A(\u03c1\u2217) (A(\u03c1\u2217)\u2212 \u03c1\u2217A\u2032(\u03c1\u2217)) . (20)\nGiven that both E and L are real, it is clear that these two equations might not have solutions if the right hand sides are always negative for all \u03c1. However, it is also clear that if A(0) > 0, there will always exist a solution at \u03c1\u2217 = 0 for E = \u221a\nA(0) and L = 0. This solution, though technically is also a CO, is not relevant in most physically important metrics. Usually in the center \u03c1 = 0, either the spacetime is singular, or the presence of matter will prevent the test particle from doing timelike geodesic motions, or it is just a trivial CO such as in the case of Minkovski spacetime. Therefore in the following sections when the timelike COs are discussed, CO at this point is excluded and we concentrate on non-trivial COs.\nWe can now study Eq. (19) and (20) separately for the (non-)existence of their solutions. Firstly for Eq. (19), keeping in mind that E is real and noticing (2A\u2212\u03c1A\u2032)\u2212 (A \u2212 \u03c1A\u2032) = A > 0, this equation will not have any solution in a region of \u03c1 if and only if in this region\nA\u2212 \u03c1A\u2032 < 0 (21) and 2A\u2212 \u03c1A\u2032 > 0. (22)\nThat is, in this region of \u03c1 we can equate the left hand sides of the inequalities to some arbitrary but positive functions \u03b4(\u03c1) and \u03b6(\u03c1):\nA(\u03c1)\u2212A\u2032(\u03c1)\u03c1 = \u2212\u03b4(\u03c1), (23) and 2A(\u03c1)\u2212A\u2032(\u03c1)\u03c1 = \u03b6(\u03c1). (24)\nUnder condition (23) alone we see that A\u2032 > 0 and consequently Eq. (20) will not have any solution. Therefore for the purpose of violating the entire system of (19) and (20), condition (23) is enough and we do not have to solve (24). Noticing Eq. (18), the \u03b4(\u03c1) in Eq. (23) can be relaxed to be semi-positive rather than strictly posi-\n4 tive. This equation can be readily solved for an arbitrary \u03b4(\u03c1). However for the sake of a shorter expression for the solution, we further change \u03b4(\u03c1) to \u03c12d\u03ba(\u03c1)/d\u03c1 without losing any generality as long as \u03ba\u2032(\u03c1) \u2265 0. This way the Eq. (23) can be solved to find the solution\nA(\u03c1) = \u03c1\u03ba(\u03c1) (25)\nwhere an integral constant has been absorbed into \u03ba(\u03c1), which is a positive and monotonically increasing but otherwise arbitrary function.\nSecondly, for Eq. (20), beside the case (23), this equation can also be violated if its numerator is negative\nA\u2032(\u03c1) < 0, (26)\nwhich automatically makes the denominator positive. It is also easy to see that in all other cases Eq. (20) will have solutions for some (E, L, \u03c1).\nCombining the above two cases, we see that the equation system (19) and (20) will not permit a CO solution in a region of \u03c1 if and only if at least one of Eq. (25) and (26) is satisfied in this region. If no CO exists at all for all \u03c1 > 0, then in the entire range of \u03c1, either one of (25) or (26) is satisfied, or these two are satisfied piecewisely. Now we further show that the piecewise satisfaction scenario is impossible and then establish one of the main conclusions in this work. Suppose that there exist no CO because Eq. (25) or equivalently Eq. (23), and (26) are piecewisely satisfied: Eq. (23) is satisfied in region \u03c1 \u2208 (a, b) and Eq. (26) is satisfied in the region \u03c1 \u2208 (b, c). Then clearly A\u2032 > 0 in (a, b) and in A\u2032 < 0 in (b, c). Because A\u2032 is continuous, we must have A\u2032(\u03c1 = b) = 0 and for any \u03c1 in the small neighborhood \u03c1 \u2208 (b \u2212 \u03c7, b), A\u2032(\u03c1) > 0. On the other hand for \u03c1 = b \u2212 \u03b5 that is in this neighborhood and infinitesimally close to b, we can compute [A\u2212\u03c1A\u2032]\u03c1=b\u2212\u03b5 using its Taylor expansion\n[A\u2212 \u03c1A\u2032]\u03c1=b\u2212\u03b5 = A(b) + \u03b5bA\u2032\u2032(b) +O(\u03b52). (27)\nClearly we have [A\u2212\u03c1A\u2032]\u03c1=b\u2212\u03b5 = A(b) > 0 to the leading order, which conflicts with the assumption that Eq. (23) is satisfied here. For the case that Eqs. (23) and (26) are satisfied respectively in the regions (b, c) and (a, b), then a similar conflict can be proven. These conclude that Eqs. (25) and (26) cannot be satisfied piecewisely. We can now state our conclusion: (Theorem A) The equatorial timelike COs for the metric (2) do not exist if and only if either only Eq. (25) is satisfied in the entire range of \u03c1, or only Eq. (26) is satisfied in the entire range of \u03c1, but not because Eq. (25) and (26) are piecewisely satisfied. Here and after, we will refer to this as the timelike CO non-existence theorem (TCONET).\nIn the following we give two simple examples satisfying respectively Eq. (25) and (26) in the entire range of \u03c1 and therefore do not permit any CO, and one more example which combines the first two and satisfies Eq. (25) in\nsome range of \u03c1, Eq. (26) in some other range and then neither of them in the rest, where CO lies. The first example is given by \u03ba(\u03c1) = \u03c1 so that A(\u03c1) = \u03c1\u03ba(\u03c1) = \u03c12, the resulting Eqs. (19) and (20) become\nE2 = 0, L2 = \u22121 (28)\nwhich permit no solution and therefore no COs. The second example is given by A(\u03c1) = 1/\u03c1 and the Eqs. (19) and (20) become\nE2 = 3 4\u03c1 , L2 = \u2212\u03c1\n3\n4 (29)\nwhere the equation for L2 eliminates the existence of COs too. The third example is a simple combination of the above two:\nA(\u03c1) = \u03c1\n1 + \u03c13 \u00b7 \u03c1. (30)\nAt very small and large \u03c1, this resembles the first and second examples respectively and therefore we expect that the COs will not exist there. However, in the middle range, as we can expect using the TCONET theorem, the COs do exists. Substituting Eq. (30) into (19) and (20), we obtain\nE2 = 3\u03c15\n2 (2\u03c16 + \u03c13 \u2212 1) , L 2 = \u2212\u03c16 + \u03c13 + 2 4\u03c13 \u2212 2 . (31)\nIt is easy to verify that these two equations will have solution when \u03c1 \u2208 (2\u22121/3, 21/3) for some (E, L)."
+        },
+        {
+            "heading": "IV. EXISTENCE OF COs IN ASYMPTOTICALLY FLAT SAS SPACETIMES",
+            "text": "In the end of last section, we see that there indeed exist metrics forbidding the existence of any timelike CO. However, these metrics are not asymptotically flat. People are usually more interested in asymptotically flat spacetimes due to their physical relevance. Therefore in this section we analyze how the asymptotic flatness condition will affect the existences of timelike COs in the SAS spacetimes.\nFor metric (4), asymptotic flatness requires that as \u03c1 \u2192 \u221e [25, 26],\nA(\u03c1) = a+ 2c\n\u03c1\u03b2 +O(\u03c1\u2212\u03b2\u22121), (32)\nwhere a > 0, \u03b2 \u2265 1 and c are constants. We then see that any A(\u03c1) satisfying (25) will necessarily diverge at large \u03c1 and therefore not be asymptotically flat. While for condition (26), metric satisfying it can still be compatible with the asymptotic flatness condition (32) and therefore has no timelike COs. An example would be the function (32) truncated to the second term and with a positive c.\n5 Clearly this metric satisfies\nA\u2032 = \u2212 2\u03b2c r\u03b2+1 < 0, (33)\ni.e. Eq. (26) and therefore has no timelike CO. This example shows that enforcing the asymptotic flatness alone will not make sure the existence of COs in SAS spacetimes.\nThere is however, one thing odd about this example. The constant c in (32) although is mathematically merely a constant in the asymptotic expansion of the metric function A(\u03c1), it is physically identified with the ADM mass for the asymptotically flat spacetime when \u03b2 = 1. It is known from the Positive Mass Theorem that for spacetime satisfying dominant energy condition, this ADM mass shall always be positive [27]. Therefore adding the positive ADM mass condition will make sure that the metric function A(\u03c1) violate Eq. (26) and guarantee the existence of COs in SAS spacetimes. We restate this conclusion as: (Theorem B) There will always exist equatorial timelike COs at least at large \u03c1 for an SAS spacetime described by metric (2) and which is also asymptotically flat with a positive ADM mass."
+        },
+        {
+            "heading": "V. STABILITY OF COs AND EXISTENCE OF MARGINALLY STABLE COs",
+            "text": "With the existence of COs proven for asymptotically flat SAS spacetimes with positive ADM mass, and existence condition given by Theorem A for general SAS spacetimes, one important question following is the stability of these COs. In this section we will assume that the spacetime considered will allow timelike CO and denote its radius as \u03c1 = \u03c1\u2217. We then use the Lyapunov exponent method [28] to address the question about what form of A(\u03c1) will make the CO stable, unstable or have a marginal stability. Here we use the wording \u201cmarginal stability\u201d instead of \u201cmarginally stable\u201d [24] or \u201cmarginal stable\u201d [29] because such orbit, defined as dV (\u03c1\u2217)/d\u03c1 = 0, is not necessarily stable even in the perturbative sense. This definition only means that the stability at this point is critical, i.e., it can change, disappear or split in to many equilibria [30].\nFor the metric (16), the Lyapunov exponents for the system (14) (or (15)) is equivalent to the eigenvalues of the linear perturbation matrix of the system, which we found to be\n\u03bb\u00b1 = \u00b1 \u221a V \u2032\u2032(\u03c1\u2217)\n2 , (34)\nwhere the effective potential V (\u03c1) is given in Eq. (11) with B = 0. Substituting V and using the relation (19)\nand (20) at the CO yields\n\u03bb\u00b1 = \u00b1 \u221a \u03c1\u2217A2A\u2032\u2032 + \u03c12\u2217A \u20323 \u2212 4\u03c1\u2217AA\u20322 + 3A2A\u2032\n2\u03c1\u2217A2D(\u03c1\u2217A\u2032 \u2212A)\n\u2261 \u00b1 \u221a\nh(\u03c1\u2217)\n2\u03c1\u2217A2(\u03c1\u2217A\u2032 \u2212A)D (35)\nwhere all of A, A\u2032, A\u2032\u2032 and D are evaluated at \u03c1\u2217, and we defined a function h as the numerator\nh(\u03c1) = \u03c1A2A\u2032\u2032 + \u03c12A\u20323 \u2212 4\u03c1AA\u20322 + 3A2A\u2032. (36)\nIt is known that when \u03bb\u00b1 are imaginary, real but nonzero, or zero, the CO will be respectively stable, unstable, or have marginal stability. Since at the CO radius, the Eq. (23) must be broken and therefore \u03c1\u2217A\n\u2032(\u03c1\u2217) \u2212 A(\u03c1\u2217) < 0, it is clearly then the situation of \u03bb\u00b1 is completely determined by h. I.e., the CO will (1) be stable if and only if h(\u03c1\u2217) > 0, (2) be unstable if and only if h(\u03c1\u2217) < 0, and (3) have marginal stability if and only if h(\u03c1\u2217) = 0. Unfortunately, the sign of h(\u03c1\u2217) cannot be completely determined without knowledge of A(\u03c1), due to two facts. First, the A\u2032\u2032(\u03c1\u2217) term, which does not appear in any form of the CO existence conditions, is not constrained and cannot be eliminated from (36). Secondly, even if A\u2032\u2032(\u03c1\u2217) were expressible through other quantities, h(\u03c1\u2217) is only an algebraic equation at \u03c1\u2217. Without knowing the value of the CO radius \u03c1\u2217 it is still impossible to determine the sign of h(\u03c1\u2217).\nHowever, if we treat h(\u03c1) as a differential equation of \u03c1 and require its sign to be fixed at not only \u03c1\u2217 but all \u03c1, then we are still able to get some sufficient conditions for determining the stability of COs of relevant metrics. These conditions are: (a). If\n\u03c1A2A\u2032\u2032 + \u03c12A\u20323 \u2212 4\u03c1AA\u20322 + 3A2A\u2032 = 0 (37)\nfor all \u03c1, then the CO will always be an MSCO regardless of the CO radius value \u03c1\u2217. (b). If\n\u03c1A2A\u2032\u2032 + \u03c12A\u20323 \u2212 4\u03c1AA\u20322 + 3A2A\u2032 = \u03c3(\u03c1) > 0 (or < 0) (38) where \u03c3(\u03c1) is positive (or negative) but otherwise arbitrary for all \u03c1, then the CO will always be an stable (or unstable) CO, regardless of the CO radius value \u03c1\u2217.\nCondition (a) can be immediately solved to get two possible A(\u03c1)\nA\u00b1(\u03c1) = \u03c1\n(\nc1\u03c1\u00b1 \u221a c21\u03c1 2 \u2212 2c2\n)\n, (39)\nwhere for the + sign, we should have c1 > 0 or c1 < 0, c2 < 0 and for the \u2212 sign, c1 > 0, c2 > 0 in order for A(\u03c1) to be positive. The relations (19) and (20) at the CO radius then further eliminate the scenario of A+\n6 with c1 > 0 and A\u2212 since they do not allow any CO. Combining these, then the condition (a) is equivalent to the statement that: (Theorem C) For an SAS spacetime with metric function A(\u03c1) = \u03c1 ( c1\u03c1+ \u221a c21\u03c1 2 \u2212 2c2 ) where c1 and c2 are negative but otherwise arbitrary constants, there will exist timelike COs and these COs are always MSCOs.\nCondition (b) allows better generality than (a) due to the arbitrariness of \u03c3(\u03c1) but has proven to be difficult to solve. This difficulty on one hand is due to the nonlinearity of the equation, and on the other due to the nonhomogeneity of \u03c3(\u03c1). Therefore we tried to replace \u03c3(\u03c1) by a homogenous term, such as \u03c7(\u03c1)\u03c12A\u20323, \u03c7(\u03c1)\u03c1AA\u20322 or \u03c7(\u03c1)A2A\u2032, where \u03c7(\u03c1) is also an arbitrary function that has the same sign as \u03c3(\u03c1). This way since the other factors in these terms are all positive, if the resulting equations were solvable, we can still obtain some sufficient conditions with enough generality on the stability of the COs. Again it is very unfortunate that these equations do not allow explicit solutions when \u03c7(\u03c1) is an arbitrary function. At last, we further set \u03c7(\u03c1) to be constants \u03c7, and the resultant equations became simple enough to solve and each solved A(\u03c1) is a sufficient conditions for the CO to be stable or unstable, depending on the sign of \u03c7. The detailed forms of these A(\u03c1)\u2019s are quite implicit and not directly useful, and therefore we only list them in Appendix A.\nSimilar to the situation in section IV, one can also tackle the stability problem of timelike COs at large \u03c1 with the help of asymptotic flatness and positive ADM mass. From Theorem B, we see the existence of timelike COs at large \u03c1 for metrics having asymptotics (32) with c < 0 and \u03b2 = 1. For these COs, substituting A(\u03c1) into Eq. (36), we find\nh(\u03c1) = a2c\u03b2(\u03b2 \u2212 2)\n\u03c1\u03b2+1 +O(\u03c1\u2212(\u03b2+2)), (40)\nwhich is positive to the leading order. This means we can have the following result: (Theorem D) The equatorial timelike COs at large \u03c1 in the asymptotically flat SAS spacetime with positive ADM mass are always stable.\nTo conclude this section, let us mention that an especially simple sufficient condition for the COs to be stable can be obtained from (38) just by observation. Noticing that h(\u03c1) can be recast into\nh(\u03c1\u2217) = A \u2032 (A\u2212 \u03c1\u2217A\u2032) (3A\u2212 \u03c1\u2217A\u2032) + \u03c1\u2217A2A\u2032\u2032 (41)\nand that the three factors in the first term of the right hand side are all positive, we see that as long as the last term is semi-positive definite, then the COs will be unstable. That is, the COs will be stable if A\u2032\u2032 \u2265 0 for all \u03c1.\nVI. NULL COs AND THEIR STABILITIES\nFor null geodesics, the existence conditions (15) for the null COs becomes\nE L = \u00b1A(\u03c1\u2217) \u03c1\u2217 , (42) A(\u03c1\u2217) = \u03c1\u2217A \u2032(\u03c1\u2217). (43)\nIt is clear that Eq. (42) will always be satisfied by some \u03c1, E and L. Eq. (43) will have no solution and therefore no COs if and only if for all \u03c1 > 0, we have either\nA(\u03c1) \u2212 \u03c1A\u2032(\u03c1) = \u03b71(\u03c1) > 0, (44)\nor\nA(\u03c1)\u2212 \u03c1A\u2032(\u03c1) = \u2212\u03b72(\u03c1) < 0, (45)\nwhere \u03b71(\u03c1) and \u03b72(\u03c1) are two positive arbitrary functions. Noticing that A(\u03c1) and A\u2032(\u03c1) are both continuous, it is seen that the Eqs. (44) and (45) cannot be satisfied piecewisely in the range of \u03c1 without letting A(\u03c1)\u2212\u03c1A\u2032(\u03c1) pass zero, i.e., having a CO.\nEqs. (44) and (45) have the same form as Eq. (23) and the solutions are respectively\nA(\u03c1) = \u03c1\u03c81(\u03c1) (46)\nwhere \u03c81(\u03c1) is a positive and monotonically increasing but otherwise arbitrary function, and\nA(\u03c1) = \u03c1\u03c82(\u03c1) (47)\nwhere \u03c82(\u03c1) is an positive and monotonically decreasing but otherwise arbitrary function. In other words, we have: (Theorem E) The equatorial null COs for the metric (2) do not exist if and only if its metric function A(\u03c1) takes the form of either Eq. (46) or Eq. (47) in the entire range of \u03c1.\nComparing with the TCONET, any metric function A(\u03c1) satisfying Eqs. (26) will satisfy Eq. (44) or equivalently Eq. (46). However metric satisfying (23) will not satisfy either of Eqs. (44) and (45) when the equality \u03b4(\u03c1) = 0 or \u03ba\u2032(\u03c1) = 0 is taken. This means that there are SAS spacetimes that does not have timelike COs but still allow null COs. An example can be constructed as\n\u03ba(\u03c1) = a3 + (\u03c1\u2212 a)3 (a > 0), A(\u03c1) = \u03c1\u03ba(\u03c1) = \u03c1 [ a3 + (\u03c1\u2212 a)3 ] , (48)\nwhich leads to \u03ba\u2032(r) = 3(\u03c1\u2212 a)2 \u2265 0 and therefore A(\u03c1) respects Eq. (25) and has no timelike CO. It is also clear that at \u03c1 = a, A \u2212 \u03c1A\u2032 = 0 and therefore there exist a null CO. On the other hand, one can also give examples of metrics that allow timelike COs but not null CO, such\n7 as\n\u03c82(\u03c1) = 1\n\u03c1+ 2M , A(\u03c1) = \u03c1\u03c82(\u03c1) = 1\u2212\n2M\n\u03c1+ 2M (49)\nwhere M > 0 is the ADM mass. The \u03c82(\u03c1) here is positive and has a negative derivative and therefore will have no null CO. It is also easy to verify that A(\u03c1) violates both conditions (25) and (26) and therefore allows timelike COs.\nWe can impose the asymptotic flatness condition to the metric. Similar to the timelike case however, this condition alone will not guarantee the existence of null COs. If we further require that the asymptotically flat spacetime should have a positive ADM mass, then clearly the corresponding metric will break the non-existence condition (46), but not necessarily the condition (47). Indeed, the metric (49) is such an example: this metric is asymptotically flat and still satisfies Eq. (47) and therefore has no null CO. Because for asymptotic flat SAS spacetimes with a positive ADM mass, Theorem B guarantees the existence of timelike COs, the above example shows that for these spacetimes the existence of null COs has more stringent requirement.\nIn spite of our incapability of producing a general existence theorem for null COs, from physical considerations such as asymptotic flatness and positive ADMmass, we can still prove the following theorem that we believe might be useful for special spacetimes: (Theorem F) If there exist a finite range of \u03c1 \u2208 [a, b) where 0 < a < b such that the metric function A(\u03c1 = a) = 0 and A(a < \u03c1 < b) > 0, and A(\u03c1 \u2192 \u221e) does not diverge faster than \u03c11, then this metric allows null COs. The proof of this is simple and given in Appendix B. Since known BH spacetimes described by the metric (4) usually has a radius \u03c1BH at which A(\u03c1BH) = 0, this theorem might be especially useful to judge the existence of null COs around such BHs.\nWe can also consider the stability of null COs using the Lyapunov exponent. In this case, the Lyapunov exponents are\n\u03bb\u00b1 = \u00b1 \u221a V \u2032\u2032(\u03c1\u2217)\n2 = \u00b1\n\u221a\n\u22122L 2A\u2032\u2032(\u03c1\u2217)\n\u03c12\u2217D(\u03c1\u2217) (50)\nWe see that the only factor whose sign is not fixed and cannot be fixed by Eqs. (42) and (43), is A\u2032\u2032(\u03c1\u2217). When A\u2032\u2032(\u03c1\u2217) is positive, zero or negative, the null CO will be stable, marginally stable or unstable respectively. Similar to the study of stability of timelike COs in section V, we can equate A\u2032\u2032 to some positive (or negative, or zero) definite arbitrary functions and solve for some general forms of A(\u03c1) whose null COs will definitely be stable (or unstable, or have marginal stability). However, these general forms are too trivial to be used to judge stabilities of COs in known SAS spacetimes and therefore they are not shown here."
+        },
+        {
+            "heading": "VII. DISCUSSION",
+            "text": "In our previous work [20], the existence and stability of COs in static and spherically symmetric (SSS) spacetimes were studied and various theorems were obtained. Since SSS spacetime is also SAS, we first verify that the theorems obtained in the current work should also apply to the SSS case and therefore reproduce the theorems in Ref. [20] when the metric (16) is reduced to the metric used in Ref. [20]:\nds2 = f(r)dt2S \u2212 1\ng(r) dr2 \u2212 r2(d\u03b82 + sin2 \u03b8d\u03c62S), (51)\nwhere (tS, r, \u03b8, \u03c6S) are the coordinates. It is only necessary to consider the geodesics in the equatorial plane, defined by \u03b8 = \u03c0/2 and therefore the SSS metric in this plane becomes\nds2 = f(r)dt2S \u2212 1\ng(r) dr2 \u2212 r2d\u03c62S. (52)\nIt is then apparent the coordinate change transforming metric (16) to metric (52) can be chosen as\ntS = t, \u03c6S = \u03c6, r 2 =\n\u03c12\nA(\u03c1) , (53)\nand the metric functions should match as\nf(r(\u03c1)) = A(\u03c1), g(r(\u03c1)) = 1\nD(\u03c1)\nd\u03c12 dr2 . (54)\nUnder this transformation, the factor \u03a6(\u03c1) in the potential (11), which becomes the starting point of the analysis in Eq. (15), can be transformed to\n\u03a6(\u03c1) \u2192 \u03a6(r) = 1 4r2f(r)2\n(\nE2\nf2 \u2212 L\n2\nr2 \u2212 \u01eb\n)\n. (55)\nExcept an irrelevant factor, this is exact the potential V (r) in Ref. [20]. Since all theorems in that work are then derived from this potential, they will be in agreement with the theorems obtained in current work. This checks that the analysis and results for the equatorial motions in the SAS spacetime implies the results obtained in Ref. [20] for the SSS spacetime, as it should.\nThe original motivation of the work is to find COs for spacetimes whose metric functions are not analytically known. Usually in classical gravity models once the ansatz for the metric (and matter) functions are chosen, their Einstein(-matter) equations are easy to derive. Due to the non-linearity of these equations, analytical solutions are usually unavailable except in a few notable cases, and then numerical methods to different levels of complexity and difficulties, are used with the help of boundary conditions. In analyzing the COs in such metrics, we realized that the existence and stability of the COs can be determined without having to know\n8 the numerical solution. We now show as an example that the results in this work can be applied to metric in the EYMD model studied in Ref. [7]. In this work the SAS ansatz for the metric in the equatorial plane is given by\nds2 = f(r)dt2EYMD \u2212 m(r) f(r) dr2 \u2212 r\n2l(r) f(r) d\u03c62EYMD, (56)\nwhere (tEYMD, r, \u03b8EYMD, \u03c6EYMD) are the coordinates and \u03b8EYMD = \u03c0/2 was set. It is not hard to verify that this metric is equivalent to metric (16) if the following coordinate transforms are used\nt = tEYMD, \u03c6 = \u03c6EYMD, \u03c1 2 = r2l(r) (57)\nand metric functions are identified\nA(\u03c1(r)) = f(r), (58)\nD(\u03c1)2 = m(r)\nf(r)\ndr2 d\u03c12 . (59)\nIt is also known from Eq. (C10) of Ref. [7] that the asymptotic expansion of the metric functions f(r) and l(r) are respectively\nf(r) = 1\u2212 cf r + c2f 2r2 +O(r\u22123), (60) l(r) = 1\u2212 cl r2 +O(r\u22123), (61)\nwith cf > 0 and cl > 0 being constants. The relations (57), (58), (60) and (61) imply that the asymptotic of A(\u03c1) is\nA(\u03c1) = 1\u2212 cf \u03c1 + c2f 2\u03c12 +O(\u03c1\u22123). (62)\nThis means that the metric function is asymptotically flat with a positive ADM mass. Therefore according to Theorem B and D, this spacetime will always allow timelike COs in its equatorial plane and the timelike COs at large \u03c1 are stable. This example shows the power of the results in this work.\nSimilar to our previous work [20], we can also use the theorems obtained in this paper to study the existences and stabilities of the COs of some general SAS metrics. A total of four metrics from Ref. [31] are examined in Table I. Their A(\u03c1) components set at the equatorial plane are given in the first column, and their allowance of the timelike and null COs are listed in the second and third columns respectively. In column four we list for the metrics allowing COs whether they are asymptotically flat and if yes the sign of the ADM mass. It is clear that an asymptotic flat spacetime with a positive ADM mass always permits the existence of timelike COs, as we stated in Theorem B, section IV.\nFor the extension of the current work, two possible directions are of special interests. The first is to extend the analysis for SAS spacetimes to stationary and ax-\nisymmetric spacetimes because many axisymmetric and physically important spacetimes are stationary but not static. An analysis for the COs in stationary spacetimes therefore will be more useful in the perspective of applications. In the stationary case, since B(\u03c1) in (4) will be nonzero, the equations analogous to Eq. (17) will contains two arbitrary functions A(\u03c1) and B(\u03c1) rather than one A(\u03c1) and a cross-terms proportional to EL will appear. Even though these make the analysis more complicated, some preliminary work shows that the (non)existence condition might be still solvable.\nAnother direction of extension is to consider the stability issues of non-radical perturbations in general stationary and axisymmetric spacetimes due to its relevance to the dynamics of a finitely thick disk in the accretion phase of the (binary) rotating systems. The zenithal stability issue in particular axisymmetric spacetimes has been studied recently in Ref. [29] and an analysis using Lyapunov exponent method for general metrics might reveal more general stability conditions on metric functions."
+        },
+        {
+            "heading": "Acknowledgments",
+            "text": "The work of J. Jia and X. Pang are supported by the Chinese SRFDP 20130141120079, NNSF China 11504276 & 11547310 and MOST China 2014GB109004. The work of N. Yang is supported by the NNSF China 31401649 & 31571797."
+        },
+        {
+            "heading": "Appendix A: Sufficient conditions for (in-)stabilities of timelike COs",
+            "text": "When Eq. (38) is replaced by\nh(\u03c1) = \u03c7\u03c12A\u20323 (\u03c7 6= 0), (A1)\nan implicit solution can be obtained\n\u221a 1 + 8\u03c7A 3 2 + \u221a 1+8\u03c7 2\n2\u03c12 \u2212 c2A\n\u221a 1+8\u03c7 + c1 = 0. (A2)\nIn particular, when \u03c7 = 1 or \u03c7 = \u22122/25, two explicit solution can be found\n\u03c7 = 1, A(\u03c1) =\n(\n2c1\u03c1 2\n2c2\u03c12 \u2212 3\n)1/3\n(A3)\n\u03c7 = \u2212 2 25 , A(\u03c1) =\n(\n1 3 x+ 10 3 x\u22121\n)5/3\n, (A4)\nx =\n(\n5 \u221a\n81c21\u03c1 4 \u2212 40c32\u03c16 \u2212 45c1\u03c12\n)1/3\n.\nThe former will only have stable COs (if any) and the later will only have unstable COs (if any) and none of them will allow MSCOs.\n9\nWhen Eq. (38) is replaced by\nh(\u03c1) = \u03c7A2A\u2032 (\u03c7 6= 0), (A5)\nan implicit solution can be obtained\n(2\u2212\u03c7) ( c1 \u2212 c2A \u221a 1+4\u03c7 ) \u03c15+ \u221a 1 + 4\u03c7A 3 2 + \u221a 1+4\u03c7 2 \u03c1\u03c7+3 = 0.\n(A6) In particular, when \u03c7 = \u22124/25, an explicit solution can be found\nA(\u03c1) = [( y/5 + 6c2\u03c1 4 25 y\u22121 ) \u03c1 ]5/3 , (A7)\ny =\n(\n15\n\u221a\n225c21 \u2212 120c32\u03c1 54 25 \u2212 225c1\n)1/3\n\u03c1\u2212 7 25 .\nThis solution will only have unstable COs (if any) and no MSCOs.\nWhen Eq. (38) is replaced by\nh(\u03c1) = \u03c7\u03c1AA\u20322 (\u03c7 6= 0), (A8)\nan implicit solution can be obtained\nc1\u2212 c2A \u221a \u03c72+6\u03c7+1+ \u221a \u03c72 + 6\u03c7+ 1A \u03c7 2 + 3 2 +\n\u221a \u03c72+6\u03c7+1\n2\n2\u03c12 = 0.\n(A9)\nIn particular, when \u03c7 = \u22123+5 \u221a 3/3, an explicit solution\ncan be found\nA(\u03c1) = (u\n3 + 2\n\u221a 3c2\u03c1 2u\u22121 )\n\u221a 3\n, (A10)\nu =\n(\n9\n\u221a 27c12\u03c14 \u2212 8 \u221a 3c32\u03c1 6 \u2212 27 \u221a 3c1\u03c1 2 )1/3 .\nThis solution will only have unstable COs (if any) and no MSCOs.\nOne can also replace Eq. (38) by\nh(\u03c1) = \u03c7\u03c1A2A\u2032\u2032 (\u03c7 6= 0). (A11)\nAlthough the sign of A\u2032\u2032 and consequently that of the right hand side cannot be fixed before solving A(\u03c1), this transformation do allow the equation to be solvable and then a determination of A\u2032\u2032\u2019s sign. The implicit solution to this equation is given by\n(\u03c7+ 2)c2A \u2212 1+\u03c7 \u03c7\u22121 + (1 + \u03c7)A\u2212 \u03c7+2 \u03c7\u22121 \u03c1 \u03c7+2 \u03c7\u22121 + c1 = 0. (A12)\nIn particular, when \u03c7 = \u22123, two explicit solution can be found\nA(\u03c1) =\n[(\n\u03c11/4 + \u221a c1c2 + \u221a \u03c1\n)\n/c1\n]4\n, (A13)\nA(\u03c1) =\n[(\n\u2212\u03c11/4 + \u221a c1c2 + \u221a \u03c1\n)\n/c1\n]4\n, (A14)\nwhere in both cases c1c2 > 0. For the former solution, since A\u2032\u2032 < 0 it will only have unstable COs (if any) and no MSCOs. For the later one, A\u2032\u2032 > 0 and it will only have stable COs (if any) and no MSCOs. When\n10\n\u03c7 = \u22121/2, or \u03c7 = \u22125/2, Eq. (A12) can also generate some explicit solutions of A(\u03c1). However, since sign of their second derivatives cannot be determined, and we will not list them here."
+        },
+        {
+            "heading": "Appendix B: Proof of Theorem F",
+            "text": "To prove the theorem, we define a \u00b5(\u03c1) first\n\u00b5(\u03c1) = A(\u03c1)/\u03c1 (B1)\nsuch that\n\u00b5\u2032(\u03c1) = [A\u2032(\u03c1)\u03c1\u2212A(\u03c1)] /\u03c12. (B2)\nThen using Eq. (43) it is seen that the existence of a null CO is equivalent to the existence of a point such that\n\u00b5\u2032(\u03c1) = 0.\nNow since A(\u03c1 = a) = 0, we have\n\u00b5\u2032(\u03c1 = a) = A\u2032(\u03c1 = a)/a2. (B3)\nSince A(\u03c1) > 0 for at least the neighborhood (a, b) of \u03c1, we must have A\u2032(\u03c1 = a) \u2265 0. Therefore\n\u00b5\u2032(\u03c1 = a) \u2265 0. (B4)\nIf the equal sign is true, then the CO exists. If it is not true, we further show by contradiction that \u00b5\u2032(\u03c1) cannot be positive definite for \u03c1 \u2208 [a, \u221e) and therefore due to the continuity of \u00b5\u2032(\u03c1) there must exist a point \u03c1\u2217 satisfying \u00b5\u2032(\u03c1\u2217) = 0, which is again a CO. Suppose \u00b5\n\u2032(\u03c1) > 0 for all \u03c1 \u2208 [a, \u221e), then clearly A(\u03c1) = \u00b5(\u03c1)\u03c1 will diverge faster than \u03c11, which contradicts the assumption.\n[1] L. Del Zanna, E. Amato, and N. Bucciantini, Astron. Astrophys. 421, 1063 (2004), doi:10.1051/00046361:20035936 [astro-ph/0404355]. [2] L. W. et al., Astrophys. J. 579, 671 (2002), doi:10.1086/342824 [astro-ph/0205337]. [3] E. Radu, Phys. Rev. D 65, 044005 (2002), doi:10.1103/PhysRevD.65.044005 [gr-qc/0109015]. [4] B. Hartmann, B. Kleihaus, and J. Kunz, Phys. Rev. D 65, 024027 (2001), doi:10.1103/PhysRevD.65.024027 [hep-th/0108129]. [5] B. Kleihaus and J. Kunz, Phys. Rev. Lett. 78, 2527 (1997), doi:10.1103/PhysRevLett.78.2527 [hepth/9612101]. [6] B. Kleihaus and J. Kunz, Phys. Rev. D 57, 6138 (1998), doi:10.1103/PhysRevD.57.6138 [gr-qc/9712086]. [7] B. Kleihaus and J. Kunz, Phys. Rev. D 57, 834 (1998), doi:10.1103/PhysRevD.57.834 [gr-qc/9707045]. [8] S. Capozziello, M. De Laurentis, and A. Stabile, Class. Quant. Grav. 27, 165008 (2010), doi:10.1088/02649381/27/16/165008 [arXiv:0912.5286 [gr-qc]]. [9] P. K. Kuhfittig, Phys. Rev. D 67, 064015 (2003), doi:10.1103/PhysRevD.67.064015 [gr-qc/0401028]. [10] D. R. Reddy, R. Naidu, and V. U. Rao, Astrophys. Space Sci. 306, 185 (2006). [11] D. R. Reddy and M. V. S. Rao, Astrophys. Space Sci. 302, 157 (2006). [12] E. Vlachynsky, R. Tresguerres, Y. N. Obukhov, and F. Hehl, Class. Quant. Grav. 13, 3253 (1996), doi:10.1088/0264-9381/13/12/016 [gr-qc/9604035]. [13] B. Abbott, R. Abbott, T. Abbott, M. Abernathy, F. Acernese, K. Ackley, C. Adams, T. Adams, P. Addesso, R. Adhikari, et al., Phys. Rev. Lett. 116, 061102 (2016), doi:10.1103/PhysRevLett.116.061102 [arXiv:1602.03837 [gr-qc]]. [14] B. Abbott, R. Abbott, T. Abbott, M. Abernathy, F. Acernese, K. Ackley, C. Adams, T. Adams, P. Addesso, R. Adhikari, et al., Phys. Rev. Lett. 116, 241103 (2016), doi:10.1103/PhysRevLett.116.241103 [arXiv:1606.04855 [gr-qc]]. [15] E. Hackmann and C. L\u00e4mmerzahl, Phys. Rev. D\n85, 044049 (2012), doi:10.1103/PhysRevD.85.044049 [arXiv:1107.5250 [gr-qc]]. [16] J. Thomas, R. Saglia, R. Bender, D. Thomas, K. Gebhardt, J. Magorrian, and D. Richstone, Mon. Not. Roy. Aston. Soc. 353, 391 (2004), doi:10.1103/PhysRevD.94.064042 [arXiv:1605.05816 [grqc]]. [17] M. Shibata and M. Sasaki, Phys. Rev. D 58, 104011 (1998), doi:10.1103/PhysRevD.58.104011 [grqc/9807046]. [18] J.-F. Donati, F. Paletou, J. Bouvier, and J. Ferreira, Nature 438, 466 (2005), doi:10.1038/nature04253 [astroph/0511695]. [19] M. A. Abramowicz, M. Jaroszy\u0144ski, S. Kato, J.P. Lasota, A. R\u00f3\u017ca\u0144ska, and A. S\u0105dowski, Astron. Astrophys. 521, A15 (2010), doi:10.1051/00046361/201014467 [arXiv:1003.3887 [astro-ph.HE]]. [20] J. Jia, J. Liu, X. Liu, Z. Mo, X. Pang, Y. Wang, and N. Yang, arXiv:1702.05889 (2017). [21] P. S. Letelier, Phys. Rev. D 68, 104002 (2003), doi:10.1103/PhysRevD.68.104002 [gr-qc/0309033]. [22] F. L\u00f3pez-Suspes and G. A. Gonz\u00e1lez, Braz. J. Phys. 44, 385 (2014), doi:10.1007/s13538-014-0216-8 [arXiv:1104.0346 [gr-qc]]. [23] S. R. Dolan and J. O. Shipley, Phys. Rev. D 94, 044038 (2016), doi:10.1103/PhysRevD.94.044038 [arXiv:1104.0346 [gr-qc]]. [24] S. Beheshti and E. Gasper\u00edn, Phys. Rev. D 94, 024015 (2016), doi:10.1103/PhysRevD.94.024015 [arXiv:1512.08707 [gr-qc]]. [25] R. Beig and B. Schmidt, Lect. Notes Phys. 540, 325 (2000), doi:10.1007/3-540-46580-4 p342, Sec. 3. [26] O. Semer\u00e1k, Gravitation: following the Prague inspiration p. 111 (2002), doi:10.1142/9789812776938_0004 grqc/0204025. [27] M. Mars, Fundam. Theor. Phys. 177, 191 (2014), doi:10.1007/978-3-319-06349-2_8. [28] P. Pradhan, Pramana 87, 1 (2016), doi:10.1007/s12043016-1214-x [arXiv:1205.5656 [gr-qc]]. [29] T. Ono, T. Suzuki, and H. Asada, Phys. Rev. D\n11\n94, 064042 (2016), doi:10.1103/PhysRevD.94.064042 [arXiv:1605.05816 [gr-qc]]. [30] E. M. Izhikevich, Dynamical systems in neuroscience (MIT press, 2007).\n[31] H. Stephani, D. Kramer, M. MacCallum, C. Hoenselaers, and E. Herlt, Exact solutions of Einstein\u2019s field equations (Cambridge University Press, 2009)."
+        }
+    ],
+    "title": "Existence and stability of circular orbits in general static and axisymmetric spacetimes",
+    "year": 2017
+}
