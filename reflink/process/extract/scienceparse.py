@@ -112,7 +112,7 @@ def extract_references(filename: str) -> types.ReferenceMetadata:
         headers = {'Content-Type': 'application/pdf'}
         response = requests.post(url, data=pdfhandle, headers=headers)
 
-        if response.status_code != 200:
+        if response.status_code != requests.codes.OK:
             msg = 'ScienceParse ({}) return error code {} ({}): {}'.format(
                 response.url, response.status_code,
                 response.reason, response.content

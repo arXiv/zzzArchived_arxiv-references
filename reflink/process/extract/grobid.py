@@ -199,7 +199,7 @@ def extract_references(filename: str) -> types.ReferenceMetadata:
         files = {'input': pdfhandle}
         response = requests.post(url, files=files)
 
-        if response.status_code != 200:
+        if response.status_code != requests.codes.OK:
             msg = 'GROBID ({}) return error code {} ({}): {}'.format(
                 response.url, response.status_code,
                 response.reason, response.content
