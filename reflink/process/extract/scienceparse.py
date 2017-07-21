@@ -2,6 +2,7 @@ import os
 import requests
 
 from reflink import types
+from reflink.status import HTTP_200_OK
 
 import logging
 logging.basicConfig(
@@ -112,7 +113,7 @@ def extract_references(filename: str) -> types.ReferenceMetadata:
         headers = {'Content-Type': 'application/pdf'}
         response = requests.post(url, data=pdfhandle, headers=headers)
 
-        if response.status_code != requests.codes.OK:
+        if response.status_code != HTTP_200_OK:
             msg = 'ScienceParse ({}) return error code {} ({}): {}'.format(
                 response.url, response.status_code,
                 response.reason, response.content

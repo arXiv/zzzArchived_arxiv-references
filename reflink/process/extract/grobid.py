@@ -5,6 +5,7 @@ import requests
 import xml.etree.ElementTree
 
 from reflink import types
+from reflink.status import HTTP_200_OK
 
 import logging
 logging.basicConfig(
@@ -199,7 +200,7 @@ def extract_references(filename: str) -> types.ReferenceMetadata:
         files = {'input': pdfhandle}
         response = requests.post(url, files=files)
 
-        if response.status_code != requests.codes.OK:
+        if response.status_code != HTTP_200_OK:
             msg = 'GROBID ({}) return error code {} ({}): {}'.format(
                 response.url, response.status_code,
                 response.reason, response.content
