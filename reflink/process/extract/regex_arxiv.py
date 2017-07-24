@@ -1,5 +1,3 @@
-import regex as re
-
 __all__ = (
     'REGEX_ARXIV_SIMPLE',
     'REGEX_ARXIV_STRICT',
@@ -19,7 +17,7 @@ RE_CATEGORIES = r'(?:{})(?:[.][A-Z]{{2}})?'.format(r'|'.join(categories))
 RE_DATE = r'[0-9]{2}(?:0[1-9]|1[0-2])'
 RE_VERSION = r'(?:[vV]\d+)?'
 
-#=============================================================================
+# =============================================================================
 RE_NUM_NEW = RE_DATE + r'[.]\d{4,5}' + RE_VERSION
 RE_NUM_OLD = RE_DATE + r'\d{3}' + RE_VERSION
 
@@ -29,7 +27,7 @@ RE_ID_NEW = r'(?:{})'.format(RE_NUM_NEW)
 # matches: hep-th/11030234 cs/0112345v2 cs.AI/0112345v2
 RE_ID_OLD = r'(?:{}/{})'.format(RE_CATEGORIES, RE_NUM_OLD)
 
-#=============================================================================
+# =============================================================================
 # matches: https://arxiv.org/abs/ abs/ arxiv.org/abs/
 #   3. e-print: eprints
 RE_PREFIX_URL = (
@@ -49,7 +47,7 @@ RE_PREFIX_CATEGORIES = r'(?i:{})'.format(RE_CATEGORIES)
 # matches: e-prints: e-print eprints:
 RE_PREFIX_EPRINT = r'(?i:e[-]?print[s]?.{1,3})'
 
-#=============================================================================
+# =============================================================================
 # matches simple old or new identifiers, no fancy business
 REGEX_ARXIV_SIMPLE = r'({}|{})'.format(RE_ID_OLD, RE_ID_NEW)
 
@@ -65,8 +63,8 @@ REGEX_ARXIV_STRICT = (
 )
 
 # this regex essentially accepts anything that looks like an arxiv id and has
-# the slightest smell of being one as well. that is, if it is an id and mentions
-# anything about the arxiv before hand, then it is an id.
+# the slightest smell of being one as well. that is, if it is an id and
+# mentions anything about the arxiv before hand, then it is an id.
 REGEX_ARXIV_FLEXIBLE = (
     r'(?:'
       r'(?:'

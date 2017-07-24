@@ -3,14 +3,14 @@ import os
 import shutil
 import subprocess
 import xml.etree.ElementTree
+import logging
 
+from reflink import types
 from reflink.process import util
 from reflink.process.extract import regex_identifiers
 
 CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
                                       'arxiv/cermine')
-
-import logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
     level=logging.DEBUG
@@ -191,7 +191,8 @@ def convert_cxml_json(filename: str) -> dict:
     return cxml_format_document(root, documentid)
 
 
-def extract_references(filename: str, cleanup: bool = True) -> str:
+def extract_references(filename: str,
+                       cleanup: bool = True) -> types.ReferenceMetadata:
     """
     Copy the pdf to a temporary directory, run CERMINE and return the extracted
     references as a string. Cleans up all temporary files.

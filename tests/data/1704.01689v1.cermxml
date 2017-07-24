@@ -1,0 +1,2159 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Existence and stability of circular orbits in general static and axisymmetric spacetimes</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Nan Yang</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Glyn O. Phillips Hydrocolloid Research Centre, Hubei University of Technology</institution>
+          ,
+          <addr-line>Wuhan 430068</addr-line>
+          ,
+          <country country="CN">China</country>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Junji Jia and Xiankai Pang MOE Key Laboratory of Artificial Microand Nano-structures, Wuhan University</institution>
+          ,
+          <addr-line>430072, China and Center for Theoretical Physics</addr-line>
+          ,
+          <institution>School of Physics and Technology, Wuhan University</institution>
+          ,
+          <addr-line>Wuhan, 430072</addr-line>
+          ,
+          <country country="CN">China</country>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>We investigate the existence and stability of timelike and null circular orbits (COs) in the equatorial plane of general static and axisymmetric (SAS) spacetime. We first obtained a necessary and sufficient condition for the non-existence of timelike COs. It is then proven that there will always exist timelike COs at large ρ in an asymptotically flat SAS spacetime with a positive ADM mass and moreover, these timelike COs are stable. Some other sufficient conditions on the stability of timelike COs are also solved. We then found the necessary and sufficient condition on the existence of null COs. It is generally shown that existence of timelike COs in SAS spacetime does not imply the existence of null COs, and vice-versa, regardless whether the spacetime is asymptotically flat or the ADM mass is positive or not. These results are then used to show the existence of timelike COs and their stability in an SAS Einstein-Yang-Mills-Dilaton spacetimes whose metric is not completely known. We also used the theorems to deduce the existence of timelike and null COs in some known SAS spacetimes.</p>
+      </abstract>
+      <kwd-group>
+        <kwd>Axisymmetric spacetime</kwd>
+        <kwd>Circular orbit</kwd>
+        <kwd>Fixed point</kwd>
+        <kwd>Stability</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>I. INTRODUCTION</title>
+      <p>Axisymmetric spacetimes are of special interests in
+observational astrophysics and theoretical study of
+space1 time and gravitational theories. This symmetry is
+cruv cial to some important observable phenomena such as
+9 torus or jet-like features [1], fast rotating objects,
+super8 nova ejecta [2] and binary systems that generates
+gravita6 tional waves. On the other hand, many theoretical work
+01 such as Einstein-Yang-Mills (EYM) [3], EYM-Higgs [4],
+. EYM-Dilaton [5–7] solutions, f(R) gravity [8], traversable
+4 wormholes [9], cosmic strings [10] and domain walls [11],
+0 and metric affine gravity [12] can be carried out in this
+17 symmetry due to its simplicity and yet non-triviality. In
+: particular, the recent direct observation of gravitational
+iv waves [13, 14] are believed to originate from binary
+system whose spacetime in the far region during the merging
+rX and spacetime in the entire space after complete merging,
+a are indeed axisymmetric.</p>
+      <p>In the spacetimes possessing axisymmetry, it is often
+desirable to know the existence and stability of circular
+orbits (COs) in the equatorial plane. These orbits for
+example can be used to characterize the properties of
+the central object [15] or in numerical modeling of stellar
+systems [16]. They are also of huge importance to the
+study of flow of matter in the accretion disk around
+rotating black holes (BHs) or binary systems [17–19]. For
+these reasons, these COs, including the ones that are
+more special such as marginal stability COs (MSCOs),
+have been studied by many authors over the years for
+various axisymmetric spacetimes, including both static
+and stationary ones (see Ref. [15] and papers therein).</p>
+      <p>In this paper, we study the existence and stabilities
+of COs for general static and axisymmetric (SAS)
+spacetimes. This work is a natural extension of the authors’
+recent results on the existence and stability of COs in
+general spherically symmetric spacetimes [20].
+Previously, there have been work on the solution of COs and
+their stabilities in particular SAS spacetimes. Letelier
+[21] studied the stability of BH + disk/ring/multipolar
+systems using the Rayleigh criteria. González and
+LópezSuspes considered the stability of COs in Weyl (vacuum)
+spacetimes [22]. Dolan and Shipley studied the stable
+photon orbits in a few spacetimes [23]. In addition,
+Beheshti and Gasperín studied the MSCO in particular
+stationary and static axisymmetric spacetimes [24]. We
+emphasis that unlike works by these authors, in this work
+the metric function of the SAS spacetimes are kept
+general, i.e., the results that we obtained are not restricted
+to a particular forms of metric functions. Rather, our
+methodology deals with general SAS spacetimes and our
+results are even applicable to metrics whose explicit
+expression is not yet known.</p>
+      <p>We organize the paper in a few sections. In section II
+we setup the SAS metric, and derive the geodesic
+equations in the equatorial plane and the CO conditions in
+terms of the metric functions and first integral constants.
+In section III we analyze the existence of non-trivial
+timelike COs and give the results in the form of a theorem.
+We then show in section IV that asymptotically flat SAS
+spacetimes with a positive ADM mass will always allow
+timelike COs. The stabilities of these timelike COs are
+studied and some sufficient conditions for the COs to be
+stable (or unstable) are obtained. The existence and
+stability issue for null CO are studied in section VI. It is
+found that there can exist metrics allowing timelike CO
+while no null COs, and metrics that allowing null CO but
+no timelike COs. Finally, in section VII we first show
+that the results in this work match those in Ref. [20].
+And then a very powerful application of our results, to
+assert the existence and stability of COs for SAS EYMD
+spacetime whose metric functions’ exact expression are
+not known, is illustrated. We also use our results to
+study the existence of COs in a few other known SAS
+spacetimes and discuss possible extensions of the current
+work.</p>
+      <p>In this section, we setup the metric and derive the
+geodesic equations and conditions for the COs in the
+equatorial plane of a stationary and axisymmetric
+spacetime, although what we need in later sections are only
+these quantities in a static and axisymmetric spacetime.
+Our notations in this section follow that of Ref. [24].</p>
+      <p>
+        For stationary and axisymmetric spacetimes, the most
+general form of the metric can be given in local
+coordinates by the Weyl-Lewis-Papapetrou line element [24]
+ds2 = e2U (dt−ωdφ)2 −e−2U [e2γ(dρ2 +dz2)+ρ2dφ2] (
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        )
+where (t, ρ, z, φ) are the coordinates and U, ω and γ are
+the metric functions depending on ρ and z only.
+Equivalently, and for easier reference to the metric functions,
+we can rewrite it as
+ds2 = A(ρ, z)dt2 − B(ρ, z)dtdρ
+      </p>
+      <p>−C(ρ, z)dφ2 − D(ρ, z)(dρ2 + dz2)
+where we have set A(ρ, z) = e2U , B(ρ, z) = 2ωe2U ,
+C(ρ, z) = ρ2e−2U − ω2e2U and D(ρ, z) = e2(γ−U). Note
+there is a relation between these functions</p>
+      <p>C = ρ2 − B2/4 /A.</p>
+      <p>
+        We further assume that the spacetime possesses a local
+reflection symmetry at some fixed z value and we shift the
+z coordinate so that it becomes the z = 0 plane, which
+is also called the equatorial plane. This way any orbit
+of a particle with zero initial off-plane momentum will
+remain in the plane and the motion becomes effectively
+2+1 dimensional whose metric is described after changing
+from A(ρ, z) etc. to A(ρ) etc. by
+ds2 = A(ρ)dt2 − B(ρ)dtdρ − C(ρ)dφ2 − D(ρ)dρ2. (
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        )
+p˙ρ =
+d d
+dτ (−D(ρ)ρ˙) = −ρ˙ dρ (D(ρ)ρ˙)
+      </p>
+      <p>1 d
+= − 2D(ρ) dρ</p>
+      <p>(D2(ρ)ρ˙2)
+= −D(ρ) D′(ρ)V (ρ) −</p>
+      <p>
+        V ′(ρ)
+2
+To obtain the geodesic equations, we can start from
+where in the last step we used Eq. (
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        ) and ′ here
+the following Lagrangian of a free particle
+      </p>
+      <p>L =
+=
+1 dxi dxk
+2 gik dτ dτ</p>
+      <p>1
+= ǫ</p>
+      <p>2
+1 " Bφ˙2
+2 4A −
+ρ2φ˙2</p>
+      <p>
+        A
++ At˙2 − Bt˙φ˙ − Dρ˙2
+#
+(
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref6">6</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref8">8</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref9">9</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref12">12</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref13">13</xref>
+        )
+where ˙ denotes the derivative with respect to the proper
+time (or affine parameter) τ and we have substituted (
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ).
+Here ǫ = 1, 0 respectively for timelike and null geodesics.
+Because t and φ are cyclic coordinates in Lagrangian, we
+can obtain two first integrals
+      </p>
+      <p>E = ∂∂Lt˙ = 2</p>
+      <p>1
+L = ∂∂Lφ˙ = 2 2A(ρ)
+1 1
+2A(ρ)t˙ − B(ρ)φ˙ ,</p>
+      <p>
+        B(ρ)2 − 4ρ2 φ˙ − B(ρ)t˙ , (
+        <xref ref-type="bibr" rid="ref7">7</xref>
+        )
+where E and L are real constants identified as the specific
+energy and angular momentum of the particle at infinite
+ρ. These equations can be inverted to express t˙ and φ˙ in
+terms of E and L as
+t˙ =
+φ˙ = −
+      </p>
+      <p>E
+A(ρ)</p>
+      <p>LA(ρ)
+ρ2
+1 −
+−</p>
+      <p>B(ρ)2
+4ρ2
+EB(ρ)
+2ρ2 .</p>
+      <p>−</p>
+      <p>
+        LB(ρ)
+2ρ2 ,
+These are equivalent to the geodesic equations of t and
+φ but with τ integrated once. Substituting Eqs. (
+        <xref ref-type="bibr" rid="ref8">8</xref>
+        ) and
+(
+        <xref ref-type="bibr" rid="ref9">9</xref>
+        ) into Lagrangian (
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ) yields the last geodesic equation,
+for ρ(τ ), as
+ρ˙2 =
+−4A ELB + ǫρ2
+4ρ2AD
+− 4L2A2 + E2 4ρ2 − B2
+(
+        <xref ref-type="bibr" rid="ref10">10</xref>
+        )
+Φ(ρ)
+≡ 4ρ2A(ρ)D(ρ) ≡ V (ρ)
+where Φ(ρ) is defined as the numerator and V (ρ) as the
+entire right hand side of Eq. (
+        <xref ref-type="bibr" rid="ref10">10</xref>
+        ) and plays the role of
+an effective potential.
+      </p>
+      <p>
+        To establish the condition for a CO, we can first
+compute the conjugate momentum pρ of ρ as
+pρ =
+∂L = −D(ρ)ρ˙
+∂ρ˙
+Taking derivative with respect to τ , we obtain
+and henceforth denotes the derivative with respect to
+ρ. Mathematically, Eqs. (
+        <xref ref-type="bibr" rid="ref12">12</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref13">13</xref>
+        ) can be thought
+as an autonomous system in 2-dimensional phase space
+spanned by ρ and pρ. Then the fixed point (FP) of this
+system, denoted by (ρ∗, pρ∗), satisfies
+ ρ˙|(ρ∗,pρ∗) = − Dp(ρρ∗∗) = 0,
+
+
+ p˙ρ|(ρ∗,pρ∗) = −D(ρ∗) D′(ρ∗)V (ρ∗) −
+
+V ′(ρ∗)
+2
+      </p>
+      <p>
+        (
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        )
+at some instantaneous time and all times after. Noting
+(
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        ), this is equivalent to require that at (ρ∗, pρ∗)
+Φ(ρ∗) = 0
+and Φ′(ρ∗) = 0.
+      </p>
+      <p>
+        (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        )
+Clearly any solution of Eq. (
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ) or equivalently (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        )
+defines a CO of the spacetime with orbit radius given by ρ∗.
+Conversely, it is also easy to show that any CO in this
+spacetime will satisfy these equation systems. Therefore
+COs of the metric (
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ) and FP defined by the system (
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        )
+or (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ) are equivalent.
+      </p>
+      <p>
+        For this work, we then restrict ourselves to the case of
+static metric, mainly due to its simplicity and the
+solvability of the desired equations. This allows us to set
+B(ρ) = 0 in all the equations above, including metric (
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        )
+and Eqs. (
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ). These two systems then will be
+our starting point for the analysis of the existence and
+stability of COs in the spacetime described by metric
+ds2 = A(ρ)dt2 − ρ2/A(ρ)dφ2 − D(ρ)dρ2.
+(
+        <xref ref-type="bibr" rid="ref16">16</xref>
+        )
+      </p>
+    </sec>
+    <sec id="sec-2">
+      <title>III. EXISTENCE OF TIMELIKE COs</title>
+      <p>We consider the existence of COs for timelike geodesics
+in this section, while the null case will be considered in
+section VI.</p>
+      <p>
+        First we write out Eq. (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ) explicitly in terms of the
+parameters E, L and the metric function A(ρ), as
+ρ2∗ −A2
+ρ3A′ [ρ∗A′ − 2A]A2
+∗
+      </p>
+      <p>E2
+L2
+=
+ρ2A
+∗
+0
+.</p>
+      <p>
+        (
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        )
+For a given A(ρ), if in the space spanned by energy E and
+angular momentum L there exists a non-empty set S for
+whose element (E, L) the solution to Eqs. (
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        ) does
+exist, then we say for that A(ρ) the COs can exist (for that
+(E, L) at ρ = ρ∗). If the set S is empty then we say
+that there exist no COs for the spacetime described by
+that A(ρ). Apparently, if COs exist for some (E, L) then
+the two equations in Eq. (
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        ) will both have solutions
+simultaneously. If either of the equations is not satisfied
+by any ρ, then the COs do not exist for that (E, L).
+Therefore the form of A(ρ) is crucial in determining the
+existence of COs. Before proceeding further however, a
+remark is in order regarding A(ρ). Even though it is
+possible for A(ρ) to be negative in some region of the
+spacetime, in this paper we assume that A(ρ) is positive in
+(
+        <xref ref-type="bibr" rid="ref18">18</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref21">21</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref22">22</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref24">24</xref>
+        )
+the range of ρ in which we seek the FP (or CO), because
+otherwise according to the metric (
+        <xref ref-type="bibr" rid="ref16">16</xref>
+        ) the ρ coordinate
+should have to be interpreted as time, not radius and a
+FP in time is not of our interest. We also assume that in
+the range of ρ the spacetime is not singular so that it is
+always possible to do coordinate transformation to make
+A(ρ) differentiable if it was not in the first place.
+Therefore throughout this paper, we will assume that A(ρ) is
+already made differentiable.
+      </p>
+      <p>
+        Eq. (
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        ) is a linear system for E2 and L2. It will have
+no solution to E2 and L2 if and only if the rank of the
+augmented matrix is larger than that of the coefficient
+matrix, which we solved to find
+      </p>
+      <p>A(ρ∗) − ρA′(ρ∗) = 0.</p>
+      <p>Otherwise, there always exist the following solution
+and</p>
+      <p>A − ρA′ &lt; 0
+2A − ρA′ &gt; 0.</p>
+      <p>A(ρ∗) [2A(ρ∗) − ρ∗A′(ρ∗)] ,
+2 (A(ρ∗) − ρ∗A′(ρ∗))
+ρ3A′(ρ∗)</p>
+      <p>∗
+2A(ρ∗) (A(ρ∗) − ρ∗A′(ρ∗))
+.</p>
+      <p>Given that both E and L are real, it is clear that these
+two equations might not have solutions if the right hand
+sides are always negative for all ρ. However, it is also
+clear that if A(0) &gt; 0, there will always exist a solution
+at ρ∗ = 0 for E = pA(0) and L = 0. This solution,
+though technically is also a CO, is not relevant in most
+physically important metrics. Usually in the center ρ =
+0, either the spacetime is singular, or the presence of
+matter will prevent the test particle from doing timelike
+geodesic motions, or it is just a trivial CO such as in the
+case of Minkovski spacetime. Therefore in the following
+sections when the timelike COs are discussed, CO at this
+point is excluded and we concentrate on non-trivial COs.</p>
+      <p>
+        We can now study Eq. (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ) separately for the
+(non-)existence of their solutions. Firstly for Eq. (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ),
+keeping in mind that E is real and noticing (2A − ρA′) −
+(A − ρA′) = A &gt; 0, this equation will not have any
+solution in a region of ρ if and only if in this region
+That is, in this region of ρ we can equate the left hand
+sides of the inequalities to some arbitrary but positive
+functions δ(ρ) and ζ(ρ):
+and
+      </p>
+      <p>A(ρ) − A′(ρ)ρ = −δ(ρ),
+2A(ρ) − A′(ρ)ρ = ζ(ρ).</p>
+      <p>
+        Under condition (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) alone we see that A′ &gt; 0 and
+consequently Eq. (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ) will not have any solution. Therefore
+for the purpose of violating the entire system of (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ) and
+(
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ), condition (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) is enough and we do not have to
+solve (
+        <xref ref-type="bibr" rid="ref24">24</xref>
+        ). Noticing Eq. (
+        <xref ref-type="bibr" rid="ref18">18</xref>
+        ), the δ(ρ) in Eq. (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) can
+be relaxed to be semi-positive rather than strictly
+positive. This equation can be readily solved for an arbitrary
+δ(ρ). However for the sake of a shorter expression for the
+solution, we further change δ(ρ) to ρ2dκ(ρ)/dρ without
+losing any generality as long as κ′(ρ) ≥ 0. This way the
+Eq. (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) can be solved to find the solution
+      </p>
+      <p>A(ρ) = ρκ(ρ)
+where an integral constant has been absorbed into κ(ρ),
+which is a positive and monotonically increasing but
+otherwise arbitrary function.</p>
+      <p>
+        Secondly, for Eq. (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ), beside the case (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ), this
+equation can also be violated if its numerator is negative
+      </p>
+      <p>
+        A′(ρ) &lt; 0,
+which automatically makes the denominator positive. It
+is also easy to see that in all other cases Eq. (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ) will
+have solutions for some (E, L, ρ).
+      </p>
+      <p>
+        Combining the above two cases, we see that the
+equation system (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ) will not permit a CO solution
+in a region of ρ if and only if at least one of Eq. (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) and
+(
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) is satisfied in this region. If no CO exists at all for
+all ρ &gt; 0, then in the entire range of ρ, either one of (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        )
+or (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) is satisfied, or these two are satisfied piecewisely.
+Now we further show that the piecewise satisfaction
+scenario is impossible and then establish one of the main
+conclusions in this work.
+      </p>
+      <p>
+        Suppose that there exist no CO because Eq. (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) or
+equivalently Eq. (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ), and (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) are piecewisely satisfied:
+Eq. (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) is satisfied in region ρ ∈ (a, b) and Eq. (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) is
+satisfied in the region ρ ∈ (b, c). Then clearly A′ &gt; 0 in
+(a, b) and in A′ &lt; 0 in (b, c). Because A′ is continuous,
+we must have A′(ρ = b) = 0 and for any ρ in the small
+neighborhood ρ ∈ (b − χ, b), A′(ρ) &gt; 0. On the other
+hand for ρ = b − ε that is in this neighborhood and
+infinitesimally close to b, we can compute [A − ρA′]ρ=b−ε
+using its Taylor expansion
+[A − ρA′]ρ=b−ε = A(b) + εbA′′(b) + O(ε2).
+(
+        <xref ref-type="bibr" rid="ref27">27</xref>
+        )
+Clearly we have [A− ρA′]ρ=b−ε = A(b) &gt; 0 to the leading
+order, which conflicts with the assumption that Eq. (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        )
+is satisfied here. For the case that Eqs. (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        )
+are satisfied respectively in the regions (b, c) and (a, b),
+then a similar conflict can be proven. These conclude
+that Eqs. (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) cannot be satisfied piecewisely.
+We can now state our conclusion:
+(Theorem A) The equatorial timelike COs for the metric
+(
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ) do not exist if and only if either only Eq. (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) is
+satisfied in the entire range of ρ, or only Eq. (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) is
+satisfied in the entire range of ρ, but not because Eq.
+(
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) are piecewisely satisfied.
+      </p>
+      <p>Here and after, we will refer to this as the timelike CO
+non-existence theorem (TCONET).</p>
+      <p>
+        In the following we give two simple examples satisfying
+respectively Eq. (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) in the entire range of ρ and
+therefore do not permit any CO, and one more example
+which combines the first two and satisfies Eq. (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) in
+(
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        )
+,
+some range of ρ, Eq. (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) in some other range and then
+neither of them in the rest, where CO lies. The first
+example is given by κ(ρ) = ρ so that A(ρ) = ρκ(ρ) = ρ2,
+the resulting Eqs. (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ) become
+which permit no solution and therefore no COs. The
+second example is given by A(ρ) = 1/ρ and the Eqs.
+(
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ) become
+(
+        <xref ref-type="bibr" rid="ref28">28</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref29">29</xref>
+        )
+(
+        <xref ref-type="bibr" rid="ref30">30</xref>
+        )
+where the equation for L2 eliminates the existence of COs
+too. The third example is a simple combination of the
+above two:
+ρ
+      </p>
+      <p>A(ρ) = 1 + ρ3 · ρ.</p>
+      <p>
+        At very small and large ρ, this resembles the first and
+second examples respectively and therefore we expect that
+the COs will not exist there. However, in the middle
+range, as we can expect using the TCONET theorem,
+the COs do exists. Substituting Eq. (
+        <xref ref-type="bibr" rid="ref30">30</xref>
+        ) into (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ) and
+(
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ), we obtain
+It is easy to verify that these two equations will have
+solution when ρ ∈ (2−1/3, 21/3) for some (E, L).
+      </p>
+    </sec>
+    <sec id="sec-3">
+      <title>IV. EXISTENCE OF COs IN</title>
+    </sec>
+    <sec id="sec-4">
+      <title>ASYMPTOTICALLY FLAT SAS SPACETIMES</title>
+      <p>In the end of last section, we see that there indeed exist
+metrics forbidding the existence of any timelike CO.
+However, these metrics are not asymptotically flat. People are
+usually more interested in asymptotically flat spacetimes
+due to their physical relevance. Therefore in this section
+we analyze how the asymptotic flatness condition will
+affect the existences of timelike COs in the SAS spacetimes.</p>
+      <p>
+        For metric (
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ), asymptotic flatness requires that as ρ →
+∞ [25, 26],
+      </p>
+      <p>
+        2c
+A(ρ) = a + ρβ + O(ρ−β−1),
+(32)
+where a &gt; 0, β ≥ 1 and c are constants. We then see that
+any A(ρ) satisfying (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) will necessarily diverge at large
+ρ and therefore not be asymptotically flat. While for
+condition (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ), metric satisfying it can still be compatible
+with the asymptotic flatness condition (32) and therefore
+has no timelike COs. An example would be the function
+(32) truncated to the second term and with a positive c.
+      </p>
+      <sec id="sec-4-1">
+        <title>Clearly this metric satisfies and (20) at the CO yields 5 (35)</title>
+        <p>
+          (36)
+i.e. Eq. (
+          <xref ref-type="bibr" rid="ref26">26</xref>
+          ) and therefore has no timelike CO. This
+example shows that enforcing the asymptotic flatness alone
+will not make sure the existence of COs in SAS
+spacetimes.
+        </p>
+        <p>
+          There is however, one thing odd about this
+example. The constant c in (32) although is mathematically
+merely a constant in the asymptotic expansion of the
+metric function A(ρ), it is physically identified with the
+ADM mass for the asymptotically flat spacetime when
+β = 1. It is known from the Positive Mass Theorem
+that for spacetime satisfying dominant energy condition,
+this ADM mass shall always be positive [27]. Therefore
+adding the positive ADM mass condition will make sure
+that the metric function A(ρ) violate Eq. (
+          <xref ref-type="bibr" rid="ref26">26</xref>
+          ) and
+guarantee the existence of COs in SAS spacetimes. We restate
+this conclusion as:
+(Theorem B) There will always exist equatorial timelike
+COs at least at large ρ for an SAS spacetime described
+by metric (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          ) and which is also asymptotically flat with
+a positive ADM mass.
+        </p>
+      </sec>
+    </sec>
+    <sec id="sec-5">
+      <title>V. STABILITY OF COs AND EXISTENCE OF</title>
+    </sec>
+    <sec id="sec-6">
+      <title>MARGINALLY STABLE COs</title>
+      <p>With the existence of COs proven for asymptotically
+flat SAS spacetimes with positive ADM mass, and
+existence condition given by Theorem A for general SAS
+spacetimes, one important question following is the
+stability of these COs. In this section we will assume that
+the spacetime considered will allow timelike CO and
+denote its radius as ρ = ρ∗. We then use the Lyapunov
+exponent method [28] to address the question about what
+form of A(ρ) will make the CO stable, unstable or have
+a marginal stability. Here we use the wording “marginal
+stability” instead of “marginally stable” [24] or “marginal
+stable” [29] because such orbit, defined as dV (ρ∗)/dρ = 0,
+is not necessarily stable even in the perturbative sense.
+This definition only means that the stability at this point
+is critical, i.e., it can change, disappear or split in to many
+equilibria [30].</p>
+      <p>
+        For the metric (
+        <xref ref-type="bibr" rid="ref16">16</xref>
+        ), the Lyapunov exponents for the
+system (
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ) (or (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        )) is equivalent to the eigenvalues of
+the linear perturbation matrix of the system, which we
+found to be
+where the effective potential V (ρ) is given in Eq. (
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        )
+with B = 0. Substituting V and using the relation (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        )
+(33)
+where all of A, A′, A′′ and D are evaluated at ρ∗, and
+we defined a function h as the numerator
+      </p>
+      <p>h(ρ) = ρA2A′′ + ρ2A′3 − 4ρAA′2 + 3A2A′.</p>
+      <p>
+        It is known that when λ± are imaginary, real but nonzero,
+or zero, the CO will be respectively stable, unstable, or
+have marginal stability. Since at the CO radius, the Eq.
+(
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) must be broken and therefore ρ∗A′(ρ∗) − A(ρ∗) &lt;
+0, it is clearly then the situation of λ± is completely
+determined by h. I.e., the CO will (
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ) be stable if and
+only if h(ρ∗) &gt; 0, (
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ) be unstable if and only if h(ρ∗) &lt; 0,
+and (
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ) have marginal stability if and only if h(ρ∗) = 0.
+Unfortunately, the sign of h(ρ∗) cannot be completely
+determined without knowledge of A(ρ), due to two facts.
+First, the A′′(ρ∗) term, which does not appear in any
+form of the CO existence conditions, is not constrained
+and cannot be eliminated from (36). Secondly, even if
+A′′(ρ∗) were expressible through other quantities, h(ρ∗)
+is only an algebraic equation at ρ∗. Without knowing
+the value of the CO radius ρ∗ it is still impossible to
+determine the sign of h(ρ∗).
+      </p>
+      <p>However, if we treat h(ρ) as a differential equation of
+ρ and require its sign to be fixed at not only ρ∗ but all
+ρ, then we are still able to get some sufficient conditions
+for determining the stability of COs of relevant metrics.
+These conditions are:
+(a). If
+ρA2A′′ + ρ2A′3 − 4ρAA′2 + 3A2A′ = 0
+(37)
+for all ρ, then the CO will always be an MSCO regardless
+of the CO radius value ρ∗.
+(b). If
+ρA2A′′ + ρ2A′3 − 4ρAA′2 + 3A2A′ = σ(ρ) &gt; 0 (or &lt; 0)
+(38)
+where σ(ρ) is positive (or negative) but otherwise
+arbitrary for all ρ, then the CO will always be an stable (or
+unstable) CO, regardless of the CO radius value ρ∗.</p>
+      <p>Condition (a) can be immediately solved to get two
+possible A(ρ)</p>
+      <p>
+        A±(ρ) = ρ c1ρ ± qc21ρ2 − 2c2 ,
+(39)
+where for the + sign, we should have c1 &gt; 0 or c1 &lt;
+0, c2 &lt; 0 and for the − sign, c1 &gt; 0, c2 &gt; 0 in order
+for A(ρ) to be positive. The relations (
+        <xref ref-type="bibr" rid="ref19">19</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref20">20</xref>
+        ) at
+the CO radius then further eliminate the scenario of A+
+VI.
+      </p>
+    </sec>
+    <sec id="sec-7">
+      <title>NULL COs AND THEIR STABILITIES</title>
+      <p>
+        For null geodesics, the existence conditions (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ) for the
+null COs becomes
+with c1 &gt; 0 and A− since they do not allow any CO.
+Combining these, then the condition (a) is equivalent to
+the statement that:
+(Theorem C) For an SAS spacetime with metric function
+A(ρ) = ρ c1ρ + pc21ρ2 − 2c2
+where c1 and c2 are
+negative but otherwise arbitrary constants, there will exist
+timelike COs and these COs are always MSCOs.
+      </p>
+      <p>Condition (b) allows better generality than (a) due to
+the arbitrariness of σ(ρ) but has proven to be difficult to
+solve. This difficulty on one hand is due to the
+nonlinearity of the equation, and on the other due to the
+nonhomogeneity of σ(ρ). Therefore we tried to replace σ(ρ)
+by a homogenous term, such as χ(ρ)ρ2A′3, χ(ρ)ρAA′2 or
+χ(ρ)A2A′, where χ(ρ) is also an arbitrary function that
+has the same sign as σ(ρ). This way since the other
+factors in these terms are all positive, if the resulting
+equations were solvable, we can still obtain some sufficient
+conditions with enough generality on the stability of the
+COs. Again it is very unfortunate that these equations
+do not allow explicit solutions when χ(ρ) is an arbitrary
+function. At last, we further set χ(ρ) to be constants
+χ, and the resultant equations became simple enough to
+solve and each solved A(ρ) is a sufficient conditions for
+the CO to be stable or unstable, depending on the sign of
+χ. The detailed forms of these A(ρ)’s are quite implicit
+and not directly useful, and therefore we only list them
+in Appendix A.</p>
+      <p>Similar to the situation in section IV, one can also
+tackle the stability problem of timelike COs at large ρ
+with the help of asymptotic flatness and positive ADM
+mass. From Theorem B, we see the existence of timelike
+COs at large ρ for metrics having asymptotics (32) with
+c &lt; 0 and β = 1. For these COs, substituting A(ρ) into
+Eq. (36), we find
+h(ρ) =
+a2cβ(β − 2)
+ρβ+1
++ O(ρ−(β+2)),
+(40)
+which is positive to the leading order. This means we
+can have the following result:
+(Theorem D) The equatorial timelike COs at large ρ
+in the asymptotically flat SAS spacetime with positive
+ADM mass are always stable.</p>
+      <p>
+        To conclude this section, let us mention that an
+especially simple sufficient condition for the COs to be stable
+can be obtained from (38) just by observation. Noticing
+that h(ρ) can be recast into
+h(ρ∗) = A′ (A − ρ∗A′) (3A − ρ∗A′) + ρ∗A2A′′
+(41)
+and that the three factors in the first term of the right
+hand side are all positive, we see that as long as the
+last term is semi-positive definite, then the COs will be
+unstable. That is, the COs will be stable if A′′ ≥ 0 for
+all ρ.
+(42)
+(43)
+(44)
+(45)
+(46)
+(47)
+where ψ1(ρ) is a positive and monotonically increasing
+but otherwise arbitrary function, and
+where ψ2(ρ) is an positive and monotonically
+decreasing but otherwise arbitrary function. In other words, we
+have:
+(Theorem E) The equatorial null COs for the metric (
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        )
+do not exist if and only if its metric function A(ρ) takes
+the form of either Eq. (46) or Eq. (47) in the entire range
+of ρ.
+      </p>
+      <p>
+        Comparing with the TCONET, any metric function
+A(ρ) satisfying Eqs. (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) will satisfy Eq. (44) or
+equivalently Eq. (46). However metric satisfying (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        ) will not
+satisfy either of Eqs. (44) and (45) when the equality
+δ(ρ) = 0 or κ′(ρ) = 0 is taken. This means that there
+are SAS spacetimes that does not have timelike COs but
+still allow null COs. An example can be constructed as
+κ(ρ) = a3 + (ρ − a)3
+A(ρ) = ρκ(ρ) = ρ a3 + (ρ − a)3 ,
+(a &gt; 0),
+(48)
+which leads to κ′(r) = 3(ρ − a)2 ≥ 0 and therefore A(ρ)
+respects Eq. (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) and has no timelike CO. It is also clear
+that at ρ = a, A − ρA′ = 0 and therefore there exist a
+null CO. On the other hand, one can also give examples
+of metrics that allow timelike COs but not null CO, such
+It is clear that Eq. (42) will always be satisfied by some
+ρ, E and L. Eq. (43) will have no solution and therefore
+no COs if and only if for all ρ &gt; 0, we have either
+      </p>
+      <p>A(ρ) − ρA′(ρ) = η1(ρ) &gt; 0,
+or</p>
+      <p>A(ρ) − ρA′(ρ) = −η2(ρ) &lt; 0,
+where η1(ρ) and η2(ρ) are two positive arbitrary
+functions. Noticing that A(ρ) and A′(ρ) are both continuous,
+it is seen that the Eqs. (44) and (45) cannot be satisfied
+piecewisely in the range of ρ without letting A(ρ)−ρA′(ρ)
+pass zero, i.e., having a CO.</p>
+      <p>
+        Eqs. (44) and (45) have the same form as Eq. (
+        <xref ref-type="bibr" rid="ref23">23</xref>
+        )
+and the solutions are respectively
+      </p>
+      <p>E A(ρ∗) ,</p>
+      <p>L = ± ρ∗
+A(ρ∗) = ρ∗A′(ρ∗).</p>
+      <p>A(ρ) = ρψ1(ρ)
+A(ρ) = ρψ2(ρ)
+as
+ψ2(ρ) =</p>
+      <p>
+        1 2M
+ρ + 2M , A(ρ) = ρψ2(ρ) = 1 − ρ + 2M
+(49)
+where M &gt; 0 is the ADM mass. The ψ2(ρ) here is
+positive and has a negative derivative and therefore will have
+no null CO. It is also easy to verify that A(ρ) violates
+both conditions (
+        <xref ref-type="bibr" rid="ref25">25</xref>
+        ) and (
+        <xref ref-type="bibr" rid="ref26">26</xref>
+        ) and therefore allows
+timelike COs.
+      </p>
+      <p>We can impose the asymptotic flatness condition to the
+metric. Similar to the timelike case however, this
+condition alone will not guarantee the existence of null COs. If
+we further require that the asymptotically flat spacetime
+should have a positive ADM mass, then clearly the
+corresponding metric will break the non-existence condition
+(46), but not necessarily the condition (47). Indeed, the
+metric (49) is such an example: this metric is
+asymptotically flat and still satisfies Eq. (47) and therefore has
+no null CO. Because for asymptotic flat SAS spacetimes
+with a positive ADM mass, Theorem B guarantees the
+existence of timelike COs, the above example shows that
+for these spacetimes the existence of null COs has more
+stringent requirement.</p>
+      <p>
+        In spite of our incapability of producing a general
+existence theorem for null COs, from physical
+considerations such as asymptotic flatness and positive ADM mass,
+we can still prove the following theorem that we believe
+might be useful for special spacetimes:
+(Theorem F) If there exist a finite range of ρ ∈ [a, b)
+where 0 &lt; a &lt; b such that the metric function A(ρ =
+a) = 0 and A(a &lt; ρ &lt; b) &gt; 0, and A(ρ → ∞) does not
+diverge faster than ρ1, then this metric allows null COs.
+The proof of this is simple and given in Appendix B.
+Since known BH spacetimes described by the metric (
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        )
+usually has a radius ρBH at which A(ρBH) = 0, this
+theorem might be especially useful to judge the existence of
+null COs around such BHs.
+      </p>
+      <p>We can also consider the stability of null COs using
+the Lyapunov exponent. In this case, the Lyapunov
+exponents are
+We see that the only factor whose sign is not fixed and
+cannot be fixed by Eqs. (42) and (43), is A′′(ρ∗). When
+A′′(ρ∗) is positive, zero or negative, the null CO will be
+stable, marginally stable or unstable respectively. Similar
+to the study of stability of timelike COs in section V, we
+can equate A′′ to some positive (or negative, or zero)
+definite arbitrary functions and solve for some general
+forms of A(ρ) whose null COs will definitely be stable
+(or unstable, or have marginal stability). However, these
+general forms are too trivial to be used to judge stabilities
+of COs in known SAS spacetimes and therefore they are
+not shown here.</p>
+      <p>
+        In our previous work [20], the existence and stability
+of COs in static and spherically symmetric (SSS)
+spacetimes were studied and various theorems were obtained.
+Since SSS spacetime is also SAS, we first verify that the
+theorems obtained in the current work should also apply
+to the SSS case and therefore reproduce the theorems in
+Ref. [20] when the metric (
+        <xref ref-type="bibr" rid="ref16">16</xref>
+        ) is reduced to the metric
+used in Ref. [20]:
+where (tS, r, θ, φS) are the coordinates. It is only
+necessary to consider the geodesics in the equatorial plane,
+defined by θ = π/2 and therefore the SSS metric in this
+plane becomes
+1
+ds2 = f (r)dt2S − g(r) dr2 − r2dφ2S.
+      </p>
+      <p>
+        It is then apparent the coordinate change transforming
+metric (
+        <xref ref-type="bibr" rid="ref16">16</xref>
+        ) to metric (52) can be chosen as
+      </p>
+      <p>tS = t, φS = φ, r2 =
+and the metric functions should match as
+f (r(ρ)) = A(ρ), g(r(ρ)) =</p>
+      <p>ρ2
+A(ρ)</p>
+      <p>
+        ,
+1 dρ2
+D(ρ) dr2
+(52)
+(53)
+(54)
+(55)
+Under this transformation, the factor Φ(ρ) in the
+potential (
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        ), which becomes the starting point of the analysis
+in Eq. (
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ), can be transformed to
+Φ(ρ) → Φ(r) =
+      </p>
+      <p>1
+4r2f (r)2</p>
+      <p>E2 L2
+f 2 − r2 − ǫ .</p>
+      <p>Except an irrelevant factor, this is exact the potential
+V (r) in Ref. [20]. Since all theorems in that work are
+then derived from this potential, they will be in
+agreement with the theorems obtained in current work. This
+checks that the analysis and results for the equatorial
+motions in the SAS spacetime implies the results obtained
+in Ref. [20] for the SSS spacetime, as it should.</p>
+      <p>
+        The original motivation of the work is to find COs
+for spacetimes whose metric functions are not
+analytically known. Usually in classical gravity models once
+the ansatz for the metric (and matter) functions are
+chosen, their Einstein(-matter) equations are easy to
+derive. Due to the non-linearity of these equations,
+analytical solutions are usually unavailable except in a few
+notable cases, and then numerical methods to different
+levels of complexity and difficulties, are used with the
+help of boundary conditions. In analyzing the COs in
+such metrics, we realized that the existence and stability
+of the COs can be determined without having to know
+the numerical solution. We now show as an example that
+the results in this work can be applied to metric in the
+EYMD model studied in Ref. [7]. In this work the SAS
+ansatz for the metric in the equatorial plane is given by
+m(r) r2l(r)
+ds2 = f (r)dt2EYMD − f (r) dr2 − f (r) dφ2EYMD, (56)
+where (tEYMD, r, θEYMD, φEYMD) are the coordinates
+and θEYMD = π/2 was set. It is not hard to verify that
+this metric is equivalent to metric (
+        <xref ref-type="bibr" rid="ref16">16</xref>
+        ) if the following
+coordinate transforms are used
+      </p>
+      <p>t = tEYMD, φ = φEYMD, ρ2 = r2l(r)
+and metric functions are identified</p>
+      <p>A(ρ(r)) = f (r),
+D(ρ)2 =
+m(r) dr2
+f (r) dρ2
+.</p>
+      <p>It is also known from Eq. (C10) of Ref. [7] that the
+asymptotic expansion of the metric functions f (r) and
+l(r) are respectively
+f (r) = 1 − crf + 2crf22 + O(r−3),</p>
+      <p>c
+l(r) = 1 − r2l + O(r−3),
+with cf &gt; 0 and cl &gt; 0 being constants. The relations
+(57), (58), (60) and (61) imply that the asymptotic of
+A(ρ) is</p>
+      <p>A(ρ) = 1 − cρf + 2cρf22 + O(ρ−3).</p>
+      <p>This means that the metric function is asymptotically
+flat with a positive ADM mass. Therefore according to
+Theorem B and D, this spacetime will always allow
+timelike COs in its equatorial plane and the timelike COs at
+large ρ are stable. This example shows the power of the
+results in this work.</p>
+      <p>Similar to our previous work [20], we can also use the
+theorems obtained in this paper to study the existences
+and stabilities of the COs of some general SAS metrics.
+A total of four metrics from Ref. [31] are examined in
+Table I. Their A(ρ) components set at the equatorial plane
+are given in the first column, and their allowance of the
+timelike and null COs are listed in the second and third
+columns respectively. In column four we list for the
+metrics allowing COs whether they are asymptotically flat
+and if yes the sign of the ADM mass. It is clear that an
+asymptotic flat spacetime with a positive ADM mass
+always permits the existence of timelike COs, as we stated
+in Theorem B, section IV.</p>
+      <p>
+        For the extension of the current work, two possible
+directions are of special interests. The first is to extend
+the analysis for SAS spacetimes to stationary and
+ax(57)
+(58)
+(59)
+(60)
+(61)
+(62)
+isymmetric spacetimes because many axisymmetric and
+physically important spacetimes are stationary but not
+static. An analysis for the COs in stationary spacetimes
+therefore will be more useful in the perspective of
+applications. In the stationary case, since B(ρ) in (
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ) will
+be nonzero, the equations analogous to Eq. (
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        ) will
+contains two arbitrary functions A(ρ) and B(ρ) rather
+than one A(ρ) and a cross-terms proportional to EL will
+appear. Even though these make the analysis more
+complicated, some preliminary work shows that the
+(non)existence condition might be still solvable.
+      </p>
+      <p>Another direction of extension is to consider the
+stability issues of non-radical perturbations in general
+stationary and axisymmetric spacetimes due to its relevance to
+the dynamics of a finitely thick disk in the accretion phase
+of the (binary) rotating systems. The zenithal
+stability issue in particular axisymmetric spacetimes has been
+studied recently in Ref. [29] and an analysis using
+Lyapunov exponent method for general metrics might reveal
+more general stability conditions on metric functions.</p>
+    </sec>
+    <sec id="sec-8">
+      <title>Acknowledgments</title>
+      <p>The work of J. Jia and X. Pang are supported by the
+Chinese SRFDP 20130141120079, NNSF China 11504276
+&amp; 11547310 and MOST China 2014GB109004. The work
+of N. Yang is supported by the NNSF China 31401649 &amp;
+31571797.</p>
+    </sec>
+    <sec id="sec-9">
+      <title>Appendix A: Sufficient conditions for (in-)stabilities of timelike COs</title>
+      <sec id="sec-9-1">
+        <title>When Eq. (38) is replaced by</title>
+        <p>h(ρ) = χρ2A′3 (χ 6= 0),
+an implicit solution can be obtained
+√1 + 8χA 32 + √1+28χ
+2ρ2</p>
+        <p>− c2A√1+8χ + c1 = 0.</p>
+        <p>In particular, when χ = 1 or χ = −2/25, two explicit
+solution can be found
+χ = 1,
+(A1)
+(A2)
+(A3)
+(A4)
+x =
+5q81c21ρ4 − 40c32ρ6 − 45c1ρ2
+1/3
+.</p>
+        <p>The former will only have stable COs (if any) and the
+later will only have unstable COs (if any) and none of
+them will allow MSCOs.</p>
+        <p>This solution will only have unstable COs (if any) and
+no MSCOs.</p>
+        <p>When Eq. (38) is replaced by</p>
+        <p>h(ρ) = χρAA′2 (χ 6= 0),
+an implicit solution can be obtained
+c1 − c2A√χ2+6χ+1 +
+pχ2 + 6χ + 1A χ2 + 23 + √χ2+26χ+1
+2ρ2
+(A9)
+In particular, when χ = −3 + 5√3/3, an explicit solution
+(A5)
+(A7)
+(A8)
+= 0.</p>
+        <p>can be found
+Although the sign of A′′ and consequently that of the
+right hand side cannot be fixed before solving A(ρ), this
+transformation do allow the equation to be solvable and
+then a determination of A′′’s sign. The implicit solution
+to this equation is given by
+(χ + 2)c2A− χ1+−χ1 + (1 + χ)A− χ−1 ρ χ−1 + c1 = 0. (A12)
+χ+2 χ+2
+In particular, when χ = −3, two explicit solution can be
+found</p>
+        <p>(A13)
+, (A14)
+where in both cases c1c2 &gt; 0. For the former solution,
+since A′′ &lt; 0 it will only have unstable COs (if any)
+and no MSCOs. For the later one, A′′ &gt; 0 and it will
+only have stable COs (if any) and no MSCOs. When
+χ = −1/2, or χ = −5/2, Eq. (A12) can also generate
+some explicit solutions of A(ρ). However, since sign of
+their second derivatives cannot be determined, and we
+will not list them here.</p>
+      </sec>
+    </sec>
+    <sec id="sec-10">
+      <title>Appendix B: Proof of Theorem F</title>
+      <p>To prove the theorem, we define a µ (ρ) first
+such that</p>
+      <p>µ (ρ) = A(ρ)/ρ
+µ ′(ρ) = [A′(ρ)ρ − A(ρ)] /ρ2.
+(B1)
+(B2)
+Then using Eq. (43) it is seen that the existence of a null
+CO is equivalent to the existence of a point such that
+µ ′(ρ) = 0.</p>
+      <p>Now since A(ρ = a) = 0, we have</p>
+      <p>µ ′(ρ = a) = A′(ρ = a)/a2.</p>
+      <p>Since A(ρ) &gt; 0 for at least the neighborhood (a, b) of ρ,
+we must have A′(ρ = a) ≥ 0. Therefore
+µ ′(ρ = a) ≥ 0.
+(B4)
+If the equal sign is true, then the CO exists. If it is not
+true, we further show by contradiction that µ ′(ρ) cannot
+be positive definite for ρ ∈ [a, ∞) and therefore due to
+the continuity of µ ′(ρ) there must exist a point ρ∗
+satisfying µ ′(ρ∗) = 0, which is again a CO. Suppose µ ′(ρ) &gt; 0
+for all ρ ∈ [a, ∞), then clearly A(ρ) = µ (ρ)ρ will diverge
+faster than ρ1, which contradicts the assumption.
+(B3)</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Del Zanna</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Amato</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Bucciantini</surname>
+          </string-name>
+          , Astron. Astrophys.
+          <volume>421</volume>
+          ,
+          <issue>1063</issue>
+          (
+          <year>2004</year>
+          ), doi:10.1051/
+          <fpage>0004</fpage>
+          - 6361:20035936 [astro-ph/0404355].
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>L. W.</given-names>
+            et al.,
+            <surname>Astrophys</surname>
+          </string-name>
+          . J.
+          <volume>579</volume>
+          ,
+          <issue>671</issue>
+          (
+          <year>2002</year>
+          ), doi:10.1086/342824 [astro-ph/0205337].
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Radu</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 65</source>
+          ,
+          <issue>044005</issue>
+          (
+          <year>2002</year>
+          ), doi:10.1103/PhysRevD.65.044005 [gr-qc/0109015].
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [4]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Hartmann</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Kleihaus</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Kunz</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 65</source>
+          ,
+          <issue>024027</issue>
+          (
+          <year>2001</year>
+          ), doi:10.1103/PhysRevD.65.024027 [hep-th/0108129].
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [5]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Kleihaus</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Kunz</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. Lett</source>
+          .
+          <volume>78</volume>
+          ,
+          <issue>2527</issue>
+          (
+          <year>1997</year>
+          ), doi:10.1103/PhysRevLett.78.2527 [hepth/9612101].
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [6]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Kleihaus</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Kunz</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 57</source>
+          ,
+          <issue>6138</issue>
+          (
+          <year>1998</year>
+          ), doi:10.1103/PhysRevD.57.6138 [gr-qc/9712086].
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [7]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Kleihaus</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Kunz</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 57</source>
+          ,
+          <issue>834</issue>
+          (
+          <year>1998</year>
+          ), doi:10.1103/PhysRevD.57.834 [gr-qc/9707045].
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [8]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Capozziello</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>M. De Laurentis</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Stabile</surname>
+          </string-name>
+          , Class. Quant. Grav.
+          <volume>27</volume>
+          ,
+          <issue>165008</issue>
+          (
+          <year>2010</year>
+          ), doi:10.1088/
+          <fpage>0264</fpage>
+          - 9381/27/16/165008 [arXiv:
+          <fpage>0912</fpage>
+          .5286 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [9]
+          <string-name>
+            <given-names>P. K.</given-names>
+            <surname>Kuhfittig</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 67</source>
+          ,
+          <issue>064015</issue>
+          (
+          <year>2003</year>
+          ), doi:10.1103/PhysRevD.67.064015 [gr-qc/0401028].
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          [10]
+          <string-name>
+            <given-names>D. R.</given-names>
+            <surname>Reddy</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Naidu</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>V. U.</given-names>
+            <surname>Rao</surname>
+          </string-name>
+          , Astrophys.
+          <source>Space Sci</source>
+          .
+          <volume>306</volume>
+          ,
+          <issue>185</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          [11]
+          <string-name>
+            <given-names>D. R.</given-names>
+            <surname>Reddy</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>M. V. S.</given-names>
+            <surname>Rao</surname>
+          </string-name>
+          , Astrophys.
+          <source>Space Sci</source>
+          .
+          <volume>302</volume>
+          ,
+          <issue>157</issue>
+          (
+          <year>2006</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          [12]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Vlachynsky</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Tresguerres</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Y. N.</given-names>
+            <surname>Obukhov</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>F.</given-names>
+            <surname>Hehl</surname>
+          </string-name>
+          , Class. Quant. Grav.
+          <volume>13</volume>
+          ,
+          <issue>3253</issue>
+          (
+          <year>1996</year>
+          ), doi:10.1088/
+          <fpage>0264</fpage>
+          -9381/13/12/016 [gr-qc/9604035].
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          [13]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Abbott</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Abbott</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Abbott</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Abernathy</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>F.</given-names>
+            <surname>Acernese</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Ackley</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Adams</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Adams</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Addesso</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Adhikari</surname>
+          </string-name>
+          , et al.,
+          <source>Phys. Rev. Lett</source>
+          .
+          <volume>116</volume>
+          ,
+          <issue>061102</issue>
+          (
+          <year>2016</year>
+          ), doi:10.1103/PhysRevLett.116.061102 [arXiv:
+          <fpage>1602</fpage>
+          .03837 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Abbott</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Abbott</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Abbott</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Abernathy</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>F.</given-names>
+            <surname>Acernese</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Ackley</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Adams</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Adams</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Addesso</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Adhikari</surname>
+          </string-name>
+          , et al.,
+          <source>Phys. Rev. Lett</source>
+          .
+          <volume>116</volume>
+          ,
+          <issue>241103</issue>
+          (
+          <year>2016</year>
+          ), doi:10.1103/PhysRevLett.116.241103 [arXiv:
+          <fpage>1606</fpage>
+          .04855 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Hackmann</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Lämmerzahl</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 85</source>
+          ,
+          <issue>044049</issue>
+          (
+          <year>2012</year>
+          ), doi:10.1103/PhysRevD.85.044049 [arXiv:
+          <fpage>1107</fpage>
+          .5250 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          [16]
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Thomas</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Saglia</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Bender</surname>
+          </string-name>
+          , D. Thomas,
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Gebhardt</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Magorrian</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Richstone</surname>
+          </string-name>
+          , Mon.
+          <source>Not. Roy. Aston. Soc</source>
+          .
+          <volume>353</volume>
+          ,
+          <issue>391</issue>
+          (
+          <year>2004</year>
+          ), doi:10.1103/PhysRevD.94.064042 [arXiv:
+          <fpage>1605</fpage>
+          .05816 [grqc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Shibata</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Sasaki</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 58</source>
+          ,
+          <issue>104011</issue>
+          (
+          <year>1998</year>
+          ), doi:10.1103/PhysRevD.58.104011 [grqc/9807046].
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <surname>J.-F. Donati</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Paletou</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Bouvier</surname>
+            , and
+            <given-names>J.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Ferreira</surname>
+          </string-name>
+          ,
+          <source>Nature</source>
+          <volume>438</volume>
+          ,
+          <issue>466</issue>
+          (
+          <year>2005</year>
+          ), doi:10.1038/nature04253 [astroph/0511695].
+        </mixed-citation>
+      </ref>
+      <ref id="ref19">
+        <mixed-citation>
+          [19]
+          <string-name>
+            <given-names>M. A.</given-names>
+            <surname>Abramowicz</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Jaroszyński</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Kato</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.- P.</given-names>
+            <surname>Lasota</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Różańska</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Sądowski</surname>
+          </string-name>
+          , Astron. Astrophys.
+          <volume>521</volume>
+          ,
+          <issue>A15</issue>
+          (
+          <year>2010</year>
+          ), doi:10.1051/
+          <fpage>0004</fpage>
+          - 6361/201014467 [arXiv:
+          <fpage>1003</fpage>
+          .3887 [astro-ph.
+          <source>HE]].</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref20">
+        <mixed-citation>
+          [20]
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Jia</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Liu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>X.</given-names>
+            <surname>Liu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Z.</given-names>
+            <surname>Mo</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>X.</given-names>
+            <surname>Pang</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Wang</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Yang</surname>
+          </string-name>
+          , arXiv:
+          <fpage>1702</fpage>
+          .05889 (
+          <year>2017</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref21">
+        <mixed-citation>
+          [21]
+          <string-name>
+            <given-names>P. S.</given-names>
+            <surname>Letelier</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 68</source>
+          ,
+          <issue>104002</issue>
+          (
+          <year>2003</year>
+          ), doi:10.1103/PhysRevD.68.104002 [gr-qc/0309033].
+        </mixed-citation>
+      </ref>
+      <ref id="ref22">
+        <mixed-citation>
+          [22]
+          <string-name>
+            <given-names>F.</given-names>
+            <surname>López-Suspes</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>G. A.</given-names>
+            <surname>González</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Braz. J.</given-names>
+            <surname>Phys</surname>
+          </string-name>
+          .
+          <volume>44</volume>
+          ,
+          <issue>385</issue>
+          (
+          <year>2014</year>
+          ), doi:10.1007/s13538-014-0216-8 [arXiv:
+          <fpage>1104</fpage>
+          .0346 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref23">
+        <mixed-citation>
+          [23]
+          <string-name>
+            <given-names>S. R.</given-names>
+            <surname>Dolan</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>J. O.</given-names>
+            <surname>Shipley</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 94</source>
+          ,
+          <issue>044038</issue>
+          (
+          <year>2016</year>
+          ), doi:10.1103/PhysRevD.94.044038 [arXiv:
+          <fpage>1104</fpage>
+          .0346 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref24">
+        <mixed-citation>
+          [24]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Beheshti</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Gasperín</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 94</source>
+          ,
+          <issue>024015</issue>
+          (
+          <year>2016</year>
+          ), doi:10.1103/PhysRevD.94.024015 [arXiv:
+          <fpage>1512</fpage>
+          .08707 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref25">
+        <mixed-citation>
+          [25]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Beig</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Schmidt</surname>
+          </string-name>
+          , Lect.
+          <source>Notes Phys</source>
+          .
+          <volume>540</volume>
+          ,
+          <issue>325</issue>
+          (
+          <year>2000</year>
+          ),
+          <source>doi:10.1007/3-540-46580-4 p342, Sec. 3.</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref26">
+        <mixed-citation>
+          [26]
+          <string-name>
+            <given-names>O.</given-names>
+            <surname>Semerák</surname>
+          </string-name>
+          , Gravitation: following the Prague inspiration p.
+          <volume>111</volume>
+          (
+          <year>2002</year>
+          ), doi:10.1142/9789812776938_0004 grqc/0204025.
+        </mixed-citation>
+      </ref>
+      <ref id="ref27">
+        <mixed-citation>
+          [27]
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Mars</surname>
+          </string-name>
+          , Fundam.
+          <source>Theor. Phys</source>
+          .
+          <volume>177</volume>
+          ,
+          <issue>191</issue>
+          (
+          <year>2014</year>
+          ), doi:10.1007/978-3-
+          <fpage>319</fpage>
+          -06349-
+          <issue>2</issue>
+          _
+          <fpage>8</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref28">
+        <mixed-citation>
+          [28]
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Pradhan</surname>
+          </string-name>
+          , Pramana
+          <volume>87</volume>
+          ,
+          <issue>1</issue>
+          (
+          <year>2016</year>
+          ), doi:10.1007/s12043- 016-1214-x [arXiv:
+          <fpage>1205</fpage>
+          .5656 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref29">
+        <mixed-citation>
+          [29]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Ono</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Suzuki</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>H.</given-names>
+            <surname>Asada</surname>
+          </string-name>
+          ,
+          <source>Phys. Rev. D 94</source>
+          ,
+          <issue>064042</issue>
+          (
+          <year>2016</year>
+          ), doi:10.1103/PhysRevD.94.064042 [arXiv:
+          <fpage>1605</fpage>
+          .05816 [gr-qc]].
+        </mixed-citation>
+      </ref>
+      <ref id="ref30">
+        <mixed-citation>
+          [30]
+          <string-name>
+            <given-names>E. M.</given-names>
+            <surname>Izhikevich</surname>
+          </string-name>
+          , Dynamical systems in neuroscience (MIT press,
+          <year>2007</year>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref31">
+        <mixed-citation>
+          [31]
+          <string-name>
+            <given-names>H.</given-names>
+            <surname>Stephani</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Kramer</surname>
+          </string-name>
+          , M. MacCallum, C. Hoenselaers, and
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Herlt</surname>
+          </string-name>
+          ,
+          <article-title>Exact solutions of Einstein's field equations</article-title>
+          (Cambridge University Press,
+          <year>2009</year>
+          ).
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

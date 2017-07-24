@@ -1,6 +1,3 @@
-import sys
-sys.path.append('.')
-
 import os
 import json
 import unittest
@@ -79,12 +76,14 @@ class TestLatexInjection(unittest.TestCase):
         file_src = revfile('tar.gz')
         metadata = json.load(open(file_ref))
 
-        with patch('reflink.process.inject.latexinjector.inject_urls') as injectfunc:
+        method = 'reflink.process.inject.latexinjector.inject_urls'
+        with patch(method) as injectfunc:
             injectfunc.return_value = 'new_pdf_name.pdf'
             self.assertEqual(
                 latexinjector.inject_urls(file_pdf, file_src, metadata),
                 'new_pdf_name.pdf'
             )
+
 
 if __name__ == '__main__':
     unittest.main()
