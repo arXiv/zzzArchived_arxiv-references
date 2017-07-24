@@ -24,21 +24,28 @@ os.environ.setdefault('REFLINK_EXTRACTED_SCHEMA', extracted_path)
 valid_data = [
     {
         "raw": "Peirson et al 2015 blah blah",
-        "reftype": "journalArticle"
+        "reftype": "citation"
     },
     {
         "raw": "Jones 2012",
-        "reftype": "journalArticle"
+        "reftype": "citation"
     },
     {
-        "raw": "Majumbdar 1968 etc",
-        "reftype": "journalArticle"
+        "raw": "Majumdar 1968 etc",
+        "reftype": "citation"
     },
     {
         "raw": "The brown fox, 1921",
-        "reftype": "journalArticle"
-    },
+        "reftype": "citation"
+    }
 ]
+
+valid_href_data = [{
+    "raw": "www.asdf.com",
+    "href": "http://www.asdf.com",
+    "reftype": "href"
+}]
+
 document_id = 'arxiv:1234.5678'
 version = '0.1'
 
@@ -97,6 +104,20 @@ class RetrieveReference(unittest.TestCase):
         for original, returned, final in zip(valid_data, data, retrieved):
             self.assertEqual(original['raw'], returned['raw'])
             self.assertEqual(original['raw'], final['raw'])
+
+    @mock_dynamodb2
+    def test_retrieve_specific_reftype(self):
+        """Test retrieving only references of a specific reftype."""
+        session = data_store.get_session()
+        data = valid_data + valid_href_data
+        extraction, data = session.create(document_id, data, version)
+
+        citations = session.retrieve_all(document_id, extraction, 'citation')
+        self.assertEqual(len(citations), len(valid_data))
+
+        hrefs = session.retrieve_all(document_id, extraction, 'href')
+        self.assertEqual(len(hrefs), len(valid_href_data))
+        self.assertEqual(valid_href_data[0]['href'], hrefs[0]['href'])
 
     @mock_dynamodb2
     def test_retrieve_latest_by_arxiv_id(self):

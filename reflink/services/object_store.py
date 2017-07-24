@@ -7,7 +7,7 @@ import os
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format,
-                    level=logging.DEBUG)
+                    level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 

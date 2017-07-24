@@ -10,7 +10,7 @@ from urllib import parse
 from itertools import groupby
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.DEBUG)
+logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
@@ -112,13 +112,15 @@ class ReferenceMetadataController(object):
                 reference[key] = value
         return reference, status.HTTP_200_OK
 
-    def list(self, document_id: str) -> types.ControllerResponseData:
+    def list(self, document_id: str,
+             reftype: str='__all__') -> types.ControllerResponseData:
         """
         Get latest reference metadata for an arXiv document.
 
         Parameters
         ----------
         document_id : str
+        reftype : str
 
         Returns
         -------
@@ -130,7 +132,7 @@ class ReferenceMetadataController(object):
         data = data_store.get_session()
 
         try:
-            references = data.retrieve_latest(document_id)
+            references = data.retrieve_latest(document_id, reftype=reftype)
         except IOError as e:
             logger.error("Error retrieving data (%s): %s " % (document_id, e))
             return {

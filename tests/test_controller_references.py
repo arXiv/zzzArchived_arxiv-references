@@ -7,6 +7,14 @@ from moto import mock_dynamodb2
 from reflink.services import data_store
 from reflink import status
 
+import logging
+for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
+             'botocore.credentials', 'botocore.client',
+             'botocore.retryhandler', 'botocore.parsers', 'botocore.waiter',
+             'botocore.args']:
+    logger = logging.getLogger(name)
+    logger.setLevel('ERROR')
+
 
 class TestReferenceMetadataControllerList(unittest.TestCase):
     """Test the references.ReferenceMetadataController.list method."""
@@ -26,9 +34,28 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
 
     @mock_dynamodb2
     @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
+    def test_list_calls_datastore_with_reftype(self, retrieve_mock):
+        """Test calls with reftype argument."""
+        retrieve_mock.return_value = []
+        controller = references.ReferenceMetadataController()
+
+        try:
+            response, status_code = controller.list('arxiv:1234.5678',
+                                                    'citation')
+        except TypeError:
+            self.fail('ReferenceMetadataController.list should return a tuple')
+        self.assertEqual(retrieve_mock.call_count, 1)
+        try:
+            retrieve_mock.assert_called_with('arxiv:1234.5678',
+                                             reftype='citation')
+        except AssertionError as e:
+            self.fail('%s' % e)
+
+    @mock_dynamodb2
+    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
     def test_list_handles_IOError(self, retrieve_mock):
         """Test the case that the underlying datastore raises an IOError."""
-        def raise_ioerror(*args):
+        def raise_ioerror(*args, **kwargs):
             raise IOError('Whoops!')
         retrieve_mock.side_effect = raise_ioerror
 

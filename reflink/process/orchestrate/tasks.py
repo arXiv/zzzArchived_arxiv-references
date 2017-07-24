@@ -16,18 +16,22 @@ from reflink.process.store import store_metadata, store_pdf
 from celery import shared_task
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.DEBUG)
+logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
 @shared_task
 def process_document(document_id: str) -> None:
     """
-    Orchestrate an asynchronous processing chain for a single arXiv document.
+    Processing chain for a single arXiv document.
 
     Parameters
     ----------
     document_id : bytes
+
+    Raises
+    ------
+    RuntimeError
     """
     logger.info('Started processing document %s' % document_id)
     try:
