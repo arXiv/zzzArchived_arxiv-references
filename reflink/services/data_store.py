@@ -17,7 +17,7 @@ from reflink.types import List
 ReferenceData = List[dict]
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.DEBUG)
+logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
@@ -382,8 +382,17 @@ class ReferenceStoreSession(object):
                 for order, reference in enumerate(references):
                     reference = self._clean(reference)
                     self.validate_extracted(reference)
+
+                    # Generate a unique identifier based on the document, raw
+                    #  reference line, and arxiv-reflink software version.
                     identifier = self.hash(document_id, reference['raw'],
                                            version)
+
+                    # References are considered citations by default.
+                    reftype = reference.get('reftype', None)
+                    if not reftype:
+                        reftype = 'citation'
+
                     reference.update({
                         'document': document_id,
                         'document_extraction': document_extraction,
@@ -392,9 +401,9 @@ class ReferenceStoreSession(object):
                         'identifier': identifier,
                         'order': order
                     })
+
                     self.validate_stored(reference)
                     stored_references.append(reference)
-                    # self.table.put_item(Item=reference)
                     batch.put_item(Item=reference)
         except ClientError as e:
             raise IOError('Failed to create: %s; %s' % (e, reference)) from e
@@ -429,7 +438,7 @@ class ReferenceStoreSession(object):
             return None
         return response['Items'][0]
 
-    def retrieve_latest(self, document_id: str) -> dict:
+    def retrieve_latest(self, document_id: str, reftype: str='__all__') -> dict:
         """
         Retrieve the most recent extracted references for a document.
 
@@ -437,6 +446,8 @@ class ReferenceStoreSession(object):
         ----------
         document_id : str
             Document identifier, e.g. ``arxiv:1234.5678``.
+        reftype : str
+            If provided, returns only references with a specific ``reftype``.
 
         Returns
         -------
@@ -445,9 +456,11 @@ class ReferenceStoreSession(object):
         latest = self.extractions.latest(document_id)
         if latest is None:
             return None    # No extractions for this document.
-        return self.retrieve_all(document_id, latest.get('extraction'))
+        return self.retrieve_all(document_id, latest.get('extraction'),
+                                 reftype=reftype)
 
-    def retrieve_all(self, document_id: str, extraction: str = None) -> dict:
+    def retrieve_all(self, document_id: str, extraction: str = None,
+                     reftype: str='__all__') -> dict:
         """
         Retrieve reference metadata for an arXiv document.
 
@@ -457,6 +470,8 @@ class ReferenceStoreSession(object):
             Document identifier, e.g. ``arxiv:1234.5678``.
         extraction : str
             Extraction version.
+        reftype : str
+            If provided, returns only references with a specific ``reftype``.
 
         Returns
         -------
@@ -482,8 +497,10 @@ class ReferenceStoreSession(object):
         if 'Items' not in response or len(response['Items']) == 0:
             return None    # No such record.
 
-        return response['Items']
-
+        references = response['Items']
+        if reftype != '__all__':
+            return [ref for ref in references if ref['reftype'] == reftype]
+        return references
 
 def get_session() -> ReferenceStoreSession:
     """

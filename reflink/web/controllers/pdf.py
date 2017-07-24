@@ -7,7 +7,7 @@ from reflink.services import object_store
 from reflink import status
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.DEBUG)
+logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 

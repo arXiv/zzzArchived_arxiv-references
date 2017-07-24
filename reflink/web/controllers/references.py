@@ -10,7 +10,7 @@ from urllib import parse
 from itertools import groupby
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.DEBUG)
+logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
