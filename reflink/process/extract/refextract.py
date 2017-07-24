@@ -29,7 +29,7 @@ FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
 
 
 def _transform(refextract_metadatum):
-    metadatum = {}
+    metadatum = {'reftype': 'citation'}
     for re_key, key in FIELD_MAPPINGS:
         value = refextract_metadatum.get(re_key)
         if value:
