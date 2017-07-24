@@ -30,3 +30,6 @@ external organizations which we wish to use. In no particular order:
 
     * AI2 ScienceParse -- 
         docker run -p 8080:8080 --rm allenai-docker-public-docker.bintray.io/s2/scienceparse:1.2.8-SNAPSHOT
+
+    * GROBID --
+        docker run -t --rm -p 8080:8080 lfoppiano/grobid:0.4.1
