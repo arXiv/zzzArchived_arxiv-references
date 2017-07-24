@@ -1,7 +1,7 @@
 """Provides REST API routes."""
 
 from flask.json import jsonify
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template, redirect, request
 
 from reflink.web.controllers import references, pdf
 from reflink.types import ViewResponseData
@@ -85,7 +85,8 @@ def get_reference_metadata_list(document_id: str) -> ViewResponseData:
         HTTP status code. See :mod:`reflink.status` for details.
     """
     controller = references.ReferenceMetadataController()
-    response, status_code = controller.list(document_id)
+    reftype = request.args.get('reftype', '__all__')
+    response, status_code = controller.list(document_id, reftype=reftype)
     return jsonify(response), status_code
 
 
