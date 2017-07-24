@@ -22,19 +22,16 @@ def _transform(metadatum: pdfx.backends.Reference) -> dict:
     -------
     dict
     """
-    href = metadatum.ref
-    if not href.startswith('http'):
-        href = 'http://%s' % href
-
-    return {
-        'reftype': 'href',
-        'href': href,
-        'raw': metadatum.ref,
-    }
+    raw = metadatum['href']
+    if not raw.startswith('http'):
+        metadatum['href'] = 'http://%s' % raw
+    metadatum.update({'reftype': 'href', 'raw': raw})
+    return metadatum
 
 
 def extract_references(pdf_path):
     """Extract HREFs from an arXiv PDF."""
 
     pdf = pdfx.PDFx(pdf_path)
-    return list(map(_transform, list(pdf.get_references())))
+    raw = set([ref.ref for ref in pdf.get_references()])
+    return list(map(_transform, [{'href': ref} for ref in raw]))
