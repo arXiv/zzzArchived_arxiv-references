@@ -1,5 +1,6 @@
+import copy
 import statistics
-from itertools import islice, chain
+from itertools import islice, chain, zip_longest
 from typing import List
 
 from reflink.process.textutil import clean_text
@@ -68,6 +69,11 @@ def digest(metadata):
 
 
 def flatten(arr):
+    """
+    Flatten a structure into a list of the values in that structure
+    """
+    if isinstance(arr, dict):
+        return list(chain(*[flatten(i) for i in arr.values()]))
     if isinstance(arr, list):
         return list(chain(*[flatten(i) for i in arr]))
     return [arr]
@@ -75,6 +81,32 @@ def flatten(arr):
 
 def align_records(records):
     """
+    Match references from a number of records so that similar 
+
+    Parameters
+    ----------
+    records : dict of metadata
+        A set of records where each reference list is labelled by the extractor
+        name i.e. {"cermine": [references], "scienceparse": [references]}
+
+    Returns
+    -------
+    aligned_references : list of list of tuples (dict, string)
+        Structure of returned data:
+            [
+                [
+                    ({reference 1}, extractor 1), 
+                    ({reference 1}, extractor 2),
+                ],
+                [
+                    ({reference 2}, extractor 3),
+                ],
+                [
+                    ({reference 3}, extractor 1),
+                    ({reference 3}, extractor 2),
+                    ({reference 3}, extractor 3),
+                ]
+            ]
 
     """
     def _cutoff(data):
@@ -86,7 +118,7 @@ def align_records(records):
     def _jacard_matrix(r0, r1, num):
         # calculate all-all jacard similarity
         # matrix for two sets of records
-        out = [[0]*N for i in range(N)]
+        out = [[0]*num for i in range(num)]
         for i in range(min(num, len(r0))):
             for j in range(min(num, len(r1))):
                 out[i][j] = jacard(
@@ -95,27 +127,56 @@ def align_records(records):
                 )
         return out
 
+    def _jacard_max(r0, rlist):
+        # calculate the maximum jacard score between r0 and the list rlist
+        return max([jacard(digest(r0), digest(r1)) for r1 in rlist])
+
     R = len(records)
     N = max(map(len, records))
 
-    jac = [[0]*R for j in range(R)]
-    ind = [[0]*R for j in range(R)]
+    # get the full jacard matrix to get the cutoff values first. unfortunately,
+    # its difficult to make use of these values later, but they are vital to
+    # calculating the cutoff 
+    jac = {}
+    for i, rec0 in islice(enumerate(records), 0, R-1):
+        for  j, rec1 in islice(enumerate(records), i+1, R):
+            jac[i,j] = _jacard_matrix(rec0, rec1, N)
 
-    # get the full jacard matrix to get the cutoff values first
-    for i, rec0 in islice(enumerate(records), 0, R):
-        for  j, rec1 in islice(enumerate(records), 0, R):
-            jac[i][j] = _jacard_matrix(rec0, rec1, N)
+    cutoff = _cutoff(flatten(copy.deepcopy(jac)))
+    print("cutoff: {}".format(cutoff))
 
-    cutoff = _cutoff(flatten(jac))
+    # pairwise integrate the lists together, keeping the output list as the
+    # master record as we go. 0+1 -> 01, 01+2 -> 012 ...
+    keys = list(records.keys())
+    output = [[(rec, keys[0])] for rec in records[keys[0]]]
+    for ikey, key in islice(enumerate(keys), 1, R):
+        used = []
 
-    # use the jacard matrix to get the index mappings
-    for i, rec0 in islice(enumerate(records), 0, R):
-        for  j, rec1 in islice(enumerate(records), 0, R):
-            ind[i][j] = [argmax(v) for v in jac[i][j] if max(v) > cutoff]
+        record = records[key]
+        for iref, ref in enumerate(record):
+            # Create a list of possible indices in the output onto which we
+            # will map the current reference. only keep those above the cutoff.
+            # keep track of the indices to only use each once
+            # FIXME -- maybe we don't want to do greedy descent (instead global
+            # optimization of scores for all references at once, but that is
+            # combinatorial and needs to have careful algorithms)
+            scores = []
+            for iout, out in enumerate(output):
+                score = _jacard_max(ref, [l[0] for l in out])
+                if score <= cutoff:
+                    continue
+                scores.append((score, iout))
 
-    output = []
+            scores = [
+                (score, index) for score, index in reversed(sorted(scores))
+                if index not in used
+            ]
 
-    return jac, ind
+            if scores:
+                score, index = scores[0]
+                output[index] = output[index] + [(ref, key)]
+
+    return output  
 
 
 def consolidate_records(records: List[List[dict]]) -> dict:
@@ -129,8 +190,9 @@ def consolidate_records(records: List[List[dict]]) -> dict:
 
     Parameters
     ----------
-    records : list of list of reference metadata
-        The reference records from multiple extraction servies / lookup services
+    records : dictionary of list of reference metadata
+        The reference records from multiple extraction servies / lookup services.
+        Each is labelled as {'extractor': [references]}
 
     Returns
     -------
