@@ -172,9 +172,12 @@ def align_records(records):
                 if index not in used
             ]
 
+            entry = [(ref, key)]
             if scores:
                 score, index = scores[0]
-                output[index] = output[index] + [(ref, key)]
+                output[index] = output[index] + entry
+            else:
+                output.append(entry)
 
     return output  
 
