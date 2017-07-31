@@ -24,12 +24,14 @@ class TestArbitrate(unittest.TestCase):
             ('alt', {'title': 0.2, 'foo': 0.9})
         ]
 
-        final = arbitrate.arbitrate(metadata, valid, priors)
+        final, score = arbitrate.arbitrate(metadata, valid, priors)
         self.assertIsInstance(final, dict)
         self.assertEqual(final['title'], 'yep')
         self.assertEqual(final['doi'], '10.123/123.4566')
         self.assertEqual(final['volume'], '12')
         self.assertEqual(final['foo'], 'bar')
+        self.assertIsInstance(score, float)
+        self.assertLess(score - 0.625, 0.0001)
 
     def test_drop_value_if_prior_missing(self):
         """Test that a field-value is ignored if extractor prior is missing."""
@@ -50,7 +52,7 @@ class TestArbitrate(unittest.TestCase):
             ('alt', {'title': 0.2, 'foo': 0.9})
         ]
 
-        final = arbitrate.arbitrate(metadata, valid, priors)
+        final, score = arbitrate.arbitrate(metadata, valid, priors)
         self.assertEqual(final['doi'], 'nonsense')
 
     def test_misaligned_input_raises_valueerror(self):
@@ -102,7 +104,7 @@ class TestArbitrate(unittest.TestCase):
 
         final = arbitrate.arbitrate_all(metadata, valid, priors)
         self.assertIsInstance(final, list)
-        for obj in final:
+        for obj, score in final:
             self.assertIsInstance(obj, dict)
             self.assertEqual(obj['title'], 'yep')
             self.assertEqual(obj['doi'], '10.123/123.4566')
