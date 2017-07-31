@@ -29,9 +29,7 @@ AUTOTEX_DOCKER_IMAGE = os.environ.get('REFLINK_AUTOTEX_DOCKER_IMAGE',
                                       'arxiv/autotex:v0.906.0-1')
 
 
-def argmax(array):
-    index, value = max(enumerate(array), key=lambda x: x[1])
-    return index
+
 
 
 def extract_tar(tarfile, destination):
@@ -89,7 +87,7 @@ def match_by_cost(l1, l2, cost=jacard):
     """
     inds = []
     for i in l1:
-        ind = argmax([cost(i, j) for j in l2])
+        ind = util.argmax([cost(i, j) for j in l2])
         inds.append(ind)
 
     return inds
