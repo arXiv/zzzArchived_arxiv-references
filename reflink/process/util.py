@@ -244,3 +244,8 @@ def ps2pdf(ps):
 
 def dvi2ps(dvi):
     subprocess.check_call(['dvi2ps', dvi])
+
+
+def argmax(array):
+    index, value = max(enumerate(array), key=lambda x: x[1])
+    return index
