@@ -1,9 +1,10 @@
 """Provides a controller for reference metadata views."""
 
 import logging
+from flask import current_app
 
 from reflink import types
-from reflink.services import data_store
+from reflink.services import DataStore
 from reflink import status
 
 from urllib import parse
@@ -16,6 +17,12 @@ logger = logging.getLogger(__name__)
 
 class ReferenceMetadataController(object):
     """Controller for reference metadata extracted from arXiv documents."""
+
+    def __init__(self):
+        try:
+            self.data_store = DataStore(current_app)
+        except RuntimeError:   # No application context.
+            self.data_store = DataStore()
 
     def _get_identifiers(self, reference_data):
         identifiers = {
@@ -44,8 +51,7 @@ class ReferenceMetadataController(object):
         int
         """
         reference_data, response_status = self.get(document_id, reference_id)
-        print(reference_id)
-        print(reference_data)
+
         if response_status != status.HTTP_200_OK:
             return {
                 'explanation': "No data exists for this reference"
@@ -85,10 +91,16 @@ class ReferenceMetadataController(object):
         int
             HTTP status code.
         """
-        data = data_store.get_session()
 
         try:
-            reference = data.retrieve(document_id, reference_id)
+            session = self.data_store.session
+        except IOError as e:
+            return {
+                'explanation': 'Could not access the data store.'
+            }, status.HTTP_500_INTERNAL_SERVER_ERROR
+
+        try:
+            reference = session.retrieve(document_id, reference_id)
         except IOError as e:
             logger.error("Error retrieving reference (%s, %s): %s "
                          % (document_id, reference_id, e))
@@ -129,10 +141,15 @@ class ReferenceMetadataController(object):
         int
             HTTP status code.
         """
-        data = data_store.get_session()
+        try:
+            session = self.data_store.session
+        except IOError as e:
+            return {
+                'explanation': 'Could not access the data store.'
+            }, status.HTTP_500_INTERNAL_SERVER_ERROR
 
         try:
-            references = data.retrieve_latest(document_id, reftype=reftype)
+            references = session.retrieve_latest(document_id, reftype=reftype)
         except IOError as e:
             logger.error("Error retrieving data (%s): %s " % (document_id, e))
             return {

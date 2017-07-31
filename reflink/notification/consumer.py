@@ -6,7 +6,7 @@ https://github.com/awslabs/amazon-kinesis-client-python/blob/master/samples/samp
 """
 
 import time
-import logging
+from reflink import logging
 import json
 from reflink.types import IntOrNone, BytesOrNone
 from reflink.factory import create_process_app
@@ -17,9 +17,7 @@ from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 
-# TODO: make this configurable.
-log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.ERROR)
+
 logger = logging.getLogger(__name__)
 
 

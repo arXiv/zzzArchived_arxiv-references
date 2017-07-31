@@ -7,7 +7,11 @@ extracts links from PDFs.
 
 import pdfx
 import logging
-logging.getLogger().setLevel(logging.ERROR)
+
+log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=log_format)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def _transform(metadatum: pdfx.backends.Reference) -> dict:
@@ -29,9 +33,22 @@ def _transform(metadatum: pdfx.backends.Reference) -> dict:
     return metadatum
 
 
-def extract_references(pdf_path):
-    """Extract HREFs from an arXiv PDF."""
+def extract_references(pdf_path: str) -> list:
+    """
+    Extract HREFs from an arXiv PDF.
 
-    pdf = pdfx.PDFx(pdf_path)
-    raw = set([ref.ref for ref in pdf.get_references()])
-    return list(map(_transform, [{'href': ref} for ref in raw]))
+    Parameters
+    ----------
+    pdf_path : str
+
+    Returns
+    -------
+    list
+    """
+    try:
+        pdf = pdfx.PDFx(pdf_path)
+        raw = set([ref.ref for ref in pdf.get_references()])
+        return list(map(_transform, [{'href': ref} for ref in raw]))
+    except Exception as e:
+        msg = 'Failed to extract hyperlinks from %s' % pdf_path
+        raise RuntimeError(msg) from e

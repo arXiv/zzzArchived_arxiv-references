@@ -16,7 +16,7 @@ from reflink.process.store import store_metadata, store_pdf
 from celery import shared_task
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.ERROR)
+logging.basicConfig(format=log_format, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
