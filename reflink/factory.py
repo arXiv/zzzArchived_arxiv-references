@@ -15,6 +15,7 @@ def create_web_app():
                 template_folder='web/templates')
     app.config.from_pyfile('config.py')
     app.register_blueprint(rest.blueprint)
+
     return app
 
 

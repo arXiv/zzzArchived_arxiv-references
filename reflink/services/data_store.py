@@ -17,7 +17,7 @@ from reflink.types import List
 ReferenceData = List[dict]
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format, level=logging.ERROR)
+logging.basicConfig(format=log_format, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

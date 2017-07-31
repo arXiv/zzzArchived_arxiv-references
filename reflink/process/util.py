@@ -11,7 +11,7 @@ from reflink.types import List
 import logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.ERROR
+    level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
