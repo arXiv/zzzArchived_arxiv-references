@@ -1,10 +1,9 @@
 """Generate authoritative reference metadata using validity probabilities."""
 
-from reflink.process.util import argmax, mean
-try:
-    from reflink import logging
-except ImportError:
-    import logging
+from reflink.process.util import argmax
+from statistics import mean
+
+from reflink import logging
 
 logger = logging.getLogger(__name__)
 

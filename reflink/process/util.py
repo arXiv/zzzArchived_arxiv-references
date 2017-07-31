@@ -249,9 +249,3 @@ def dvi2ps(dvi):
 def argmax(array):
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index
-
-
-def mean(array):
-    if len(array) == 0:
-        return 0.
-    return 1. * sum(array) / len(array)
