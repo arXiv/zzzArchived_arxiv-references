@@ -92,15 +92,11 @@ class TestArbitrate(unittest.TestCase):
             ('refextract', {'title': 0.6, 'doi': 0.1, 'volume': 0.8}),
             ('alt', {'title': 0.1, 'foo': 1.0})
         ]]
-        priors = [[
+        priors = [
             ('cermine', {'title': 0.8, 'doi': 0.9}),
             ('refextract', {'title': 0.9, 'doi': 0.2, 'volume': 0.2}),
             ('alt', {'title': 0.2, 'foo': 0.9})
-        ], [
-            ('cermine', {'title': 0.8, 'doi': 0.9}),
-            ('refextract', {'title': 0.9, 'doi': 0.2, 'volume': 0.2}),
-            ('alt', {'title': 0.2, 'foo': 0.9})
-        ]]
+        ]
 
         final = arbitrate.arbitrate_all(metadata, valid, priors)
         self.assertIsInstance(final, list)
