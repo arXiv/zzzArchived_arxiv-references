@@ -1,6 +1,6 @@
 import copy
 import statistics
-from itertools import islice, chain, zip_longest
+from itertools import islice, chain
 from typing import List
 
 from reflink.process.textutil import clean_text
@@ -11,7 +11,7 @@ def argmax(array):
     return index
 
 
-def jacard(str0, str1):
+def jacard(str0: str, str1: str) -> float:
     """
     Jacard similarity score between str0 and str1, containing the fraction of
     matching words that are the same between the two strings.
@@ -36,7 +36,7 @@ def jacard(str0, str1):
     return shared_words/all_words
 
 
-def digest(metadata):
+def digest(metadata: dict) -> str:
     """
     Create a single string that represents the record. It does so by
     recursively digesting the structure, taking any strings in a list or
@@ -79,7 +79,7 @@ def flatten(arr):
     return [arr]
 
 
-def align_records(records):
+def align_records(records: List[dict]) -> List[List[tuple]]:
     """
     Match references from a number of records so that similar 
 
@@ -95,16 +95,16 @@ def align_records(records):
         Structure of returned data:
             [
                 [
-                    ({reference 1}, extractor 1), 
-                    ({reference 1}, extractor 2),
+                    (extractor 1, {reference 1}), 
+                    (extractor 2, {reference 1}),
                 ],
                 [
-                    ({reference 2}, extractor 3),
+                    (extractor 3, {reference 2}),
                 ],
                 [
-                    ({reference 3}, extractor 1),
-                    ({reference 3}, extractor 2),
-                    ({reference 3}, extractor 3),
+                    (extractor 1, {reference 3}),
+                    (extractor 2, {reference 3}),
+                    (extractor 3, {reference 3}),
                 ]
             ]
 
@@ -143,12 +143,11 @@ def align_records(records):
             jac[i,j] = _jacard_matrix(rec0, rec1, N)
 
     cutoff = _cutoff(flatten(copy.deepcopy(jac)))
-    print("cutoff: {}".format(cutoff))
 
     # pairwise integrate the lists together, keeping the output list as the
     # master record as we go. 0+1 -> 01, 01+2 -> 012 ...
     keys = list(records.keys())
-    output = [[(rec, keys[0])] for rec in records[keys[0]]]
+    output = [[(keys[0], rec)] for rec in records[keys[0]]]
     for ikey, key in islice(enumerate(keys), 1, R):
         used = []
 
@@ -162,7 +161,7 @@ def align_records(records):
             # combinatorial and needs to have careful algorithms)
             scores = []
             for iout, out in enumerate(output):
-                score = _jacard_max(ref, [l[0] for l in out])
+                score = _jacard_max(ref, [l[1] for l in out])
                 if score <= cutoff:
                     continue
                 scores.append((score, iout))
@@ -172,7 +171,7 @@ def align_records(records):
                 if index not in used
             ]
 
-            entry = [(ref, key)]
+            entry = [(key, ref)]
             if scores:
                 score, index = scores[0]
                 output[index] = output[index] + entry
@@ -180,25 +179,3 @@ def align_records(records):
                 output.append(entry)
 
     return output  
-
-
-def consolidate_records(records: List[List[dict]]) -> dict:
-    """
-    Takes a list of reference metadata records (each formatted according to the
-    schema) and reconciles them with each other to form one primary record for
-    each item. First step is to match the lists against each other using
-    similarity measures. Then, for each individual record we combine the
-    possible fields and augment them with possible external information to form
-    a single record.
-
-    Parameters
-    ----------
-    records : dictionary of list of reference metadata
-        The reference records from multiple extraction servies / lookup services.
-        Each is labelled as {'extractor': [references]}
-
-    Returns
-    -------
-    united : list of dict (reference data)
-    """
-    matched_records = []
