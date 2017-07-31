@@ -1,7 +1,7 @@
 ---
 
 - name: Install base configuration on reflink hosts.
-  hosts: reflink-consumer:reflink-worker:reflink-web
+  hosts: reflink-consumer:reflink-worker
   vars_files:
     - vars/secrets.yml
   vars:
@@ -12,6 +12,8 @@
     - reflink_base_url: "{{ groups['reflink-web'][0] }}/references"
     - cermine_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/cermine"
     - autotex_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/autotex"
+    - grobid_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/grobid"
+    - scienceparse_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/scienceparse"
   roles:
     - reflink
 
@@ -38,16 +40,16 @@
     - worker
   become: true
 
-- name: Install web role
-  hosts: reflink-web
-  vars_files:
-    - vars/secrets.yml
-  vars:
-    - aws_region: us-east-1
-    - s3_bucket: "arxiv-reflink-proto"
-    - application_root: "/"
-    - cermine_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/cermine"
-    - autotex_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/autotex"
-  roles:
-    - web
-  become: true
+# - name: Install web role
+#   hosts: reflink-web
+#   vars_files:
+#     - vars/secrets.yml
+#   vars:
+#     - aws_region: us-east-1
+#     - s3_bucket: "arxiv-reflink-proto"
+#     - application_root: "/"
+#     - cermine_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/cermine"
+#     - autotex_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/autotex"
+#   roles:
+#     - web
+#   become: true

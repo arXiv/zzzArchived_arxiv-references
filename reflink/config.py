@@ -204,3 +204,21 @@ message to the logger explaining the attempts to locate the template. This can
 be useful to figure out why templates cannot be found or wrong templates appear
 to be loaded.
 """
+
+REFLINK_EXTRACTED_SCHEMA = os.environ.get('REFLINK_EXTRACTED_SCHEMA', None)
+"""Path to JSON schema for extracted references."""
+
+REFLINK_STORED_SCHEMA = os.environ.get('REFLINK_STORED_SCHEMA', None)
+"""Path to JSON schema for stored references."""
+
+REFLINK_AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY', 'nope')
+REFLINK_AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY', 'nope')
+REFLINK_AWS_REGION = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
+
+REFLINK_S3_BUCKET = os.environ.get('REFLINK_S3_BUCKET', 'arxiv-reflink')
+"""Bucket for link-injected PDFs."""
+
+REFLINK_S3_ENDPOINT = os.environ.get('REFLINK_S3_ENDPOINT', None)
+"""For testing only."""
+REFLINK_DYNAMODB_ENDPOINT = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
+"""For testing only."""

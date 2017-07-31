@@ -7,7 +7,7 @@ from reflink.status import HTTP_200_OK
 import logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.ERROR
+    level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
