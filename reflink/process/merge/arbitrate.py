@@ -1,10 +1,9 @@
 """Generate authoritative reference metadata using validity probabilities."""
 
 from reflink.process.util import argmax
-try:
-    from reflink import logging
-except ImportError:
-    import logging
+from statistics import mean
+
+from reflink import logging
 
 logger = logging.getLogger(__name__)
 
@@ -56,12 +55,19 @@ def arbitrate(metadata: list, valid: list, priors: list) -> dict:
         field for metadatum in metadata.values() for field in metadatum.keys()
     })
 
-    return {
-        field: metadata[extractors[argmax([
+    probs = [
+        [
             valid[extractor].get(field, 0.) * priors[extractor].get(field, 0.)
             for extractor in extractors
-        ])]][field] for field in fields
-    }
+        ] for field in fields
+    ]
+    optimal = [argmax(prob) for prob in probs]
+    score = mean([prob[optimal[i]] for i, prob in enumerate(probs)])
+
+    return {
+        field: metadata[extractors[optimal[i]]][field]
+        for i, field in enumerate(fields)
+    }, score
 
 
 def arbitrate_all(metadata_all: list, valid_all: list,
