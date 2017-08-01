@@ -41,7 +41,7 @@ def digest(metadata: dict) -> str:
     Create a single string that represents the record. It does so by
     recursively digesting the structure, taking any strings in a list or
     dictionary value and combining them into a word list (single string)
-    
+
     Parameters
     ----------
     metadata : dict
@@ -81,7 +81,7 @@ def flatten(arr):
 
 def align_records(records: List[dict]) -> List[List[tuple]]:
     """
-    Match references from a number of records so that similar 
+    Match references from a number of records so that similar
 
     Parameters
     ----------
@@ -95,7 +95,7 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
         Structure of returned data:
             [
                 [
-                    (extractor 1, {reference 1}), 
+                    (extractor 1, {reference 1}),
                     (extractor 2, {reference 1}),
                 ],
                 [
@@ -136,11 +136,11 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
 
     # get the full jacard matrix to get the cutoff values first. unfortunately,
     # its difficult to make use of these values later, but they are vital to
-    # calculating the cutoff 
+    # calculating the cutoff
     jac = {}
     for i, rec0 in islice(enumerate(records), 0, R-1):
-        for  j, rec1 in islice(enumerate(records), i+1, R):
-            jac[i,j] = _jacard_matrix(rec0, rec1, N)
+        for j, rec1 in islice(enumerate(records), i+1, R):
+            jac[i, j] = _jacard_matrix(rec0, rec1, N)
 
     cutoff = _cutoff(flatten(copy.deepcopy(jac)))
 
@@ -178,4 +178,4 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
             else:
                 output.append(entry)
 
-    return output  
+    return output

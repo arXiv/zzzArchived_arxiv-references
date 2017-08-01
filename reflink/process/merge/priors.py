@@ -4,7 +4,7 @@ EXTRACTORS = [
     (
         'refextract',
         {
-            'title': 0.9
+            'title': 0.9,
             'doi': 0.6,
         }
     ),
