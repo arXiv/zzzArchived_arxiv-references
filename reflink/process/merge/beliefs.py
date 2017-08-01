@@ -51,7 +51,8 @@ def _load_filters():
 
 def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
     score = [
-        1 if word in bloom_filter else 0 for word in clean_text(value).split()
+        1 if word in bloom_filter else 0
+        for word in clean_text(value, numok=True).split()
     ]
     return sum(score) / len(score)
 
