@@ -43,9 +43,9 @@ def process_document(document_id: str) -> None:
                     (document_id, len(extractions)))
 
         logger.info('Merging metadata for %s' % document_id)
-        metadata = merge.merge_records(extractions)
-        logger.info('Final reference list for %s contains %i records' %
-                    (document_id, len(metadata)))
+        metadata, score = merge.merge_records(extractions)
+        logger.info('Merged: %s contains %i records with score %f' %
+                    (document_id, len(metadata), score))
 
         # Should return the data with reference hashes inserted.
         logger.info('Storing metadata for %s' % document_id)

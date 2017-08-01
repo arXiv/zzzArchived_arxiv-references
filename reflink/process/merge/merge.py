@@ -1,5 +1,5 @@
 from reflink import logging
-from reflink.process.merge import align, arbitrate, priors, validate, normalize
+from reflink.process.merge import align, arbitrate, priors, beliefs, normalize
 from statistics import mean
 
 logger = logging.getLogger(__name__)
@@ -39,7 +39,7 @@ def merge_records(records: dict,
         raise RuntimeError('Alignment failed: %s' % e) from e
 
     try:
-        aligned_probabilities = validate.validate(aligned_records)
+        aligned_probabilities = beliefs.validate(aligned_records)
     except Exception as e:
         raise RuntimeError('Validation failed: %s' % e) from e
 

@@ -1,8 +1,10 @@
 import re
-#from reflink.process.extract import 
+#from reflink.process.extract import
 
 
-def is_integer_like(value: str) -> float:
+def is_integer_like(value: object) -> float:
+    if isinstance(value, int):
+        return 1.0
     numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
     if any([is_integer(i) for i in numbers]):
         return 1.0
@@ -32,16 +34,16 @@ def unity(r):
 
 
 BELIEF_FUNCTIONS = {
-    'title': unity,
-    'raw': unity,
-    'authors': unity,
-    'doi': unity,
-    'volume': unity,
-    'issue': unity,
-    'pages': unity,
-    'source': unity,
+    'title': [unity],
+    'raw': [unity],
+    'authors': [unity],
+    'doi': [unity],
+    'volume': [unity],
+    'issue': [unity],
+    'pages': [unity],
+    'source': [unity],
     'year': [is_integer_like, is_integer, is_year],
-    'identifiers': unity 
+    'identifiers': [unity]
 }
 
 
@@ -88,3 +90,29 @@ def identity_belief(reference: dict) -> dict:
         The beliefs about the values within a record, all unity
     """
     return {key: unity(value) for key, value in reference.keys()}
+
+
+def validate(aligned_references: list) -> list:
+    """
+    Apply expectations about field values to generate probabilities.
+
+    Parameters
+    ----------
+    aligned_references : list
+        Each item represents an aligned reference; should be a two-tuple with
+        the extractor name (``str``) and the reference object (``dict``).
+
+    Returns
+    -------
+    list
+        Probabilities for each value in each field in each reference. Should
+        have the same shape as ``aligned_references``, except that values are
+        replaced by floats in the range 0.0 to 1.0.
+    """
+
+    return [
+        [
+            (extractor, calculate_belief(metadatum))
+            for extractor, metadatum in reference
+        ] for reference in aligned_references
+    ]
