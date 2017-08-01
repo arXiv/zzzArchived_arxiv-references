@@ -27,7 +27,7 @@ def _load_filters():
     # just automatically load the whole thing without recording sizes
     BIGNUMBER = int(1e8)
 
-    stubs = ['abs', 'auth', 'title']
+    stubs = ['auth', 'title']
     bloom_files = [
         os.path.join(os.environ.get('REFLINK_DATA_DIRECTORY', '.'), i)
         for i in ['words_bloom_filter_{}.bytes'.format(j) for j in stubs]
@@ -135,15 +135,13 @@ bloom_filters = _prepare_filters_or_not()
 if StringBloomFilter and bloom_filters:
     words_title = partial(bloom_match, bloom_filter=bloom_filters['title'])
     words_auth = partial(bloom_match, bloom_filter=bloom_filters['auth'])
-    words_abs = partial(bloom_match, bloom_filter=bloom_filters['abs'])
 else:
     words_title = unity
     words_auth = unity
-    words_abs = unity
 
 BELIEF_FUNCTIONS = {
     'title': [words_title],
-    'raw': [words_auth, words_abs],
+    'raw': [words_auth, words_title],
     'authors': [words_auth],
     'doi': [valid_doi],
     'volume': unity,
