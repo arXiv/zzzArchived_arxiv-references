@@ -1,0 +1,23 @@
+The files are labeled by what type of document they are used for and the
+arguments with which to create the bloom filter. The first number is `size` and
+the second `hashes`.
+
+To create the bloom filter:
+
+    words = Counter()
+    for abs in abstracts:
+        words.update(clean_text(abs, numok=True).split())
+    
+    filterargs = pybloof.bloom_calculator(len(words), 1e-2)
+    a = StringBloomFilter(**filterargs)
+    
+    for w in words:
+        a.add(w)
+
+    filt = a.to_byte_array()
+    filt.tofile(open('./words_bloom_filter', 'wb'))
+
+Current files:
+    abs -> abs_3.8e6_6
+    auth -> auth_2.5e6_6
+    title -> title_1e6_6
