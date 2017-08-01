@@ -36,6 +36,9 @@ def process_document(document_id: str) -> None:
     try:
         pdf_path, tex_path = retrieve(document_id)
         logger.info('Retrieved content for %s' % document_id)
+        if pdf_path is None:
+            logger.info('No PDF available for %s; aborting' % document_id)
+            return
 
         logger.info('Extracting metadata for %s' % document_id)
         extractions = extract(pdf_path)    # TODO: add reconciliation step.
@@ -43,10 +46,14 @@ def process_document(document_id: str) -> None:
                     (document_id, len(extractions),
                      ', '.join(extractions.keys())))
 
-        logger.info('Merging metadata for %s' % document_id)
-        metadata, score = merge.merge_records(extractions)
-        logger.info('Merged: %s contains %i records with score %f' %
-                    (document_id, len(metadata), score))
+        if len(extractions) > 1:
+            logger.info('Merging metadata for %s' % document_id)
+            metadata, score = merge.merge_records(extractions)
+            logger.info('Merged: %s contains %i records with score %f' %
+                        (document_id, len(metadata), score))
+        else:
+            metadata = extractions
+            logger.info('Skipping merge step for %s' % document_id)
 
         # Should return the data with reference hashes inserted.
         logger.info('Storing metadata for %s' % document_id)
