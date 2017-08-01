@@ -37,7 +37,7 @@ class ExtractionSession(object):
         try:
             self._create_table()
         except ClientError as e:
-            logger.trace('Table already exists: %s' % self.table_name)
+            logger.info('Table already exists: %s' % self.table_name)
         self.table = self.dynamodb.Table(self.table_name)
 
     def _create_table(self) -> None:
@@ -171,7 +171,7 @@ class ReferenceStoreSession(object):
             self.table_name = self.stored_schema.get('title',
                                                      'StoredReference')
         except (FileNotFoundError, TypeError):
-            logger.trace("Could not load schema at %s." % stored_schema_path)
+            logger.info("Could not load schema at %s." % stored_schema_path)
             logger.info("Stored reference validation is disabled")
             self.stored_schema = None
             self.table_name = 'StoredReference'
@@ -182,7 +182,7 @@ class ReferenceStoreSession(object):
             self.table_name = self.extracted_schema.get('title',
                                                         'ExtractedReference')
         except (FileNotFoundError, TypeError):
-            logger.trace("Could not load schema at %s" % extracted_schema_path)
+            logger.info("Could not load schema at %s" % extracted_schema_path)
             logger.info("Extracted reference validation is disabled")
             self.extracted_schema = None
             # self.table_name = 'ExtractedReference'
