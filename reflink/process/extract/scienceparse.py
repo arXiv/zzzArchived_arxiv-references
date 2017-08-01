@@ -1,14 +1,10 @@
 import os
 import requests
 
+from reflink import logging
 from reflink import types
 from reflink.status import HTTP_200_OK
 
-import logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.INFO
-)
 logger = logging.getLogger(__name__)
 
 SCIENCEPARSE_API_VERSION = os.environ.get(

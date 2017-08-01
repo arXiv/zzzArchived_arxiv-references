@@ -22,7 +22,6 @@ EXTRACTORS = [
     ('cermine', cermine.extract_references),
     ('grobid', grobid.extract_references),
     ('refextract', refextract.extract_references),
-    ('regex_identifiers', regex_identifiers.extract_identifiers),
     ('scienceparse', scienceparse.extract_references)
 ]
 

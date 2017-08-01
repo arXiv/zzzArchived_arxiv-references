@@ -37,6 +37,7 @@ def merge_records(records: dict,
         aligned_records = align.align_records(records)
     except Exception as e:
         raise RuntimeError('Alignment failed: %s' % e) from e
+    logger.info(str(aligned_records))
 
     try:
         aligned_probabilities = beliefs.validate(aligned_records)

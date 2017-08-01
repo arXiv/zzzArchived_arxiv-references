@@ -41,6 +41,7 @@ def process_document(document_id: str) -> None:
         extractions = extract(pdf_path)    # TODO: add reconciliation step.
         logger.info('Extraction for %s succeeded with %i extractions' %
                     (document_id, len(extractions)))
+        logger.info(str(extractions))
 
         logger.info('Merging metadata for %s' % document_id)
         metadata, score = merge.merge_records(extractions)

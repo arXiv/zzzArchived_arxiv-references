@@ -6,15 +6,12 @@ import xml.etree.ElementTree
 import logging
 
 from reflink import types
+from reflink import logging
 from reflink.process import util
 from reflink.process.extract import regex_identifiers
 
 CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
                                       'arxiv/cermine')
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.INFO
-)
 logger = logging.getLogger(__name__)
 
 
