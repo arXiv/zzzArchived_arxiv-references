@@ -239,7 +239,7 @@ Cite&nbsp;as:
     <script src="{{ url_for('static', filename='js/references.js') }}" type="text/javascript"></script>
     <script>
     var document_id = "{{ document_id }}",
-        hostname = 'arxiv-references.elasticbeanstalk.com';
+        hostname = 'arxiv-references.us-east-1.elasticbeanstalk.com';
     $('body').ready(function() {
         loadReferences(document_id, hostname);
     });
