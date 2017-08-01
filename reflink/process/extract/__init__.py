@@ -14,7 +14,9 @@ Extractor:
 
 from reflink.process.extract import cermine, grobid, refextract
 from reflink.process.extract import regex_identifiers, scienceparse
+from reflink import logging
 
+logger = logging.getLogger(__name__)
 
 EXTRACTORS = [
     ('cermine', cermine.extract_references),
