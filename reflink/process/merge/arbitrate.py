@@ -57,11 +57,11 @@ def arbitrate(metadata: list, valid: list, priors: list) -> dict:
 
     probs = [
         [
-            valid[extractor].get(field, 0.) * priors[extractor].get(field, 0.)
+            valid[extractor].get(field, 0.) * priors[extractor].get(field, priors[extractor].get('__all__', 0.))
             for extractor in extractors
         ] for field in fields
     ]
-    
+
     optimal = [argmax(prob) for prob in probs]
     score = mean([prob[optimal[i]] for i, prob in enumerate(probs)])
 

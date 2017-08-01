@@ -4,8 +4,25 @@ EXTRACTORS = [
     (
         'refextract',
         {
-            'title': 0.9,
-            'doi': 0.6,
+            '__all__': 1.0,
+        }
+    ),
+    (
+        'cermine',
+        {
+            '__all__': 1.0,
+        }
+    ),
+    (
+        'grobid',
+        {
+            '__all__': 1.0,
+        }
+    ),
+    (
+        'scienceparse',
+        {
+            '__all__': 1.0,
         }
     ),
 ]
