@@ -60,5 +60,5 @@ def extract_references(filename: str) -> str:
     except IOError as e:
         raise IOError('%s' % e) from e
     except Exception as e:
-        msg = 'Failed to extract references from %s' % filename
+        msg = 'Failed to extract references from %s: %s' % (filename, e)
         raise RuntimeError(msg) from e

@@ -34,12 +34,16 @@ class TestAlignRecords(unittest.TestCase):
 
         aligned_answer = [
             [
-                ["ext1", {"name": "Matt", "cheatcode": "uuddlrlrba", "year": 2011}],
-                ["ext2", {"name": "Matt", "cheatcode": "uuddlrlrbaba","year": 2011}]
+                ["ext1", {"name": "Matt", "cheatcode": "uuddlrlrba",
+                          "year": 2011}],
+                ["ext2", {"name": "Matt", "cheatcode": "uuddlrlrbaba",
+                          "year": 2011}]
             ],
             [
-                ["ext1", {"name": "Erick", "cheatcode": "babaudbalrba", "year": 2013}],
-                ["ext3", {'name': 'Eric', 'cheatcode': 'babaudbalrba', 'year': 2013}]
+                ["ext1", {"name": "Erick", "cheatcode": "babaudbalrba",
+                          "year": 2013}],
+                ["ext3", {'name': 'Eric', 'cheatcode': 'babaudbalrba',
+                          'year': 2013}]
             ],
             [
                 ["ext3", {"name": "John", "cheatcode": "start", "year": 2010}]

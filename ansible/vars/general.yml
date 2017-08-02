@@ -1,0 +1,9 @@
+---
+
+grobid_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/grobid"
+grobid_exposed_port: 8889
+grobid_local_port: 8080
+
+scienceparse_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/scienceparse:1.2.8-SNAPSHOT"
+scienceparse_exposed_port: 8888
+scienceparse_local_port: 8080

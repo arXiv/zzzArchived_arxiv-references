@@ -3,7 +3,7 @@ var references_elem = $('#reference-list');
 // We send the user back to an endpoint that we control, so that we
 //  can reconfigure resolution logic without altering this view.
 var getURLforReference = function(reference, document_id, hostname) {
-    return 'https://' + hostname + '/references/' + document_id + '/ref/' + encodeURIComponent(reference.identifier) + '/resolve';
+    return 'http://' + hostname + '/references/' + document_id + '/ref/' + encodeURIComponent(reference.identifier) + '/resolve';
 }
 
 var renderReferences = function(data, document_id, hostname) {
@@ -75,7 +75,7 @@ var renderError = function(err) {
 }
 
 var loadReferences = function(document_id, hostname) {
-    $.get('https://' + hostname + '/references/' + document_id,
+    $.get('http://' + hostname + '/references/' + document_id,
           function(data) {
               renderReferences(data, document_id, hostname);
           }).fail(renderError);

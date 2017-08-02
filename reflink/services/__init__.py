@@ -2,7 +2,6 @@
 
 import os
 
-from flask import current_app
 from flask import _app_ctx_stack as stack
 
 from reflink.services import data_store, object_store
@@ -25,13 +24,13 @@ class DataStore(object):
 
     def get_session(self) -> None:
         try:
-            extracted_schema_path = current_app.config['REFLINK_EXTRACTED_SCHEMA']
-            stored_schema_path = current_app.config['REFLINK_STORED_SCHEMA']
-            endpoint_url = current_app.config['REFLINK_DYNAMODB_ENDPOINT']
-            aws_access_key = current_app.config['REFLINK_AWS_ACCESS_KEY']
-            aws_secret_key = current_app.config['REFLINK_AWS_SECRET_KEY']
-            region_name = current_app.config['REFLINK_AWS_REGION']
-        except RuntimeError:     # No application context.
+            extracted_schema_path = self.app.config['REFLINK_EXTRACTED_SCHEMA']
+            stored_schema_path = self.app.config['REFLINK_STORED_SCHEMA']
+            endpoint_url = self.app.config['REFLINK_DYNAMODB_ENDPOINT']
+            aws_access_key = self.app.config['REFLINK_AWS_ACCESS_KEY']
+            aws_secret_key = self.app.config['REFLINK_AWS_SECRET_KEY']
+            region_name = self.app.config['REFLINK_AWS_REGION']
+        except (RuntimeError, AttributeError) as e:    # No application context.
             extracted_schema_path = os.environ.get('REFLINK_EXTRACTED_SCHEMA',
                                                    None)
             stored_schema_path = os.environ.get('REFLINK_STORED_SCHEMA', None)
@@ -72,12 +71,12 @@ class ObjectStore(object):
 
     def get_session(self) -> None:
         try:
-            bucket_name = current_app.config['REFLINK_S3_BUCKET']
-            endpoint_url = current_app.config['REFLINK_S3_ENDPOINT']
-            aws_access_key = current_app.config['REFLINK_AWS_ACCESS_KEY']
-            aws_secret_key = current_app.config['REFLINK_AWS_SECRET_KEY']
-            region_name = current_app.config['REFLINK_AWS_REGION']
-        except RuntimeError:    # No application context.
+            bucket_name = self.app.config['REFLINK_S3_BUCKET']
+            endpoint_url = self.app.config['REFLINK_S3_ENDPOINT']
+            aws_access_key = self.app.config['REFLINK_AWS_ACCESS_KEY']
+            aws_secret_key = self.app.config['REFLINK_AWS_SECRET_KEY']
+            region_name = self.app.config['REFLINK_AWS_REGION']
+        except (RuntimeError, AttributeError) as e:    # No application context.
             bucket_name = os.environ.get('REFLINK_S3_BUCKET', 'arxiv-reflink')
             endpoint_url = os.environ.get('REFLINK_S3_ENDPOINT', None)
             aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf')

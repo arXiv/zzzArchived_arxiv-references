@@ -12,24 +12,41 @@ Extractor:
 - Returns reference lines and metadata.
 """
 
-from reflink.process.extract import cermine
+from reflink.process.extract import cermine, grobid, refextract
+from reflink.process.extract import regex_identifiers, scienceparse
+from reflink import logging
+
+logger = logging.getLogger(__name__)
+
+EXTRACTORS = [
+    ('cermine', cermine.extract_references),
+    ('grobid', grobid.extract_references),
+    ('refextract', refextract.extract_references),
+    ('scienceparse', scienceparse.extract_references)
+]
 
 
-def extract_cermine(pdf_path: str) -> list:
+def extract(pdf_path: str) -> dict:
     """
-    Extract the list of reference metadata from a PDF using CERMINE.
+    Perform reference extractions using all available extractors.
 
     Parameters
     ----------
     pdf_path : str
-        Location of an arXiv PDF on the filesystem.
+        Path to an arXiv PDF on the filesystem.
 
     Returns
     -------
-    list
-        Extracted reference metadata.
+    dict
+        Keys are extractor names, values are lists of reference metadata
+        objects (``dict``).
     """
-    return cermine.extract_references(pdf_path)
 
-
-extract = extract_cermine
+    extractions = {}
+    for name, extractor in EXTRACTORS:
+        try:
+            extractions[name] = extractor(pdf_path)
+        except Exception as e:
+            logger.info('Extraction failed for %s with %s: %s' %
+                        (pdf_path, name, e))
+    return extractions

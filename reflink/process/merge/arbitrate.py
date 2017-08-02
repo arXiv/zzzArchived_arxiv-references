@@ -4,6 +4,7 @@ from reflink.process.util import argmax
 from statistics import mean
 
 from reflink import logging
+from itertools import repeat
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +24,6 @@ def arbitrate(metadata: list, valid: list, priors: list) -> dict:
         field-values are replaced by ``float`` in the range 0.0 to 1.0.
     priors : list
         Represents prior level of trust in field output for each extractor.
-        Should have the same shape as ``valid``.
 
     Returns
     -------
@@ -57,10 +57,11 @@ def arbitrate(metadata: list, valid: list, priors: list) -> dict:
 
     probs = [
         [
-            valid[extractor].get(field, 0.) * priors[extractor].get(field, 0.)
+            valid[extractor].get(field, 0.) * priors[extractor].get(field, priors[extractor].get('__all__', 0.))
             for extractor in extractors
         ] for field in fields
     ]
+
     optimal = [argmax(prob) for prob in probs]
     score = mean([prob[optimal[i]] for i, prob in enumerate(probs)])
 
@@ -91,4 +92,5 @@ def arbitrate_all(metadata_all: list, valid_all: list,
         :func:`.arbitrate` for more details.
     """
 
-    return list(map(arbitrate, metadata_all, valid_all, priors_all))
+    return list(map(arbitrate, metadata_all, valid_all,
+                    repeat(priors_all, len(metadata_all))))

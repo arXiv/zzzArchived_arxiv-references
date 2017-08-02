@@ -171,7 +171,7 @@ class ReferenceStoreSession(object):
             self.table_name = self.stored_schema.get('title',
                                                      'StoredReference')
         except (FileNotFoundError, TypeError):
-            logger.error("Could not load schema at %s." % stored_schema_path)
+            logger.info("Could not load schema at %s." % stored_schema_path)
             logger.info("Stored reference validation is disabled")
             self.stored_schema = None
             self.table_name = 'StoredReference'
@@ -182,7 +182,7 @@ class ReferenceStoreSession(object):
             self.table_name = self.extracted_schema.get('title',
                                                         'ExtractedReference')
         except (FileNotFoundError, TypeError):
-            logger.error("Could not load schema at %s" % extracted_schema_path)
+            logger.info("Could not load schema at %s" % extracted_schema_path)
             logger.info("Extracted reference validation is disabled")
             self.extracted_schema = None
             # self.table_name = 'ExtractedReference'
