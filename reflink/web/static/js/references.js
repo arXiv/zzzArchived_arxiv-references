@@ -77,7 +77,6 @@ var renderError = function(err) {
 var loadReferences = function(document_id, hostname) {
     $.get('http://' + hostname + '/references/' + document_id,
           function(data) {
-              console.log(data);
               renderReferences(data, document_id, hostname);
           }).fail(renderError);
 }

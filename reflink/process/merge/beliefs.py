@@ -2,13 +2,43 @@ import re
 #from reflink.process.extract import
 
 
+def likely(func: function, min_prob: float=0.0,
+           max_prob: float=1.0) -> function:
+    def call(value: object) -> float:
+        return max(min(func(value), max_prob), min_prob)
+    return call
+
+
+def does_not_contain_arxiv(value: object) -> float:
+    return 0. if 'arxiv' in value else 1.
+
+
 def is_integer_like(value: object) -> float:
     if isinstance(value, int):
         return 1.0
     numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
-    if any([is_integer(i) for i in numbers]):
-        return 1.0
-    return 0.0
+    return (1. * sum([is_integer(i) for i in numbers]))/len(value)
+
+
+def contains(substring: str, false_prob: float=0.0,
+             true_prob: float=1.0) -> function:
+    def call(value: object) -> float:
+        if not isinstance(value, str):
+            return 0.0
+        return true_prob if substring in value else false_prob
+
+
+def ends_with(substring: str, false_prob: float=0.0,
+             true_prob: float=1.0) -> function:
+    def call(value: object) -> float:
+        if not isinstance(value, str):
+            return 0.0
+        return true_prob if value.endswith(substring) else false_prob
+
+
+def doesnt_end_with(substring: str, false_prob: float=0.0,
+                    true_prob: float=1.0) -> function:
+    return ends_with(substring, false_prob=true_prob, true_prob=false_prob)
 
 
 def is_integer(value: str) -> float:
@@ -37,11 +67,11 @@ BELIEF_FUNCTIONS = {
     'title': [unity],
     'raw': [unity],
     'authors': [unity],
-    'doi': [unity],
-    'volume': [unity],
-    'issue': [unity],
+    'doi': [contains('.'), contains('/'), doesnt_end_with('-')],
+    'volume': [likely(is_integer_like, min_prob=0.5)],
+    'issue': [likely(is_integer_like, min_prob=0.5)],
     'pages': [unity],
-    'source': [unity],
+    'source': [does_not_contain_arxiv],
     'year': [is_integer_like, is_integer, is_year],
     'identifiers': [unity]
 }

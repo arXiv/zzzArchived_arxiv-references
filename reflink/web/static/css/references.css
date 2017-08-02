@@ -1,0 +1,56 @@
+#reference-list {
+    list-style: none;
+}
+
+.reference {
+    margin-bottom: 12px;
+}
+
+.reference-author::after {
+    content: ', ';
+}
+.reference-author:last-of-type::after {
+    content: '. ';
+}
+.reference-year {
+    font-weight: bold;
+}
+.reference-year::after {
+    content: '. ';
+}
+.reference-title::after {
+    content: '. ';
+}
+.reference-source {
+    font-style: italic;
+}
+.reference-source::after {
+    font-style: '.';
+}
+.reference-volume::before {
+    content: ' ';
+}
+.reference-issue::before {
+    content: ' (';
+}
+.reference-issue::after {
+    content: ')';
+}
+.reference-pages::before {
+    content: ': ';
+}
+.reference-pages::after {
+    content: '. ';
+}
+.reference-doi::before {
+    content: ' DOI: ';
+}
+.reference-author-givennames::after {
+    content: ' ';
+}
+.reference-identifier {
+    font-weight: bold;
+}
+.reference-identifier-type::after {
+    content: ': ';
+}
