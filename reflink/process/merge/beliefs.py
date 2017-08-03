@@ -10,6 +10,11 @@ from reflink.process.extract.regex_identifiers import (
     REGEX_DOI, REGEX_ISBN_10, REGEX_ISBN_13
 )
 
+RE_INTEGER = (
+    r'(?:^|(?:\s+))'
+    r'(\d+)'
+    r'(?:$|(?:\s+))'
+)
 
 try:
     from array import array
@@ -32,7 +37,7 @@ def _load_filters():
 
     stubs = ['auth', 'title']
     bloom_files = [
-        os.path.join(os.environ.get('REFLINK_DATA_DIRECTORY', '.'), i)
+        os.path.join(os.environ.get('REFLINK_DATA_DIRECTORY', './data'), i)
         for i in ['words_bloom_filter_{}.bytes'.format(j) for j in stubs]
     ]
 
@@ -57,6 +62,8 @@ def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
         1 if word in bloom_filter else 0
         for word in clean_text(value, numok=True).split()
     ]
+    if len(score) == 0:
+        return 0.0
     return sum(score) / len(score)
 
 
@@ -106,8 +113,17 @@ def is_integer_like(value: object) -> float:
         return 1.0
     if len(value) == 0:
         return 0.0
-    numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
-    return (1. * sum([is_integer(i) for i in numbers]))/len(value)
+
+    numbers = re.findall(RE_INTEGER, value)
+    leftovers = re.subn(RE_INTEGER, '', value)[0]
+
+    if not numbers:
+        return 0.0
+
+    return (
+        (sum([is_integer(i) for i in numbers])/len(numbers)) *
+        ((len(value) - len(leftovers)) / len(value))
+    )
 
 
 def is_year(value: str) -> float:
@@ -122,7 +138,7 @@ def is_year(value: str) -> float:
 
 def is_year_like(value: str) -> float:
     try:
-        numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
+        numbers = re.findall(RE_INTEGER, value)
         if not numbers:
             return 0.0
         return (1. * sum([is_year(i) for i in numbers]))/len(numbers)
@@ -181,10 +197,25 @@ else:
     words_title = unity
     words_auth = unity
 
+
+def words_author_structure(value: list) -> float:
+    num_authors = 0
+    num_good = 0.0
+
+    for auth in value:
+        name = clean_text(' '.join(auth.values()))
+        num_good += words_auth(name)
+        num_authors += 1
+
+    if num_authors == 0:
+        return 0.0
+    return num_good / num_authors
+
+
 BELIEF_FUNCTIONS = {
     'title': [words_title],
     'raw': [words_title, words_auth],
-    'authors': [words_auth],
+    'authors': [words_author_structure],
     'doi': [valid_doi, contains('.'), contains('/'), doesnt_end_with('-')],
     'volume': [likely(is_integer_like, min_prob=0.5)],
     'issue': [likely(is_integer_like, min_prob=0.5)],
