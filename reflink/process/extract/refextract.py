@@ -3,17 +3,9 @@ Provides extractions using the `refextract
 <https://github.com/inspirehep/refextract>`_ package.
 """
 
-
-from refextract import extract_references_from_file
-import logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.DEBUG
-)
-
-logging.getLogger('refextract.references.engine').setLevel(logging.ERROR)
+from reflink.services import RefExtract
+from reflink import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 
 FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
@@ -40,7 +32,7 @@ def _transform(refextract_metadatum):
     return metadatum
 
 
-def extract_references(filename: str) -> str:
+def extract_references(filename: str, document_id: str) -> str:
     """
     Wrapper for :func:`refextract.extract_references_from_file` function.
 
@@ -54,9 +46,10 @@ def extract_references(filename: str) -> str:
     references : list of dicts
         Reference metadata extracted from PDF.
     """
+    refextract = RefExtract()
     try:
         return [_transform(reference) for reference
-                in extract_references_from_file(filename)]
+                in refextract.session.extract_references(filename)]
     except IOError as e:
         raise IOError('%s' % e) from e
     except Exception as e:

@@ -26,7 +26,7 @@ EXTRACTORS = [
 ]
 
 
-def extract(pdf_path: str) -> dict:
+def extract(pdf_path: str, document_id: str) -> dict:
     """
     Perform reference extractions using all available extractors.
 
@@ -34,6 +34,8 @@ def extract(pdf_path: str) -> dict:
     ----------
     pdf_path : str
         Path to an arXiv PDF on the filesystem.
+    document_id : str
+        Identifier for an arXiv paper.
 
     Returns
     -------
@@ -45,7 +47,7 @@ def extract(pdf_path: str) -> dict:
     extractions = {}
     for name, extractor in EXTRACTORS:
         try:
-            extractions[name] = extractor(pdf_path)
+            extractions[name] = extractor(pdf_path, document_id)
         except Exception as e:
             logger.info('Extraction failed for %s with %s: %s' %
                         (pdf_path, name, e))

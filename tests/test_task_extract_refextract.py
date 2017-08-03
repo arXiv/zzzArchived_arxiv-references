@@ -14,7 +14,7 @@ class TestRefextractExtractor(unittest.TestCase):
     def test_extract(self):
         """:func:`.refextract.extract_references` returns valid metadata."""
         pdf_path = 'tests/data/1702.07336.pdf'
-        references = refextract.extract_references(pdf_path)
+        references = refextract.extract_references(pdf_path, '1702.07336')
         self.assertIsInstance(references, list)
         self.assertIsInstance(references[0], dict)
         self.assertEqual(len(references), 45)

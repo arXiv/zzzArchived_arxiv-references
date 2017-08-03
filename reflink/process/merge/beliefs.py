@@ -1,9 +1,9 @@
 import re
+from reflink.types import Callable
 #from reflink.process.extract import
 
 
-def likely(func: function, min_prob: float=0.0,
-           max_prob: float=1.0) -> function:
+def likely(func, min_prob: float=0.0, max_prob: float=1.0) -> Callable:
     def call(value: object) -> float:
         return max(min(func(value), max_prob), min_prob)
     return call
@@ -16,28 +16,32 @@ def does_not_contain_arxiv(value: object) -> float:
 def is_integer_like(value: object) -> float:
     if isinstance(value, int):
         return 1.0
+    if len(value) == 0:
+        return 0.0
     numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
     return (1. * sum([is_integer(i) for i in numbers]))/len(value)
 
 
 def contains(substring: str, false_prob: float=0.0,
-             true_prob: float=1.0) -> function:
+             true_prob: float=1.0) -> Callable:
     def call(value: object) -> float:
         if not isinstance(value, str):
             return 0.0
         return true_prob if substring in value else false_prob
+    return call
 
 
 def ends_with(substring: str, false_prob: float=0.0,
-             true_prob: float=1.0) -> function:
+             true_prob: float=1.0) -> Callable:
     def call(value: object) -> float:
         if not isinstance(value, str):
             return 0.0
         return true_prob if value.endswith(substring) else false_prob
+    return call
 
 
 def doesnt_end_with(substring: str, false_prob: float=0.0,
-                    true_prob: float=1.0) -> function:
+                    true_prob: float=1.0) -> Callable:
     return ends_with(substring, false_prob=true_prob, true_prob=false_prob)
 
 

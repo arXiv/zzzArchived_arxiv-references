@@ -1,23 +1,13 @@
+"""Business logic for processing ScienceParse extracted references."""
+
 import os
-import requests
 
 from reflink import logging
 from reflink import types
 from reflink.status import HTTP_200_OK
+from reflink.services import ScienceParse
 
 logger = logging.getLogger(__name__)
-
-SCIENCEPARSE_API_VERSION = os.environ.get(
-    'REFLINK_SCIENCEPARSE_API_VERSION', 'v1'
-)
-SCIENCEPARSE_DOCKER_IMAGE = os.environ.get(
-    'REFLINK_SCIENCEPARSE_DOCKER_IMAGE',
-    'allenai-docker-public-docker.bintray.io/s2/scienceparse:1.2.8-SNAPSHOT'
-)
-SCIENCEPARSE_DOCKER_PORT = os.environ.get(
-    'REFLINK_SCIENCEPARSE_DOCKER_PORT', 8888
-)
-SCIENCEPARSE_DOCKER_PORT = int(SCIENCEPARSE_DOCKER_PORT)
 
 
 def parse_auth_line(text):
@@ -83,10 +73,9 @@ def format_scienceparse_output(output: dict) -> types.ReferenceMetadata:
     return references
 
 
-def extract_references(filename: str) -> types.ReferenceMetadata:
+def extract_references(filename: str, document_id: str) -> types.ReferenceMetadata:
     """
-    Send the pdf to the ScienceParse service that ought to be running on the
-    same machine. If not running, start it up, wait, then send the request.
+    Extract references from the PDF at ``filename`` using ScienceParse.
 
     Return the reponse formatted to the schema for all references
 
@@ -97,26 +86,15 @@ def extract_references(filename: str) -> types.ReferenceMetadata:
 
     Returns
     -------
-    reference_docs : list of dicts
+    reference_docs : list
         Dictionary of reference metadata with metadata separated into author,
         journal, year, etc
     """
+    scienceparse = ScienceParse()
 
-    with open(filename, 'rb') as pdfhandle:
-        url = 'http://localhost:{}/{}'.format(
-            SCIENCEPARSE_DOCKER_PORT, SCIENCEPARSE_API_VERSION
-        )
-        headers = {'Content-Type': 'application/pdf'}
-        response = requests.post(url, data=pdfhandle, headers=headers)
 
-        if response.status_code != HTTP_200_OK:
-            msg = 'ScienceParse ({}) return error code {} ({}): {}'.format(
-                response.url, response.status_code,
-                response.reason, response.content
-            )
-            logger.error(msg)
-            raise RuntimeError(msg)
-
-        data = response.json()
-
+    try:
+        data = scienceparse.session.extract_references(filename)
+    except IOError as e:
+        raise RuntimeError('ScienceParse extraction failed: %s' % e) from e
     return format_scienceparse_output(data)
