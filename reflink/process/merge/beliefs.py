@@ -121,12 +121,13 @@ def is_year(value: str) -> float:
 
 
 def is_year_like(value: str) -> float:
-    numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
-
-    if not numbers:
+    try:
+        numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
+        if not numbers:
+            return 0.0
+        return (1. * sum([is_year(i) for i in numbers]))/len(numbers)
+    except Exception as e:
         return 0.0
-
-    return (1. * sum([is_year(i) for i in numbers]))/len(numbers)
 
 
 def is_pages(value: str) -> float:
