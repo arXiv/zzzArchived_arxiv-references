@@ -433,7 +433,9 @@ def run_autotex(directory: str) -> str:
         return None
 
     timestamp = datetime.datetime.now()
-    util.run_docker(AUTOTEX_DOCKER_IMAGE, [(directory, '/autotex')], 'go')
+    util.run_docker(
+        AUTOTEX_DOCKER_IMAGE, volumes=[(directory, '/autotex')], args='go'
+    )
 
     # run the conversion pipeline since autotex produces many types of files
     pdf, dvi, ps = [_find(ext, timestamp) for ext in ['pdf', 'dvi', 'ps']]
