@@ -10,23 +10,30 @@ from reflink import logging
 from reflink.config import VERSION
 from reflink.process.retrieve import retrieve
 from reflink.process.extract import extract
-from reflink.process.inject import inject
+# from reflink.process.inject import inject
 from reflink.process.merge import merge
-from reflink.process.store import store_metadata, store_pdf
 
 from celery import shared_task
 
 logger = logging.getLogger(__name__)
 
 
+
+
+
 @shared_task
-def process_document(document_id: str) -> None:
+def process_document(document_id: str) -> list:
     """
     Processing chain for a single arXiv document.
 
     Parameters
     ----------
     document_id : bytes
+
+    Returns
+    -------
+    list
+        Extracted reference metadata.
 
     Raises
     ------
@@ -55,13 +62,6 @@ def process_document(document_id: str) -> None:
             metadata = extractions
             logger.info('Skipping merge step for %s' % document_id)
 
-        # Should return the data with reference hashes inserted.
-        logger.info('Storing metadata for %s' % document_id)
-        extraction, metadata = store_metadata(metadata, document_id, VERSION)
-        logger.info('Stored metadata for %s with extraction %s' %
-                    (document_id, extraction))
-
-
         # 2017-07-31: disabling link injection for now. - Erick
         #
         # if tex_path:
@@ -78,3 +78,5 @@ def process_document(document_id: str) -> None:
         msg = 'Failed to process %s: %s' % (document_id, e)
         logger.error(msg)
         raise RuntimeError(msg) from e
+
+    return metadata

@@ -3,48 +3,12 @@
 
 import logging
 
-from reflink.services import data_store, object_store
+from reflink.services import object_store
 from reflink.types import ReferenceMetadata
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format, level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
-def store_metadata(metadata: ReferenceMetadata, document_id: str,
-                   version: str) -> None:
-    """
-    Deposit extracted reference metadata in the datastore.
-
-    Parameters
-    ----------
-    metadata : list
-        A list of reference metadata (dict) extracted from an arXiv
-        publication.
-    document_id : str
-        ArXiv identifier, including paper version.
-    version: str
-        The reference extraction application version.
-
-    Raises
-    ------
-    RuntimeError
-        Raised when there is a problem storing the metadata. The caller should
-        assume that nothing has been stored.
-    """
-    data_session = data_store.get_session()
-    try:
-        # Should return the data with reference hashes inserted.
-        metadata = data_session.create(document_id, metadata, version)
-    except IOError as e:    # Separating this out in case we want to retry.
-        msg = 'Could not store metadata for document %s: %s' % (document_id, e)
-        logger.error(msg)
-        raise RuntimeError(msg) from e
-    except Exception as e:
-        msg = 'Could not store metadata for document %s: %s' % (document_id, e)
-        logger.error(msg)
-        raise RuntimeError(msg) from e
-    return metadata
 
 
 def store_pdf(pdf_path: str, document_id: str) -> None:

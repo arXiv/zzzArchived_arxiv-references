@@ -1,7 +1,7 @@
 """Execute the KCL consumer process."""
 
 from amazon_kclpy import kcl
-from reflink.notification.consumer import RecordProcessor
+from reflink.agent.consumer import RecordProcessor
 
 
 if __name__ == "__main__":
