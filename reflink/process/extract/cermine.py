@@ -1,25 +1,19 @@
+"""Business logic for processing Cermine extracted references."""
+
 import regex as re
 import os
 import shutil
 import subprocess
 import xml.etree.ElementTree
-import logging
 
 from reflink import types
+from reflink import logging
 from reflink.process import util
 from reflink.process.extract import regex_identifiers
+from reflink.services import Cermine
 
-CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
-                                      'arxiv/cermine')
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.INFO
-)
+
 logger = logging.getLogger(__name__)
-
-
-class ExtractionError(Exception):
-    pass
 
 
 def _cxml_element_func(tagname):
@@ -171,7 +165,7 @@ def cxml_format_document(root, documentid=''):
     return references
 
 
-def convert_cxml_json(filename: str) -> dict:
+def convert_cxml_json(raw_data: str, document_id: str) -> dict:
     """
     Transforms a CERMINE XML file into human and machine readable references:
         1. Reference lines i.e. the visual form in the paper
@@ -179,19 +173,19 @@ def convert_cxml_json(filename: str) -> dict:
 
     Parameters
     ----------
-    filename : str
-        Name of file containing .cermxml information
+    raw_data : str
+        Raw XML response from Cermine.
+    document_id : str
 
     Returns
     -------
     see :func:`cermine_extract_references`
     """
-    root = xml.etree.ElementTree.parse(filename).getroot()
-    documentid = util.find_arxiv_id(filename)
-    return cxml_format_document(root, documentid)
+    root = xml.etree.ElementTree.fromstring(raw_data)
+    return cxml_format_document(root, document_id)
 
 
-def extract_references(filename: str,
+def extract_references(filename: str, document_id: str,
                        cleanup: bool = True) -> types.ReferenceMetadata:
     """
     Copy the pdf to a temporary directory, run CERMINE and return the extracted
@@ -212,34 +206,17 @@ def extract_references(filename: str,
         journal, year, etc
     """
     filename = os.path.abspath(filename)
-    fldr, name = os.path.split(filename)
-    stub, ext = os.path.splitext(os.path.basename(filename))
 
     if not os.path.exists(filename):
         logger.error("{} does not exist".format(filename))
         raise FileNotFoundError(filename)
 
-    with util.tempdir(cleanup=cleanup) as tmpdir:
-        # copy the pdf to our temporary location
-        tmppdf = os.path.join(tmpdir, name)
-        shutil.copyfile(filename, tmppdf)
+    cermine = Cermine()
 
-        try:
-            # FIXME: magic string for cermine container
-            util.run_docker(CERMINE_DOCKER_IMAGE, [[tmpdir, '/pdfs']])
-        except subprocess.CalledProcessError as exc:
-            logger.error(
-                'CERMINE failed to extract references for {}'.format(filename)
-            )
-            raise ExtractionError(filename) from exc
-
-        cxml = os.path.join(tmpdir, '{}.cermxml'.format(stub))
-        if not os.path.exists(cxml):
-            logger.error(
-                'CERMINE produced no output metadata for {}'.format(filename)
-            )
-            raise FileNotFoundError(
-                '{} not found, expected as output'.format(cxml)
-            )
-
-        return convert_cxml_json(cxml)
+    try:
+        data = cermine.session.extract_references(filename)
+    except IOError as e:
+        msg = 'Cermine extraction failed for %s: %s' % (filename, e)
+        logger.error(msg)
+        raise RuntimeError(msg) from e
+    return convert_cxml_json(data, document_id)

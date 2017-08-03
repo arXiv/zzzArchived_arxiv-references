@@ -86,7 +86,7 @@ def similarity_cutoff(records: List[dict]) -> float:
 
     Parameters
     ----------
-    records : dict of metadata
+    records : dict
         A set of records where each reference list is labelled by the extractor
         name i.e. {"cermine": [references], "scienceparse": [references]}
 

@@ -5,6 +5,7 @@
     <title>[1606.00123] Exponential sum approximations for $t^{-\beta}$</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/arXiv.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/references.css') }}"></link>
     <meta name="citation_title" content="Exponential sum approximations for $t^{-\beta}$" />
     <meta name="citation_author" content="McLean, William" />
     <meta name="citation_date" content="2016/06/01" />
@@ -181,65 +182,11 @@ Cite&nbsp;as:
 <div class="references submission-history">
     <h2>References</h2>
     <ul id="reference-list"></ul>
-    <style>
-    #reference-list {
-        list-style: none;
-    }
 
-    .reference {
-        margin-bottom: 12px;
-    }
-
-    .reference-author::after {
-        content: ', ';
-    }
-    .reference-author:last-of-type::after {
-        content: '. ';
-    }
-    .reference-year {
-        font-weight: bold;
-    }
-    .reference-year::after {
-        content: '. ';
-    }
-    .reference-title::after {
-        content: '. ';
-    }
-    .reference-source {
-        font-style: italic;
-    }
-    .reference-volume::before {
-        content: ' ';
-    }
-    .reference-issue::before {
-        content: ' (';
-    }
-    .reference-issue::after {
-        content: ')';
-    }
-    .reference-pages::before {
-        content: ': ';
-    }
-    .reference-pages::after {
-        content: '. ';
-    }
-    .reference-doi::before {
-        content: 'DOI: ';
-    }
-    .reference-author-givennames::after {
-        content: ' ';
-    }
-    .reference-identifier {
-        font-weight: bold;
-    }
-    .reference-identifier-type::after {
-        content: ': ';
-    }
-    </style>
     <script src="{{ url_for('static', filename='js/references.js') }}" type="text/javascript"></script>
     <script>
     var document_id = "{{ document_id }}",
-        hostname = 'arxiv-references.elasticbeanstalk.com';
+        hostname = 'arxiv-references.us-east-1.elasticbeanstalk.com';
     $('body').ready(function() {
         loadReferences(document_id, hostname);
     });

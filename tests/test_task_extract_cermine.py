@@ -53,14 +53,16 @@ class TestCERMINEExtractor(unittest.TestCase):
         cxml_document_path = article1('cermxml')
         json_document_path = article1('cermine.json')
 
-        doc_test = cermine.convert_cxml_json(cxml_document_path)
+        with open(cxml_document_path) as f:
+            doc_test = cermine.convert_cxml_json(f.read(), '1702.07336')
         doc_orig = json.load(open(json_document_path))
 
         self.assertEqual(ordered(doc_test), ordered(doc_orig))
 
     def test_cxml_json_schema(self):
         cxml_document_path = article1('cermxml')
-        jsondoc = cermine.convert_cxml_json(cxml_document_path)
+        with open(cxml_document_path) as f:
+            jsondoc = cermine.convert_cxml_json(f.read(), '1702.07336')
 
         schema_path = 'schema/ExtractedReference.json'
         schemadoc = json.load(open(schema_path))

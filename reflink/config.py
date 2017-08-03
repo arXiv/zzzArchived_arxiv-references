@@ -222,3 +222,21 @@ REFLINK_S3_ENDPOINT = os.environ.get('REFLINK_S3_ENDPOINT', None)
 """For testing only."""
 REFLINK_DYNAMODB_ENDPOINT = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
 """For testing only."""
+
+
+# ScienceParse configuration.
+REFLINK_SCIENCEPARSE_HOSTNAME = os.environ.get('REFLINK_SCIENCEPARSE_HOSTNAME',
+                                               'localhost')
+REFLINK_SCIENCEPARSE_PORT = os.environ.get('REFLINK_SCIENCEPARSE_PORT', '8888')
+REFLINK_SCIENCEPARSE_PATH = os.environ.get('REFLINK_SCIENCEPARSE_PATH', 'v1')
+
+# Cermine configuration.
+REFLINK_CERMINE_DOCKER_IMAGE = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
+                                              'arxiv/cermine')
+
+# Grobid configuration.
+REFLINK_GROBID_HOSTNAME = os.environ.get('REFLINK_GROBID_HOSTNAME',
+                                         'localhost')
+REFLINK_GROBID_PORT = os.environ.get('REFLINK_GROBID_PORT', '8889')
+REFLINK_GROBID_PATH = os.environ.get('REFLINK_GROBID_PATH',
+                                     'processFulltextDocument')

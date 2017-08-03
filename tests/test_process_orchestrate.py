@@ -1,56 +1,20 @@
-"""Tests for the :mod:`reflink.process.orchestrate` module."""
+"""Tests for :mod:`reflink.process.orchestrate` module."""
 
 import unittest
-from unittest import mock
-from moto import mock_s3, mock_dynamodb2
-from tempfile import mkstemp
-
-from reflink.process.store import store_pdf
-from reflink.process.store import store_metadata
-from reflink.services import object_store, data_store
+from reflink.process.orchestrate import tasks
 
 
-class TestStore(unittest.TestCase):
-    """Test tasks (functions) in the :mod:`reflink.process.store` module."""
-
-    @mock.patch('reflink.services.object_store.get_session')
-    def test_store_pdf(self, mock_get_session):
-        """
-        Test the :func:`reflink.process.store.store_pdf` task (function).
-
-        The task :func:`reflink.process.store.store_pdf` should generate a new
-        object in the object store.
-        """
-        document_id = 'arxiv:1234.5678'
-
-        mock_session = mock.MagicMock()
-        mock_get_session.return_value = mock_session
-
-        _, fpath = mkstemp()
-        store_pdf(fpath, document_id)
-
-        self.assertEqual(mock_session.create.call_count, 1)
-        try:
-            mock_session.create.assert_called_with(document_id, fpath)
-        except AssertionError as e:
-            self.fail(str(e))
-
-    @mock.patch('reflink.services.data_store.get_session')
-    def test_store_metadata(self, mock_get_session):
-        """
-        Test the :func:`reflink.process.store.store_metadata` task (function).
-
-        Should generate a new record in the datastore.
-        """
-        mock_session = mock.MagicMock()
-        mock_get_session.return_value = mock_session
-
-        document_id = 'arxiv:1234.5678'
-        data = [{'foo': 'bar'}]
-        version = '0.1'
-        store_metadata(data, document_id, version)
-        self.assertEqual(mock_session.create.call_count, 1)
-        try:
-            mock_session.create.assert_called_with(document_id, data, version)
-        except AssertionError as e:
-            self.fail(str(e))
+# class TestOrchestrate(unittest.TestCase):
+#     """Test :func:`.tasks.process_document` with a real arXiv document."""
+#
+#     def setUp(self):
+#         """Given an arXiv document ID..."""
+#         self.document_id = '1602.00026'
+#
+#     def test_process_document(self):
+#         """Test that the entire processing workflow completes successfully."""
+#
+#         try:
+#             tasks.process_document(self.document_id)
+#         except Exception as e:
+#             self.fail(e.msg)

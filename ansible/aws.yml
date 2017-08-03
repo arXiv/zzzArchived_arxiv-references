@@ -4,6 +4,7 @@
   hosts: reflink-consumer:reflink-worker
   vars_files:
     - vars/secrets.yml
+    - vars/general.yml
   vars:
     - reflink_user: bob
     - aws_region: us-east-1
@@ -12,20 +13,52 @@
     - reflink_base_url: "{{ groups['reflink-web'][0] }}/references"
     - cermine_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/cermine"
     - autotex_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/autotex"
-    - grobid_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/grobid"
-    - scienceparse_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/scienceparse"
   roles:
     - reflink
 
-- name: Install consumer role
-  hosts: reflink-consumer
-  vars:
-    - reflink_user: bob
-    - aws_region: us-east-1
-    - s3_bucket: "arxiv-reflink-proto"
-  roles:
-    - consumer
-  become: true
+# - name: Install consumer role
+#   hosts: reflink-consumer
+#   vars:
+#     - reflink_user: bob
+#     - aws_region: us-east-1
+#     - s3_bucket: "arxiv-reflink-proto"
+#   roles:
+#     - consumer
+#   become: true
+
+- name: Start Grobid & ScienceParse on worker.
+  hosts: reflink-worker
+  vars_files:
+    - vars/secrets.yml
+    - vars/general.yml
+  tasks:
+    - name: make sure that docker-py is installed
+      pip: name=docker-py state=latest
+    - name: make sure that docker is installed
+      yum: name=docker state=latest
+    - name: ensure that docker is running
+      service: name=docker state=running
+    - name: add ec2-user to the docker group
+      user: name=ec2-user group=docker append=yes
+    - name: log in to docker
+      shell: $(aws ecr get-login --region=us-east-1)
+    - name: start Grobid
+      docker_container:
+        name: grobid
+        image: "{{ grobid_docker_image }}"
+        state: started
+        pull: yes
+        tty: yes
+        ports: "{{ grobid_exposed_port }}:{{ grobid_local_port }}"
+    - name: start ScienceParse
+      docker_container:
+        name: scienceparse
+        image: "{{ scienceparse_docker_image }}"
+        state: started
+        pull: yes
+        tty: yes
+        ports: "{{ scienceparse_exposed_port }}:{{ scienceparse_local_port }}"
+
 
 - name: Install worker role
   hosts: reflink-worker
@@ -39,6 +72,8 @@
   roles:
     - worker
   become: true
+
+
 
 # - name: Install web role
 #   hosts: reflink-web

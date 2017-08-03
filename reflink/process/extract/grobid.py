@@ -1,3 +1,5 @@
+"""Business logic for processing Grobid extracted references."""
+
 import os
 import re
 import io
@@ -5,26 +7,10 @@ import requests
 import xml.etree.ElementTree
 
 from reflink import types
-from reflink.status import HTTP_200_OK
+from reflink import logging
+from reflink.services import Grobid
 
-import logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
-    level=logging.INFO
-)
 logger = logging.getLogger(__name__)
-
-GROBID_API_ENDPOINT = os.environ.get(
-    'REFLINK_GROBID_API_ENDPOINT', 'processFulltextDocument'
-)
-GROBID_DOCKER_IMAGE = os.environ.get(
-    'REFLINK_GROBID_DOCKER_IMAGE',
-    'lfoppiano/grobid:0.4.1'
-)
-GROBID_DOCKER_PORT = os.environ.get(
-    'REFLINK_GROBID_DOCKER_PORT', 8889
-)
-GROBID_DOCKER_PORT = int(GROBID_DOCKER_PORT)
 
 RE_XMLNS = re.compile(r'^[{](.*?)[}].*')
 XMLNS = 'http://www.tei-c.org/ns/1.0'
@@ -174,40 +160,28 @@ def format_grobid_output(output: str) -> types.ReferenceMetadata:
     return references
 
 
-def extract_references(filename: str) -> types.ReferenceMetadata:
+def extract_references(filename: str, document_id: str) -> types.ReferenceMetadata:
     """
-    Send the pdf to the GROBID service that ought to be running on the
-    same machine. If not running, start it up, wait, then send the request.
+    Extract references from the PDF at ``filename`` using GROBID.
 
-    Return the reponse formatted to the schema for all references
+    Sends the PDF to Grobid, which returns an XML response with extracted
+    reference metadata.
 
     Parameters
     ----------
     filename : str
-        Name of the pdf from which to extract references
+        Location of the PDF from which to extract references.
 
     Returns
     -------
-    reference_docs : list of dicts
+    reference_docs : list
         Dictionary of reference metadata with metadata separated into author,
         journal, year, etc
     """
+    grobid = Grobid()
 
-    with open(filename, 'rb') as pdfhandle:
-        url = 'http://localhost:{}/{}'.format(
-            GROBID_DOCKER_PORT, GROBID_API_ENDPOINT
-        )
-        files = {'input': pdfhandle}
-        response = requests.post(url, files=files)
-
-        if response.status_code != HTTP_200_OK:
-            msg = 'GROBID ({}) return error code {} ({}): {}'.format(
-                response.url, response.status_code,
-                response.reason, response.content
-            )
-            logger.error(msg)
-            raise RuntimeError(msg)
-
-        data = response.content
-
+    try:
+        data = grobid.session.extract_references(filename)
+    except IOError as e:
+        raise RuntimeError('Extraction with Grobid failed: %s' % e) from e
     return format_grobid_output(data)

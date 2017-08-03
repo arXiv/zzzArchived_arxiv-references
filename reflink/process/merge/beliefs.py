@@ -2,11 +2,14 @@ import os
 import re
 from functools import partial
 
+from reflink.types import Callable
+
 from reflink.process.textutil import clean_text
 from reflink.process.extract.regex_arxiv import REGEX_ARXIV_STRICT
 from reflink.process.extract.regex_identifiers import (
     REGEX_DOI, REGEX_ISBN_10, REGEX_ISBN_13
 )
+
 
 try:
     from array import array
@@ -57,6 +60,39 @@ def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
     return sum(score) / len(score)
 
 
+def likely(func, min_prob: float=0.0, max_prob: float=1.0) -> Callable:
+    def call(value: object) -> float:
+        return max(min(func(value), max_prob), min_prob)
+    return call
+
+
+def does_not_contain_arxiv(value: object) -> float:
+    return 0. if 'arxiv' in value else 1.
+
+
+def contains(substring: str, false_prob: float=0.0,
+             true_prob: float=1.0) -> Callable:
+    def call(value: object) -> float:
+        if not isinstance(value, str):
+            return 0.0
+        return true_prob if substring in value else false_prob
+    return call
+
+
+def ends_with(substring: str, false_prob: float=0.0,
+              true_prob: float=1.0) -> Callable:
+    def call(value: object) -> float:
+        if not isinstance(value, str):
+            return 0.0
+        return true_prob if value.endswith(substring) else false_prob
+    return call
+
+
+def doesnt_end_with(substring: str, false_prob: float=0.0,
+                    true_prob: float=1.0) -> Callable:
+    return ends_with(substring, false_prob=true_prob, true_prob=false_prob)
+
+
 def is_integer(value: str) -> float:
     try:
         int(value)
@@ -65,11 +101,13 @@ def is_integer(value: str) -> float:
     return 1.0
 
 
-def is_integer_like(value: str) -> float:
-    numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
-    if any([is_integer(i) for i in numbers]):
+def is_integer_like(value: object) -> float:
+    if isinstance(value, int):
         return 1.0
-    return 0.0
+    if len(value) == 0:
+        return 0.0
+    numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
+    return (1. * sum([is_integer(i) for i in numbers]))/len(value)
 
 
 def is_year(value: str) -> float:
@@ -84,9 +122,11 @@ def is_year(value: str) -> float:
 
 def is_year_like(value: str) -> float:
     numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
-    if any([is_year(i) for i in numbers]):
-        return 1.0
-    return 0.0
+
+    if not numbers:
+        return 0.0
+
+    return (1. * sum([is_year(i) for i in numbers]))/len(numbers)
 
 
 def is_pages(value: str) -> float:
@@ -142,14 +182,14 @@ else:
 
 BELIEF_FUNCTIONS = {
     'title': [words_title],
-    'raw': [words_auth, words_title],
+    'raw': [words_title, words_auth],
     'authors': [words_auth],
-    'doi': [valid_doi],
-    'volume': unity,
-    'issue': unity,
+    'doi': [valid_doi, contains('.'), contains('/'), doesnt_end_with('-')],
+    'volume': [likely(is_integer_like, min_prob=0.5)],
+    'issue': [likely(is_integer_like, min_prob=0.5)],
     'pages': [is_integer_like, is_pages],
-    'source': unity,
-    'year': [is_integer, is_integer_like, is_year, is_year_like],
+    'source': [does_not_contain_arxiv],
+    'year': [is_integer_like, is_integer, is_year_like, is_year],
     'identifiers': [valid_identifier]
 }
 
@@ -197,3 +237,29 @@ def identity_belief(reference: dict) -> dict:
         The beliefs about the values within a record, all unity
     """
     return {key: unity(value) for key, value in reference.keys()}
+
+
+def validate(aligned_references: list) -> list:
+    """
+    Apply expectations about field values to generate probabilities.
+
+    Parameters
+    ----------
+    aligned_references : list
+        Each item represents an aligned reference; should be a two-tuple with
+        the extractor name (``str``) and the reference object (``dict``).
+
+    Returns
+    -------
+    list
+        Probabilities for each value in each field in each reference. Should
+        have the same shape as ``aligned_references``, except that values are
+        replaced by floats in the range 0.0 to 1.0.
+    """
+
+    return [
+        [
+            (extractor, calculate_belief(metadatum))
+            for extractor, metadatum in reference
+        ] for reference in aligned_references
+    ]
