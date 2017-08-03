@@ -14,8 +14,11 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def create_failed_event(task_id: str, document_id: str) -> dict:
+def create_failed_event(task_id: str, document_id: str, *args) -> dict:
     """Commemorate extraction failure."""
+    logger.info(task_id)
+    logger.info(document_id)
+    logger.info(str(args))
     try:
         extractions = ExtractionEvents().session
         data = extractions.create(document_id, state=extractions.FAILED)
@@ -27,8 +30,11 @@ def create_failed_event(task_id: str, document_id: str) -> dict:
 
 
 @shared_task
-def create_success_event(extraction_id: str, document_id: str) -> dict:
+def create_success_event(extraction_id: str, document_id: str, *args) -> dict:
     """Commemorate extraction success."""
+    logger.info(extraction_id)
+    logger.info(document_id)
+    logger.info(str(args))
     try:
         extractions = ExtractionEvents().session
         data = extractions.create(document_id, state=extractions.COMPLETED,
@@ -41,7 +47,7 @@ def create_success_event(extraction_id: str, document_id: str) -> dict:
 
 
 @shared_task
-def store(document_id: str, metadata: list, version: str=VERSION) -> str:
+def store(metadata: list, document_id: str) -> str:
     """
     Deposit extracted references in the datastore.
 
@@ -61,7 +67,7 @@ def store(document_id: str, metadata: list, version: str=VERSION) -> str:
     try:
         # Should return the data with reference hashes inserted.
         extraction, metadata = datastore.session.create(document_id, metadata,
-                                                        version)
+                                                        VERSION)
     except IOError as e:    # Separating this out in case we want to retry.
         msg = 'Could not store metadata for document %s: %s' % (document_id, e)
         logger.error(msg)

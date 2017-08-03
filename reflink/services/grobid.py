@@ -2,7 +2,7 @@
 
 import requests
 import os
-from reflink.status import HTTP_200_OK
+from reflink.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
 from flask import _app_ctx_stack as stack
 
 
@@ -31,7 +31,8 @@ class GrobidSession(object):
             raise IOError('Failed to connect to Grobid at %s: %s' %
                           (self.endpoint, e)) from e
 
-        if head.status_code != HTTP_200_OK:
+        # Grobid doesn't allow HEAD, but at least a 405 tells us it's running.
+        if head.status_code != HTTP_405_METHOD_NOT_ALLOWED:
             raise IOError('Failed to connect to Grobid at %s: %s' %
                           (self.endpoint, head.content))
 

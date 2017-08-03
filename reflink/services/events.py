@@ -32,7 +32,8 @@ class ExtractionEventSession(object):
         try:
             self._create_table()
         except ClientError as e:
-            logger.info('Table already exists: %s' % self.table_name)
+            # logger.info('Table already exists: %s' % self.table_name)
+            pass
         self.table = self.dynamodb.Table(self.table_name)
 
     def _create_table(self) -> None:
@@ -72,7 +73,7 @@ class ExtractionEventSession(object):
 
         entry = dict(extra)
         entry.update({
-            'created': datetime.now(),
+            'created': datetime.now().isoformat(),
             'document': document_id,
             'state': state,
         })

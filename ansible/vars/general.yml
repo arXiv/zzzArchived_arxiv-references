@@ -8,4 +8,4 @@ scienceparse_docker_image: "626657773168.dkr.ecr.us-east-1.amazonaws.com/arxiv/s
 scienceparse_exposed_port: 8888
 scienceparse_local_port: 8080
 
-redis_url: arxiv-reflink.vekyzh.0001.use1.cache.amazonaws.com:6379
+redis_url: arxiv-reflink-2.vekyzh.0001.use1.cache.amazonaws.com:6379

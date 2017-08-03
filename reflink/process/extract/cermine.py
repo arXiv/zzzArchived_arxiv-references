@@ -2,6 +2,7 @@
 
 import regex as re
 import os
+from io import BytesIO
 import shutil
 import subprocess
 import xml.etree.ElementTree
@@ -165,7 +166,7 @@ def cxml_format_document(root, documentid=''):
     return references
 
 
-def convert_cxml_json(raw_data: str, document_id: str) -> dict:
+def convert_cxml_json(raw_data: bytes, document_id: str) -> dict:
     """
     Transforms a CERMINE XML file into human and machine readable references:
         1. Reference lines i.e. the visual form in the paper
@@ -181,7 +182,7 @@ def convert_cxml_json(raw_data: str, document_id: str) -> dict:
     -------
     see :func:`cermine_extract_references`
     """
-    root = xml.etree.ElementTree.fromstring(raw_data)
+    root = xml.etree.ElementTree.parse(BytesIO(raw_data)).getroot()
     return cxml_format_document(root, document_id)
 
 

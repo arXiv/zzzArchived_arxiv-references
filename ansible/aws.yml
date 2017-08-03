@@ -16,15 +16,15 @@
   roles:
     - reflink
 
-# - name: Install consumer role
-#   hosts: reflink-consumer
-#   vars:
-#     - reflink_user: bob
-#     - aws_region: us-east-1
-#     - s3_bucket: "arxiv-reflink-proto"
-#   roles:
-#     - consumer
-#   become: true
+- name: Install consumer role
+  hosts: reflink-consumer
+  vars:
+    - reflink_user: bob
+    - aws_region: us-east-1
+    - s3_bucket: "arxiv-reflink-proto"
+  roles:
+    - consumer
+  become: true
 
 - name: Start Grobid & ScienceParse on worker.
   hosts: reflink-worker
