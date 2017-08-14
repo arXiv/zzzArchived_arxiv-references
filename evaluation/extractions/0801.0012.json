@@ -1,0 +1,356 @@
+[
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Tomonaga",
+                "fullname": "S. Tomonaga"
+            }
+        ],
+        "journal": "Prog. Theor. Phys.",
+        "volume": "1",
+        "issue": "27",
+        "year": 1946,
+        "raw": "S. Tomonaga, Prog. Theor. Phys. 1, 27 (1946)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Schwinger",
+                "fullname": "J. Schwinger"
+            },
+            {
+                "forename": "V.",
+                "surname": "Weisskopf",
+                "fullname": "V. Weisskopf"
+            }
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "73",
+        "issue": "1272A",
+        "year": 1948,
+        "raw": "J. Schwinger, V. Weisskopf, Phys. Rev. 73, 1272A (1948)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Schwinger",
+                "fullname": "J. Schwinger"
+            },
+        ],
+        "journal": "J. Math. Phys.",
+        "volume": "2",
+        "issue": "407",
+        "year": 1961,
+        "raw": "J. Schwinger, J. Math. Phys. 2, 407 (1961); Particles and Sources, vol. I., II., and III.,Addison-Wesley, Cambridge, Mass.
+1970-73."
+    },
+    {
+        "authors": [
+            {
+                "forename": "L. V.",
+                "surname": "Keldysh",
+                "fullname": "L. V. Keldysh"
+            }
+        ],
+        "journal": "Zh. Eksp. Teor. Fiz.",
+        "volume": "47",
+        "issue": "1515",
+        "year": 1964,
+        "raw": "L. V. Keldysh, Zh. Eksp. Teor. Fiz. 47, 1515 (1964) (Sov. Phys. JETP 20, 1018 (1965))."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Polonyi",
+                "fullname": "J. Polonyi"
+            }
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "D74",
+        "issue": "065014",
+        "year": 2006,
+        "raw": "J. Polonyi, Phys. Rev. D74, 065014 (2006)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "H. D.",
+                "surname": "Zeh",
+                "fullname": "H. D. Zeh"
+            }
+        ],
+        "journal": "journalFound. Phys",
+        "volume": "11970",
+        "raw": "H. D. Zeh, journalFound. Phys.11970."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "W. H. Zurek",
+                "forename": "W. H.",
+                "surname": "Zurek"
+            }
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "D24",
+        "issue": "1516",
+        "year": 1981,
+        "raw": "W. H. Zurek, Phys. Rev. D24, 1516 (1981)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "W. H. Zurek",
+                "forename": "W. H.",
+                "surname": "Zurek"
+            }
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "D26",
+        "issue": "1862",
+        "year": 1982,
+        "raw": "W. H. Zurek, Phys. Rev. D26, 1862 (1982)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "W. H. Zurek",
+                "forename": "W. H.",
+                "surname": "Zurek"
+            },
+            {
+                "fullname": "S. Habib",
+                "forename": "S.",
+                "surname": "Habib"
+            }
+            {
+                "fullname": "J. P. Paz",
+                "forename": "J. P.",
+                "surname": "Paz"
+            }
+        ],
+        "journal": "Phys. Rev. Lett.",
+        "volume": "70",
+        "issue": "1187",
+        "year": 1993,
+        "raw": "W. H. Zurek, S. Habib, J. P. Paz, Phys. Rev. Lett. 70, 1187 (1993)."
+    },
+    {
+        "authors": [
+            {
+                "surname": "Wisemann",
+                "forename": "H. M.",
+                "fullname": "H. M. Wisemann"
+            },
+            {
+                "fullname": "J. A. Vaccaro",
+                "forename": "J. A.",
+                "surname": "Vaccaro"
+            }
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "A65",
+        "issue": "043606",
+        "year": 2002,
+        "raw": "H. M. Wisemann, J. A. Vaccaro, Phys. Rev. A65, 043606 (2002)."
+    },
+    {
+        "authors": [
+            {
+                "surname": "Dziarmaga",
+                "forename": "J.",
+                "fullname": "J. Dziarmaga"
+            },
+            {
+                "fullname": "A. R. Dalvit",
+                "forename": "A. R.",
+                "surname": "Dalvit"
+            },
+            {
+                "fullname": "W. H. Zurek",
+                "forename": "W. H.",
+                "surname": "Zurek"
+            },
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "A69",
+        "issue": "022109",
+        "year": 2004,
+        "raw": "J. Dziarmaga, A. R. Dalvit, W. H. Zurek, Phys. Rev. A69, 022109 (2004)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "D. A. Dalvit",
+                "forename": "D. A.",
+                "surname": "Dalvit"
+            },
+            {
+                "surname": "Dziarmaga",
+                "forename": "J.",
+                "fullname": "J. Dziarmaga"
+            },
+            {
+                "fullname": "W. H. Zurek",
+                "forename": "W. H.",
+                "surname": "Zurek"
+            },
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "A72",
+        "issue": "062101",
+        "year": 2005,
+        "raw": "D. A. Dalvit, J. Dziarmaga, W. H. Zurek, Phys. Rev. A72, 062101 (2005)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "H.Y. Elze",
+                "forename": "H.Y.",
+                "surname": "H.Y. Elze"
+            },
+        ],
+        "source": "Proceedings of the 5th Rio de Janeiro International Workshop on Relativistic Aspects of Nuclear Physics",
+        "arxiv": "9710063",
+        "raw": "H.Y. Elze, in the Proceedings of the 5th Rio de Janeiro International Workshop on Relativistic Aspects of Nuclear Physics,
+        eds. T. Kodama et al. (World Scientific), arXiv:quant-ph/9710063."
+    },
+    {
+        "authors": [
+            {
+                "surname": "Dreyer",
+                "forename": "O.",
+                "fullname": "O. Dreyer"
+            }
+        ],
+        "journal": "J. Phys. Conf. Ser.",
+        "volume": "67",
+        "issue": "012051",
+        "year": 2007,
+        "raw": "O. Dreyer, J. Phys. Conf. Ser. 67, 012051 (2007)."
+    },
+    {
+        "authors": [
+            {
+                "surname": "Groisman",
+                "forename": "B.",
+                "fullname": "B. Groisman"
+            },
+            {
+                "surname": "Kenigsberg",
+                "forename": "D.",
+                "fullname": "D. Kenigsberg"
+            }
+            ,
+            {
+                "surname": "Mor",
+                "forename": "T.",
+                "fullname": "T. Mor"
+            }
+        ],
+        "title": "”Quantumness” versus ”Classicality” of Quantum States",
+        "arxiv": "0703103",
+        "year": 2007,
+        "raw": "B. Groisman, D. Kenigsberg, T. Mor, ”Quantumness” versus ”Classicality” of Quantum States, Preprint arXiv:quant-
+        ph/0703103, (2007)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "G.",
+                "surname": "Mahajan",
+                "fullname": "G. Mahajan"
+            },
+            {
+                "forename": "T.",
+                "surname": "Padmanabhan",
+                "fullname": "T. Padmanabhan"
+            }
+        ],
+        "title": "Particle creation, classicality and related issues in quantum field theory: I. Formalism and
+        toy models",
+        "arxiv": "0708.1233",
+        "year": 2007,
+        "raw": "G. Mahajan, T. Padmanabhan Particle creation, classicality and related issues in quantum field theory: I. Formalism and
+        toy models, Preprint arXiv:0708.1233, (2007)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "V. V. Dodonov",
+                "forename": "V. V.",
+                "surname": "Dodonov"
+            },
+            {
+                "surname": "Reno",
+                "forename": "M. B.",
+                "fullname": "M. B. Reno"
+            }
+        ],
+        "journal": "Phys. Lett.",
+        "volume": "A308",
+        "issue": "249",
+        "year": 2003,
+        "raw": "V.V. Dodonov, M. B. Reno, Phys. Lett. A308, 249 (2003)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "V. I. Arnold",
+                "forename": "V. I.",
+                "surname": "Arnold"
+            },
+            {
+                "surname": "Avez",
+                "forename": "A.",
+                "fullname": "A. Avez"
+            }
+        ],
+        "title": "Ergodic Problems in Classical Mechanics",
+        "publisher": "Benjamin, New York",
+        "year": 1968,
+        "raw": "V. I. Arnold, A. Avez, Ergodic Problems in Classical Mechanics, Benjamin, New York (1968)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "M. Feingold",
+                "forename": "M.",
+                "surname": "Feingold"
+            },
+            {
+                "surname": "Peres",
+                "forename": "A.",
+                "fullname": "A. Peres"
+            }
+        ],
+        "journal": "Phys. Rev.",
+        "volume": "A34",
+        "issue": "591",
+        "year": 1968,
+        "raw": "M. Feingold, A. Peres, Phys. Rev. A34, 591 (1968)."
+    },
+    {
+        "authors": [
+            {
+                "fullname": "R. P. Feynman",
+                "forename": "R. P.",
+                "surname": "Feynman"
+            },
+            {
+                "surname": "Vernon",
+                "forename": "F. L.",
+                "fullname": "F. L. Vernon"
+            }
+        ],
+        "journal": "Ann. Phys.",
+        "volume": "24",
+        "issue": "118",
+        "year": 1963,
+        "raw": "R. P. Feynman, F. L. Vernon, Ann. Phys. 24, 118 (1963).",
+    }
+]

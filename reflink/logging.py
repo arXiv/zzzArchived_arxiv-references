@@ -27,5 +27,5 @@ def getLogger(name: str, fmt: str=default_format,
     logger.setLevel(level)
     if LOGFILE is not None:
         logger.addHandler(logging.FileHandler(LOGFILE))
-    logger.propagate = False
+    # logger.propagate = False
     return logger

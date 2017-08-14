@@ -2,41 +2,38 @@
 
 from reflink.process.util import argmax
 from statistics import mean
-
+from collections import Counter, defaultdict
 from reflink import logging
 from itertools import repeat
+
+import editdistance    # For string similarity.
+
 
 logger = logging.getLogger(__name__)
 
 
-def arbitrate(metadata: list, valid: list, priors: list) -> dict:
+def _dict_repr(value: dict) -> str:
     """
-    Apply arbitration logic to raw extraction metadata for a single reference.
+    Represent a ``dict`` as a string-coerced list of ``(key, value)`` tuples.
 
     Parameters
     ----------
-    metadata : list
-        Each item is a two-tuple of ``(str, dict)``, representing an extractor
-        and its metadata record.
-    valid : list
-        Represents the probability of each field-value in each metadata record
-        being valid. Should have the same shape as ``metadata``, except that
-        field-values are replaced by ``float`` in the range 0.0 to 1.0.
-    priors : list
-        Represents prior level of trust in field output for each extractor.
+    value : dict
 
     Returns
     -------
-    dict
-        Authoritative metadata record for a single extracted reference.
+    str
     """
+    def _keysort(item):
+        return item[0]
+
+    return str([(key.strip(), value.strip()) for key, value
+                in sorted(value.items(), key=_keysort)])
 
 
-    metadata = dict(metadata)
-    valid = dict(valid)
-    priors = dict(priors)
-    extractors = list(metadata.keys())
-
+def _validate(extractors: list, priors: dict, metadata: dict,
+              valid: dict) -> None:
+    """Check that extraction data is valid for arbitrartion."""
     try:
         missing = set(extractors) - set(priors.keys())
         assert len(missing) == 0
@@ -51,24 +48,134 @@ def arbitrate(metadata: list, valid: list, priors: list) -> dict:
         logger.error(msg)
         raise ValueError(msg)
 
+
+def _similarity(value_a: object, value_b: object) -> float:
+    """
+    Calculate the similarity of two field values.
+
+    Parameters
+    ----------
+    value_a : object
+    value_b : object
+
+    Returns
+    -------
+    float
+        Similarity value in (0. - 1.).
+    """
+    # Since we need a value in 0-1., diff for numbers is 1. - % diff.
+    if type(value_a) in [int, float] and type(value_b) in [int, float]:
+        diff = value_a - value_b
+        return 1. - max(diff, -1. * diff)/mean([value_a, value_b])
+    elif type(value_a) is str and type(value_b) is str:
+        N_max = max(len(value_a), len(value_b))
+        return (N_max - editdistance.eval(value_a, value_b))/N_max
+    if type(value_a) != type(value_b):
+        logger.warning('Comparing objects with different types')
+    return 0.
+
+
+def _pool(metadata: dict, fields: list, prob_valid: object,
+          similarity_threshold: float=0.9) -> dict:
+    """Pool similar values for a field across extractions."""
+    # Similar values (above a threshold) for fields are grouped together, and
+    #  their P(value|extractor, field) are combined (summed, then normalized).
+    pooled = defaultdict(Counter)
+    for extractor, metadatum in metadata.items():
+        print(extractor, metadatum)
+        for field in fields:
+            value = metadatum.get(field, None)
+            if value is None:
+                continue
+            p_value = prob_valid(extractor, field)
+            match = False
+            for prev_value in list(pooled[field].keys()):
+                if _similarity(value, prev_value) >= similarity_threshold:
+                    p_prev = pooled[field][prev_value]
+                    # Given that there can be same variation in values here,
+                    #  if we encounter a substantially better value we should
+                    #  use it instead.
+                    if p_value > p_prev and value != prev_value:
+                        # New assignment inherits all of the previous weight.
+                        pooled[field][value] += p_value + p_prev
+                        del pooled[field][prev_value]   # Cleanup.
+                    else:
+                        pooled[field][prev_value] += p_value
+                    match = True
+            if not match:
+                pooled[field][value] += p_value
+    # Return a native dict for cleanliness' sake.
+    return {field: {value: score for value, score in scores.items()}
+            for field, scores in pooled.items()}
+
+
+def _select(pooled: dict) -> tuple:
+    """Select the most likely values given their pooled weights."""
+    result = {}
+    max_probs = []
+    print(pooled)
+    for field, counts in pooled.items():
+        # Feature-normalize accross distinct values.
+        values, norm_prob = zip(*[(value, count/sum(counts.values()))
+                                  for value, count in counts.items()])
+        result[field] = values[argmax(norm_prob)]
+        max_probs.append(max(norm_prob))
+        print(counts)
+    print(max_probs)
+    return result, mean(max_probs)
+
+
+def arbitrate(metadata: list, valid: list, priors: list,
+              similarity_threshold: float=0.9) -> dict:
+    """
+    Apply arbitration logic to raw extraction metadata for a single reference.
+
+    Parameters
+    ----------
+    metadata : list
+        Each item is a two-tuple of ``(str, dict)``, representing an extractor
+        and its metadata record.
+    valid : list
+        Represents the probability of each field-value in each metadata record
+        being valid. Should have the same shape as ``metadata``, except that
+        field-values are replaced by ``float`` in the range 0.0 to 1.0.
+    priors : list
+        Represents prior level of trust in field output for each extractor.
+    similarity_threshold : float
+        Minimum similarity (0.-1.) to consider two values identical.
+
+    Returns
+    -------
+    dict
+        Authoritative metadata record for a single extracted reference.
+    """
+    # Kind of hoakie to coerce to dict, but it does make some things easier.
+    metadata = dict(metadata)
+    valid = dict(valid)
+    priors = dict(priors)
+    extractors = list(metadata.keys())
+
+    _validate(extractors, priors, metadata, valid)
+
+    # We want to know all of the unique field names present across the aligned
+    #  extractions.
     fields = list({
         field for metadatum in metadata.values() for field in metadatum.keys()
     })
 
-    probs = [
-        [
-            valid[extractor].get(field, 0.) * priors[extractor].get(field, priors[extractor].get('__all__', 0.))
-            for extractor in extractors
-        ] for field in fields
-    ]
+    # Pulling this out for readability.
+    def _prob_valid(extractor: str, field: str) -> float:
+        """The probability that the value for ``field`` is correct."""
+        p_val = valid[extractor].get(field, 0.)
+        p_extr = priors[extractor].get('__all__', 0.)
+        p_extr_field = priors[extractor].get(field, p_extr)
+        return p_val * p_extr_field
 
-    optimal = [argmax(prob) for prob in probs]
-    score = mean([prob[optimal[i]] for i, prob in enumerate(probs)])
+    pooled = _pool(metadata, fields, _prob_valid,
+                   similarity_threshold=similarity_threshold)
 
-    return {
-        field: metadata[extractors[optimal[i]]][field]
-        for i, field in enumerate(fields)
-    }, score
+    # Here we select the value with the highest P for each field.
+    return _select(pooled)
 
 
 def arbitrate_all(metadata_all: list, valid_all: list,
@@ -91,6 +198,5 @@ def arbitrate_all(metadata_all: list, valid_all: list,
         Optimal metadata for cited references. Each item is a ``dict``. See
         :func:`.arbitrate` for more details.
     """
-
     return list(map(arbitrate, metadata_all, valid_all,
                     repeat(priors_all, len(metadata_all))))

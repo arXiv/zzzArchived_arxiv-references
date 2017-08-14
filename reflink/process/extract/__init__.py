@@ -12,8 +12,7 @@ Extractor:
 - Returns reference lines and metadata.
 """
 
-from reflink.process.extract import cermine, grobid, refextract
-from reflink.process.extract import regex_identifiers, scienceparse
+from reflink.process.extract import cermine, grobid, refextract, scienceparse
 from reflink import logging
 
 logger = logging.getLogger(__name__)
@@ -26,7 +25,12 @@ EXTRACTORS = [
 ]
 
 
-def extract(pdf_path: str, document_id: str) -> dict:
+def getDefaultExtractors():
+    return EXTRACTORS
+
+
+def extract(pdf_path: str, document_id: str,
+            extractors: list=getDefaultExtractors()) -> dict:
     """
     Perform reference extractions using all available extractors.
 
@@ -36,6 +40,8 @@ def extract(pdf_path: str, document_id: str) -> dict:
         Path to an arXiv PDF on the filesystem.
     document_id : str
         Identifier for an arXiv paper.
+    extractors : list
+        Tuples of ('extractor name', callable).
 
     Returns
     -------
@@ -45,7 +51,8 @@ def extract(pdf_path: str, document_id: str) -> dict:
     """
 
     extractions = {}
-    for name, extractor in EXTRACTORS:
+    for name, extractor in extractors:
+        logger.info(name)
         try:
             extractions[name] = extractor(pdf_path, document_id)
         except Exception as e:
