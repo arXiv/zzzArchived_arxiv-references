@@ -1,3 +1,5 @@
+"""Align records across multiple extractions."""
+
 import copy
 import statistics
 from itertools import islice, chain
@@ -139,8 +141,8 @@ def align_records(records: dict) -> List[List[tuple]]:
     # calculating the cutoff
     jac = {}
     for i, rec0 in islice(enumerate(records), 0, R-1):
-        for  j, rec1 in islice(enumerate(records), i+1, R):
-            jac[i,j] = _jacard_matrix(rec0, rec1, N)
+        for j, rec1 in islice(enumerate(records), i+1, R):
+            jac[i, j] = _jacard_matrix(rec0, rec1, N)
 
     cutoff = _cutoff(flatten(copy.deepcopy(jac)))
 

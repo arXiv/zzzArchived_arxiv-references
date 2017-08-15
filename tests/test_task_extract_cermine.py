@@ -8,6 +8,7 @@ from reflink.process.extract import cermine, grobid, scienceparse
 
 data_directory = 'tests/data'
 
+
 def article1(ext):
     return '{}.{}'.format(
         os.path.join(data_directory, '1702.07336'), ext
@@ -53,7 +54,7 @@ class TestCERMINEExtractor(unittest.TestCase):
         cxml_document_path = article1('cermxml')
         json_document_path = article1('cermine.json')
 
-        with open(cxml_document_path) as f:
+        with open(cxml_document_path, 'rb') as f:
             doc_test = cermine.convert_cxml_json(f.read(), '1702.07336')
         doc_orig = json.load(open(json_document_path))
 
@@ -61,7 +62,7 @@ class TestCERMINEExtractor(unittest.TestCase):
 
     def test_cxml_json_schema(self):
         cxml_document_path = article1('cermxml')
-        with open(cxml_document_path) as f:
+        with open(cxml_document_path, 'rb') as f:
             jsondoc = cermine.convert_cxml_json(f.read(), '1702.07336')
 
         schema_path = 'schema/ExtractedReference.json'

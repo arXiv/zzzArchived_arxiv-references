@@ -1,0 +1,640 @@
+[
+    {
+        "authors": [
+            {
+                "forename": "E.",
+                "surname": "Agol",
+                "fullname": "E. Agol"
+            },
+            {
+                "forename": "N. B.",
+                "surname": "Cowan",
+                "fullname": "N. B. Cowan"
+            },
+            {
+                "forename": "H. A.",
+                "surname": "Knutson",
+                "fullname": "H. A. Knutson"
+            },
+            {
+                "forename": "D.",
+                "surname": "Deming",
+                "fullname": "D. Deming"
+            },
+            {
+                "forename": "J. H.",
+                "surname": "Steffen",
+                "fullname": "J. H. Steffen"
+            },
+            {
+                "forename": "G. W.",
+                "surname": "Henry",
+                "fullname": "G. W. Henry"
+            },
+            {
+                "forename": "D.",
+                "surname": "Charbonneau",
+                "fullname": "D. Charbonneau"
+            }
+        ],
+        "journal": "ApJ",
+        "volume": "721",
+        "pages": "1861",
+        "year": "2010",
+        "raw": "Agol, E., Cowan, N. B., Knutson, H. A., Deming, D., Steffen, J. H., Henry, G. W., & Charbonneau, D. 2010, ApJ, 721, 1861"
+    },
+    {
+        "authors": [
+            {
+                "forename": "R.",
+                "surname": "Alonso",
+                "fullname": "R. Alonso"
+            }
+        ],
+        "journal": "A&A",
+        "volume": "506",
+        "pages": "353",
+        "year": "2009",
+        "raw": "Alonso, R. et al. 2009a, A&A, 506, 353"
+    },
+    {
+        "authors": [
+            {
+                "forename": "R.",
+                "surname": "Alonso",
+                "fullname": "R. Alonso"
+            },
+            {
+                "forename": "H. J.",
+                "surname": "Deeg",
+                "fullname": "H. J. Deeg"
+            },
+            {
+                "forename": "P.",
+                "surname": "Kabath",
+                "fullname": "P. Kabath"
+            },
+            {
+                "forename": "M.",
+                "surname": "Rabus",
+                "fullname": "M. Rabus"
+            }
+        ],
+        "journal": "A&AJ",
+        "volume": "139",
+        "pages": "1481",
+        "year": "2010",
+        "raw": "Alonso, R., Deeg, H. J., Kabath, P., & Rabus, M. 2010, AJ, 139, 1481"
+    },
+    {
+        "authors": [
+            {
+                "forename": "R.",
+                "surname": "Alonso",
+                "fullname": "R. Alonso"
+            },
+            {
+                "forename": "T.",
+                "surname": "Guillot",
+                "fullname": "T. Guillot"
+            },
+            {
+                "forename": "T.",
+                "surname": "Mazeh",
+                "fullname": "T. Mazeh"
+            },
+            {
+                "forename": "S.",
+                "surname": "Aigrain",
+                "fullname": "S. Aigrain"
+            },
+            {
+                "forename": "A.",
+                "surname": "Alapini",
+                "fullname": "A. Alapini"
+            },
+            {
+                "forename": "P.",
+                "surname": "Barge",
+                "fullname": "P. Barge"
+            },
+            {
+                "forename": "A.",
+                "surname": "Hatzes",
+                "fullname": "A. Hatzes"
+            },
+            {
+                "forename": "F.",
+                "surname": "Pont",
+                "fullname": "F. Pont"
+            }
+        ],
+        "journal": "A&A",
+        "volume": "501",
+        "pages": "L23",
+        "year": "2009",
+        "raw": "Alonso, R., Guillot, T., Mazeh, T., Aigrain, S., Alapini, A., Barge, P., Hatzes, A., & Pont, F. 2009b, A&A, 501, L23"
+    },
+    {
+        "authors": [
+            {
+                "forename": "D. R.",
+                "surname": "Anderson",
+                "fullname": "D. R. Anderson"
+            }
+        ],
+        "journal": "A&A",
+        "volume": "513",
+        "pages": "L3+",
+        "year": "2010",
+        "raw": "Anderson, D. R. et al. 2010, A&A, 513, L3+"
+    },
+    {
+        "authors": [
+            {
+                "forename": "T. S.",
+                "surname": "Barman",
+                "fullname": "T. S. Barman"
+            }
+        ],
+        "journal": "ApJ",
+        "volume": "676",
+        "pages": "L61",
+        "year": "2008",
+        "raw": "Barman, T. S. 2008, ApJ, 676, L61"
+    },
+    {
+        "authors": [
+            {
+                "forename": "J. R.",
+                "surname": "Barnes",
+                "fullname": "J. R. Barnes"
+            },
+            {
+                "forename": "T. S.",
+                "surname": "Barman",
+                "fullname": "T. S. Barman"
+            },
+            {
+                "forename": "L.",
+                "surname": "Prato",
+                "fullname": "L. Prato"
+            },
+            {
+                "forename": "D.",
+                "surname": "Segransan",
+                "fullname": "D. Segransan"
+            },
+            {
+                "forename": "H. R. A.",
+                "surname": "Jones",
+                "fullname": "H. R. A. Jones"
+            },
+            {
+                "forename": "C. J.",
+                "surname": "Leigh",
+                "fullname": "C. J. Leigh"
+            },
+            {
+                "forename": "A.",
+                "surname": "Collier Cameron",
+                "fullname": "A. Collier Cameron"
+            },
+            {
+                "forename": "D. J.",
+                "surname": "Pinfield",
+                "fullname": "D. J. Pinfield"
+            }
+        ],
+        "journal": "MNRAS",
+        "volume": "382",
+        "pages": "473",
+        "year": "2007",
+        "raw": "Barnes, J. R., Barman, T. S., Prato, L., Segransan, D., Jones, H. R. A., Leigh, C. J., Collier Cameron, A., & Pinfield, D. J. 2007, MNRAS, 382, 473"
+    },
+    {
+        "authors": [
+            {
+                "forename": "I. M.",
+                "surname": "Beerer",
+                "fullname": "I. M. Beerer"
+            }
+        ],
+        "year": "2010",
+        "arxiv": "1011.4066",
+        "raw": "Beerer, I. M., et al. 2010, arXiv:1011.4066"
+    },
+    {
+        "authors": [
+            {
+                "forename": "W. J.",
+                "surname": "Borucki",
+                "fullname": "W. J. Borucki"
+            }
+        ],
+        "year": "2009",
+        "journal": "Science",
+        "volume": "325",
+        "pages": "709",
+        "raw": "Borucki, W. J. et al. 2009, Science, 325, 709"
+    },
+    {
+        "authors": [
+            {
+                "forename": "A.",
+                "surname": "Burrows",
+                "fullname": "A. Burrows"
+            },
+            {
+                "forename": "J.",
+                "surname": "Budaj",
+                "fullname": "J. Budaj"
+            },
+            {
+                "forename": "I.",
+                "surname": "Hubeny",
+                "fullname": "I. Hubeny"
+            }
+        ],
+        "year": "2008",
+        "journal": "ApJ",
+        "volume": "678",
+        "pages": "1436",
+        "raw": "Burrows, A., Budaj, J., & Hubeny, I. 2008, ApJ, 678, 1436"
+    },
+    {
+        "authors": [
+            {
+                "forename": "A.",
+                "surname": "Burrows",
+                "fullname": "A. Burrows"
+            },
+            {
+                "forename": "I.",
+                "surname": "Hubeny",
+                "fullname": "I. Hubeny"
+            },
+            {
+                "forename": "J.",
+                "surname": "Budaj",
+                "fullname": "J. Budaj"
+            },
+            {
+                "forename": "H. A.",
+                "surname": "Knutson",
+                "fullname": "H. A. Knutson"
+            },
+            {
+                "forename": "D.",
+                "surname": "Charbonneau",
+                "fullname": "D. Charbonneau"
+            }
+        ],
+        "year": "2007",
+        "journal": "ApJ",
+        "volume": "668",
+        "pages": "L171",
+        "raw": "Burrows, A., Hubeny, I., Budaj, J., Knutson, H. A., & Charbonneau, D. 2007, ApJ, 668, L171"
+    },
+    {
+        "authors": [
+            {
+                "forename": "A.",
+                "surname": "Burrows",
+                "fullname": "A. Burrows"
+            },
+            {
+                "forename": "M. S.",
+                "surname": "Marley",
+                "fullname": "M. S. Marley"
+            },
+            {
+                "forename": "C. M.",
+                "surname": "Sharp",
+                "fullname": "C. M. Sharp"
+            }
+        ],
+        "year": "2000",
+        "journal": "ApJ",
+        "volume": "531",
+        "pages": "438",
+        "raw": "Burrows, A., Marley, M. S., & Sharp, C. M. 2000, ApJ, 531, 438"
+    },
+    {
+        "authors": [
+            {
+                "forename": "A.",
+                "surname": "Burrows",
+                "fullname": "A. Burrows"
+            },
+            {
+                "forename": "D.",
+                "surname": "Sudarsky",
+                "fullname": "D. Sudarsky"
+            },
+            {
+                "forename": "I.",
+                "surname": "Hubeny",
+                "fullname": "I. Hubeny"
+            }
+        ],
+        "year": "2006",
+        "journal": "ApJ",
+        "volume": "650",
+        "pages": "1140",
+        "raw": "Burrows, A., Sudarsky, D., & Hubeny, I. 2006, ApJ, 650, 1140"
+    },
+    {
+        "authors": [
+            {
+                "forename": "C. J.",
+                "surname": "Campo",
+                "fullname": "C. J. Campo"
+            }
+        ],
+        "year": "2010",
+        "raw": "Campo, C. J. et al. 2010, ArXiv e-prints"
+    },
+    {
+        "authors": [
+            {
+                "forename": "D.",
+                "surname": "Charbonneau",
+                "fullname": "D. Charbonneau"
+            }
+        ],
+        "year": "2005",
+        "journal": "ApJ",
+        "volume": "626",
+        "pages": "523",
+        "raw": "Charbonneau, D. et al. 2005, ApJ, 626, 523"
+    },
+    {
+        "authors": [
+            {
+                "forename": "D.",
+                "surname": "Charbonneau",
+                "fullname": "D. Charbonneau"
+            },
+            {
+                "forename": "H. A.",
+                "surname": "Knutson",
+                "fullname": "H. A. Knutson"
+            },
+            {
+                "forename": "T.",
+                "surname": "Barman",
+                "fullname": "T. Barman"
+            },
+            {
+                "forename": "L. E.",
+                "surname": "Allen",
+                "fullname": "L. E. Allen"
+            },
+            {
+                "forename": "M.",
+                "surname": "Mayor",
+                "fullname": "M. Mayor"
+            },
+            {
+                "forename": "S. T.",
+                "surname": "Megeath",
+                "fullname": "S. T. Megeath"
+            },
+            {
+                "forename": "D.",
+                "surname": "Queloz",
+                "fullname": "D. Queloz"
+            },
+            {
+                "forename": "S.",
+                "surname": "Udry",
+                "fullname": "S. Udry"
+            }
+        ],
+        "year": "2008",
+        "journal": "ApJ",
+        "volume": "686",
+        "pages": "1341",
+        "raw": "Charbonneau, D., Knutson, H. A., Barman, T., Allen, L. E., Mayor, M., Megeath, S. T., Queloz, D., & Udry, S. 2008, ApJ, 686, 1341"
+    },
+    {
+        "authors": [
+            {
+                "forename": "D.",
+                "surname": "Charbonneau",
+                "fullname": "D. Charbonneau"
+            },
+            {
+                "forename": "R. W.",
+                "surname": "Noyes",
+                "fullname": "R. W. Noyes"
+            },
+            {
+                "forename": "S. G.",
+                "surname": "Korzennik",
+                "fullname": "S. G. Korzennik"
+            },
+            {
+                "forename": "P.",
+                "surname": "Nisenson",
+                "fullname": "P. Nisenson"
+            },
+            {
+                "forename": "S.",
+                "surname": "Jha",
+                "fullname": "S. Jha"
+            },
+            {
+                "forename": "S. S.",
+                "surname": "Vogt",
+                "fullname": "S. S. Vogt"
+            },
+            {
+                "forename": "R. I.",
+                "surname": "Kibrick",
+                "fullname": "R. I. Kibrick"
+            }
+        ],
+        "year": "1999",
+        "journal": "ApJ",
+        "volume": "522",
+        "pages": "L145",
+        "raw": "Charbonneau, D., Noyes, R. W., Korzennik, S. G., Nisenson, P., Jha, S., Vogt, S. S., & Kibrick, R. I. 1999, ApJ, 522, L145"
+    },
+    {
+        "authors": [
+            {
+                "forename": "J. L.",
+                "surname": "Christiansen",
+                "fullname": "J. L. Christiansen"
+            }
+        ],
+        "year": "2010",
+        "journal": "ApJ",
+        "volume": "710",
+        "pages": "97",
+        "raw": "Christiansen, J. L. et al. 2010, ApJ, 710, 97"
+    },
+    {
+        "authors": [
+            {
+                "forename": "J. L.",
+                "surname": "Christiansen",
+                "fullname": "J. L. Christiansen"
+            }
+        ],
+        "year": "2010",
+        "arxiv": "1011.2229",
+        "raw": "Christiansen, J. L., et al. 2010b, arXiv:1011.2229"
+    },
+    {
+        "authors": [
+            {
+                "forename": "A.",
+                "surname": "Collier Cameron",
+                "fullname": "A. Collier Cameron"
+            },
+            {
+                "forename": "K.",
+                "surname": "Horne",
+                "fullname": "K. Horne"
+            },
+            {
+                "forename": "A.",
+                "surname": "Penny",
+                "fullname": "A. Penny"
+            },
+            {
+                "forename": "C.",
+                "surname": "Leigh",
+                "fullname": "C. Leigh"
+            }
+        ],
+        "year": "2002",
+        "journal": "MNRAS",
+        "volume": "330",
+        "pages": "187",
+        "raw": "Collier Cameron, A., Horne, K., Penny, A., & Leigh, C. 2002a, MNRAS, 330, 187"
+    },
+    {
+        "authors": [
+            {
+                "forename": "A.",
+                "surname": "Collier Cameron",
+                "fullname": "A. Collier Cameron"
+            },
+            {
+                "forename": "K.",
+                "surname": "Horne",
+                "fullname": "K. Horne"
+            },
+            {
+                "forename": "A.",
+                "surname": "Penny",
+                "fullname": "A. Penny"
+            },
+            {
+                "forename": "C.",
+                "surname": "Leigh",
+                "fullname": "C. Leigh"
+            }
+        ],
+        "year": "2002",
+        "journal": "MNRAS",
+        "volume": "330",
+        "pages": "187",
+        "raw": "—. 2002b, MNRAS, 330, 187"
+    },
+    {
+        "authors": [
+            {
+                "forename": "N. B.",
+                "surname": "Cowan",
+                "fullname": "N. B. Cowan"
+            },
+            {
+                "forename": "E.",
+                "surname": "Agol",
+                "fullname": "E. Agol"
+            },
+            {
+                "forename": "D.",
+                "surname": "Charbonneau",
+                "fullname": "D. Charbonneau"
+            }
+        ],
+        "year": "2007",
+        "journal": "MNRAS",
+        "volume": "379",
+        "pages": "641",
+        "raw": "Cowan, N. B., Agol, E., & Charbonneau, D. 2007, MNRAS, 379, 641"
+    }
+]
+
+
+
+
+Cowan, N. B., & Agol, E. 2008, ApJ, 678, L129
+Cowan, N. B., & Agol, E. 2010, arXiv:1011.0428
+Croll, B., Albert, L., Lafreniere, D., Jayawardhana, R., & Fortney, J. J. 2010a, ApJ, 717, 1084
+Croll, B., Jayawardhana, R., Fortney, J. J., Lafreni`ere, D., & Albert, L. 2010b, ApJ, 718, 920
+Croll, B., Lafreniere, D., Albert, L., Jayawardhana, R., Fortney, J. J., & Murray, N. 2010c, arXiv:1009.0071
+Crossfield, I. J. M., Hansen, B. M. S., Harrington, J., Cho, J. Y.-K., Deming, D., Menou, K., & Seager, S. 2010, ApJ, 723, 1436
+Deming, D., Harrington, J., Laughlin, G., Seager, S., Navarro, S. B., Bowman, W. C., & Horning, K. 2007, ApJ, 667, L199
+Deming, D., Harrington, J., Seager, S., & Richardson, L. J. 2006, ApJ, 644, 560
+Deming, D., Seager, S., Richardson, L. J., & Harrington, J. 2005, Nature, 434, 740
+Deming, D., et al. 2010, arXiv:1011.1019
+Demory, B.-O. et al. 2007, A&A, 475, 1125
+Fazio, G. G. et al. 2004, ApJS, 154, 10
+Fortney, J. J., Cooper, C. S., Showman, A. P., Marley, M. S., & Freedman, R. S. 2006, ApJ, 652, 746
+Fortney, J. J., Lodders, K., Marley, M. S., & Freedman, R. S. 2008, ApJ, 678, 1419
+Fressin, F., Knutson, H. A., Charbonneau, D., O’Donovan, F. T., Burrows, A., Deming, D., Mandushev, G., & Spiegel, D. 2010, ApJ, 711, 374
+Gaulme, P., et al. 2010, A&A, 518, L153
+Gillon, M. et al. 2009, A&A, 506, 359
+—. 2010, A&A, 511, A260000+
+Hansen, B. M. S. 2008, ApJS, 179, 484
+Harrington, J., Hansen, B. M., Luszcz, S. H., Seager, S., Deming, D., Menou, K., Cho, J. Y.-K., & Richardson, L. J. 2006, Science, 314, 623
+Hauschildt, P. H., Allard, F., & Baron, E. 1999, ApJ, 512, 377
+Hubeny, I., Burrows, A., & Sudarsky, D. 2003, ApJ, 594, 1011
+Kipping, D. M., & Bakos, G. A ́ . 2010, arXiv:1004.3538
+Kipping, D. M., & Bakos, G. A ́ . 2010b, arXiv:1006.5680
+Knutson, H. A., Charbonneau, D., Allen, L. E., Burrows, A., & Megeath, S. T. 2008, ApJ, 673, 526
+Knutson, H. A. et al. 2007a, Nature, 447, 183
+Knutson, H. A., Charbonneau, D., Burrows, A., O’Donovan, F. T., & Mandushev, G. 2009a, ApJ, 691, 866
+Knutson, H. A., Charbonneau, D., Cowan, N. B., Fortney, J. J., Showman, A. P., Agol, E., & Henry, G. W. 2009b, ApJ, 703, 769
+Knutson, H. A. et al. 2009c, ApJ, 690, 822
+Knutson, H. A., Charbonneau, D., Deming, D., & Richardson, L. J. 2007b, PASP, 119, 616
+Knutson, H. A., Howard, A. W., & Isaacson, H. 2010, ApJ, 720, 1569
+Kurucz, R. L. 2005, Memorie della Societa Astronomica Italiana Supplement, 8, 14
+Langford, S. V., Wyithe, J. S. B., Turner, E. L., Jenkins, E. B., Narita, N., Liu, X., Suto, Y., & Yamada, T. 2010, arXiv:1006.5492
+Laughlin, G., Deming, D., Langton, J., Kasen, D., Vogt, S., Butler, P., Rivera, E., & Meschiari, S. 2009, Nature, 457, 562
+Leigh, C., Cameron, A. C., Horne, K., Penny, A., & James, D. Albedo and Heat Recirculation on Hot Exoplanets 9 2003a, MNRAS, 344, 1271
+Leigh, C., Collier Cameron, A., Udry, S., Donati, J.-F., Horne, K., James, D., & Penny, A. 2003b, MNRAS, 346, L16
+López-Morales, M., Coughlin, J. L., Sing, D. K., Burrows, A., Apai, D., Rogers, J. C., Spiegel, D. S., & Adams, E. R. 2010, ApJ, 716, L36
+Machalek, P., Greene, T., McCullough, P. R., Burrows, A., Burke, C. J., Hora, J. L., Johns-Krull, C. M., & Deming, D. L. 2010, ApJ, 711, 111
+Machalek, P., McCullough, P. R., Burke, C. J., Valenti, J. A., Burrows, A., & Hora, J. L. 2008, ApJ, 684, 1427
+Machalek, P., McCullough, P. R., Burrows, A., Burke, C. J., Hora, J. L., & Johns-Krull, C. M. 2009, ApJ, 701, 514
+Marley, M. S., Gelino, C., Stephens, D., Lunine, J. I., & Freedman, R. 1999, ApJ, 513, 879
+Nymeyer, S., et al. 2010, arXiv:1005.1017
+O’Donovan, F. T., Charbonneau, D., Harrington, J., Madhusudhan, N., Seager, S., Deming, D., & Knutson, H. A. 2010, ApJ, 710, 1551
+Perna, R., Menou, K., & Rauscher, E. 2010, ApJ, 719, 1421
+Richardson, L. J., Deming, D., & Seager, S. 2003, ApJ, 597, 581
+Rieke, G. H. et al. 2004, ApJS, 154, 25
+Rodler, F., Kürster, M., & Henning, T. 2008, A&A, 485, 859 —. 2010, A&A, 514, A23+
+Rogers, J. C., Apai, D., L ́opez-Morales, M., Sing, D. K., & Burrows, A. 2009, ApJ, 707, 1707
+Rowe, J. F. et al. 2008, ApJ, 689, 1345
+Seager, S., & Deming, D. 2009, ApJ, 703, 1884
+Seager, S., Whitney, B. A., & Sasselov, D. D. 2000, ApJ, 540, 504 Seager, S., & Mall ́en-Ornelas, G. 2003, ApJ, 585, 1038
+Sing, D. K., & L ́opez-Morales, M. 2009, A&A, 493, L31
+Snellen, I. A. G., & Covino, E. 2007, MNRAS, 375, 307
+Snellen, I. A. G., de Mooij, E. J. W., & Albrecht, S. 2009, Nature, 459, 543
+Snellen, I. A. G., de Mooij, E. J. W., & Burrows, A. 2010, A&A, 513, A76+
+Spiegel, D. S., & Burrows, A. 2010, ApJ, 722, 871
+Stevenson, K. B. et al. 2010, Nature, 464, 1161
+Sudarsky, D., Burrows, A., & Hubeny, I. 2003, ApJ, 588, 1121
+Sudarsky, D., Burrows, A., & Pinto, P. 2000, ApJ, 538, 885
+Todorov, K., Deming, D., Harrington, J., Stevenson, K. B., Bowman, W. C., Nymeyer, S., Fortney, J. J., & Bakos, G. A. 2010, ApJ, 708, 498
+Werner, M. W. et al. 2004, ApJS, 154, 1
+Wheatley, P. J., et al. 2010, arXiv:1004.0836
+Zahnle, K., Marley, M. S., Freedman, R. S., Lodders, K., & Fortney, J. J. 2009, ApJ, 701, L20

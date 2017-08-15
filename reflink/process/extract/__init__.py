@@ -52,9 +52,10 @@ def extract(pdf_path: str, document_id: str,
 
     extractions = {}
     for name, extractor in extractors:
-        logger.info(name)
+        logger.info('Starting extraction with %s' % name)
         try:
             extractions[name] = extractor(pdf_path, document_id)
+            logger.info('Extraction with %s succeeded' % name)
         except Exception as e:
             logger.info('Extraction failed for %s with %s: %s' %
                         (pdf_path, name, e))

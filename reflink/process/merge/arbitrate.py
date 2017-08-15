@@ -4,9 +4,11 @@ from reflink.process.util import argmax
 from statistics import mean
 from collections import Counter, defaultdict
 from reflink import logging
+from reflink.process.merge.align import align_records
 from itertools import repeat
 
 import editdistance    # For string similarity.
+from datadiff import diff as datadiff    # For dict similarity.
 
 
 logger = logging.getLogger(__name__)
@@ -70,8 +72,23 @@ def _similarity(value_a: object, value_b: object) -> float:
     elif type(value_a) is str and type(value_b) is str:
         N_max = max(len(value_a), len(value_b))
         return (N_max - editdistance.eval(value_a, value_b))/N_max
+    elif type(value_a) is dict and type(value_b) is dict:
+        fields = set(value_a.keys()) | set(value_b.keys())
+        scores = [_similarity(value_a.get(field, None),
+                              value_b.get(field, None)) for field in fields]
+        return mean(scores)
+    elif type(value_a) is list and type(value_b) is list:
+        aligned = align_records({'a': value_a, 'b': value_b})
+        scores = []
+        for item in aligned:
+            if len(item) != 2:
+                scores.append(0.)
+                continue
+            item = dict(item)
+            scores.append(_similarity(item['a'], item['b']))
+        return mean(scores)
     if type(value_a) != type(value_b):
-        logger.warning('Comparing objects with different types')
+        logger.debug('Comparing objects with different types')
     return 0.
 
 
@@ -82,7 +99,6 @@ def _pool(metadata: dict, fields: list, prob_valid: object,
     #  their P(value|extractor, field) are combined (summed, then normalized).
     pooled = defaultdict(Counter)
     for extractor, metadatum in metadata.items():
-        print(extractor, metadatum)
         for field in fields:
             value = metadatum.get(field, None)
             if value is None:
