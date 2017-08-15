@@ -26,38 +26,38 @@
     - agent
   become: true
 
-- name: Start Grobid & ScienceParse on worker.
-  hosts: reflink-worker
-  vars_files:
-    - vars/secrets.yml
-    - vars/general.yml
-  tasks:
-    - name: make sure that docker-py is installed
-      pip: name=docker-py state=latest
-    - name: make sure that docker is installed
-      yum: name=docker state=latest
-    - name: ensure that docker is running
-      service: name=docker state=running
-    - name: add ec2-user to the docker group
-      user: name=ec2-user group=docker append=yes
-    - name: log in to docker
-      shell: $(aws ecr get-login --region=us-east-1)
-    - name: start Grobid
-      docker_container:
-        name: grobid
-        image: "{{ grobid_docker_image }}"
-        state: started
-        pull: yes
-        tty: yes
-        ports: "{{ grobid_exposed_port }}:{{ grobid_local_port }}"
-    - name: start ScienceParse
-      docker_container:
-        name: scienceparse
-        image: "{{ scienceparse_docker_image }}"
-        state: started
-        pull: yes
-        tty: yes
-        ports: "{{ scienceparse_exposed_port }}:{{ scienceparse_local_port }}"
+# - name: Start Grobid & ScienceParse on worker.
+#   hosts: reflink-worker
+#   vars_files:
+#     - vars/secrets.yml
+#     - vars/general.yml
+#   tasks:
+#     - name: make sure that docker-py is installed
+#       pip: name=docker-py state=latest
+#     - name: make sure that docker is installed
+#       yum: name=docker state=latest
+#     - name: ensure that docker is running
+#       service: name=docker state=running
+#     - name: add ec2-user to the docker group
+#       user: name=ec2-user group=docker append=yes
+#     - name: log in to docker
+#       shell: $(aws ecr get-login --region=us-east-1)
+    # - name: start Grobid
+    #   docker_container:
+    #     name: grobid
+    #     image: "{{ grobid_docker_image }}"
+    #     state: started
+    #     pull: yes
+    #     tty: yes
+    #     ports: "{{ grobid_exposed_port }}:{{ grobid_local_port }}"
+    # - name: start ScienceParse
+    #   docker_container:
+    #     name: scienceparse
+    #     image: "{{ scienceparse_docker_image }}"
+    #     state: started
+    #     pull: yes
+    #     tty: yes
+    #     ports: "{{ scienceparse_exposed_port }}:{{ scienceparse_local_port }}"
 
 
 - name: Install worker role

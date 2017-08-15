@@ -4,7 +4,7 @@
   user: name=reflinkconsumer state=present
 
 - name: create and give worker ownership of log file
-  file: path=/var/log/reflinkconsumer.log owner=reflinkconsumer state=touch mode=0666
+  file: path=/var/log/reflink-agent.log owner=reflink-agent state=touch mode=0666
 
 - name: copy startup script
   copy: src=files/start_kcl dest=/opt/reflink/bin/start_kcl mode="u=rwx,g=r,o=r"

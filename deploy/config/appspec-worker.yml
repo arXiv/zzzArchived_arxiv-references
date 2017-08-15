@@ -1,0 +1,25 @@
+version: 0.1
+os: linux
+files:
+  - source: /
+    destination: /opt/reflink/arxiv-reflink
+  - source: deploy/files/reflink-worker
+    destination: /etc/init.d/reflink-worker
+  - source: deploy/files/start_worker
+    destination: /opt/reflink/files/start_worker
+permissions:
+  - object: /opt/reflink
+    owner: reflink
+    type:
+      - directory
+  - object: /opt/reflink/bin
+    mode: 0755
+    type:
+      - file
+hooks:
+  AfterInstall:
+    - location: deploy/getSecrets.sh
+    - location: deploy/installDependencies.sh
+  ApplicationStart:
+    - location: deploy/startWorker.sh
+      timeout: 3600

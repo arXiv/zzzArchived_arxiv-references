@@ -1,0 +1,17 @@
+version: 0.1
+os: linux
+files:
+  - source: /
+    destination: /opt/reflink/arxiv-reflink
+  - source: deploy/config/agent.properties
+    destination: /opt/reflink/files/agent.properties
+  - source: deploy/files/reflink-agent
+    destination: /etc/init.d/reflink-agent
+  - source: deploy/files/start_kcl
+    destination: /opt/reflink/files/start_kcl
+hooks:
+  AfterInstall:
+    - location: deploy/getSecrets.sh
+  ApplicationStart:
+    - location: deploy/startAgent.sh
+      timeout: 3600
