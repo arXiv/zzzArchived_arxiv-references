@@ -1,17 +1,29 @@
-version: 0.1
+version: 0.0
 os: linux
 files:
   - source: /
     destination: /opt/reflink/arxiv-reflink
-  - source: deploy/config/agent.properties
-    destination: /opt/reflink/files/agent.properties
   - source: deploy/files/reflink-agent
-    destination: /etc/init.d/reflink-agent
+    destination: /etc/init.d
   - source: deploy/files/start_kcl
-    destination: /opt/reflink/files/start_kcl
+    destination: /opt/reflink/bin
+  - source: deploy/files/agent.properties
+    destination: /opt/reflink/bin
+permissions:
+  - object: /opt/reflink
+    owner: reflinkconsumer
+    type:
+      - directory
+  - object: /opt/reflink/bin
+    mode: 755
+    type:
+      - file
 hooks:
+  BeforeInstall:
+    - location: deploy/cleanUp.sh
   AfterInstall:
     - location: deploy/getSecrets.sh
+    - location: deploy/installDependencies.sh
   ApplicationStart:
     - location: deploy/startAgent.sh
       timeout: 3600

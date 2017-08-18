@@ -8,7 +8,6 @@ from reflink.process.merge.align import align_records
 from itertools import repeat
 
 import editdistance    # For string similarity.
-from datadiff import diff as datadiff    # For dict similarity.
 
 
 logger = logging.getLogger(__name__)
@@ -92,6 +91,23 @@ def _similarity(value_a: object, value_b: object) -> float:
     return 0.
 
 
+def _prep_value(value: object) -> object:
+    """Ensure that ``value`` is hashable."""
+    if value.__hash__ is None:
+        return str(value)
+    return value
+
+
+def _cast_value(value: object) -> object:
+    """Retrieve the original value type."""
+    if type(value) is not str:
+        return value
+    if (value.startswith('[') and value.endswith(']')) or \
+       (value.startswith('{') and value.endswith('}')):
+        return eval(value)
+    return value
+
+
 def _pool(metadata: dict, fields: list, prob_valid: object,
           similarity_threshold: float=0.9) -> dict:
     """Pool similar values for a field across extractions."""
@@ -100,7 +116,7 @@ def _pool(metadata: dict, fields: list, prob_valid: object,
     pooled = defaultdict(Counter)
     for extractor, metadatum in metadata.items():
         for field in fields:
-            value = metadatum.get(field, None)
+            value = _prep_value(metadatum.get(field, None))
             if value is None:
                 continue
             p_value = prob_valid(extractor, field)
@@ -129,15 +145,12 @@ def _select(pooled: dict) -> tuple:
     """Select the most likely values given their pooled weights."""
     result = {}
     max_probs = []
-    print(pooled)
     for field, counts in pooled.items():
         # Feature-normalize accross distinct values.
         values, norm_prob = zip(*[(value, count/sum(counts.values()))
                                   for value, count in counts.items()])
-        result[field] = values[argmax(norm_prob)]
+        result[field] = _cast_value(values[argmax(norm_prob)])
         max_probs.append(max(norm_prob))
-        print(counts)
-    print(max_probs)
     return result, mean(max_probs)
 
 

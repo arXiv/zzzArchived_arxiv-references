@@ -4,6 +4,9 @@
 - name: install libcurl-devel.x86_64
   yum: name=libcurl-devel.x86_64 state=present
 
+- name: install gcc-c++
+  yum: name=gcc-c++ state=present
+
 - name: install python3
   yum:
     name:

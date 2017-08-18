@@ -1,22 +1,24 @@
-version: 0.1
+version: 0.0
 os: linux
 files:
   - source: /
     destination: /opt/reflink/arxiv-reflink
   - source: deploy/files/reflink-worker
-    destination: /etc/init.d/reflink-worker
+    destination: /etc/init.d
   - source: deploy/files/start_worker
-    destination: /opt/reflink/files/start_worker
+    destination: /opt/reflink/bin
 permissions:
   - object: /opt/reflink
-    owner: reflink
+    owner: reflinkworker
     type:
       - directory
   - object: /opt/reflink/bin
-    mode: 0755
+    mode: 755
     type:
       - file
 hooks:
+  BeforeInstall:
+    - location: deploy/cleanUp.sh
   AfterInstall:
     - location: deploy/getSecrets.sh
     - location: deploy/installDependencies.sh

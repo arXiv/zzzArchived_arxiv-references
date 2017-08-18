@@ -35,6 +35,37 @@ class TestArbitrate(unittest.TestCase):
         self.assertIsInstance(score, float)
         self.assertGreater(score, 0.5)
 
+    def test_arbitrate_with_list_and_dict(self):
+        """Test successful arbitration with dict and list values."""
+        metadata = [
+            ('cermine', {
+                'title': ['yep', 'yep'],
+                'doi': {'is': '10.123/123.4566'}
+            }),
+            ('refextract', {'title': 'asdf', 'doi': 'nonsense',
+                            'volume': '12'}),
+            ('alt', {'title': 'nope', 'foo': 'bar', 'volume': 'baz'})
+        ]
+        valid = [
+            ('cermine', {'title': 0.9, 'doi': 0.8}),
+            ('refextract', {'title': 0.6, 'doi': 0.1, 'volume': 0.8}),
+            ('alt', {'title': 0.1, 'foo': 1.0})
+        ]
+        priors = [
+            ('cermine', {'title': 0.8, 'doi': 0.9}),
+            ('refextract', {'title': 0.9, 'doi': 0.2, 'volume': 0.2}),
+            ('alt', {'title': 0.2, 'foo': 0.9})
+        ]
+
+        final, score = arbitrate.arbitrate(metadata, valid, priors)
+        self.assertIsInstance(final, dict)
+        self.assertEqual(final['title'], ['yep', 'yep'])
+        self.assertEqual(final['doi'], {'is': '10.123/123.4566'})
+        self.assertEqual(final['volume'], '12')
+        self.assertEqual(final['foo'], 'bar')
+        self.assertIsInstance(score, float)
+        self.assertGreater(score, 0.5)
+
     def test_select(self):
         """Test :func:`.arbitrate._select` returns a sensical score."""
         pooled = {
@@ -78,6 +109,34 @@ class TestArbitrate(unittest.TestCase):
         pooled = arbitrate._pool(dict(metadata), ['title'], _prob_valid)
         self.assertEqual(pooled['title']['meh'], 1.1)
         self.assertEqual(pooled['title']['too good to be true'], 0.95)
+
+    def test_pool_handles_list_values(self):
+        """Test :func:`.arbitrate._pool` can handle lists."""
+        def _prob_valid(extractor, field):
+            return 0.55 if extractor in ['cermine', 'refextract'] else 0.95
+
+        metadata = [('cermine', {'title': ['meh', 'meh']}),
+                    ('refextract', {'title': ['meh', 'meh']}),
+                    ('alt', {'title': 'too good to be true'})]
+        try:
+            pooled = arbitrate._pool(dict(metadata), ['title'], _prob_valid)
+        except Exception as e:
+            self.fail(str(e))
+
+        self.assertEqual(pooled['title'][str(['meh', 'meh'])], 1.1)
+
+    def test_pool_handles_dict_values(self):
+        """Test :func:`.arbitrate._pool` can handle dicts."""
+        def _prob_valid(extractor, field):
+            return 0.55 if extractor in ['cermine', 'refextract'] else 0.95
+
+        metadata = [('cermine', {'title': {'meh': 'meh'}}),
+                    ('refextract', {'title': {'meh': 'meh'}}),
+                    ('alt', {'title': 'too good to be true'})]
+        try:
+            arbitrate._pool(dict(metadata), ['title'], _prob_valid)
+        except Exception as e:
+            self.fail(str(e))
 
     def test_pooling_matters(self):
         """Two med-scoring values can beat a single high-scoring value."""
