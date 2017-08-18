@@ -14,14 +14,16 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def create_failed_event(task_id: str, document_id: str, *args) -> dict:
+def create_failed_event(task_id: str, document_id: str,
+                        sequence_id: int, *args) -> dict:
     """Commemorate extraction failure."""
     logger.info(task_id)
     logger.info(document_id)
     logger.info(str(args))
     try:
         extractions = ExtractionEvents().session
-        data = extractions.create(document_id, state=extractions.FAILED)
+        data = extractions.create(sequence_id, state=extractions.FAILED,
+                                  document_id=document_id)
     except IOError as e:
         msg = 'Failed to store failed state for %s: %s' % (document_id, e)
         logger.error(msg)
@@ -30,15 +32,17 @@ def create_failed_event(task_id: str, document_id: str, *args) -> dict:
 
 
 @shared_task
-def create_success_event(extraction_id: str, document_id: str, *args) -> dict:
+def create_success_event(extraction_id: str, document_id: str,
+                         sequence_id: int, *args) -> dict:
     """Commemorate extraction success."""
     logger.info(extraction_id)
     logger.info(document_id)
     logger.info(str(args))
     try:
         extractions = ExtractionEvents().session
-        data = extractions.create(document_id, state=extractions.COMPLETED,
-                                  extraction=extraction_id)
+        data = extractions.create(sequence_id, state=extractions.COMPLETED,
+                                  extraction=extraction_id,
+                                  document_id=document_id)
     except IOError as e:
         msg = 'Failed to store success state for %s: %s' % (document_id, e)
         logger.error(msg)

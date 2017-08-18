@@ -116,7 +116,8 @@ class RecordProcessor(processor.RecordProcessorBase):
 
         document_id = deserialized.get('document_id')
         try:
-            self.events.session.create(document_id)
+            self.events.session.create(sequence_number,
+                                       document_id=document_id)
         except IOError as e:
             # If we can't connect, there is no reason to proceed. Make noise.
             msg = "Could not connect to extraction events database: %s" % e
@@ -126,9 +127,11 @@ class RecordProcessor(processor.RecordProcessorBase):
         try:
             job = chain(tasks.process_document.s(document_id),
                         agent_tasks.store.s(document_id),
-                        agent_tasks.create_success_event.s(document_id))
+                        agent_tasks.create_success_event.s(document_id,
+                                                           sequence_number))
             job.apply_async(
-                link_error=agent_tasks.create_failed_event.s(document_id)
+                link_error=agent_tasks.create_failed_event.s(document_id,
+                                                             sequence_number)
             )
         except (RuntimeError, TaskError) as e:
             logger.error("Error while processing document: %s" % e)

@@ -41,11 +41,11 @@ class ExtractionEventSession(object):
         table = self.dynamodb.create_table(
             TableName=self.table_name,
             KeySchema=[
-                {'AttributeName': 'document', 'KeyType': 'HASH'},
+                {'AttributeName': 'sequence', 'KeyType': 'HASH'},
                 {'AttributeName': 'created', 'KeyType': 'RANGE'}
             ],
             AttributeDefinitions=[
-                {"AttributeName": 'document', "AttributeType": "S"},
+                {"AttributeName": 'sequence', "AttributeType": "N"},
                 {"AttributeName": 'created', "AttributeType": "S"}
             ],
             ProvisionedThroughput={    # TODO: make this configurable.
@@ -56,12 +56,15 @@ class ExtractionEventSession(object):
         waiter = table.meta.client.get_waiter('table_exists')
         waiter.wait(TableName=self.table_name)
 
-    def create(self, document_id: str, state: str=REQUESTED, **extra) -> None:
+    def create(self, sequence_id: int, state: str=REQUESTED,
+               document_id: str=None, **extra) -> None:
         """
         Create a new extraction event entry.
 
         Parameters
         ----------
+        sequence_id : int
+        state : str
         document_id : str
 
         Raises
@@ -73,6 +76,7 @@ class ExtractionEventSession(object):
 
         entry = dict(extra)
         entry.update({
+            'sequence': sequence_id,
             'created': datetime.now().isoformat(),
             'document': document_id,
             'state': state,
@@ -82,13 +86,13 @@ class ExtractionEventSession(object):
         except ClientError as e:
             raise IOError('Failed to create: %s' % e) from e
 
-    def latest(self, document_id: str) -> dict:
+    def latest(self, sequence_id: int) -> dict:
         """
-        Retrieve the most recent event for a document.
+        Retrieve the most recent event for a notification.
 
         Parameters
         ----------
-        document_id : str
+        sequence_id : int
 
         Returns
         -------
@@ -97,7 +101,7 @@ class ExtractionEventSession(object):
         response = self.table.query(
             Limit=1,
             ScanIndexForward=False,
-            KeyConditionExpression=Key('document').eq(document_id)
+            KeyConditionExpression=Key('sequence').eq(sequence_id)
         )
         if len(response['Items']) == 0:
             return None
