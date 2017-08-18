@@ -45,7 +45,7 @@ class ExtractionEventSession(object):
                 {'AttributeName': 'created', 'KeyType': 'RANGE'}
             ],
             AttributeDefinitions=[
-                {"AttributeName": 'sequence', "AttributeType": "N"},
+                {"AttributeName": 'sequence', "AttributeType": "S"},
                 {"AttributeName": 'created', "AttributeType": "S"}
             ],
             ProvisionedThroughput={    # TODO: make this configurable.
@@ -76,7 +76,7 @@ class ExtractionEventSession(object):
 
         entry = dict(extra)
         entry.update({
-            'sequence': sequence_id,
+            'sequence': str(sequence_id),
             'created': datetime.now().isoformat(),
             'document': document_id,
             'state': state,

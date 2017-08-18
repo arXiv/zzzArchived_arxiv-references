@@ -67,9 +67,13 @@ def _similarity(value_a: object, value_b: object) -> float:
     # Since we need a value in 0-1., diff for numbers is 1. - % diff.
     if type(value_a) in [int, float] and type(value_b) in [int, float]:
         diff = value_a - value_b
+        if mean([value_a, value_b]) == 0:
+            return 0.
         return 1. - max(diff, -1. * diff)/mean([value_a, value_b])
     elif type(value_a) is str and type(value_b) is str:
         N_max = max(len(value_a), len(value_b))
+        if N_max == 0:
+            return 0.
         return (N_max - editdistance.eval(value_a, value_b))/N_max
     elif type(value_a) is dict and type(value_b) is dict:
         fields = set(value_a.keys()) | set(value_b.keys())
@@ -147,8 +151,14 @@ def _select(pooled: dict) -> tuple:
     max_probs = []
     for field, counts in pooled.items():
         # Feature-normalize accross distinct values.
-        values, norm_prob = zip(*[(value, count/sum(counts.values()))
-                                  for value, count in counts.items()])
+        if len(counts) == 0:
+            continue
+        try:
+            values, norm_prob = zip(*[(value, count/sum(counts.values()))
+                                      for value, count in counts.items()
+                                      if sum(counts.values()) > 0])
+        except ValueError as e:
+            continue
         result[field] = _cast_value(values[argmax(norm_prob)])
         max_probs.append(max(norm_prob))
     return result, mean(max_probs)

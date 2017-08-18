@@ -5,6 +5,9 @@ import shutil
 import tempfile
 from contextlib import contextmanager
 from reflink.types import List
+from reflink import logging
+
+logger = logging.getLogger(__name__)
 
 VolumeList = List[List[str]]
 PortList = List[List[int]]

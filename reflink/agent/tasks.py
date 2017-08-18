@@ -10,16 +10,14 @@ from reflink.config import VERSION
 from reflink.services import ExtractionEvents, DataStore
 from celery import shared_task
 
+
 logger = logging.getLogger(__name__)
 
 
 @shared_task
-def create_failed_event(task_id: str, document_id: str,
-                        sequence_id: int, *args) -> dict:
+def create_failed_event(data: object, message: str, exception: Exception,
+                        document_id: str, sequence_id: int, *args) -> dict:
     """Commemorate extraction failure."""
-    logger.info(task_id)
-    logger.info(document_id)
-    logger.info(str(args))
     try:
         extractions = ExtractionEvents().session
         data = extractions.create(sequence_id, state=extractions.FAILED,
@@ -33,11 +31,10 @@ def create_failed_event(task_id: str, document_id: str,
 
 @shared_task
 def create_success_event(extraction_id: str, document_id: str,
-                         sequence_id: int, *args) -> dict:
+                         sequence_id: int=-1) -> dict:
     """Commemorate extraction success."""
-    logger.info(extraction_id)
-    logger.info(document_id)
-    logger.info(str(args))
+    if sequence_id == -1:   # Legacy message.
+        return
     try:
         extractions = ExtractionEvents().session
         data = extractions.create(sequence_id, state=extractions.COMPLETED,

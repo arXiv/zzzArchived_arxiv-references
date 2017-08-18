@@ -7,7 +7,6 @@ https://github.com/awslabs/amazon-kinesis-client-python/blob/master/samples/samp
 
 import time
 import os
-os.environ['LOGFILE'] = '/var/log/reflinkconsumer.log'
 from reflink import logging
 import json
 from reflink.types import IntOrNone, BytesOrNone
