@@ -218,7 +218,7 @@ def arbitrate(metadata: list, valid: list, priors: list,
 
 
 def arbitrate_all(metadata_all: list, valid_all: list,
-                  priors_all: list) -> list:
+                  priors_all: list, N_extractions: int=0) -> list:
     """
     Helper to apply arbitration to metadata for a set of cited references.
 
@@ -230,6 +230,7 @@ def arbitrate_all(metadata_all: list, valid_all: list,
         List of lists (see :func:`.arbitrate`).
     priors_all : list
         List of lists (see :func:`.arbitrate`).
+    N_extractions : int
 
     Returns
     -------
@@ -237,5 +238,8 @@ def arbitrate_all(metadata_all: list, valid_all: list,
         Optimal metadata for cited references. Each item is a ``dict``. See
         :func:`.arbitrate` for more details.
     """
-    return list(map(arbitrate, metadata_all, valid_all,
-                    repeat(priors_all, len(metadata_all))))
+    N = len(metadata_all)
+    quorum = min(round(0.67 * N_extractions), 1)
+    return list(map(arbitrate,
+                    filter(lambda meta: len(meta) >= quorum, metadata_all),
+                    valid_all, repeat(priors_all, N)))

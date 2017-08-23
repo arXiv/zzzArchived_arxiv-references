@@ -7,3 +7,4 @@ from reflink.services.scienceparse import ScienceParse
 from reflink.services.refextract import RefExtract
 from reflink.services.cermine import Cermine
 from reflink.services.events import ExtractionEvents
+from reflink.services.metrics import Metrics

@@ -223,7 +223,7 @@ class TestArbitrate(unittest.TestCase):
             ('alt', {'title': 0.2, 'foo': 0.9})
         ]
 
-        final = arbitrate.arbitrate_all(metadata, valid, priors)
+        final = arbitrate.arbitrate_all(metadata, valid, priors, 3)
         self.assertIsInstance(final, list)
         self.assertEqual(len(final), 2)
         for obj, score in final:

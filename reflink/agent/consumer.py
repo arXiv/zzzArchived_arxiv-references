@@ -6,7 +6,6 @@ https://github.com/awslabs/amazon-kinesis-client-python/blob/master/samples/samp
 """
 
 import time
-import os
 from reflink import logging
 import json
 from reflink.types import IntOrNone, BytesOrNone
@@ -17,9 +16,7 @@ from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 from reflink.process import tasks
-from reflink.agent import tasks as agent_tasks
 from celery.exceptions import TaskError
-from celery import chain
 from reflink.services import ExtractionEvents
 
 
@@ -124,14 +121,7 @@ class RecordProcessor(processor.RecordProcessorBase):
             raise RuntimeError(msg) from e
 
         try:
-            job = chain(tasks.process_document.s(document_id),
-                        agent_tasks.store.s(document_id),
-                        agent_tasks.create_success_event.s(document_id,
-                                                           sequence_number))
-            job.apply_async(
-                link_error=agent_tasks.create_failed_event.s(document_id,
-                                                             sequence_number)
-            )
+            tasks.process_document.delay(document_id, sequence_number)
         except (RuntimeError, TaskError) as e:
             logger.error("Error while processing document: %s" % e)
             logger.error("Data payload: %s" % data)

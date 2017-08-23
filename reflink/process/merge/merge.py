@@ -32,6 +32,7 @@ def merge_records(records: dict,
         Authoritative reference metadata. Each item represents a single
         cite reference (``dict``).
     """
+    N_extractions = len(records)
 
     try:
         aligned_records = align.align_records(records)
@@ -46,7 +47,8 @@ def merge_records(records: dict,
     try:
         arbitrated_records = arbitrate.arbitrate_all(aligned_records,
                                                      aligned_probabilities,
-                                                     extractor_priors)
+                                                     extractor_priors,
+                                                     N_extractions)
     except Exception as e:
         raise RuntimeError('Arbitration failed: %s' % e) from e
 
