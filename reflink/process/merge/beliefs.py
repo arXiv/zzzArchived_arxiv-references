@@ -1,6 +1,70 @@
+import os
 import re
+from functools import partial
+
 from reflink.types import Callable
-#from reflink.process.extract import
+
+from reflink.process.textutil import clean_text
+from reflink.process.extract.regex_arxiv import REGEX_ARXIV_STRICT
+from reflink.process.extract.regex_identifiers import (
+    REGEX_DOI, REGEX_ISBN_10, REGEX_ISBN_13
+)
+
+RE_INTEGER = (
+    r'(?:^|(?:\s+))'
+    r'(\d+)'
+    r'(?:$|(?:\s+))'
+)
+
+try:
+    from array import array
+    from pybloof import StringBloomFilter
+except ImportError as e:
+    StringBloomFilter = None
+
+
+def _prepare_filters_or_not():
+    try:
+        return _load_filters()
+    except Exception as e:
+        return {}
+
+
+def _load_filters():
+    # a size bigger than our filters but smaller than memory so we can
+    # just automatically load the whole thing without recording sizes
+    BIGNUMBER = int(1e8)
+
+    stubs = ['auth', 'title']
+    bloom_files = [
+        os.path.join(os.environ.get('REFLINK_DATA_DIRECTORY', './data'), i)
+        for i in ['words_bloom_filter_{}.bytes'.format(j) for j in stubs]
+    ]
+
+    bloom_filters = {}
+    for stub, filename in zip(stubs, bloom_files):
+        with open(filename, 'rb') as fn:
+            try:
+                arr = array('b')
+                arr.fromfile(fn, BIGNUMBER)
+            except EOFError as e:
+                # we expect this to happen, we asked for way to many bytes, but
+                # it doesn't matter, we've successfully filled our array
+                pass
+            bfilter = StringBloomFilter.from_byte_array(arr)
+            bloom_filters[stub] = bfilter
+
+    return bloom_filters
+
+
+def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
+    score = [
+        1 if word in bloom_filter else 0
+        for word in clean_text(value, numok=True).split()
+    ]
+    if len(score) == 0:
+        return 0.0
+    return sum(score) / len(score)
 
 
 def likely(func, min_prob: float=0.0, max_prob: float=1.0) -> Callable:
@@ -36,7 +100,7 @@ def contains(substring: str, false_prob: float=0.0,
 
 
 def ends_with(substring: str, false_prob: float=0.0,
-             true_prob: float=1.0) -> Callable:
+              true_prob: float=1.0) -> Callable:
     def call(value: object) -> float:
         if not isinstance(value, str):
             return 0.0
@@ -51,10 +115,28 @@ def doesnt_end_with(substring: str, false_prob: float=0.0,
 
 def is_integer(value: str) -> float:
     try:
-        number = int(value)
+        int(value)
     except ValueError as e:
         return 0.0
     return 1.0
+
+
+def is_integer_like(value: object) -> float:
+    if isinstance(value, int):
+        return 1.0
+    if len(value) == 0:
+        return 0.0
+
+    numbers = re.findall(RE_INTEGER, value)
+    leftovers = re.subn(RE_INTEGER, '', value)[0]
+
+    if not numbers:
+        return 0.0
+
+    return (
+        (sum([is_integer(i) for i in numbers])/len(numbers)) *
+        ((len(value) - len(leftovers)) / len(value))
+    )
 
 
 def is_year(value: str) -> float:
@@ -67,21 +149,93 @@ def is_year(value: str) -> float:
     return 0.0
 
 
+def is_year_like(value: str) -> float:
+    try:
+        numbers = re.findall(RE_INTEGER, value)
+        if not numbers:
+            return 0.0
+        return (1. * sum([is_year(i) for i in numbers]))/len(numbers)
+    except Exception as e:
+        return 0.0
+
+
+def is_pages(value: str) -> float:
+    pages = re.compile(r'(\d+)(?:\s+)?[\s\-._/\:]+(?:\s+)?(\d+)')
+    match = pages.match(value)
+
+    if match:
+        start, end = [int(i) for i in match.groups()]
+        if start < end:
+            return 1.0
+        return 0.5
+    return 0.0
+
+
+def valid_doi(value: str) -> float:
+    if re.match(REGEX_DOI, value):
+        return 1.0
+    return 0.0
+
+
+def valid_identifier(value: list) -> float:
+    num_identifiers = len(value)
+    num_good = 0
+
+    for ID in value:
+        idtype = ID.get('identifier_type', '')
+        idvalue = ID.get('identifier', '')
+
+        if idtype == 'arxiv':
+            if re.match(REGEX_ARXIV_STRICT, idvalue):
+                num_good += 1
+
+        if idtype == 'isbn':
+            if re.match(REGEX_ISBN_10, idvalue):
+                num_good += 1
+            elif re.match(REGEX_ISBN_13, idvalue):
+                num_good += 1
+
+    return num_good / num_identifiers
+
+
 def unity(r):
     return 1.0
 
 
+bloom_filters = _prepare_filters_or_not()
+if StringBloomFilter and bloom_filters:
+    words_title = partial(bloom_match, bloom_filter=bloom_filters['title'])
+    words_auth = partial(bloom_match, bloom_filter=bloom_filters['auth'])
+else:
+    words_title = unity
+    words_auth = unity
+
+
+def words_author_structure(value: list) -> float:
+    num_authors = 0
+    num_good = 0.0
+
+    for auth in value:
+        name = clean_text(' '.join(auth.values()))
+        num_good += words_auth(name)
+        num_authors += 1
+
+    if num_authors == 0:
+        return 0.0
+    return num_good / num_authors
+
+
 BELIEF_FUNCTIONS = {
-    'title': [unity],
-    'raw': [unity],
-    'authors': [unity],
-    'doi': [contains('.'), contains('/'), doesnt_end_with('-')],
+    'title': [words_title],
+    'raw': [words_title, words_auth],
+    'authors': [words_author_structure],
+    'doi': [valid_doi, contains('.'), contains('/'), doesnt_end_with('-')],
     'volume': [likely(is_integer_like, min_prob=0.5)],
     'issue': [likely(is_integer_like, min_prob=0.5)],
-    'pages': [unity],
+    'pages': [is_integer_like, is_pages],
     'source': [does_not_contain_arxiv],
-    'year': [is_integer_like, is_integer, is_year],
-    'identifiers': [unity]
+    'year': [is_integer_like, is_integer, is_year_like, is_year],
+    'identifiers': [valid_identifier]
 }
 
 
