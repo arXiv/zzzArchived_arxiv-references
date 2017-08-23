@@ -65,10 +65,10 @@ processes new notifications received by the consumer. A so-called
 MultiLangDaemon, a stand-alone Java process, provides the glue between the
 KCL and our record processor. When new notifications are received by the
 consumer, the MultiLangDaemon invokes the record processor, which in turn
-starts the processing pipeline. See :mod:`reflink.notification.consumer` for
+starts the processing pipeline. See :mod:`reflink.agent.consumer` for
 details.
 
-The :class:`reflink.notification.consumer.RecordProcessor` is responsible for
+The :class:`reflink.agent.consumer.RecordProcessor` is responsible for
 creating a new processing task for each new publication. The Celery instance
 running in this container passes those requested tasks to the reference
 extraction container (worker processes) via a messaging broker (such as SQS)
@@ -79,7 +79,7 @@ Reference extraction
 A Celery instance running on the reference extraction (worker) container
 listens for new task requests coming through the messaging broker (e.g. SQS),
 and coordinates the execution of those tasks. The entry point to the processing
-pipeline is the :mod:`reflink.process.orchestrate` component, which calls a
+pipeline is the :mod:`reflink.process.tasks` component, which calls a
 series of functions in series for each arXiv publication.
 
 * :mod:`reflink.process.retrieve`

@@ -10,12 +10,14 @@ from reflink import logging
 import json
 from reflink.types import IntOrNone, BytesOrNone
 from reflink.factory import create_process_app
-from reflink.notification import process
 
 import amazon_kclpy
 from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
+from reflink.process import tasks
+from celery.exceptions import TaskError
+from reflink.services import ExtractionEvents
 
 
 logger = logging.getLogger(__name__)
@@ -44,6 +46,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
         self.proc = create_process_app()
+        self.events = ExtractionEvents(self.proc)
         logger.info('%s' % self.proc.conf)
 
     def initialize(self, initialize_input):
@@ -107,9 +110,19 @@ class RecordProcessor(processor.RecordProcessorBase):
             logger.error("Data payload: %s" % data)
             return   # Don't bring down the whole batch.
 
+        document_id = deserialized.get('document_id')
         try:
-            process.process_document(deserialized.get('document_id'))
-        except RuntimeError as e:
+            self.events.session.create(sequence_number,
+                                       document_id=document_id)
+        except IOError as e:
+            # If we can't connect, there is no reason to proceed. Make noise.
+            msg = "Could not connect to extraction events database: %s" % e
+            logger.error(msg)
+            raise RuntimeError(msg) from e
+
+        try:
+            tasks.process_document.delay(document_id, sequence_number)
+        except (RuntimeError, TaskError) as e:
             logger.error("Error while processing document: %s" % e)
             logger.error("Data payload: %s" % data)
 

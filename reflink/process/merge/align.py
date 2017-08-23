@@ -1,3 +1,5 @@
+"""Align records across multiple extractions."""
+
 import copy
 import statistics
 from itertools import islice, chain

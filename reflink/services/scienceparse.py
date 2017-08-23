@@ -2,7 +2,7 @@
 
 import requests
 import os
-from reflink.status import HTTP_200_OK
+from reflink.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
 from flask import _app_ctx_stack as stack
 
 
@@ -33,7 +33,9 @@ class ScienceParseSession(object):
                     (self.endpoint, e)
             raise IOError(msg) from e
 
-        if head.status_code != HTTP_200_OK:
+        # ScienceParse doesn't allow HEAD, but at least a 405 tells us it's
+        #  running.
+        if head.status_code != HTTP_405_METHOD_NOT_ALLOWED:
             msg = 'Failed to connect to ScienceParse at %s: %s' %  \
                     (self.endpoint, head.content)
             raise IOError(msg)

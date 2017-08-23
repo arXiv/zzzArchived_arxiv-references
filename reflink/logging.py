@@ -1,8 +1,10 @@
 import os
 import logging
+import sys
 
 default_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 default_level = os.environ.get('REFLINK_LOGLEVEL', logging.INFO)
+LOGFILE = os.environ.get('LOGFILE', None)
 
 
 def getLogger(name: str, fmt: str=default_format,
@@ -23,4 +25,7 @@ def getLogger(name: str, fmt: str=default_format,
     logging.basicConfig(format=default_format)
     logger = logging.getLogger(name)
     logger.setLevel(level)
+    if LOGFILE is not None:
+        logger.addHandler(logging.FileHandler(LOGFILE))
+    # logger.propagate = False
     return logger

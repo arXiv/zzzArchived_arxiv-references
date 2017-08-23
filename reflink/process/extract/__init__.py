@@ -12,9 +12,12 @@ Extractor:
 - Returns reference lines and metadata.
 """
 
-from reflink.process.extract import cermine, grobid, refextract
-from reflink.process.extract import regex_identifiers, scienceparse
+from reflink.process.extract import cermine, grobid, refextract, scienceparse
 from reflink import logging
+from reflink.services import Metrics
+from datetime import datetime
+from statistics import mean
+
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +29,30 @@ EXTRACTORS = [
 ]
 
 
-def extract(pdf_path: str, document_id: str) -> dict:
+def getDefaultExtractors():
+    return EXTRACTORS
+
+
+def estimate_quality(metadata: list) -> float:
+    """"
+    Generate a rough estimate of extraction quality.
+
+    Parameters
+    ----------
+    metadata : list
+        A list of metadata (dict) from a single extractor.
+
+    Returns
+    -------
+    float
+    """
+    return mean([
+        len([(key, value) for key, value in metadatum.items() if value])/10.
+        for metadatum in metadata])
+
+
+def extract(pdf_path: str, document_id: str,
+            extractors: list=getDefaultExtractors()) -> dict:
     """
     Perform reference extractions using all available extractors.
 
@@ -36,6 +62,8 @@ def extract(pdf_path: str, document_id: str) -> dict:
         Path to an arXiv PDF on the filesystem.
     document_id : str
         Identifier for an arXiv paper.
+    extractors : list
+        Tuples of ('extractor name', callable).
 
     Returns
     -------
@@ -43,12 +71,30 @@ def extract(pdf_path: str, document_id: str) -> dict:
         Keys are extractor names, values are lists of reference metadata
         objects (``dict``).
     """
-
+    metrics_session = Metrics().session
     extractions = {}
-    for name, extractor in EXTRACTORS:
+    for name, extractor in extractors:
+        logger.info('Starting extraction with %s' % name)
         try:
+            start_time = datetime.now()
             extractions[name] = extractor(pdf_path, document_id)
+            end_time = datetime.now()
+
+            logger.info('Extraction with %s succeeded' % name)
+            metrics_session.report('ExtractionSucceeded', 1.,
+                                   dimensions={'Extractor': name})
+            metrics_session.report('ExtractionDuration',
+                                   (start_time - end_time).microseconds,
+                                   dimensions={'Extractor': name},
+                                   units='Microseconds')
+            metrics_session.report('ExtractionQuality',
+                                   estimate_quality(extractions[name]),
+                                   dimensions={'Extractor': name},
+                                   units='Microseconds')
+
         except Exception as e:
+            metrics_session.report('ExtractionSucceeded', 0.,
+                                   dimensions={'Extractor': name})
             logger.info('Extraction failed for %s with %s: %s' %
                         (pdf_path, name, e))
     return extractions

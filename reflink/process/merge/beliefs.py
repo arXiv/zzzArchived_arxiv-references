@@ -74,7 +74,20 @@ def likely(func, min_prob: float=0.0, max_prob: float=1.0) -> Callable:
 
 
 def does_not_contain_arxiv(value: object) -> float:
+    if not isinstance(value, str):
+        return 0.0
     return 0. if 'arxiv' in value else 1.
+
+
+def is_integer_like(value: object) -> float:
+    if value is None:
+        return 0.
+    if isinstance(value, int):
+        return 1.0
+    if len(value) == 0:
+        return 0.0
+    numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
+    return (1. * sum([is_integer(i) for i in numbers]))/len(value)
 
 
 def contains(substring: str, false_prob: float=0.0,

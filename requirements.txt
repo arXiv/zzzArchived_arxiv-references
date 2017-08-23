@@ -12,5 +12,6 @@ ftfy==5.0.2
 -e git://github.com/erickpeirson/refextract.git#egg=refextract
 markupsafe
 regex==2017.7.11
+editdistance==0.3.1
 pybloof==0.7.1
 bitarray==0.8.1

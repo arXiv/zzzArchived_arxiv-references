@@ -63,7 +63,7 @@ class CermineSession(object):
             if not os.path.exists(cxml):
                 raise FileNotFoundError('%s not found, expected output' % cxml)
             try:
-                with open(cxml) as f:
+                with open(cxml, 'rb') as f:
                     return f.read()
             except Exception as e:
                 raise IOError('Could not read Cermine output at %s: %s' %
