@@ -8,7 +8,7 @@ import xml.etree.ElementTree
 
 from reflink import types
 from reflink import logging
-from reflink.services import Grobid
+from reflink.services.grobid import grobid
 
 logger = logging.getLogger(__name__)
 
@@ -178,7 +178,6 @@ def extract_references(filename: str, document_id: str) -> types.ReferenceMetada
         Dictionary of reference metadata with metadata separated into author,
         journal, year, etc
     """
-    grobid = Grobid()
 
     try:
         data = grobid.session.extract_references(filename)

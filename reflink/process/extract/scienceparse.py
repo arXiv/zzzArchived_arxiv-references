@@ -5,7 +5,7 @@ import os
 from reflink import logging
 from reflink import types
 from reflink.status import HTTP_200_OK
-from reflink.services import ScienceParse
+from reflink.services.scienceparse import scienceParse
 
 logger = logging.getLogger(__name__)
 
@@ -90,11 +90,8 @@ def extract_references(filename: str, document_id: str) -> types.ReferenceMetada
         Dictionary of reference metadata with metadata separated into author,
         journal, year, etc
     """
-    scienceparse = ScienceParse()
-
-
     try:
-        data = scienceparse.session.extract_references(filename)
+        data = scienceParse.session.extract_references(filename)
     except IOError as e:
         raise RuntimeError('ScienceParse extraction failed: %s' % e) from e
     return format_scienceparse_output(data)

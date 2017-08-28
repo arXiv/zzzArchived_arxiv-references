@@ -502,27 +502,6 @@ class ReferenceStoreSession(object):
             return [ref for ref in references if ref['reftype'] == reftype]
         return references
 
-def get_session() -> ReferenceStoreSession:
-    """
-    Get a new database session.
-
-    Returns
-    -------
-    :class:`.ReferenceStoreSession`
-    """
-    extracted_schema_path = os.environ.get('REFLINK_EXTRACTED_SCHEMA', None)
-    stored_schema_path = os.environ.get('REFLINK_STORED_SCHEMA', None)
-    endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
-    aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
-    aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
-    region_name = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
-    return ReferenceStoreSession(endpoint_url,
-                                 extracted_schema_path=extracted_schema_path,
-                                 stored_schema_path=stored_schema_path,
-                                 aws_access_key=aws_access_key,
-                                 aws_secret_key=aws_secret_key,
-                                 region_name=region_name)
-
 
 class DataStore(object):
     """Data store service integration from reflink Flask application."""
@@ -535,8 +514,8 @@ class DataStore(object):
         app.config.setdefault('REFLINK_EXTRACTED_SCHEMA', None)
         app.config.setdefault('REFLINK_STORED_SCHEMA', None)
         app.config.setdefault('REFLINK_DYNAMODB_ENDPOINT', None)
-        app.config.setdefault('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
-        app.config.setdefault('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+        app.config.setdefault('AWS_ACCESS_KEY_ID', 'asdf1234')
+        app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
         app.config.setdefault('REFLINK_AWS_REGION', 'us-east-1')
 
     def get_session(self) -> None:
@@ -544,16 +523,16 @@ class DataStore(object):
             extracted_schema_path = self.app.config['REFLINK_EXTRACTED_SCHEMA']
             stored_schema_path = self.app.config['REFLINK_STORED_SCHEMA']
             endpoint_url = self.app.config['REFLINK_DYNAMODB_ENDPOINT']
-            aws_access_key = self.app.config['REFLINK_AWS_ACCESS_KEY']
-            aws_secret_key = self.app.config['REFLINK_AWS_SECRET_KEY']
+            aws_access_key = self.app.config['AWS_ACCESS_KEY_ID']
+            aws_secret_key = self.app.config['AWS_SECRET_ACCESS_KEY']
             region_name = self.app.config['REFLINK_AWS_REGION']
         except (RuntimeError, AttributeError) as e:    # No application context.
             extracted_schema_path = os.environ.get('REFLINK_EXTRACTED_SCHEMA',
                                                    None)
             stored_schema_path = os.environ.get('REFLINK_STORED_SCHEMA', None)
             endpoint_url = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
-            aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf')
-            aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa')
+            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', 'asdf')
+            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'fdsa')
             region_name = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
         return ReferenceStoreSession(endpoint_url, extracted_schema_path,
                                      stored_schema_path, aws_access_key,
@@ -567,3 +546,6 @@ class DataStore(object):
                 ctx.data_store = self.get_session()
             return ctx.data_store
         return self.get_session()     # No application context.
+
+
+referencesStore = DataStore()

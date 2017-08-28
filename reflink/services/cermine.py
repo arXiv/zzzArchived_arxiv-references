@@ -101,3 +101,6 @@ class Cermine(object):
                 ctx.cermine = self.get_session()
             return ctx.cermine
         return self.get_session()     # No application context.
+
+
+cermine = Cermine()

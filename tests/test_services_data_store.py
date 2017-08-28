@@ -63,7 +63,7 @@ class StoreReference(unittest.TestCase):
         """
         invalid_data = [{"foo": "bar", "baz": 347}]
 
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         with self.assertRaises(ValueError):
             session.create(document_id, invalid_data, version)
 
@@ -74,7 +74,7 @@ class StoreReference(unittest.TestCase):
 
         If the data is valid, it should be inserted into the database.
         """
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         extraction, data = session.create(document_id, valid_data, version)
 
         # Get the data that we just inserted.
@@ -94,7 +94,7 @@ class RetrieveReference(unittest.TestCase):
         After a set of references are saved, we should be able to retrieve
         those references using the arXiv identifier and extraction id.
         """
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         extraction, data = session.create(document_id, valid_data, version)
 
         retrieved = session.retrieve_all(document_id, extraction)
@@ -108,7 +108,7 @@ class RetrieveReference(unittest.TestCase):
     @mock_dynamodb2
     def test_retrieve_specific_reftype(self):
         """Test retrieving only references of a specific reftype."""
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         data = valid_data + valid_href_data
         extraction, data = session.create(document_id, data, version)
 
@@ -127,7 +127,7 @@ class RetrieveReference(unittest.TestCase):
         After a set of references are saved, we should be able to retrieve
         the latest references using the arXiv identifier.
         """
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         first_extraction, _ = session.create(document_id, valid_data, version)
         new_version = '0.2'
         second_extraction, _ = session.create(document_id, valid_data[::-1],
@@ -150,7 +150,7 @@ class RetrieveReference(unittest.TestCase):
         After a set of references are saved, we should be able to retrieve
         a specific reference by its document id and identifier.
         """
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         extraction, data = session.create(document_id, valid_data, version)
         identifier = data[0]['identifier']
         retrieved = session.retrieve(document_id, identifier)
@@ -164,7 +164,7 @@ class RetrieveReference(unittest.TestCase):
         If the record does not exist, attempting to retrieve it should simply
         return ``None``.
         """
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         data = session.retrieve_latest('nonsense')
         self.assertEqual(data, None)
 
@@ -176,7 +176,7 @@ class RetrieveReference(unittest.TestCase):
         If the record does not exist, attempting to retrieve it should simply
         return ``None``.
         """
-        session = data_store.get_session()
+        session = data_store.referencesStore.session
         data = session.retrieve('nonsense', 'gibberish')
         self.assertEqual(data, None)
 

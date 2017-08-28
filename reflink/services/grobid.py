@@ -104,3 +104,6 @@ class Grobid(object):
                 ctx.grobid = self.get_session()
             return ctx.grobid
         return self.get_session()     # No application context.
+
+
+grobid = Grobid()

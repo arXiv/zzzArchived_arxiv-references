@@ -17,7 +17,7 @@ from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 from reflink.process import tasks
 from celery.exceptions import TaskError
-from reflink.services import ExtractionEvents
+from reflink.services.events import extractionEvents
 
 
 logger = logging.getLogger(__name__)
@@ -46,7 +46,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
         self.proc = create_process_app()
-        self.events = ExtractionEvents(self.proc)
+        self.events = extractionEvents
+        self.events.init_app(self.proc)
         logger.info('%s' % self.proc.conf)
 
     def initialize(self, initialize_input):

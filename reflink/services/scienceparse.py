@@ -109,3 +109,6 @@ class ScienceParse(object):
                 ctx.scienceparse = self.get_session()
             return ctx.scienceparse
         return self.get_session()     # No application context.
+
+
+scienceParse = ScienceParse

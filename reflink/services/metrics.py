@@ -46,20 +46,20 @@ class Metrics(object):
 
     def init_app(self, app) -> None:
         app.config.setdefault('REFLINK_CLOUDWATCH_ENDPOINT', None)
-        app.config.setdefault('REFLINK_AWS_ACCESS_KEY', 'asdf1234')
-        app.config.setdefault('REFLINK_AWS_SECRET_KEY', 'fdsa5678')
+        app.config.setdefault('AWS_ACCESS_KEY_ID', 'asdf1234')
+        app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
         app.config.setdefault('REFLINK_AWS_REGION', 'us-east-1')
 
     def get_session(self) -> None:
         try:
             endpoint_url = self.app.config['REFLINK_CLOUDWATCH_ENDPOINT']
-            aws_access_key = self.app.config['REFLINK_AWS_ACCESS_KEY']
-            aws_secret_key = self.app.config['REFLINK_AWS_SECRET_KEY']
+            aws_access_key = self.app.config['AWS_ACCESS_KEY_ID']
+            aws_secret_key = self.app.config['AWS_SECRET_ACCESS_KEY']
             region_name = self.app.config['REFLINK_AWS_REGION']
         except (RuntimeError, AttributeError) as e:    # No app context.
             endpoint_url = os.environ.get('REFLINK_CLOUDWATCH_ENDPOINT', None)
-            aws_access_key = os.environ.get('REFLINK_AWS_ACCESS_KEY', 'asdf')
-            aws_secret_key = os.environ.get('REFLINK_AWS_SECRET_KEY', 'fdsa')
+            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', 'asdf')
+            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'fdsa')
             region_name = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
         return MetricsSession(endpoint_url, aws_access_key, aws_secret_key,
                               region_name)
@@ -72,3 +72,6 @@ class Metrics(object):
                 ctx.metrics = self.get_session()
             return ctx.metrics
         return self.get_session()     # No application context.
+
+
+metrics = Metrics()
