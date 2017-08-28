@@ -4,7 +4,7 @@ import logging
 from flask import current_app
 
 from reflink import types
-from reflink.services import DataStore
+from reflink.services.data_store import referencesStore
 from reflink import status
 
 from urllib import parse
@@ -17,12 +17,6 @@ logger = logging.getLogger(__name__)
 
 class ReferenceMetadataController(object):
     """Controller for reference metadata extracted from arXiv documents."""
-
-    def __init__(self):
-        try:
-            self.data_store = DataStore(current_app)
-        except RuntimeError:   # No application context.
-            self.data_store = DataStore()
 
     def _get_identifiers(self, reference_data):
         identifiers = {
@@ -56,7 +50,6 @@ class ReferenceMetadataController(object):
             return {
                 'explanation': "No data exists for this reference"
             }, response_status
-
 
         identifiers = self._get_identifiers(reference_data)
 
@@ -93,7 +86,7 @@ class ReferenceMetadataController(object):
         """
 
         try:
-            session = self.data_store.session
+            session = referencesStore.session
         except IOError as e:
             return {
                 'explanation': 'Could not access the data store.'
@@ -142,7 +135,7 @@ class ReferenceMetadataController(object):
             HTTP status code.
         """
         try:
-            session = self.data_store.session
+            session = referencesStore.session
         except IOError as e:
             return {
                 'explanation': 'Could not access the data store.'

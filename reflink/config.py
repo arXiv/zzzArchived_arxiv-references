@@ -209,8 +209,8 @@ REFLINK_EXTRACTED_SCHEMA = os.environ.get('REFLINK_EXTRACTED_SCHEMA', None)
 REFLINK_STORED_SCHEMA = os.environ.get('REFLINK_STORED_SCHEMA', None)
 """Path to JSON schema for stored references."""
 
-REFLINK_AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY', 'nope')
-REFLINK_AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY', 'nope')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'nope')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', 'nope')
 REFLINK_AWS_REGION = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
 
 REFLINK_S3_BUCKET = os.environ.get('REFLINK_S3_BUCKET', 'arxiv-reflink')

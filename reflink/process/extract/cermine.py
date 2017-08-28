@@ -11,7 +11,7 @@ from reflink import types
 from reflink import logging
 from reflink.process import util
 from reflink.process.extract import regex_identifiers
-from reflink.services import Cermine
+from reflink.services.cermine import cermine
 
 
 logger = logging.getLogger(__name__)
@@ -212,7 +212,6 @@ def extract_references(filename: str, document_id: str,
         logger.error("{} does not exist".format(filename))
         raise FileNotFoundError(filename)
 
-    cermine = Cermine()
 
     try:
         data = cermine.session.extract_references(filename)

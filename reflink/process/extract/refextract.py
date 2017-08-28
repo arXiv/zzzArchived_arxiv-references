@@ -3,7 +3,7 @@ Provides extractions using the `refextract
 <https://github.com/inspirehep/refextract>`_ package.
 """
 
-from reflink.services import RefExtract
+from reflink.services.refextract import refExtract
 from reflink import logging
 logger = logging.getLogger(__name__)
 
@@ -46,10 +46,9 @@ def extract_references(filename: str, document_id: str) -> str:
     references : list of dicts
         Reference metadata extracted from PDF.
     """
-    refextract = RefExtract()
     try:
         return [_transform(reference) for reference
-                in refextract.session.extract_references(filename)]
+                in refExtract.session.extract_references(filename)]
     except IOError as e:
         raise IOError('%s' % e) from e
     except Exception as e:

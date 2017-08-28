@@ -1,12 +1,14 @@
 """Application factory for reflink service components."""
 
 from flask import Flask
+
 import logging
 
 
 def create_web_app():
     """Initialize an instance of the web application."""
     from reflink.web.routes import rest
+    from reflink.services.data_store import referencesStore
     logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
     logging.getLogger('botocore').setLevel(logging.ERROR)
@@ -14,8 +16,8 @@ def create_web_app():
     app = Flask('reflink', static_folder='web/static',
                 template_folder='web/templates')
     app.config.from_pyfile('config.py')
+    referencesStore.init_app(app)
     app.register_blueprint(rest.blueprint)
-
     return app
 
 

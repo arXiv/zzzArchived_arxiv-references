@@ -14,7 +14,7 @@ from reflink.process.extract import extract
 from reflink.process.merge import merge
 from reflink.process.store import store, create_success_event, \
                                   create_failed_event
-from reflink.services import Metrics
+from reflink.services.metrics import metrics
 
 from celery import shared_task
 
@@ -40,22 +40,22 @@ def process_document(document_id: str, sequence_id: int) -> list:
     ------
     RuntimeError
     """
-    metrics_session = Metrics().session
+
     start_time = datetime.now()
     logger.info('Started processing document %s' % document_id)
     try:
         pdf_path, tex_path = retrieve(document_id)
         if pdf_path is None:
             logger.info('No PDF available for %s; aborting' % document_id)
-            metrics_session.report('PDFIsAvailable', 0.)
+            metrics.session.report('PDFIsAvailable', 0.)
             return []
-        metrics_session.report('PDFIsAvailable', 1.)
+        metrics.session.report('PDFIsAvailable', 1.)
         logger.info('Retrieved content for %s' % document_id)
 
         logger.info('Extracting metadata for %s' % document_id)
         extractions = extract(pdf_path, document_id)
 
-        metrics_session.report('NumberExtractorsSucceeded', len(extractions))
+        metrics.session.report('NumberExtractorsSucceeded', len(extractions))
         if len(extractions) == 0:
             raise RuntimeError('No extractors succeeded for %s' % document_id)
         else:
@@ -93,8 +93,8 @@ def process_document(document_id: str, sequence_id: int) -> list:
         return []
     end_time = datetime.now()
 
-    metrics_session.report('FinalQuality', score)
-    metrics_session.report('ProcessingDuration',
+    metrics.session.report('FinalQuality', score)
+    metrics.session.report('ProcessingDuration',
                            (start_time - end_time).microseconds,
                            units='Microseconds')
     create_success_event(extraction_id, document_id, sequence_id)

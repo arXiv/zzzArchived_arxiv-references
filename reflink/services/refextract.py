@@ -59,3 +59,6 @@ class RefExtract(object):
                 ctx.refextract = self.get_session()
             return ctx.refextract
         return self.get_session()     # No application context.
+
+
+refExtract = RefExtract()
