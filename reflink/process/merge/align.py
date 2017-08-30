@@ -81,7 +81,7 @@ def flatten(arr):
     return [arr]
 
 
-def similarity_cutoff(records: List[dict]) -> float:
+def similarity_cutoff(records: dict) -> float:
     """
     Get the similarity score cutoff to assist in determining whether two items
     are actually similar or in fact have no matches.
@@ -104,9 +104,12 @@ def similarity_cutoff(records: List[dict]) -> float:
         return median + 3*mad
 
     def _jacard_matrix(r0, r1, num):
-        # calculate all-all jacard similarity
-        # matrix for two sets of records
-        out = [[0]*num for i in range(num)]
+        """Calculate all-all jacard similarity matrix for 2 sets of records."""
+        # If there is a large disparity in the number of records extracted by
+        #  each extractor, this will a relatively sparse matrix. Since we want
+        #  to avoid the median being 0, the matrix is initialized with a
+        #  relatively small number.
+        out = [[1e-6]*num for i in range(num)]
         for i in range(min(num, len(r0))):
             for j in range(min(num, len(r1))):
                 out[i][j] = jacard(
@@ -115,17 +118,18 @@ def similarity_cutoff(records: List[dict]) -> float:
                 )
         return out
 
+    # Number of extractions.
     R = len(records)
-    N = max(map(len, records))
+    # Number of references in largest extraction.
+    N = max(map(len, records.values()))
 
     # get the full jacard matrix to get the cutoff values first. unfortunately,
     # its difficult to make use of these values later, but they are vital to
     # calculating the cutoff
     jac = {}
-    for i, rec0 in islice(enumerate(records), 0, R-1):
-        for j, rec1 in islice(enumerate(records), i+1, R):
+    for i, rec0 in islice(enumerate(records.values()), 0, R-1):
+        for j, rec1 in islice(enumerate(records.values()), i+1, R):
             jac[i, j] = _jacard_matrix(rec0, rec1, N)
-
     return _cutoff(flatten(copy.deepcopy(jac)))
 
 
@@ -159,20 +163,25 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
             ]
 
     """
+    # records = dict())
+
     def _jacard_max(r0, rlist):
         # calculate the maximum jacard score between r0 and the list rlist
         return max([jacard(digest(r0), digest(r1)) for r1 in rlist])
 
     cutoff = similarity_cutoff(records)
-
     # pairwise integrate the lists together, keeping the output list as the
     # master record as we go. 0+1 -> 01, 01+2 -> 012 ...
-    keys = list(records.keys())
-    output = [[(keys[0], rec)] for rec in records[keys[0]]]
-    for ikey, key in islice(enumerate(keys), 1, len(records)):
+    # extractors = list(records.keys())
+
+    # Start with the largest extraction.
+    extractors = [extractor for extractor, records in sorted(records.items(),
+                  key=lambda extraction: -len(extraction[1]))]
+    output = [[(extractors[0], rec)] for rec in records[extractors[0]]]
+    for ikey, extractor in islice(enumerate(extractors), 1, len(records)):
         used = []
 
-        record = records[key]
+        record = records[extractor]
         for iref, ref in enumerate(record):
             # Create a list of possible indices in the output onto which we
             # will map the current reference. only keep those above the cutoff.
@@ -192,10 +201,13 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
                 if index not in used
             ]
 
-            entry = [(key, ref)]
+            entry = [(extractor, ref)]
             if scores:
                 score, index = scores[0]
-                output[index] = output[index] + entry
+                if extractor not in list(zip(*output[index]))[0]:
+                    output[index] = output[index] + entry
+                else:
+                    output.append(entry)
             else:
                 output.append(entry)
 

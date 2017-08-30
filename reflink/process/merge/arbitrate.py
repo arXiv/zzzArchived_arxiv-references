@@ -161,7 +161,17 @@ def _select(pooled: dict) -> tuple:
             continue
         result[field] = _cast_value(values[argmax(norm_prob)])
         max_probs.append(max(norm_prob))
-    return result, mean(max_probs)
+    return result, _score(result)*mean(max_probs)
+
+
+def _score(result: dict) -> float:
+    """Evaluate the overall quality of the reference."""
+    identifiers = [ident.get('identifier_type') for ident
+                   in result.get('identifiers', [])]
+    if result.get('doi') or 'arxiv' in identifiers:
+        return 1.0
+    core = ['volume', 'source', 'year', 'title', 'authors']
+    return mean([1. if result.get(field) else 0. for field in core])
 
 
 def arbitrate(metadata: list, valid: list, priors: list,
@@ -239,7 +249,4 @@ def arbitrate_all(metadata_all: list, valid_all: list,
         :func:`.arbitrate` for more details.
     """
     N = len(metadata_all)
-    quorum = min(round(0.67 * N_extractions), 1)
-    return list(map(arbitrate,
-                    filter(lambda meta: len(meta) >= quorum, metadata_all),
-                    valid_all, repeat(priors_all, N)))
+    return list(map(arbitrate, metadata_all, valid_all, repeat(priors_all, N)))

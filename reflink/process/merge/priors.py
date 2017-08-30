@@ -5,6 +5,7 @@ EXTRACTORS = [
         'refextract',
         {
             '__all__': 1.0,
+            'authors': 0.5,
         }
     ),
     (

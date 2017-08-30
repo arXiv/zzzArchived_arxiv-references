@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def process_document(document_id: str, sequence_id: int) -> list:
+def process_document(document_id: str, sequence_id: int,
+                     report: bool=True) -> list:
     """
     Processing chain for a single arXiv document.
 
@@ -30,6 +31,7 @@ def process_document(document_id: str, sequence_id: int) -> list:
     ----------
     document_id : bytes
     sequence_id : int
+    report : bool
 
     Returns
     -------
@@ -44,18 +46,24 @@ def process_document(document_id: str, sequence_id: int) -> list:
     start_time = datetime.now()
     logger.info('Started processing document %s' % document_id)
     try:
+        # Retrieve PDF from arXiv central object store.
         pdf_path, tex_path = retrieve(document_id)
         if pdf_path is None:
             logger.info('No PDF available for %s; aborting' % document_id)
-            metrics.session.report('PDFIsAvailable', 0.)
+            if report:
+                metrics.session.report('PDFIsAvailable', 0.)
             return []
-        metrics.session.report('PDFIsAvailable', 1.)
+
+        if report:
+            metrics.session.report('PDFIsAvailable', 1.)
         logger.info('Retrieved content for %s' % document_id)
 
+        # Extract references using an array of extractors.
         logger.info('Extracting metadata for %s' % document_id)
         extractions = extract(pdf_path, document_id)
-
-        metrics.session.report('NumberExtractorsSucceeded', len(extractions))
+        if report:
+            metrics.session.report('NumberExtractorsSucceeded',
+                                   len(extractions))
         if len(extractions) == 0:
             raise RuntimeError('No extractors succeeded for %s' % document_id)
         else:
@@ -63,6 +71,7 @@ def process_document(document_id: str, sequence_id: int) -> list:
                         (document_id, len(extractions),
                          ', '.join(extractions.keys())))
 
+        # Merge references across extractors.
         if len(extractions) > 1:
             logger.info('Merging metadata for %s' % document_id)
             metadata, score = merge.merge_records(extractions)
@@ -72,30 +81,21 @@ def process_document(document_id: str, sequence_id: int) -> list:
             metadata = extractions
             logger.info('Skipping merge step for %s' % document_id)
 
+        # Store final reference set.
         extraction_id = store(metadata, document_id)
-        # 2017-07-31: disabling link injection for now. - Erick
-        #
-        # if tex_path:
-        #     logger.info('Injecting links for %s' % document_id)
-        #     logger.debug('Injecting in source: %s' % tex_path)
-        #     new_pdf_path = inject(tex_path, metadata)
-        #     logger.info('Created injected PDF for %s' % document_id)
-        #     logger.debug('PDF at %s' % new_pdf_path)
-        #
-        #     logger.info('Storing injected PDF for %s' % document_id)
-        #     store_pdf(new_pdf_path, document_id)
-        #     logger.info('Stored injected PDF for %s' % document_id)
 
     except Exception as e:
         msg = 'Failed to process %s: %s' % (document_id, e)
         logger.error(msg)
-        create_failed_event(document_id, sequence_id)
+        if report:
+            create_failed_event(document_id, sequence_id)
         return []
     end_time = datetime.now()
 
-    metrics.session.report('FinalQuality', score)
-    metrics.session.report('ProcessingDuration',
-                           (start_time - end_time).microseconds,
-                           units='Microseconds')
-    create_success_event(extraction_id, document_id, sequence_id)
+    if report:
+        metrics.session.report('FinalQuality', score)
+        metrics.session.report('ProcessingDuration',
+                               (start_time - end_time).microseconds,
+                               units='Microseconds')
+        create_success_event(extraction_id, document_id, sequence_id)
     return metadata
