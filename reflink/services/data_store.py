@@ -86,7 +86,8 @@ class ExtractionSession(object):
         """
         to_encode = '%s:%s:%s' % (document_id, version, created)
         hash_string = bytes(unidecode(to_encode), encoding='ascii')
-        return str(b64encode(hash_string), encoding='utf-8')
+        # DynamoDB index keys must be < 1024 bytes.
+        return str(b64encode(hash_string), encoding='utf-8')[:100]
 
     def create(self, document_id: str, version: str, created: str) -> None:
         """
@@ -324,7 +325,7 @@ class ReferenceStoreSession(object):
         """
         to_encode = '%s:%s:%s' % (document_id, raw, version)
         hash_string = bytes(unidecode(to_encode), encoding='ascii')
-        return str(b64encode(hash_string), encoding='utf-8')
+        return str(b64encode(hash_string), encoding='utf-8')[:100]
 
     def _clean(self, reference: dict) -> dict:
         """
@@ -385,7 +386,7 @@ class ReferenceStoreSession(object):
 
                     # Generate a unique identifier based on the document, raw
                     #  reference line, and arxiv-reflink software version.
-                    identifier = self.hash(document_id, reference['raw'],
+                    identifier = self.hash(document_id, reference.get('raw'),
                                            version)
 
                     # References are considered citations by default.
