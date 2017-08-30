@@ -2,6 +2,34 @@ import unittest
 from unittest import mock
 
 from reflink.process.merge import merge
+from reflink.process.merge.normalize import filter_records
+
+
+class TestNormalize(unittest.TestCase):
+    """Tests for :func:`reflink.process.merge.normalize.filter_records`."""
+
+    def setUp(self):
+        """Given some records..."""
+        self.records = [
+            ({'foo': 'bar'}, 0.1),
+            ({'baz': 'bat'}, 0.4),
+            ({'lorem': 'ipsum'}, 0.9)
+        ]
+
+    def test_filter_threshold(self):
+        """Test that :func:`.filter_records` really does filter by score."""
+        self.assertEqual(len(filter_records(self.records, 0.1)[0]), 3)
+        self.assertEqual(len(filter_records(self.records, 0.2)[0]), 2)
+        self.assertEqual(len(filter_records(self.records, 0.4)[0]), 2)
+        self.assertEqual(len(filter_records(self.records, 0.5)[0]), 1)
+        self.assertEqual(len(filter_records(self.records, 0.9)[0]), 1)
+        self.assertEqual(len(filter_records(self.records, 1.0)[0]), 0)
+
+    def test_filter_threshold_adds_score(self):
+        """Each record should be updated with its score."""
+        filtered, mean_score = filter_records(self.records, 0.1)
+        for record in filtered:
+            self.assertIn('score', record)
 
 
 class TestMergeSimple(unittest.TestCase):

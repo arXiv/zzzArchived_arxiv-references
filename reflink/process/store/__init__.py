@@ -44,8 +44,9 @@ def create_failed_event(document_id: str, sequence_id: int, *args) -> dict:
     metrics.session.report('ProcessingSucceeded', 0.)
     try:
         extractions = extractionEvents.session
-        event_data = extractions.create(sequence_id, state=extractions.FAILED,
-                                        document_id=document_id)
+        event_data = extractions.update_or_create(sequence_id,
+                                                  state=extractions.FAILED,
+                                                  document_id=document_id)
     except IOError as e:
         msg = 'Failed to store failed state for %s: %s' % (document_id, e)
         logger.error(msg)
