@@ -90,8 +90,9 @@ def extract_references(filename: str, document_id: str) -> types.ReferenceMetada
         Dictionary of reference metadata with metadata separated into author,
         journal, year, etc
     """
+    sp_session = scienceParse.session
     try:
-        data = scienceParse.session.extract_references(filename)
+        data = sp_session.extract_references(filename)
     except IOError as e:
         raise RuntimeError('ScienceParse extraction failed: %s' % e) from e
     return format_scienceparse_output(data)

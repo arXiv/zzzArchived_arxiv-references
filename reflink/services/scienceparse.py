@@ -111,4 +111,4 @@ class ScienceParse(object):
         return self.get_session()     # No application context.
 
 
-scienceParse = ScienceParse
+scienceParse = ScienceParse()

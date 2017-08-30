@@ -1,9 +1,7 @@
 """Business logic for processing Grobid extracted references."""
 
-import os
 import re
 import io
-import requests
 import xml.etree.ElementTree
 
 from reflink import types

@@ -3,7 +3,7 @@ import re
 from functools import partial
 
 from reflink.types import Callable
-
+from reflink import logging
 from reflink.process.textutil import clean_text
 from reflink.process.extract.regex_arxiv import REGEX_ARXIV_STRICT
 from reflink.process.extract.regex_identifiers import (
@@ -16,11 +16,15 @@ RE_INTEGER = (
     r'(?:$|(?:\s+))'
 )
 
+
 try:
     from array import array
     from pybloof import StringBloomFilter
 except ImportError as e:
     StringBloomFilter = None
+
+
+logger = logging.getLogger(__name__)
 
 
 def _prepare_filters_or_not():
@@ -260,7 +264,16 @@ def calculate_belief(reference: dict) -> dict:
 
     for key, value in reference.items():
         funcs = BELIEF_FUNCTIONS.get(key, [unity])
-        output[key] = sum([func(value) for func in funcs]) / len(funcs)
+        score = 0.
+        for func in funcs:
+            # We don't want the whole process to get derailed when one
+            #  function fails.
+            try:
+                score += func(value)
+            except Exception as e:
+                logger.error('Validation function for %s failed with: %s' %
+                             (key, e))
+        output[key] = score/len(funcs)
 
     return output
 
