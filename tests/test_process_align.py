@@ -59,5 +59,6 @@ class TestAlignRecords(unittest.TestCase):
         recs = {lbl: rec for lbl, rec in zip(labels, records)}
         aligned_calc = align.align_records(recs)
         aligned_file = json.load(open(json_aligned))
-
+        with open('ack.json', 'w') as f:
+            json.dump(aligned_calc, f)
         self.assertEqual(obj_digest(aligned_calc), obj_digest(aligned_file))

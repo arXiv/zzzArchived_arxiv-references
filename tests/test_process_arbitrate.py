@@ -77,7 +77,8 @@ class TestArbitrate(unittest.TestCase):
         }
         final, score = arbitrate._select(pooled)
         self.assertEqual(final['title'], 'yes')
-        self.assertEqual(score, 0.6)
+        # This is low, because we are now scoring partially by completeness.
+        self.assertEqual(score, 0.12)
 
     def test_select_with_ints(self):
         """Test :func:`.arbitrate._select` works with ``int``s."""
@@ -90,7 +91,8 @@ class TestArbitrate(unittest.TestCase):
         }
         final, score = arbitrate._select(pooled)
         self.assertEqual(final['title'], 'yes')
-        self.assertEqual(score, 0.625)
+        # This is low, because we are now scoring partially by completeness.
+        self.assertEqual(score, 0.125)
 
     def test_similarity_with_strings(self):
         """Test :func:`.arbitrate._similarity` returns sensical values."""
