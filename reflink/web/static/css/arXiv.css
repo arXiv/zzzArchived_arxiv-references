@@ -11,7 +11,7 @@ body {
 	padding: 0;
 	background-color: #fff;
 	color: #000;
-	font-family: 'Lucida Grande', helvetica, arial, verdana, sans-serif;
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a:link, a:visited, a:active {
@@ -78,7 +78,7 @@ em.boxed {
 * Cornell Identity
 *****************************************/
 #cu-identity {
-	font-family: verdana, arial, helvetica, sans-serif;
+	font-family: Verdana, Geneva, sans-serif;
 	font-size: 63.125%;
 	color: #222;
 	height: 75px;
@@ -92,7 +92,7 @@ em.boxed {
 	left: 20px;
 	width: 303px;
 	height: 75px;
-	background: url(/icons/cu/cul_signature.gif) no-repeat -8px -1px;
+	background: url('/icons/cu/cul_signature.gif') no-repeat -8px -1px;
 }
 
 #cu-logo a {
@@ -140,7 +140,7 @@ em.boxed {
 	text-align: right;
 	font-size: 120%;
 	font-weight: bold;
-	font-family: 'Lucida Grande', helvetica, arial, verdana, sans-serif;
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 	color: #fff;
 }
 
@@ -279,23 +279,23 @@ body#front.with-cu-identity #header form {
 	border-bottom: 1px solid #ddd;
 	font-size: 80%;
 	clear: both;
-        overflow: hidden;
+  overflow: hidden;
 }
 
 #footer .footer-text {
-        width: 88%;
-        float: left;
+  width: 88%;
+  float: left;
 }
 
 #footer .social {
-        width: 10%;
-        float: right;
-        text-align: right;
+  width: 10%;
+  float: right;
+  text-align: right;
 }
 
 #footer .social img {
-        max-width: 100%;
-        height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 #footer a, #footer a:visited {
@@ -376,6 +376,7 @@ p.tagline {
  *   ****************************************/
 #abs {
 	margin: -0.7em;
+	font-size: 100%;
 }
 
 #abs .leftcolumn {
@@ -433,9 +434,10 @@ div#long-author-list {
 	font-size: small;
 }
 
-#abs blockquote.abstract {
+#abs blockquote {
 	line-height: 140%;
 	margin-bottom: 1.5em;
+	margin-left: 1.5em;
 }
 
 #abs .comments {
@@ -467,7 +469,7 @@ div#long-author-list {
 
 #abs .acm-classes, #abs .msc-classes {
 	vertical-align: bottom;
-	font-family: courier;
+	font-family: Courier,"Lucida Sans Typewriter","Lucida Typewriter", monospace;
 	font-size: 100%;
 }
 
@@ -483,23 +485,27 @@ div#long-author-list {
 
 }
 
-#abs .submission-history {
-	margin: 1.5em 0 1.5em 20px;
-	font-size: 90%;
+#abs .submission-history, #abs .references, #abs .abstract-container {
+	margin: 0 1.5em 4.5em 20px;
 	line-height: 1.5em;
 }
 
-#abs .submission-history h2 {
+#abs .submission-history h2, #abs .references h2 {
 	font-size: 120%;
 	margin: 0 0 .25em 0;
 	font-weight: bold;
 }
 
 #abs .submission-history pre {
-	font-family: 'Lucida Grande', helvetica, arial, verdana, sans-serif;
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 	margin: 0;
 	line-height: 1.4em;
 	padding: 0;
+}
+
+#abs ul.submission-history-list {
+	margin-left: 0;
+	list-style: none;
 }
 
 #abs .endorsers {
@@ -507,6 +513,117 @@ div#long-author-list {
 	font-size: small;
 	font-style: italic;
 }
+
+/****  Tabs for abs page ***/
+
+.c-tabs-nav {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 2em 20px -1px 20px; /* negative bottom margin sets tabs on top of content border */
+  padding: 0;
+}
+
+.c-tabs-nav__link {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-right: 8px;
+  padding: 8px;
+  color: #000;
+	font-weight: bold;
+  background-color: #eee;
+	border-bottom: 1px solid #999;
+  text-align: center;
+  -webkit-transition: color 0.3s;
+          transition: color 0.3s;
+}
+
+.c-tabs-nav__link:last-child {
+  margin-right: 0;
+}
+
+.c-tabs-nav__link:hover {
+  color: #6d6d6d;
+}
+
+.c-tabs-nav__link.is-active {
+  color: #000;
+  background-color: #fff;
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #FFF;
+}
+
+.c-tabs-nav__link i,
+.c-tabs-nav__link span {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.c-tabs-nav__link i {
+  font-size: 18px;
+}
+
+.c-tabs-nav__link span {
+  display: none;
+  font-size: 18px;
+}
+
+@media all and (min-width: 720px) {
+  .c-tabs-nav__link i {
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+  .c-tabs-nav__link span {
+    display: block;
+  }
+}
+
+/**
+ * Tab
+ */
+.c-tab {
+  display: none;
+  background-color: #fff;
+	color: #000;
+}
+
+.c-tab.is-active {
+  display: block;
+}
+
+.c-tab__content {
+  padding: 1.5rem;
+}
+
+.c-tab.is-active .c-tab__content {
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+}
+
+/**
+ * Tabs no-js fallback
+ */
+.c-tabs.no-js .c-tabs-nav {
+  display: none;
+}
+
+.c-tabs.no-js .c-tab {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.c-tabs.no-js .c-tab:last-child {
+  margin-bottom: 0;
+}
+
+/* end tabs */
 
 /* Floating box on right for links to extra services */
 .extra-services {
