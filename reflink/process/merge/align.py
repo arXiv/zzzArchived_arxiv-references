@@ -109,7 +109,7 @@ def similarity_cutoff(records: dict) -> float:
         #  each extractor, this will a relatively sparse matrix. Since we want
         #  to avoid the median being 0, the matrix is initialized with a
         #  relatively small number.
-        out = [[1e-6]*num for i in range(num)]
+        out = [[0]*len(r1) for i in range(len(r0))]
         for i in range(min(num, len(r0))):
             for j in range(min(num, len(r1))):
                 out[i][j] = jacard(
