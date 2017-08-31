@@ -15,3 +15,4 @@ regex==2017.7.11
 editdistance==0.3.1
 pybloof==0.7.1
 bitarray==0.8.1
+titlecase>=0.11.0

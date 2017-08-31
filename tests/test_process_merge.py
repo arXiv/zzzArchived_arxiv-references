@@ -2,6 +2,34 @@ import unittest
 from unittest import mock
 
 from reflink.process.merge import merge
+from reflink.process.merge.normalize import filter_records
+
+
+class TestNormalize(unittest.TestCase):
+    """Tests for :func:`reflink.process.merge.normalize.filter_records`."""
+
+    def setUp(self):
+        """Given some records..."""
+        self.records = [
+            ({'foo': 'bar'}, 0.1),
+            ({'baz': 'bat'}, 0.4),
+            ({'lorem': 'ipsum'}, 0.9)
+        ]
+
+    def test_filter_threshold(self):
+        """Test that :func:`.filter_records` really does filter by score."""
+        self.assertEqual(len(filter_records(self.records, 0.1)[0]), 3)
+        self.assertEqual(len(filter_records(self.records, 0.2)[0]), 2)
+        self.assertEqual(len(filter_records(self.records, 0.4)[0]), 2)
+        self.assertEqual(len(filter_records(self.records, 0.5)[0]), 1)
+        self.assertEqual(len(filter_records(self.records, 0.9)[0]), 1)
+        self.assertEqual(len(filter_records(self.records, 1.0)[0]), 0)
+
+    def test_filter_threshold_adds_score(self):
+        """Each record should be updated with its score."""
+        filtered, mean_score = filter_records(self.records, 0.1)
+        for record in filtered:
+            self.assertIn('score', record)
 
 
 class TestMergeSimple(unittest.TestCase):
@@ -11,21 +39,21 @@ class TestMergeSimple(unittest.TestCase):
         """Given aligned references from several extractors, and priors..."""
         self.simple_docs = {
             'ext1': [
-                {'title': 'Matt', 'cheatcode': 'uuddlrlrba', 'year': 2011},
-                {'title': 'Erick', 'cheatcode': 'babaudbalrba', 'year': 2013},
+                {'title': 'Matt', 'volume': 'uuddlrlrba', 'year': 2011},
+                {'title': 'Erick', 'volume': 'babaudbalrba', 'year': 2013},
             ],
             'ext2': [
-                {'title': 'Matt', 'cheatcode': 'uuddlrlrbaba', 'year': 2011},
+                {'title': 'Matt', 'volume': 'uuddlrlrbaba', 'year': 2011},
             ],
             'ext3': [
-                {'title': 'John', 'cheatcode': 'start', 'year': 2010},
-                {'title': 'Eric', 'cheatcode': 'babaudbalrba', 'year': 2013},
+                {'title': 'John', 'volume': 'start', 'year': 2010},
+                {'title': 'Eric', 'volume': 'babaudbalrba', 'year': 2013},
             ]
         }
         self.priors = [
-            ('ext1', {'title': 0.9, 'cheatcode': 0.6, 'year': 0.1}),
-            ('ext2', {'title': 0.8, 'cheatcode': 0.7, 'year': 0.99}),
-            ('ext3', {'title': 0.2, 'cheatcode': 0.9, 'year': 0.001}),
+            ('ext1', {'title': 0.9, 'volume': 0.6, 'year': 0.1}),
+            ('ext2', {'title': 0.8, 'volume': 0.7, 'year': 0.99}),
+            ('ext3', {'title': 0.2, 'volume': 0.9, 'year': 0.001}),
         ]
 
     @mock.patch('reflink.process.merge.normalize.filter_records')
@@ -49,7 +77,7 @@ class TestMergeSimple(unittest.TestCase):
         self.assertEqual(len(records), 3)
         for ref in records:
             self.assertTrue('title' in ref)
-            self.assertTrue('cheatcode' in ref)
+            self.assertTrue('volume' in ref)
             self.assertTrue('year' in ref)
         self.assertGreaterEqual(score, 0.0)
         self.assertLessEqual(score, 1.0)
