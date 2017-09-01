@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-from reflink.process.merge import merge
+from reflink.process.merge import merge_records
 from reflink.process.merge.normalize import filter_records
 
 
@@ -33,7 +33,7 @@ class TestNormalize(unittest.TestCase):
 
 
 class TestMergeSimple(unittest.TestCase):
-    """Tests for :func:`reflink.process.merge.merge.merge_records` function."""
+    """Tests for :func:`reflink.process.merge_records` function."""
 
     def setUp(self):
         """Given aligned references from several extractors, and priors..."""
@@ -64,7 +64,7 @@ class TestMergeSimple(unittest.TestCase):
                                 mock_arbitrate_all, mock_filter_records):
         """Test that :func:`.merge_records` calls correct fnx when called."""
 
-        merge.merge_records(self.simple_docs)
+        merge_records(self.simple_docs)
         self.assertEqual(mock_align_records.call_count, 1)
         self.assertEqual(mock_validate.call_count, 1)
         self.assertEqual(mock_arbitrate_all.call_count, 1)
@@ -72,7 +72,7 @@ class TestMergeSimple(unittest.TestCase):
 
     def test_merge_full(self):
         """Test that :func:`.merge_records` returns a merged reference set."""
-        records, score = merge.merge_records(self.simple_docs, self.priors)
+        records, score = merge_records(self.simple_docs, self.priors)
         self.assertIsInstance(records, list)
         self.assertEqual(len(records), 3)
         for ref in records:

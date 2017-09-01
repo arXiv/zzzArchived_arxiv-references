@@ -3,6 +3,8 @@
 import boto3
 import os
 from flask import _app_ctx_stack as stack
+from reflink.types import Callable
+from functools import wraps
 
 
 class MetricsSession(object):
@@ -10,20 +12,27 @@ class MetricsSession(object):
 
     namespace = 'arXiv/References'
 
-    def __init__(self, endpoint_url: str, aws_access_key: str,
-                 aws_secret_key: str, region_name: str) -> None:
+    def __init__(self, endpoint_url: str=None, aws_access_key: str=None,
+                 aws_secret_key: str=None, region_name: str=None) -> None:
+        """Initialize with AWS configuration."""
         self.cloudwatch = boto3.client('cloudwatch', region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
 
-    def report(self, metric, value, units=None, dimensions=None):
-        """Put data for a metric."""
+    def report(self, metric: str, value: object, units: str=None,
+               dimensions: dict=None) -> None:
+        """
+        Put data for a metric to CloudWatch.
 
-        metric_data = {
-            'MetricName': metric,
-            'Value': value,
-        }
+        Parameters
+        ----------
+        metric : str
+        value : str, int, float
+        units : str or None
+        dimensions : dict or None
+        """
+        metric_data = {'MetricName': metric, 'Value': value}
         if units is not None:
             metric_data.update({'Unit': units})
         if dimensions is not None:
@@ -34,6 +43,25 @@ class MetricsSession(object):
         self.cloudwatch.put_metric_data(Namespace=self.namespace,
                                         MetricData=[metric_data])
 
+    def reporter(self, func) -> Callable:
+        """Generate a decorator to handle metrics reporting."""
+        @wraps(func)
+        def metrics_wrapper(*args, **kwargs):
+            """Report metrics data returned by ``func``."""
+            result = func(*args, **kwargs)
+            if type(result) is tuple and len(result) > 1 \
+                    and hasattr(result[-1], '__iter__') \
+                    and len(result[-1]) > 0 and 'metric' in result[-1][0]:
+                metrics = result[-1]
+                remainder = result[:-1]
+                for item in metrics:
+                    self.report(item['metric'], item['value'],
+                                item.get('units'), item.get('dimensions'))
+                if len(remainder) == 1:
+                    return remainder[0]
+                return remainder
+            return result
+        return metrics_wrapper
 
 
 class Metrics(object):

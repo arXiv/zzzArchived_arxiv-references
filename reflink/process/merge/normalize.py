@@ -25,7 +25,7 @@ def filter_records(records: list, threshold: float=0.5) -> tuple:
         for all retained records (``float``).
     """
     filtered_records = [
-        (dict(list(rec.items()) + [('score', Decimal(sc))]), sc)
+        (dict(list(rec.items()) + [('score', Decimal(str(round(sc, 2))))]), sc)
         for rec, sc in records if sc >= threshold
     ]
     if len(filtered_records) == 0:

@@ -10,45 +10,40 @@ from reflink.agent import consumer
 class TestRecordProcessor(unittest.TestCase):
     """Test the :meth:`.consumer.RecordProcessor.process_records` method."""
 
-    # Erick: this is no longer accurate -- should rethink what is needed here.
-    # @mock.patch('reflink.agent.process.process_document')
-    # def test_process_document_called_for_each_record(self, process_document):
-    #     """
-    #     Ensure :func:`reflink.process.tasks.process_document` is called.
-    #
-    #     The document id from each record should be passed to the
-    #     :func:`reflink.process.tasks.process_document` function.
-    #     """
-    #     process_document.return_value = None
-    #
-    #     records = mock.MagicMock()
-    #     checkpointer = mock.MagicMock()
-    #     checkpointer.checkpoint = mock.MagicMock(return_value=None)
-    #
-    #     _records = []
-    #     for i in range(5):
-    #         record = mock.MagicMock()
-    #         data = {'document_id': 'bar %i' % i}
-    #         record.binary_data = json.dumps(data).encode('utf-8')
-    #         record.sequence_number = i
-    #         record.sub_sequence_number = 0
-    #         record.partition_key = 'thebestpartition111'
-    #         record.checkpointer = checkpointer
-    #         _records.append(record)
-    #         if i == 4:
-    #             last = data['document_id']
-    #     records.records = _records
-    #
-    #     processor = consumer.RecordProcessor()
-    #     processor.initialize(None)
-    #     processor.process_records(records)
-    #
-    #     self.assertEqual(process_document.call_count, 5)
-    #     self.assertEqual(process_document.call_args[0][0], last)
+    def test_bad_data_are_ignored(self):
+        """Malformed notification data are ignored."""
+        processor = consumer.RecordProcessor()
+        processor.initialize(None)
 
-    def test_bad_data_ends_execution(self):
-        """Test the case that the notification data is malformed."""
-        pass
+        records = mock.MagicMock()
+        records.checkpointer = mock.MagicMock()
+        record_mock = mock.MagicMock()
+        record_mock.binary_data = bytes(str({'foo': 'bar', 'baz': 'bat'}),
+                                        encoding='utf-8')
+        records.records = [record_mock]
+        try:
+            processor.process_records(records)
+        except Exception as e:
+            self.fail('raised %s' % e)
+
+    @mock.patch('reflink.agent.consumer.tasks.process_document')
+    def test_valid_data_generate_tasks(self, mock_process_document):
+        """Each record results in a call to :func:`.tasks.process_document`."""
+        processor = consumer.RecordProcessor()
+        processor.initialize(None)
+
+        records = mock.MagicMock()
+        records.checkpointer = mock.MagicMock()
+        record_mock = mock.MagicMock()
+        payload = {'document_id': '1234.5678'}
+        record_mock.binary_data = bytes(json.dumps(payload), encoding='utf-8')
+        records.records = [record_mock, record_mock]
+        try:
+            processor.process_records(records)
+        except Exception as e:
+            self.fail('raised %s' % e)
+
+        self.assertEqual(mock_process_document.delay.call_count, 2)
 
 
 class TestRecordProcessorCheckpoint(unittest.TestCase):

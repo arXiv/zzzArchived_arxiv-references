@@ -8,7 +8,7 @@ class TestArbitrate(unittest.TestCase):
     """Tests for :func:`reflink.process.merge.arbitrate.arbitrate` function."""
 
     def test_arbitrate(self):
-        """Test successful arbitration with valid data."""
+        """Successful arbitration with valid data."""
         metadata = [
             ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
             ('refextract', {'title': 'asdf', 'doi': 'nonsense',
@@ -36,7 +36,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertGreater(score, 0.5)
 
     def test_arbitrate_with_list_and_dict(self):
-        """Test successful arbitration with dict and list values."""
+        """Successful arbitration with dict and list values."""
         metadata = [
             ('cermine', {
                 'title': ['yep', 'yep'],
@@ -67,7 +67,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertGreater(score, 0.5)
 
     def test_select(self):
-        """Test :func:`.arbitrate._select` returns a sensical score."""
+        """:func:`.arbitrate._select` returns a sensical score."""
         pooled = {
             'title': {
                 'meh': 0.7,
@@ -81,7 +81,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertEqual(score, 0.12)
 
     def test_select_with_ints(self):
-        """Test :func:`.arbitrate._select` works with ``int``s."""
+        """:func:`.arbitrate._select` works with ``int``s."""
         pooled = {
             'title': {
                 'meh': 1,
@@ -95,7 +95,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertEqual(score, 0.125)
 
     def test_similarity_with_strings(self):
-        """Test :func:`.arbitrate._similarity` returns sensical values."""
+        """:func:`.arbitrate._similarity` returns sensical values."""
         self.assertEqual(arbitrate._similarity('meh', 'meh'), 1.0)
         self.assertEqual(arbitrate._similarity('meh', 'meb'), 2/3)
         self.assertEqual(arbitrate._similarity('foo', 'fuzz'), 1/4)
@@ -113,7 +113,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertEqual(pooled['title']['too good to be true'], 0.95)
 
     def test_pool_handles_list_values(self):
-        """Test :func:`.arbitrate._pool` can handle lists."""
+        """:func:`.arbitrate._pool` can handle lists."""
         def _prob_valid(extractor, field):
             return 0.55 if extractor in ['cermine', 'refextract'] else 0.95
 
@@ -128,7 +128,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertEqual(pooled['title'][str(['meh', 'meh'])], 1.1)
 
     def test_pool_handles_dict_values(self):
-        """Test :func:`.arbitrate._pool` can handle dicts."""
+        """:func:`.arbitrate._pool` can handle dicts."""
         def _prob_valid(extractor, field):
             return 0.55 if extractor in ['cermine', 'refextract'] else 0.95
 
@@ -162,7 +162,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertLess(score - 0.52, 0.01)
 
     def test_drop_value_if_prior_missing(self):
-        """Test that a field-value is ignored if extractor prior is missing."""
+        """A field-value is ignored if extractor prior is missing."""
         metadata = [
             ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
             ('refextract', {'title': 'asdf', 'doi': 'nonsense',
@@ -184,7 +184,7 @@ class TestArbitrate(unittest.TestCase):
         self.assertEqual(final['doi'], 'nonsense')
 
     def test_misaligned_input_raises_valueerror(self):
-        """Test that misalignment of input is caught."""
+        """Misalignment of input raises a ValueError."""
         metadata = [('foo', {}), ('bar', {})]
         valid = [('foo', {}), ('baz', {})]
         priors = [('foo', {}), ('bar', {})]
