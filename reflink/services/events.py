@@ -101,6 +101,9 @@ class ExtractionEventSession(object):
         except ClientError as e:
             raise IOError('Failed to create: %s' % e) from e
 
+    def create(self, *args, **kwargs):
+        return self.update_or_create(*args, **kwargs)
+
     def latest(self, sequence_id: int) -> dict:
         """
         Retrieve the most recent event for a notification.

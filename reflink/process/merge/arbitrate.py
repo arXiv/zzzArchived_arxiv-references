@@ -6,7 +6,7 @@ from collections import Counter, defaultdict
 from reflink import logging
 from reflink.process.merge.align import align_records
 from itertools import repeat
-
+import re
 import editdistance    # For string similarity.
 
 
@@ -38,16 +38,16 @@ def _validate(extractors: list, priors: dict, metadata: dict,
     try:
         missing = set(extractors) - set(priors.keys())
         assert len(missing) == 0
-    except AssertionError:
+    except AssertionError as e:
         logger.error('Missing priors for %s' % '; '.join(list(missing)))
-        raise ValueError('Priors missing for one or more extractors')
+        raise ValueError('Priors missing for one or more extractors') from e
     try:
         assert len(metadata) == len(valid)
         assert len(set(metadata.keys()) - set(valid.keys())) == 0
-    except AssertionError:
+    except AssertionError as e:
         msg = 'Metadata and validity objects must have the same shape'
         logger.error(msg)
-        raise ValueError(msg)
+        raise ValueError(msg) from e
 
 
 def _similarity(value_a: object, value_b: object) -> float:
@@ -102,13 +102,15 @@ def _prep_value(value: object) -> object:
     return value
 
 
-def _cast_value(value: object) -> object:
+def _cast_value(field: str, value: object) -> object:
     """Retrieve the original value type."""
-    if type(value) is not str:
-        return value
-    if (value.startswith('[') and value.endswith(']')) or \
-       (value.startswith('{') and value.endswith('}')):
-        return eval(value)
+    if field == 'year':
+        return int(value)
+    if field in ['authors', 'identifiers']:
+        try:
+            return eval(value)
+        except SyntaxError:
+            return value
     return value
 
 
@@ -159,7 +161,7 @@ def _select(pooled: dict) -> tuple:
                                       if sum(counts.values()) > 0])
         except ValueError as e:
             continue
-        result[field] = _cast_value(values[argmax(norm_prob)])
+        result[field] = _cast_value(field, values[argmax(norm_prob)])
         max_probs.append(max(norm_prob))
     return result, _score(result)*mean(max_probs)
 
