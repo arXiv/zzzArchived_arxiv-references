@@ -113,6 +113,23 @@ class TestRecordProcessorCheckpoint(unittest.TestCase):
         self.assertEqual(checkpointer.checkpoint.call_count, retries)
 
 
+class TestRecordProcessorShouldUpdateSequence(unittest.TestCase):
+    """Tests for :meth:`consumer.RecordProcessor.should_update_sequence`."""
+
+    def test_true_if_largest_unset(self):
+        """Return true if largest seq is not set."""
+        processor = consumer.RecordProcessor()
+        self.assertTrue(processor.should_update_sequence(1234, 5678))
+
+    def test_true_if_seq_is_larger_than_previously_seen(self):
+        """Return true if the current seq is larger than previously seen."""
+        processor = consumer.RecordProcessor()
+        processor._largest_seq = (1, 1)
+        self.assertTrue(processor.should_update_sequence(2, 1))
+        self.assertTrue(processor.should_update_sequence(1, 2))
+        self.assertFalse(processor.should_update_sequence(1, 1))
+
+
 class TestRecordProcessorShutdown(unittest.TestCase):
     """Test the handling of Shutdown signals."""
 

@@ -45,8 +45,8 @@ def process_document(document_id: str, sequence_id: int) -> list:
     start_time = datetime.now()
     logger.info('%s: started processing document' % document_id)
     try:
-        # Retrieve PDF from arXiv central object store.
-        pdf_path, tex_path = retrieve(document_id)
+        # Retrieve PDF from arXiv central document store.
+        pdf_path = retrieve(document_id)
         if pdf_path is None:
             metrics_data.append({'metric': 'PDFIsAvailable', 'value': 0.})
             msg = '%s: no PDF available' % document_id

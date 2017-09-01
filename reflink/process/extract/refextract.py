@@ -46,9 +46,10 @@ def extract_references(filename: str, document_id: str) -> str:
     references : list of dicts
         Reference metadata extracted from PDF.
     """
+    raw = refExtract.session.extract_references(filename)
     try:
         return [_transform(reference) for reference
-                in refExtract.session.extract_references(filename)]
+                in raw]
     except IOError as e:
         raise IOError('%s' % e) from e
     except Exception as e:

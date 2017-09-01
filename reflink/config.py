@@ -213,11 +213,6 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'nope')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', 'nope')
 REFLINK_AWS_REGION = os.environ.get('REFLINK_AWS_REGION', 'us-east-1')
 
-REFLINK_S3_BUCKET = os.environ.get('REFLINK_S3_BUCKET', 'arxiv-reflink')
-"""Bucket for link-injected PDFs."""
-
-REFLINK_S3_ENDPOINT = os.environ.get('REFLINK_S3_ENDPOINT', None)
-"""For testing only."""
 REFLINK_DYNAMODB_ENDPOINT = os.environ.get('REFLINK_DYNAMODB_ENDPOINT', None)
 """For testing only."""
 

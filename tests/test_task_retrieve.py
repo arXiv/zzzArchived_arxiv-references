@@ -20,7 +20,7 @@ class TestRetrieve(unittest.TestCase):
         mock_get.return_value = mock_response
 
         try:
-            pdf_path, source_path = retrieve('1234.5678')
+            pdf_path = retrieve('1234.5678')
         except TypeError:
             self.fail('Return value should be a two-tuple.')
 
@@ -28,9 +28,7 @@ class TestRetrieve(unittest.TestCase):
         args, kwargs = mock_get.call_args
         self.assertTrue(args[0].startswith('https://arxiv.org'))
         self.assertTrue(pdf_path.endswith('.pdf'))
-        # self.assertTrue(source_path.endswith('.tar.gz'))
         self.assertTrue(os.path.exists(pdf_path))
-        # self.assertTrue(os.path.exists(source_path))
 
     @mock.patch('requests.get')
     def test_retrieve_no_source(self, mock_get):
@@ -49,9 +47,8 @@ class TestRetrieve(unittest.TestCase):
                 return mock_source_response
 
         mock_get.side_effect = _handle_request
-        pdf_path, source_path = retrieve('1234.5678')
+        pdf_path = retrieve('1234.5678')
         self.assertIsInstance(pdf_path, str)
-        self.assertEqual(source_path, None)
 
     @mock.patch('requests.get')
     def test_retrieve_no_pdf(self, mock_get):
@@ -59,6 +56,5 @@ class TestRetrieve(unittest.TestCase):
         mock_not_found = mock.MagicMock()
         mock_not_found.status_code = 404
         mock_get.return_value = mock_not_found
-        pdf_path, source_path = retrieve('1234.5678')
+        pdf_path = retrieve('1234.5678')
         self.assertEqual(pdf_path, None)
-        self.assertEqual(source_path, None)

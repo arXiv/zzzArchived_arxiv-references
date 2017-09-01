@@ -68,7 +68,6 @@ class ScienceParseSession(object):
                 response.reason, response.content
             )
             raise IOError(msg)
-
         return response.json()
 
 

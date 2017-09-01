@@ -75,7 +75,7 @@ class ExtractionEventSession(object):
         if state not in ExtractionEventSession.STATES:
             raise ValueError('Invalid state: %s' % state)
 
-        _attributeValues = dict(extra)
+        _attributeValues = {}
         _attributeValues.update({
             ':seq': str(sequence_id),
             ':updated': datetime.now().isoformat(),
@@ -87,9 +87,12 @@ class ExtractionEventSession(object):
             '#st': 'state'
         }
         _key = {'document': document_id, 'version': self.version}
-        _updateExpression = ', '.join(['SET #seq=:seq',
-                                       '#upd=:updated',
-                                       '#st=:state'])
+        _updateExpressionParts = ['#seq=:seq', '#upd=:updated', '#st=:state']
+        if 'extraction' in extra:
+            _attributeValues[':extr'] = extra.get('extraction')
+            _attributeNames['#extr'] = 'extraction'
+            _updateExpressionParts.append('#extr=:extr')
+        _updateExpression = 'SET ' + ', '.join(_updateExpressionParts)
         try:
             self.table.update_item(Key=_key,
                                    UpdateExpression=_updateExpression,

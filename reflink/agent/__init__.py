@@ -1,1 +1,1 @@
-"""The notification component listens and responds to external messages."""
+"""The reference agent orchestrates extraction when new PDFs are available."""

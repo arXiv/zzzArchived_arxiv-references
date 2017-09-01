@@ -1,4 +1,5 @@
 """Tests for the :mod:`reflink.services.data_store` module."""
+
 import unittest
 import os
 from moto import mock_dynamodb2
@@ -55,12 +56,7 @@ class StoreReference(unittest.TestCase):
 
     @mock_dynamodb2
     def test_invalid_data_raises_valueerror(self):
-        """
-        Test the case that invalid data are passed to the datastore.
-
-        If the input data does not conform to the JSON schema, we should raise
-        a ValueError.
-        """
+        """A ValueError is raised when invalid data are passed."""
         invalid_data = [{"foo": "bar", "baz": 347}]
 
         session = data_store.referencesStore.session
@@ -69,11 +65,7 @@ class StoreReference(unittest.TestCase):
 
     @mock_dynamodb2
     def test_valid_data_is_stored(self):
-        """
-        Test the case that valid data are passed to the datastore.
-
-        If the data is valid, it should be inserted into the database.
-        """
+        """Valid data are inserted into the datastore."""
         session = data_store.referencesStore.session
         extraction, data = session.create(document_id, valid_data, version)
 
@@ -89,7 +81,7 @@ class RetrieveReference(unittest.TestCase):
     @mock_dynamodb2
     def test_retrieve_by_arxiv_id_and_extraction(self):
         """
-        Test retrieving data for a specific document from the datastore.
+        Data for a specific document are retrieved from the datastore.
 
         After a set of references are saved, we should be able to retrieve
         those references using the arXiv identifier and extraction id.
@@ -107,7 +99,7 @@ class RetrieveReference(unittest.TestCase):
 
     @mock_dynamodb2
     def test_retrieve_specific_reftype(self):
-        """Test retrieving only references of a specific reftype."""
+        """Retrieve only references of a specific reftype."""
         session = data_store.referencesStore.session
         data = valid_data + valid_href_data
         extraction, data = session.create(document_id, data, version)
@@ -122,7 +114,7 @@ class RetrieveReference(unittest.TestCase):
     @mock_dynamodb2
     def test_retrieve_latest_by_arxiv_id(self):
         """
-        Test retrieving data for the latest extraction from a document.
+        Retrieve data for the latest extraction from a document.
 
         After a set of references are saved, we should be able to retrieve
         the latest references using the arXiv identifier.
@@ -145,7 +137,7 @@ class RetrieveReference(unittest.TestCase):
     @mock_dynamodb2
     def test_retrieve_specific_reference(self):
         """
-        Test retrieving data for a specific reference in a document.
+        Retrieve data for a specific reference in a document.
 
         After a set of references are saved, we should be able to retrieve
         a specific reference by its document id and identifier.
@@ -158,24 +150,14 @@ class RetrieveReference(unittest.TestCase):
 
     @mock_dynamodb2
     def test_retrieving_nonexistant_record_returns_none(self):
-        """
-        Test retrieving a record that does not exist.
-
-        If the record does not exist, attempting to retrieve it should simply
-        return ``None``.
-        """
+        """Return ``None`` when references for a paper do not exist."""
         session = data_store.referencesStore.session
         data = session.retrieve_latest('nonsense')
         self.assertEqual(data, None)
 
     @mock_dynamodb2
     def test_retrieving_nonexistant_reference_returns_none(self):
-        """
-        Test retrieving a record that does not exist.
-
-        If the record does not exist, attempting to retrieve it should simply
-        return ``None``.
-        """
+        """Return ``None`` when an extraction does not exist."""
         session = data_store.referencesStore.session
         data = session.retrieve('nonsense', 'gibberish')
         self.assertEqual(data, None)
