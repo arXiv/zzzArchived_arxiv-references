@@ -143,18 +143,17 @@ def cxml_format_document(root, documentid=''):
     }
 
     # things that cermine does not extract / FIXME -- get these somehow?!
-    unknown_properties = {
-        'identifiers': [{'identifier_type': '', 'identifier': ''}],
-        'reftype': '',
-        'doi': ''
-    }
+    # unknown_properties = {
+    #     'identifiers': [{'identifier_type': '', 'identifier': ''}],
+    #     'reftype': '',
+    #     'doi': ''
+    # }
 
     references = []
     for refroot in root.iter(tag='ref'):
         reference = {
             key: func(refroot) for key, func in reference_constructor.items()
         }
-        reference.update(unknown_properties)
 
         # add regex extracted information to the metadata (not CERMINE's)
         rawline = reference.get('raw', '') or ''
@@ -211,7 +210,6 @@ def extract_references(filename: str, document_id: str,
     if not os.path.exists(filename):
         logger.error("{} does not exist".format(filename))
         raise FileNotFoundError(filename)
-
 
     try:
         data = cermine.session.extract_references(filename)

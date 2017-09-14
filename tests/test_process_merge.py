@@ -39,21 +39,21 @@ class TestMergeSimple(unittest.TestCase):
         """Given aligned references from several extractors, and priors..."""
         self.simple_docs = {
             'ext1': [
-                {'title': 'Matt', 'volume': 'uuddlrlrba', 'year': 2011},
-                {'title': 'Erick', 'volume': 'babaudbalrba', 'year': 2013},
+                {'source': 'Matthew', 'volume': 'uuddlrlrba', 'year': 2011},
+                {'source': 'Erick P', 'volume': 'babaudbalrba', 'year': 2013},
             ],
             'ext2': [
-                {'title': 'Matt', 'volume': 'uuddlrlrbaba', 'year': 2011},
+                {'source': 'Matthew', 'volume': 'uuddlrlrbaba', 'year': 2011},
             ],
             'ext3': [
-                {'title': 'John', 'volume': 'start', 'year': 2010},
-                {'title': 'Eric', 'volume': 'babaudbalrba', 'year': 2013},
+                {'source': 'Johnathan', 'volume': 'start', 'year': 2010},
+                {'source': 'Eric Pe', 'volume': 'babaudbalrba', 'year': 2013},
             ]
         }
         self.priors = [
-            ('ext1', {'title': 0.9, 'volume': 0.6, 'year': 0.1}),
-            ('ext2', {'title': 0.8, 'volume': 0.7, 'year': 0.99}),
-            ('ext3', {'title': 0.2, 'volume': 0.9, 'year': 0.001}),
+            ('ext1', {'source': 0.9, 'volume': 0.6, 'year': 0.1}),
+            ('ext2', {'source': 0.8, 'volume': 0.7, 'year': 0.99}),
+            ('ext3', {'source': 0.2, 'volume': 0.9, 'year': 0.001}),
         ]
 
     @mock.patch('reflink.process.merge.normalize.filter_records')
@@ -73,10 +73,11 @@ class TestMergeSimple(unittest.TestCase):
     def test_merge_full(self):
         """Test that :func:`.merge_records` returns a merged reference set."""
         records, score = merge_records(self.simple_docs, self.priors)
+        print(records)
         self.assertIsInstance(records, list)
         self.assertEqual(len(records), 3)
         for ref in records:
-            self.assertTrue('title' in ref)
+            self.assertTrue('source' in ref)
             self.assertTrue('volume' in ref)
             self.assertTrue('year' in ref)
         self.assertGreaterEqual(score, 0.0)

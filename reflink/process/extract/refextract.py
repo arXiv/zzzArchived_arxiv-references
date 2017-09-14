@@ -12,7 +12,7 @@ FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
     ('doi', 'doi'),
     ('journal_page', 'pages'),
     ('raw_ref', 'raw'),
-    ('journal_title', 'title'),
+    ('journal_title', 'source'),
     ('journal_volume', 'volume'),
     ('journal_issue', 'issue'),
     ('title', 'title'),

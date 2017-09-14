@@ -46,7 +46,8 @@ def merge_records(records: dict,
         cite reference (``dict``).
     """
     N_extractions = len(records)
-
+    records = {extractor: normalize.normalize_records(extraction)
+               for extractor, extraction in records.items()}
     try:
         aligned_records = align.align_records(records)
     except Exception as e:

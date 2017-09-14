@@ -39,60 +39,57 @@ class TestArbitrate(unittest.TestCase):
         """Successful arbitration with dict and list values."""
         metadata = [
             ('cermine', {
-                'title': ['yep', 'yep'],
-                'doi': {'is': '10.123/123.4566'}
+                'authors': ['yep', 'yep'],
             }),
-            ('refextract', {'title': 'asdf', 'doi': 'nonsense',
-                            'volume': '12'}),
-            ('alt', {'title': 'nope', 'foo': 'bar', 'volume': 'baz'})
+            ('refextract', {'authors': 'asdf', 'volume': '12'}),
+            ('alt', {'authors': 'nope', 'foo': 'bar', 'volume': 'baz'})
         ]
         valid = [
-            ('cermine', {'title': 0.9, 'doi': 0.8}),
-            ('refextract', {'title': 0.6, 'doi': 0.1, 'volume': 0.8}),
-            ('alt', {'title': 0.1, 'foo': 1.0})
+            ('cermine', {'authors': 0.9}),
+            ('refextract', {'authors': 0.6, 'volume': 0.8}),
+            ('alt', {'authors': 0.1, 'foo': 1.0})
         ]
         priors = [
-            ('cermine', {'title': 0.8, 'doi': 0.9}),
-            ('refextract', {'title': 0.9, 'doi': 0.2, 'volume': 0.2}),
-            ('alt', {'title': 0.2, 'foo': 0.9})
+            ('cermine', {'authors': 0.8}),
+            ('refextract', {'authors': 0.9, 'volume': 0.2}),
+            ('alt', {'authors': 0.2, 'foo': 0.9})
         ]
 
         final, score = arbitrate.arbitrate(metadata, valid, priors)
         self.assertIsInstance(final, dict)
-        self.assertEqual(final['title'], ['yep', 'yep'])
-        self.assertEqual(final['doi'], {'is': '10.123/123.4566'})
+        self.assertEqual(final['authors'], ['yep', 'yep'])
         self.assertEqual(final['volume'], '12')
         self.assertEqual(final['foo'], 'bar')
         self.assertIsInstance(score, float)
-        self.assertGreater(score, 0.5)
+        self.assertGreater(score, 0.0)
 
     def test_select(self):
         """:func:`.arbitrate._select` returns a sensical score."""
         pooled = {
-            'title': {
+            'source': {
                 'meh': 0.7,
                 'yes': 1.5,
                 'nope': 0.3
             }
         }
         final, score = arbitrate._select(pooled)
-        self.assertEqual(final['title'], 'yes')
+        self.assertEqual(final['source'], 'yes')
         # This is low, because we are now scoring partially by completeness.
-        self.assertEqual(score, 0.12)
+        self.assertEqual(score, 0.15)
 
     def test_select_with_ints(self):
         """:func:`.arbitrate._select` works with ``int``s."""
         pooled = {
-            'title': {
+            'source': {
                 'meh': 1,
                 'yes': 5,
                 'nope': 2
             }
         }
         final, score = arbitrate._select(pooled)
-        self.assertEqual(final['title'], 'yes')
+        self.assertEqual(final['source'], 'yes')
         # This is low, because we are now scoring partially by completeness.
-        self.assertEqual(score, 0.125)
+        self.assertEqual(score, 0.15625)
 
     def test_similarity_with_strings(self):
         """:func:`.arbitrate._similarity` returns sensical values."""
@@ -235,3 +232,43 @@ class TestArbitrate(unittest.TestCase):
             self.assertEqual(obj['title'], 'yep')
             self.assertEqual(obj['volume'], '12')
             self.assertEqual(obj['foo'], 'bar')
+
+    def test_empty_value_is_treated_as_value(self):
+        """If a key is present, but value empty, treat it as a real value."""
+        metadata = [[
+            ('cermine', {'title': ""}),
+            ('refextract', {'title': ""}),
+            ('grobid', {'title': "This is a false positive"})
+        ]]
+        valid = [[
+            ('cermine', {'title': 1.0}),
+            ('refextract', {'title': 1.0}),
+            ('grobid', {'title': 1.0})
+        ]]
+        priors = [
+            ('cermine', {'title': 1.0}),
+            ('refextract', {'title': 1.0}),
+            ('grobid', {'title': 1.0}),
+        ]
+        final, score = arbitrate.arbitrate_all(metadata, valid, priors, 3)[0]
+        self.assertEqual(final['title'], "")
+
+    def test_missing_value_is_not_treated_as_value(self):
+        """If a key is not present, do not treat it as a real value."""
+        metadata = [[
+            ('cermine', {}),
+            ('refextract', {}),
+            ('grobid', {'title': "This is correct"})
+        ]]
+        valid = [[
+            ('cermine', {'title': 1.0}),
+            ('refextract', {'title': 1.0}),
+            ('grobid', {'title': 1.0})
+        ]]
+        priors = [
+            ('cermine', {'title': 1.0}),
+            ('refextract', {'title': 1.0}),
+            ('grobid', {'title': 1.0}),
+        ]
+        final, score = arbitrate.arbitrate_all(metadata, valid, priors, 3)[0]
+        self.assertEqual(final['title'], "This is correct")

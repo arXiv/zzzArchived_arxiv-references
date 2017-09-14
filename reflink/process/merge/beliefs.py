@@ -71,6 +71,14 @@ def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
     return sum(score) / len(score)
 
 
+def minimum_length(length: int) -> Callable:
+    def _min_len(value: object) -> float:
+        if length > len(value) > 0:
+            return 0.
+        return 1.
+    return _min_len
+
+
 def likely(func, min_prob: float=0.0, max_prob: float=1.0) -> Callable:
     def call(value: object) -> float:
         return max(min(func(value), max_prob), min_prob)
@@ -189,10 +197,6 @@ def valid_identifier(value: list) -> float:
         idtype = ID.get('identifier_type', '')
         idvalue = ID.get('identifier', '')
 
-        if idtype == 'arxiv':
-            if re.match(REGEX_ARXIV_STRICT, idvalue):
-                num_good += 1
-
         if idtype == 'isbn':
             if re.match(REGEX_ISBN_10, idvalue):
                 num_good += 1
@@ -200,6 +204,12 @@ def valid_identifier(value: list) -> float:
                 num_good += 1
 
     return num_good / num_identifiers
+
+
+def valid_arxiv_id(value: str) -> float:
+    if re.match(REGEX_ARXIV_STRICT, value):
+        return 1.0
+    return 0.0
 
 
 def unity(r):
@@ -221,7 +231,11 @@ def words_author_structure(value: list) -> float:
 
     for auth in value:
         name = clean_text(' '.join(auth.values()))
-        num_good += words_auth(name)
+        mod = words_auth(name)
+        surname = auth.get('surname')
+        if surname:
+            mod *= 1./len(surname.split())
+        num_good += mod
         num_authors += 1
 
     if num_authors == 0:
@@ -230,24 +244,25 @@ def words_author_structure(value: list) -> float:
 
 
 BELIEF_FUNCTIONS = {
-    'title': [words_title],
+    'title': [words_title, minimum_length(5)],
     'raw': [words_title, words_auth],
     'authors': [words_author_structure],
     'doi': [valid_doi, contains('.'), contains('/'), doesnt_end_with('-')],
-    'volume': [likely(is_integer_like, min_prob=0.5)],
-    'issue': [likely(is_integer_like, min_prob=0.5)],
+    'volume': [likely(is_integer_like, min_prob=0.8)],
     'pages': [is_integer_like, is_pages],
     'source': [does_not_contain_arxiv],
     'year': [is_integer_like, is_integer, is_year_like, is_year],
-    'identifiers': [valid_identifier]
+    'identifiers': [valid_identifier],
+    'arxiv': [valid_arxiv_id]
 }
 
 
 def calculate_belief(reference: dict) -> dict:
     """
-    Calculate the beliefs about the elements in a single record, returning a
-    data structure similar to the input but with the values replaced by
-    probabilities.
+    Calculate the beliefs about the elements in a single record.
+
+    Generates a data structure similar to the input but with the values
+    replaced by probabilities (float in 0.0-1.0).
 
     Parameters
     ----------
@@ -263,6 +278,11 @@ def calculate_belief(reference: dict) -> dict:
     output = {}
 
     for key, value in reference.items():
+        if not value:
+            # Blank values are perfectly plausible, and there isn't much else
+            # that we can say about them.
+            output[key] = 1.
+            continue
         funcs = BELIEF_FUNCTIONS.get(key, [unity])
         score = 0.
         for func in funcs:

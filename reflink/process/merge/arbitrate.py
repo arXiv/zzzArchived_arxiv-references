@@ -105,13 +105,32 @@ def _prep_value(value: object) -> object:
 def _cast_value(field: str, value: object) -> object:
     """Retrieve the original value type."""
     if field == 'year':
-        return int(value)
+        try:
+            return int(value)
+        except ValueError:    # Just in case we get something odd here.
+            return None
     if field in ['authors', 'identifiers']:
         try:
             return eval(value)
         except SyntaxError:
             return value
     return value
+
+
+def _fix_authors(authors: list) -> list:
+    """Fill out fullname if not set."""
+    fixed = []
+    for author in authors:
+        try:
+            givennames = author.get('givennames')
+            surname = author.get('surname')
+            fullname = author.get('fullname')
+            if givennames and surname and not fullname:
+                author['fullname'] = '%s %s' % (givennames, surname)
+        except AttributeError:
+            pass
+        fixed.append(author)
+    return fixed
 
 
 def _pool(metadata: dict, fields: list, prob_valid: object,
@@ -162,17 +181,17 @@ def _select(pooled: dict) -> tuple:
         except ValueError as e:
             continue
         result[field] = _cast_value(field, values[argmax(norm_prob)])
+        if field == 'authors':
+            result[field] = _fix_authors(result[field])
         max_probs.append(max(norm_prob))
     return result, _score(result)*mean(max_probs)
 
 
 def _score(result: dict) -> float:
     """Evaluate the overall quality of the reference."""
-    identifiers = [ident.get('identifier_type') for ident
-                   in result.get('identifiers', [])]
-    if result.get('doi') or 'arxiv' in identifiers:
+    if result.get('doi') or result.get('arxiv'):
         return 1.0
-    core = ['volume', 'source', 'year', 'title', 'authors']
+    core = ['volume', 'source', 'year', 'authors']
     return mean([1. if result.get(field) else 0. for field in core])
 
 

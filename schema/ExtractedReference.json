@@ -3,7 +3,6 @@
     "title": "ExtractedReference",
     "type": "object",
     "required": [
-        "reftype",
         "raw"
     ],
     "properties": {
