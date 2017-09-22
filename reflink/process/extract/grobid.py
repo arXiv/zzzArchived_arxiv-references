@@ -158,7 +158,8 @@ def format_grobid_output(output: str) -> types.ReferenceMetadata:
     return references
 
 
-def extract_references(filename: str, document_id: str) -> types.ReferenceMetadata:
+def extract_references(filename: str,
+                       document_id: str) -> types.ReferenceMetadata:
     """
     Extract references from the PDF at ``filename`` using GROBID.
 

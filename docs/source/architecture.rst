@@ -5,8 +5,7 @@ This document describes the architecture of the reference linking service,
 using a loose interpretation of the
 [C4 architectural model](https://www.structurizr.com/help/c4).
 
-Note: the term "container" in this document should not be conflated with
-Docker containers; the two concepts are not related.
+
 
 Context
 -------
@@ -23,7 +22,7 @@ arXiv publications via a REST API.
 
 .. image:: static/images/context.png
 
-Containers
+Subsystems
 ----------
 
 Since reference extraction is time-consuming (several minutes per document),
@@ -32,14 +31,13 @@ extraction process is responsible for processing notifications from the
 notification broker, extracting and storing reference metadata, and producing
 link-injected PDFs. We further isolate the notification consumption role from
 the actually execution of the reference extraction steps. This results in three
-independently deployable containers:
+independently deployable subsystems:
 
-1. The notification consumer, which receives notifications from the broker and
+1. The notification agent, which receives notifications from the broker and
    generates processing tasks. This will be deployed on a dedicated EC2 virtual
    machine.
-2. The reference extraction worker, which executes processing tasks and stores
-   the results. This will be deployed on one or more dedicated EC2 virtual
-   machines.
+2. The reference extraction backend service (worker), which executes processing
+   tasks and stores the results. Deployed as an Auto Scaling Group in EC2.
 3. The REST API, which responds to client requests for reference metadata and
    link-injected PDFs. This is deployed as a WSGI web application running
    on ElasticBeanstalk.
@@ -56,8 +54,8 @@ Components
 
 .. image:: static/images/components.png
 
-Notification Consumer
-`````````````````````
+Notification Agent
+``````````````````
 Notification handling is provided by two components: a notification consumer
 provided by Amazon, implemented using the Java-based Kinesis Consumer
 Library, and a record processor component implemented in Python that
@@ -84,16 +82,14 @@ series of functions in series for each arXiv publication.
 
 * :mod:`reflink.process.retrieve`
 * :mod:`reflink.process.extract`
-* :mod:`reflink.process.reconcile`
+* :mod:`reflink.process.merge`
 * :mod:`reflink.process.store`
-* :mod:`reflink.process.inject`
 
 Access to the data store (for reference metadata) and object store (for link
 injected PDFs) are provided by corresponding service components that expose a
 very simple CRUD API. Those service components are used by both the reference
 extraction process and the web application. See
-:mod:`reflink.services.data_store` and :mod:`reflink.services.object_store` for
-details.
+:mod:`reflink.services.data_store`.
 
 REST API
 `````````
@@ -101,7 +97,7 @@ The REST API is provided by a web application, implemented in Flask, running
 on AWS ElasticBeanstalk. This uses a fairly straightforward MVC pattern;
 blueprints and view functions (:mod:`reflink.web.views`\) arbitrate client
 requests and serialize responses, lightweight controllers
-(:mod:`reflink.web.controllers`\) are responsible for interpreting request
-content and retrieving relevant data from the data store and object store, and
-the :mod:`reflink.services.data_store` and :mod:`reflink.services.object_store`
-service components provide access to the underlying DynamoDB and S3 services.
+(:mod:`reflink.web.references`\) are responsible for interpreting request
+content and retrieving relevant data from the data store;
+the :mod:`reflink.services.data_store` service components provide access to
+the underlying DynamoDB service.

@@ -1,13 +1,14 @@
 """Application factory for reflink service components."""
 
 from flask import Flask
+from celery import Celery
 
 import logging
 
 
-def create_web_app():
+def create_web_app() -> Flask:
     """Initialize an instance of the web application."""
-    from reflink.web.routes import rest
+    from reflink.web import rest
     from reflink.services.data_store import referencesStore
     logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
@@ -21,7 +22,7 @@ def create_web_app():
     return app
 
 
-def create_process_app():
+def create_process_app() -> Celery:
     """Initialize an instance of the processing application."""
     from reflink.celery import app
     logging.getLogger('boto').setLevel(logging.ERROR)

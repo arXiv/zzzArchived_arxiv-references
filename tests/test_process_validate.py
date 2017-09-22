@@ -48,6 +48,35 @@ class TestValidateSimpleRecords(unittest.TestCase):
                                             "Probability never less than 0.")
                     self.assertLessEqual(value, 1.0,
                                          "Probability never more than 1.")
+    def test_blank_value_is_valid(self):
+        """A blank value is treated as a real value."""
+        records = [
+            [
+                ["ext1", {"title": "", "cheatcode": "uuddlrlrba",
+                          "year": 2011, "pages": ""}],
+                ["ext2", {"title": "Matt", "cheatcode": "uuddlrlrbaba",
+                          "year": 2011, "pages": ""}]
+            ]
+        ]
+        aligned_probs = beliefs.validate(records)
+        print(aligned_probs)
+        self.assertGreater(dict(aligned_probs[0])['ext1']['title'], 0)
+        self.assertGreater(dict(aligned_probs[0])['ext1']['pages'], 0)
+
+    def test_missing_value_is_invalid(self):
+        """A missing value is treated as invalid."""
+        records = [
+            [
+                ["ext1", {"cheatcode": "uuddlrlrba",
+                          "year": 2011}],
+                ["ext2", {"title": "Matt", "cheatcode": "uuddlrlrbaba",
+                          "year": 2011, "pages": ""}]
+            ]
+        ]
+        aligned_probs = beliefs.validate(records)
+        print(aligned_probs)
+        self.assertEqual(dict(aligned_probs[0])['ext1'].get('title', 0), 0)
+        self.assertEqual(dict(aligned_probs[0])['ext1'].get('pages', 0), 0)
 
 
 class TestFullRecords(unittest.TestCase):

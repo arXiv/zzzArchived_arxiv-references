@@ -2,12 +2,12 @@
     {
         "authors": [
             {
-                "forename": "S.",
+                "givennames": "S.",
                 "surname": "Tomonaga",
                 "fullname": "S. Tomonaga"
             }
         ],
-        "journal": "Prog. Theor. Phys.",
+        "source": "Prog. Theor. Phys.",
         "volume": "1",
         "issue": "27",
         "year": "1946",
@@ -16,17 +16,17 @@
     {
         "authors": [
             {
-                "forename": "J.",
+                "givennames": "J.",
                 "surname": "Schwinger",
                 "fullname": "J. Schwinger"
             },
             {
-                "forename": "V.",
+                "givennames": "V.",
                 "surname": "Weisskopf",
                 "fullname": "V. Weisskopf"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "73",
         "issue": "1272A",
         "year": "1948",
@@ -35,12 +35,12 @@
     {
         "authors": [
             {
-                "forename": "J.",
+                "givennames": "J.",
                 "surname": "Schwinger",
                 "fullname": "J. Schwinger"
             }
         ],
-        "journal": "J. Math. Phys.",
+        "source": "J. Math. Phys.",
         "volume": "2",
         "issue": "407",
         "year": "1961",
@@ -49,12 +49,12 @@
     {
         "authors": [
             {
-                "forename": "L. V.",
+                "givennames": "L. V.",
                 "surname": "Keldysh",
                 "fullname": "L. V. Keldysh"
             }
         ],
-        "journal": "Zh. Eksp. Teor. Fiz.",
+        "source": "Zh. Eksp. Teor. Fiz.",
         "volume": "47",
         "issue": "1515",
         "year": "1964",
@@ -63,12 +63,12 @@
     {
         "authors": [
             {
-                "forename": "J.",
+                "givennames": "J.",
                 "surname": "Polonyi",
                 "fullname": "J. Polonyi"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "D74",
         "issue": "065014",
         "year": "2006",
@@ -77,12 +77,12 @@
     {
         "authors": [
             {
-                "forename": "H. D.",
+                "givennames": "H. D.",
                 "surname": "Zeh",
                 "fullname": "H. D. Zeh"
             }
         ],
-        "journal": "journalFound. Phys",
+        "source": "journalFound. Phys",
         "volume": "11970",
         "raw": "H. D. Zeh, journalFound. Phys.11970."
     },
@@ -90,11 +90,11 @@
         "authors": [
             {
                 "fullname": "W. H. Zurek",
-                "forename": "W. H.",
+                "givennames": "W. H.",
                 "surname": "Zurek"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "D24",
         "issue": "1516",
         "year": "1981",
@@ -104,11 +104,11 @@
         "authors": [
             {
                 "fullname": "W. H. Zurek",
-                "forename": "W. H.",
+                "givennames": "W. H.",
                 "surname": "Zurek"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "D26",
         "issue": "1862",
         "year": "1982",
@@ -118,21 +118,21 @@
         "authors": [
             {
                 "fullname": "W. H. Zurek",
-                "forename": "W. H.",
+                "givennames": "W. H.",
                 "surname": "Zurek"
             },
             {
                 "fullname": "S. Habib",
-                "forename": "S.",
+                "givennames": "S.",
                 "surname": "Habib"
             },
             {
                 "fullname": "J. P. Paz",
-                "forename": "J. P.",
+                "givennames": "J. P.",
                 "surname": "Paz"
             }
         ],
-        "journal": "Phys. Rev. Lett.",
+        "source": "Phys. Rev. Lett.",
         "volume": "70",
         "issue": "1187",
         "year": "1993",
@@ -142,16 +142,16 @@
         "authors": [
             {
                 "surname": "Wisemann",
-                "forename": "H. M.",
+                "givennames": "H. M.",
                 "fullname": "H. M. Wisemann"
             },
             {
                 "fullname": "J. A. Vaccaro",
-                "forename": "J. A.",
+                "givennames": "J. A.",
                 "surname": "Vaccaro"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "A65",
         "issue": "043606",
         "year": "2002",
@@ -161,21 +161,21 @@
         "authors": [
             {
                 "surname": "Dziarmaga",
-                "forename": "J.",
+                "givennames": "J.",
                 "fullname": "J. Dziarmaga"
             },
             {
                 "fullname": "A. R. Dalvit",
-                "forename": "A. R.",
+                "givennames": "A. R.",
                 "surname": "Dalvit"
             },
             {
                 "fullname": "W. H. Zurek",
-                "forename": "W. H.",
+                "givennames": "W. H.",
                 "surname": "Zurek"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "A69",
         "issue": "022109",
         "year": "2004",
@@ -185,21 +185,21 @@
         "authors": [
             {
                 "fullname": "D. A. Dalvit",
-                "forename": "D. A.",
+                "givennames": "D. A.",
                 "surname": "Dalvit"
             },
             {
                 "surname": "Dziarmaga",
-                "forename": "J.",
+                "givennames": "J.",
                 "fullname": "J. Dziarmaga"
             },
             {
                 "fullname": "W. H. Zurek",
-                "forename": "W. H.",
+                "givennames": "W. H.",
                 "surname": "Zurek"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "A72",
         "issue": "062101",
         "year": "2005",
@@ -209,7 +209,7 @@
         "authors": [
             {
                 "fullname": "H.Y. Elze",
-                "forename": "H.Y.",
+                "givennames": "H.Y.",
                 "surname": "H.Y. Elze"
             }
         ],
@@ -221,11 +221,11 @@
         "authors": [
             {
                 "surname": "Dreyer",
-                "forename": "O.",
+                "givennames": "O.",
                 "fullname": "O. Dreyer"
             }
         ],
-        "journal": "J. Phys. Conf. Ser.",
+        "source": "J. Phys. Conf. Ser.",
         "volume": "67",
         "issue": "012051",
         "year": "2007",
@@ -235,17 +235,17 @@
         "authors": [
             {
                 "surname": "Groisman",
-                "forename": "B.",
+                "givennames": "B.",
                 "fullname": "B. Groisman"
             },
             {
                 "surname": "Kenigsberg",
-                "forename": "D.",
+                "givennames": "D.",
                 "fullname": "D. Kenigsberg"
             },
             {
                 "surname": "Mor",
-                "forename": "T.",
+                "givennames": "T.",
                 "fullname": "T. Mor"
             }
         ],
@@ -257,12 +257,12 @@
     {
         "authors": [
             {
-                "forename": "G.",
+                "givennames": "G.",
                 "surname": "Mahajan",
                 "fullname": "G. Mahajan"
             },
             {
-                "forename": "T.",
+                "givennames": "T.",
                 "surname": "Padmanabhan",
                 "fullname": "T. Padmanabhan"
             }
@@ -276,16 +276,16 @@
         "authors": [
             {
                 "fullname": "V. V. Dodonov",
-                "forename": "V. V.",
+                "givennames": "V. V.",
                 "surname": "Dodonov"
             },
             {
                 "surname": "Reno",
-                "forename": "M. B.",
+                "givennames": "M. B.",
                 "fullname": "M. B. Reno"
             }
         ],
-        "journal": "Phys. Lett.",
+        "source": "Phys. Lett.",
         "volume": "A308",
         "issue": "249",
         "year": "2003",
@@ -295,12 +295,12 @@
         "authors": [
             {
                 "fullname": "V. I. Arnold",
-                "forename": "V. I.",
+                "givennames": "V. I.",
                 "surname": "Arnold"
             },
             {
                 "surname": "Avez",
-                "forename": "A.",
+                "givennames": "A.",
                 "fullname": "A. Avez"
             }
         ],
@@ -313,16 +313,16 @@
         "authors": [
             {
                 "fullname": "M. Feingold",
-                "forename": "M.",
+                "givennames": "M.",
                 "surname": "Feingold"
             },
             {
                 "surname": "Peres",
-                "forename": "A.",
+                "givennames": "A.",
                 "fullname": "A. Peres"
             }
         ],
-        "journal": "Phys. Rev.",
+        "source": "Phys. Rev.",
         "volume": "A34",
         "issue": "591",
         "year": "1968",
@@ -332,16 +332,16 @@
         "authors": [
             {
                 "fullname": "R. P. Feynman",
-                "forename": "R. P.",
+                "givennames": "R. P.",
                 "surname": "Feynman"
             },
             {
                 "surname": "Vernon",
-                "forename": "F. L.",
+                "givennames": "F. L.",
                 "fullname": "F. L. Vernon"
             }
         ],
-        "journal": "Ann. Phys.",
+        "source": "Ann. Phys.",
         "volume": "24",
         "issue": "118",
         "year": "1963",

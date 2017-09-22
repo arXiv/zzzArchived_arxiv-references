@@ -1,0 +1,435 @@
+[
+    {
+        "issue": "27",
+        "year": 1946,
+        "raw": "S. Tomonaga, Prog. Theor. Phys. 1, 27 (1946)",
+        "title": "",
+        "source": "Prog Theor Phys",
+        "volume": "1",
+        "authors": [
+            {
+                "givennames": "S",
+                "surname": "Tomonaga",
+                "fullname": "S Tomonaga"
+            },
+            {
+                "givennames": "",
+                "surname": "Prog"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.67
+    },
+    {
+        "issue": "1272A",
+        "year": 1948,
+        "raw": "J. Schwinger, V. Weisskopf, Phys. Rev. 73, 1272A (1948)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "73",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Schwinger",
+                "fullname": "J Schwinger"
+            },
+            {
+                "givennames": "V",
+                "surname": "Weisskopf",
+                "fullname": "V Weisskopf"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.79
+    },
+    {
+        "issue": "407",
+        "year": 1961,
+        "raw": "J. Schwinger, J. Math. Phys. 2, 407 (1961) ; Particles and Sources, vol. I., II., and III., Addison-Wesley, Cambridge, Mass. 1970 - 73",
+        "title": "Particles and Sources",
+        "source": "J Math Phys",
+        "volume": "73",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Schwinger",
+                "fullname": "J Schwinger"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.57
+    },
+    {
+        "issue": "1515 1018",
+        "year": 1964,
+        "raw": "L. V. Keldysh, Zh. Eksp. Teor. Fiz. 47, 1515 (1964) (Sov. Phys. JETP 20, 1018 (1965))",
+        "title": "",
+        "source": "Zh Eksp Teor Fiz",
+        "volume": "47",
+        "authors": [
+            {
+                "givennames": "L V",
+                "surname": "Keldysh",
+                "fullname": "L V Keldysh"
+            },
+            {
+                "givennames": "",
+                "surname": "Zh"
+            },
+            {
+                "givennames": "",
+                "surname": "Eksp"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.66
+    },
+    {
+        "issue": "",
+        "year": 2006,
+        "raw": "J. Polonyi, Phys. Rev. D74, 065014 (2006)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "065014",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Polonyi",
+                "fullname": "J Polonyi"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.71
+    },
+    {
+        "issue": "",
+        "year": null,
+        "raw": "H. D. Zeh, journalFound. Phys. 11970",
+        "title": "",
+        "source": "Phys",
+        "volume": "11970",
+        "authors": [
+            {
+                "givennames": "H D",
+                "surname": "Zeh",
+                "fullname": "H D Zeh"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.55
+    },
+    {
+        "issue": "",
+        "year": 1981,
+        "raw": "W. H. Zurek, Phys. Rev. D24, 1516 (1981)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "1516",
+        "authors": [
+            {
+                "givennames": "W H",
+                "surname": "Zurek",
+                "fullname": "W H Zurek"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.71
+    },
+    {
+        "issue": "",
+        "year": 1982,
+        "raw": "W. H. Zurek, Phys. Rev. D26, 1862 (1982)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "",
+        "authors": [
+            {
+                "givennames": "W H",
+                "surname": "Zurek",
+                "fullname": "W H Zurek"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.52
+    },
+    {
+        "issue": "1187",
+        "year": 1993,
+        "raw": "W. H. Zurek, S. Habib, J. P. Paz, Phys. Rev. Lett. 70, 1187 (1993)",
+        "title": "",
+        "source": "Phys Rev Lett",
+        "volume": "70",
+        "authors": [
+            {
+                "givennames": "W H",
+                "surname": "Zurek",
+                "fullname": "W H Zurek"
+            },
+            {
+                "givennames": "S",
+                "surname": "Habib",
+                "fullname": "S Habib"
+            },
+            {
+                "givennames": "J P",
+                "surname": "Paz",
+                "fullname": "J P Paz"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.79
+    },
+    {
+        "issue": "",
+        "year": 2002,
+        "raw": "H. M. Wisemann, J. A. Vaccaro, Phys. Rev. A65, 043606 (2002)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "043606",
+        "authors": [
+            {
+                "givennames": "H M",
+                "surname": "Wisemann",
+                "fullname": "H M Wisemann"
+            },
+            {
+                "givennames": "J A",
+                "surname": "Vaccaro",
+                "fullname": "J A Vaccaro"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.75
+    },
+    {
+        "issue": "",
+        "year": 2004,
+        "raw": "J. Dziarmaga, A. R. Dalvit, W. H. Zurek, Phys. Rev. A69, 022109 (2004)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "022109",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Dziarmaga",
+                "fullname": "J Dziarmaga"
+            },
+            {
+                "givennames": "A R",
+                "surname": "Dalvit",
+                "fullname": "A R Dalvit"
+            },
+            {
+                "givennames": "W H",
+                "surname": "Zurek",
+                "fullname": "W H Zurek"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.74
+    },
+    {
+        "issue": "",
+        "year": 2005,
+        "raw": "D. A. Dalvit, J. Dziarmaga, W. H. Zurek, Phys. Rev. A72, 062101 (2005)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "062101",
+        "authors": [
+            {
+                "givennames": "D A",
+                "surname": "Dalvit",
+                "fullname": "D A Dalvit"
+            },
+            {
+                "givennames": "J",
+                "surname": "Dziarmaga",
+                "fullname": "J Dziarmaga"
+            },
+            {
+                "givennames": "W H",
+                "surname": "Zurek",
+                "fullname": "W H Zurek"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.74
+    },
+    {
+        "issue": "012051",
+        "year": 2007,
+        "raw": "O. Dreyer, J. Phys. Conf. Ser. 67, 012051 (2007)",
+        "title": "",
+        "source": "J Phys Conf Ser",
+        "volume": "67",
+        "authors": [
+            {
+                "givennames": "O",
+                "surname": "Dreyer",
+                "fullname": "O Dreyer"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.73
+    },
+    {
+        "issue": "",
+        "year": 2007,
+        "raw": "B. Groisman, D. Kenigsberg, T. Mor, \u201dQuantumness\u201d versus \u201dClassicality\u201d of Quantum States, Preprint arXiv:quantph/0703103, (2007)",
+        "title": "",
+        "source": "Preprint Arxiv:Quantph/0703103",
+        "volume": "",
+        "authors": [
+            {
+                "givennames": "B",
+                "surname": "Groisman",
+                "fullname": "B Groisman"
+            },
+            {
+                "givennames": "D",
+                "surname": "Kenigsberg",
+                "fullname": "D Kenigsberg"
+            },
+            {
+                "givennames": "T",
+                "surname": "Mor",
+                "fullname": "T Mor"
+            }
+        ],
+        "pages": "",
+        "arxiv_id": "quant-ph/0703103",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.58
+    },
+    {
+        "issue": "",
+        "year": 2007,
+        "raw": "G. Mahajan, T. Padmanabhan Particle creation, classicality and related issues in quantum field theory: I. Formalism and toy models, Preprint arXiv:0708.1233, (2007)",
+        "title": "Padmanabhan Particle creation, classicality and related issues in quantum field theory: I. Formalism and toy models",
+        "source": "Preprint Arxiv:0708 1233",
+        "volume": "",
+        "authors": [
+            {
+                "givennames": "G",
+                "surname": "Mahajan",
+                "fullname": "G Mahajan"
+            },
+            {
+                "givennames": "T",
+                "surname": ""
+            }
+        ],
+        "pages": "",
+        "arxiv_id": "0708.1233",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.6
+    },
+    {
+        "issue": "",
+        "year": 2003,
+        "raw": "V.V. Dodonov, M. B. Reno, Phys. Lett. A308, 249 (2003)",
+        "title": "",
+        "source": "Phys Lett",
+        "volume": "249",
+        "authors": [
+            {
+                "givennames": "V V",
+                "surname": "Dodonov",
+                "fullname": "V V Dodonov"
+            },
+            {
+                "givennames": "M B",
+                "surname": "Reno",
+                "fullname": "M B Reno"
+            },
+            {
+                "givennames": "",
+                "surname": "Phys"
+            },
+            {
+                "givennames": "",
+                "surname": "Lett"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.71
+    },
+    {
+        "issue": "",
+        "year": 1968,
+        "raw": "M. Feingold, A. Peres, Phys. Rev. A34, 591 (1968)",
+        "title": "",
+        "source": "Phys Rev",
+        "volume": "591",
+        "authors": [
+            {
+                "givennames": "M",
+                "surname": "Feingold",
+                "fullname": "M Feingold"
+            },
+            {
+                "givennames": "A",
+                "surname": "Peres",
+                "fullname": "A Peres"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.71
+    },
+    {
+        "issue": "118",
+        "year": 1963,
+        "raw": "R. P. Feynman, F. L. Vernon, Ann. Phys. 24, 118 (1963)",
+        "title": "",
+        "source": "Ann Phys",
+        "volume": "24",
+        "authors": [
+            {
+                "givennames": "R P",
+                "surname": "Feynman",
+                "fullname": "R P Feynman"
+            },
+            {
+                "givennames": "F L",
+                "surname": "Vernon",
+                "fullname": "F L Vernon"
+            }
+        ],
+        "pages": "",
+        "reftype": "citation",
+        "doi": "",
+        "score": 0.81
+    }
+]

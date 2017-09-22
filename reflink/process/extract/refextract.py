@@ -12,7 +12,7 @@ FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
     ('doi', 'doi'),
     ('journal_page', 'pages'),
     ('raw_ref', 'raw'),
-    ('journal_title', 'title'),
+    ('journal_title', 'source'),
     ('journal_volume', 'volume'),
     ('journal_issue', 'issue'),
     ('title', 'title'),
@@ -46,9 +46,10 @@ def extract_references(filename: str, document_id: str) -> str:
     references : list of dicts
         Reference metadata extracted from PDF.
     """
+    raw = refExtract.session.extract_references(filename)
     try:
         return [_transform(reference) for reference
-                in refExtract.session.extract_references(filename)]
+                in raw]
     except IOError as e:
         raise IOError('%s' % e) from e
     except Exception as e:

@@ -48,7 +48,6 @@ class RecordProcessor(processor.RecordProcessorBase):
         self.proc = create_process_app()
         self.events = extractionEvents
         self.events.init_app(self.proc)
-        logger.info('%s' % self.proc.conf)
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
@@ -107,17 +106,21 @@ class RecordProcessor(processor.RecordProcessorBase):
         try:
             deserialized = json.loads(data.decode('utf-8'))
         except Exception as e:
-            logger.error("Error while deserializing data: %s" % e)
-            logger.error("Data payload: %s" % data)
+            logger.error("%s: eror while deserializing data: %s" %
+                         (sequence_number, e))
+            logger.error("%s: data payload: %s" % (sequence_number, data))
             return   # Don't bring down the whole batch.
 
         document_id = deserialized.get('document_id')
+        if document_id is None:
+            logger.error("%s: no document id" % sequence_number)
         try:
             self.events.session.update_or_create(sequence_number,
                                                  document_id=document_id)
         except IOError as e:
             # If we can't connect, there is no reason to proceed. Make noise.
-            msg = "Could not connect to extraction events database: %s" % e
+            msg = "%s: could not connect to extraction events database: %s" \
+                  % (sequence_number, e)
             logger.error(msg)
             raise RuntimeError(msg) from e
 

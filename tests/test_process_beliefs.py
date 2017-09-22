@@ -32,16 +32,8 @@ class TestBeliefs(unittest.TestCase):
         self.assertEqual(beliefs.valid_doi('DOX 10.1002/0470841559.ch1'), 0.0)
 
     def test_valid_identifier_arxiv(self):
-        self.assertEqual(
-            beliefs.valid_identifier(
-                [{'identifier_type': 'arxiv', 'identifier': 'arxiv:1703.03442'}]
-            ), 1.0
-        )
-        self.assertEqual(
-            beliefs.valid_identifier(
-                [{'identifier_type': 'arxiv', 'identifier': 'arxix:1703.03442'}]
-            ), 0.0
-        )
+        self.assertEqual(beliefs.valid_arxiv_id('arxiv:1703.03442'), 1.0)
+        self.assertEqual(beliefs.valid_arxiv_id('arxix:1703.03442'), 0.0)
 
     def test_valid_identifier_isbn(self):
         self.assertEqual(
@@ -60,4 +52,3 @@ class TestBeliefs(unittest.TestCase):
                 }]
             ), 0.0
         )
-

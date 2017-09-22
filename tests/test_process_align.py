@@ -15,9 +15,7 @@ def obj_digest(obj):
 
 class TestAlignRecords(unittest.TestCase):
     def test_simple_records(self):
-        """
-        Align some fake records
-        """
+        """Regression test for alignment with fake records."""
         docs = {
             'ext1': [
                 {'name': 'Matt', 'cheatcode': 'uuddlrlrba', 'year': 2011},
@@ -51,10 +49,10 @@ class TestAlignRecords(unittest.TestCase):
         ]
 
         aligned_calc = align.align_records(docs)
-
         self.assertEqual(obj_digest(aligned_calc), obj_digest(aligned_answer))
 
     def test_full_records(self):
+        """Regression test for alignment with real data."""
         records = [json.load(open(testfile+ext)) for ext in extensions]
         recs = {lbl: rec for lbl, rec in zip(labels, records)}
         aligned_calc = align.align_records(recs)

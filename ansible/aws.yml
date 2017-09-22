@@ -52,14 +52,14 @@
         pull: yes
         tty: yes
         ports: "{{ grobid_exposed_port }}:{{ grobid_local_port }}"
-    - name: start ScienceParse
-      docker_container:
-        name: scienceparse
-        image: "{{ scienceparse_docker_image }}"
-        state: started
-        pull: yes
-        tty: yes
-        ports: "{{ scienceparse_exposed_port }}:{{ scienceparse_local_port }}"
+    # - name: start ScienceParse
+    #   docker_container:
+    #     name: scienceparse
+    #     image: "{{ scienceparse_docker_image }}"
+    #     state: started
+    #     pull: yes
+    #     tty: yes
+    #     ports: "{{ scienceparse_exposed_port }}:{{ scienceparse_local_port }}"
 
 
 # - name: Install worker role

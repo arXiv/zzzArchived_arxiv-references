@@ -2,7 +2,7 @@
 
 from reflink import logging
 import boto3
-from boto3.dynamodb.conditions import Key, Attr
+from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 # from botocore.errorfactory import ResourceInUseException
 import datetime
@@ -434,12 +434,11 @@ class ReferenceStoreSession(object):
             Limit=1
         )
         if len(response['Items']) == 0:
-            msg = 'No such reference %s for document %s' %\
-                (identifier, document_id)
             return None
         return response['Items'][0]
 
-    def retrieve_latest(self, document_id: str, reftype: str='__all__') -> dict:
+    def retrieve_latest(self, document_id: str,
+                        reftype: str='__all__') -> dict:
         """
         Retrieve the most recent extracted references for a document.
 
@@ -506,12 +505,27 @@ class ReferenceStoreSession(object):
 
 class DataStore(object):
     """Data store service integration from reflink Flask application."""
-    def __init__(self, app=None):
+
+    def __init__(self, app: object=None) -> None:
+        """
+        Set the application if available.
+
+        Parameters
+        ----------
+        app : :class:`flask.Flask` or :class:`celery.Celery`
+        """
         self.app = app
         if app is not None:
             self.init_app(app)
 
-    def init_app(self, app) -> None:
+    def init_app(self, app: object) -> None:
+        """
+        Set default configuration parameters on an application.
+
+        Parameters
+        ----------
+        app : :class:`flask.Flask` or :class:`celery.Celery`
+        """
         app.config.setdefault('REFLINK_EXTRACTED_SCHEMA', None)
         app.config.setdefault('REFLINK_STORED_SCHEMA', None)
         app.config.setdefault('REFLINK_DYNAMODB_ENDPOINT', None)
@@ -519,7 +533,14 @@ class DataStore(object):
         app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
         app.config.setdefault('REFLINK_AWS_REGION', 'us-east-1')
 
-    def get_session(self) -> None:
+    def get_session(self) -> ReferenceStoreSession:
+        """
+        Initialize a session with the data store.
+
+        Returns
+        -------
+        :class:`.ReferenceStoreSession`
+        """
         try:
             extracted_schema_path = self.app.config['REFLINK_EXTRACTED_SCHEMA']
             stored_schema_path = self.app.config['REFLINK_STORED_SCHEMA']
@@ -527,7 +548,7 @@ class DataStore(object):
             aws_access_key = self.app.config['AWS_ACCESS_KEY_ID']
             aws_secret_key = self.app.config['AWS_SECRET_ACCESS_KEY']
             region_name = self.app.config['REFLINK_AWS_REGION']
-        except (RuntimeError, AttributeError) as e:    # No application context.
+        except (RuntimeError, AttributeError) as e:   # No application context.
             extracted_schema_path = os.environ.get('REFLINK_EXTRACTED_SCHEMA',
                                                    None)
             stored_schema_path = os.environ.get('REFLINK_STORED_SCHEMA', None)
@@ -540,7 +561,8 @@ class DataStore(object):
                                      aws_secret_key, region_name)
 
     @property
-    def session(self):
+    def session(self) -> ReferenceStoreSession:
+        """The current data store session."""
         ctx = stack.top
         if ctx is not None:
             if not hasattr(ctx, 'data_store'):

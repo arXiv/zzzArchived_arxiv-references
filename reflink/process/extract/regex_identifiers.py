@@ -63,19 +63,25 @@ def extract_identifiers(text):
                 ]
             }
     """
-    arxivids = re.findall(REGEX_ARXIV_FLEXIBLE, text)
+
+    document = {}
+    arxivids = [longest_string(ID) for ID
+                in re.findall(REGEX_ARXIV_FLEXIBLE, text)]
+    if arxivids:
+        if len(arxivids) > 1:
+            document['arxiv_id'] = arxivids
+        else:
+            document['arxiv_id'] = arxivids[0]
+
     dois = re.findall(REGEX_DOI, text)
+    if dois:
+        document['doi'] = dois[0]
+
     isbn10 = re.findall(REGEX_ISBN_10, text)
     isbn13 = re.findall(REGEX_ISBN_13, text)
 
     # gather the identifiers one at a time
     identifiers = []
-    if arxivids:
-        identifiers.extend([
-            {'identifier_type': 'arxiv', 'identifier': longest_string(ID)}
-            for ID in arxivids
-        ])
-
     if isbn10:
         identifiers.extend([
             {'identifier_type': 'ISBN', 'identifier': ID}
@@ -88,11 +94,7 @@ def extract_identifiers(text):
             for ID in isbn13
         ])
 
-    # blank documents in case nothing was found
-    blank_ids = {'identifiers': [{'identifier_type': '', 'identifier': ''}]}
-    blank_doi = {'doi': ''}
+    if identifiers:
+        document['identifiers'] = identifiers
 
-    # form the actual documents / blank if nothing found
-    doidoc = {'doi': dois[0]} if dois else blank_doi
-    idsdoc = {'identifiers': identifiers} if identifiers else blank_ids
-    return dict(doidoc, **idsdoc)
+    return document

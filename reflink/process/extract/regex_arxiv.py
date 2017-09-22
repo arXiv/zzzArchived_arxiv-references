@@ -11,6 +11,8 @@ categories = [
     "math", "math-ph", "mtrl-th", "nlin", "nucl-ex", "nucl-th", "patt-sol",
     "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int", "supr-con"
 ]
+# A common typo is to exclude the hyphen in the category.
+categories += [cat.replace('-', '') for cat in categories]
 
 RE_SEPS = r'.{1,5}'
 RE_CATEGORIES = r'(?:{})(?:[.][A-Z]{{2}})?'.format(r'|'.join(categories))

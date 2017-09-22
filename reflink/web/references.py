@@ -1,18 +1,46 @@
 """Provides a controller for reference metadata views."""
 
 import logging
-from flask import current_app
 
-from reflink import types
+from reflink.types import ControllerResponseData
 from reflink.services.data_store import referencesStore
 from reflink import status
 
 from urllib import parse
-from itertools import groupby
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
+
+
+def _gs_query(reference):
+    """Generate a query for Google Scholar."""
+    query_parts = []
+    title = reference.get('title')
+    year = reference.get('year')
+    authors = reference.get('authors')
+    source = reference.get('source')
+    if title:
+        query_parts.append(('as_q', title))
+    if authors:
+        for author in authors:
+            forename = author.get('forename')
+            surname = author.get('surname')
+            fullname = author.get('fullname')
+            if surname:
+                if forename:
+                    query_parts.append(('as_sauthors',
+                                        '"%s %s"' % (forename, surname)))
+                else:
+                    query_parts.append(('as_sauthors', '%s' % surname))
+            elif fullname:
+                query_parts.append(('as_sauthors', '%s' % fullname))
+    if source:
+        query_parts.append(('as_publication', source))
+    if year:
+        query_parts.append(('as_ylo', str(year)))
+        query_parts.append(('as_yhi', str(year)))
+    return parse.urlencode(query_parts)
 
 
 class ReferenceMetadataController(object):
@@ -30,7 +58,7 @@ class ReferenceMetadataController(object):
         return {k: v for k, v in identifiers.items() if v}
 
     def resolve(self, document_id: str, reference_id: str)\
-            -> types.ControllerResponseData:
+            -> ControllerResponseData:
         """
         Get a redirect URL for a reference.
 
@@ -60,16 +88,16 @@ class ReferenceMetadataController(object):
         elif 'isbn' in identifiers:
             url = 'https://www.worldcat.org/isbn/%s' % identifiers['isbn']
         elif 'title' in identifiers:
-            url = 'https://scholar.google.com/scholar?&q=%s' \
-                    % parse.quote(identifiers['title'])
+            url = 'https://scholar.google.com/scholar?%s' % \
+                  _gs_query(reference_data)
         else:
             return {
                 'explanation': 'Cannot generate redirect for this reference.'
             }, status.HTTP_404_NOT_FOUND
         return url, status.HTTP_303_SEE_OTHER
 
-    def get(self, document_id: str, reference_id: str)\
-            -> types.ControllerResponseData:
+    def get(self, document_id: str,
+            reference_id: str) -> ControllerResponseData:
         """
         Get metadata for a specific reference in a document.
 
@@ -84,7 +112,6 @@ class ReferenceMetadataController(object):
         int
             HTTP status code.
         """
-
         try:
             session = referencesStore.session
         except IOError as e:
@@ -118,7 +145,7 @@ class ReferenceMetadataController(object):
         return reference, status.HTTP_200_OK
 
     def list(self, document_id: str,
-             reftype: str='__all__') -> types.ControllerResponseData:
+             reftype: str='__all__') -> ControllerResponseData:
         """
         Get latest reference metadata for an arXiv document.
 
