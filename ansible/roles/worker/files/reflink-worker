@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# reflink-worker          Reflink Service Worker
+#
+# chkconfig: 2345 90 60
+# description: Performs reference extraction and link injection.
+#
+
+case "$1" in
+start)
+   sudo /sbin/runuser reflinkworker -s /bin/bash -c "/opt/reflink/bin/start_worker > /tmp/reflinkworker.pid"
+   ;;
+stop)
+   kill `cat /tmp/reflinkworker.pid`
+   rm /tmp/reflinkworker.pid
+   ;;
+restart)
+   $0 stop
+   $0 start
+   ;;
+status)
+   if [ -e /tmp/reflinkworker.pid ]; then
+      echo reflink worker is running, pid=`cat /tmp/reflinkworker.pid`
+   else
+      echo reflink worker is NOT running
+      exit 1
+   fi
+   ;;
+*)
+   echo "Usage: $0 {start|stop|status|restart}"
+esac
+
+exit 0

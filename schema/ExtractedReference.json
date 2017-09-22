@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "ExtractedReference",
+    "type": "object",
+    "required": [
+        "raw"
+    ],
+    "properties": {
+        "title": {
+            "description": "The title of the reference.",
+            "type": "string"
+        },
+        "raw": {
+            "description": "The un-parsed reference string.",
+            "type": "string"
+        },
+        "authors": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "surname": {
+                        "type": "string"
+                    },
+                    "givennames": {
+                        "type": "string"
+                    },
+                    "prefix": {
+                        "type": "string"
+                    },
+                    "suffix": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "reftype": {
+            "description": "The type of work to which the reference refers.",
+            "type": "string"
+        },
+        "doi": {
+            "type": "string"
+        },
+        "volume": {
+            "type": "string"
+        },
+        "issue": {
+            "type": "string"
+        },
+        "pages": {
+            "type": "string"
+        },
+        "source": {
+            "type": "string"
+        },
+        "year": {
+            "type": "string"
+        },
+        "identifiers": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "identifer_type": {
+                        "description": "E.g. ISBN, ISSN, URI",
+                        "type": "string"
+                    },
+                    "identifier": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

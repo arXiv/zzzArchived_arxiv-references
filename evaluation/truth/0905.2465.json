@@ -1,0 +1,1105 @@
+[
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Matsufuru",
+                "fullname": "H. Matsufuru"
+            }
+        ],
+        "journal": "PoS LATTICE",
+        "volume": "018",
+        "year": 2007,
+        "arxiv": "0710.4225",
+        "raw": "H. Matsufuru, PoS LATTICE 2007, 018 (2007) [arXiv:0710.4225 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Hashimoto",
+                "fullname": "S. Hashimoto"
+            }
+        ],
+        "journal": "PoS LATTICE",
+        "volume": "011",
+        "year": 2008,
+        "arxiv": "0811.1257",
+        "raw": "S. Hashimoto, PoS LATTICE 2008, 011 (2008) [arXiv:0811.1257 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "R.",
+                "surname": "Narayanan",
+                "fullname": "R. Narayanan"
+            },
+            {
+                "forename": "H.",
+                "surname": "Neuberger",
+                "fullname": "H. Neuberger"
+            }
+        ],
+        "journal": "Nucl. Phys. B.",
+        "volume": "443",
+        "issue": "305",
+        "year": 1995,
+        "arxiv": "9411108",
+        "raw": "R. Narayanan and H. Neuberger, Nucl. Phys. B443, 305 (1995) [arXiv:hep-th/9411108]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Neuberger",
+                "fullname": "H. Neuberger"
+            }
+        ],
+        "journal": "Phys. Lett. B.",
+        "volume": "417",
+        "issue": "141",
+        "year": 1998,
+        "arxiv": "9707022",
+        "raw": "H. Neuberger, Phys. Lett. B 417, 141 (1998) [arXiv:hep-lat/9707022];"
+    },
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Neuberger",
+                "fullname": "H. Neuberger"
+            }
+        ],
+        "journal": "Phys. Lett. B.",
+        "volume": "427",
+        "issue": "353",
+        "year": 1998,
+        "arxiv": "9801031",
+        "raw": "ibid. B 427, 353 (1998) [arXiv:hep-lat/9801031]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Noaki",
+                "fullname": "J. Noaki"
+            }
+        ],
+        "journal": "Phys. Rev. Lett.",
+        "volume": "101",
+        "issue": "202004",
+        "year": 2008,
+        "arxiv": "0806.0894",
+        "raw": "J. Noaki et al. (JLQCD and TWQCD collaborations), Phys. Rev. Lett. 101, 202004 (2008) [arXiv:0806.0894 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Fukaya",
+                "fullname": "H. Fukaya"
+            }
+        ],
+        "journal": "Phys. Rev. Lett.",
+        "volume": "98",
+        "issue": "172001",
+        "year": 2007,
+        "arxiv": "0702003",
+        "raw": "H.Fukayaetal.(JLQCDcollaboration),Phys.Rev.Lett.98,172001(2007)[arXiv:hep-lat/0702003]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Fukaya",
+                "fullname": "H. Fukaya"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "76",
+        "issue": "054503",
+        "year": 2007,
+        "arxiv": "0705.3322",
+        "raw": "H. Fukaya et al. (JLQCD and TWQCD collaborations), Phys. Rev. D76, 054503 (2007) [arXiv:0705.3322 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Aokietal",
+                "fullname": "S. Aokietal"
+            }
+        ],
+        "journal": "Phys. Lett. B.",
+        "volume": "665",
+        "issue": "294",
+        "year": 2008,
+        "arxiv": "0710.1130",
+        "raw": "S.Aokietal.(JLQCDandTWQCDcollaborations),Phys.Lett.B665,294(2008)[arXiv:0710.1130 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Fukaya",
+                "fullname": "H. Fukaya"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "77",
+        "issue": "074503",
+        "year": 2008,
+        "arxiv": "0711.4965",
+        "raw": "H. Fukaya et al. (JLQCD collaboration), Phys. Rev. D77, 074503 (2008) [arXiv:0711.4965 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Aoki",
+                "fullname": "S. Aoki"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "77",
+        "issue": "074503",
+        "year": 2008,
+        "arxiv": "0801.4186",
+        "raw": " S. Aoki et al. (JLQCD collaboration), Phys. Rev. D 77, 094503 (2008) [arXiv:arXiv:0801.4186 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "E.",
+                "surname": "Shintani",
+                "fullname": "E. Shintani"
+            }
+        ],
+        "journal": "Phys. Rev. Lett.",
+        "volume": "101",
+        "issue": "242001",
+        "year": 2008,
+        "arxiv": "0806.4222",
+        "raw": "E. Shintani et al. (JLQCD collaboration), Phys. Rev. Lett. 101, 242001 (2008) [arXiv:0806.4222 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Ohki",
+                "fullname": "H. Ohki"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "78",
+        "issue": "054502",
+        "year": 2008,
+        "arxiv": "0806.4744",
+        "raw": "H. Ohki et al. (JLQCD collaboration), Phys. Rev. D 78, 054502 (2008) [arXiv:0806.4744 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "E.",
+                "surname": "Shintani",
+                "fullname": "E. Shintani"
+            }
+        ],
+        "arxiv": "0807.0556",
+        "raw": "E. Shintani et al. (JLQCD and TWQCD collaborations), arXiv:0807.0556 [hep-lat]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Gasser",
+                "fullname": "J. Gasser"
+            },
+            {
+                "forename": "H.",
+                "surname": "Leutwyler",
+                "fullname": "H. Leutwyler"
+            }
+        ],
+        "journal": "Ann. Phys.",
+        "volume": "158",
+        "issue": "142",
+        "year": 1984,
+        "raw": "J. Gasser and H. Leutwyler, Ann. Phys. 158, 142 (1984)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Gasser",
+                "fullname": "J. Gasser"
+            },
+            {
+                "forename": "U.-G.",
+                "surname": "Meißner",
+                "fullname": "U.-G. Meißner"
+            }
+        ],
+        "journal": "Nucl. Phys. B.",
+        "volume": "357",
+        "issue": "90",
+        "year": 1991,
+        "raw": "J. Gasser and U.-G. Meißner, Nucl. Phys. B 357, 90 (1991)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Bijnens",
+                "fullname": "J. Bijnens"
+            },
+            {
+                "forename": "G.",
+                "surname": "Colangelo",
+                "fullname": "G. Colangelo"
+            },
+            {
+                "forename": "P.",
+                "surname": "Talavera",
+                "fullname": "P. Talavera"
+            }
+        ],
+        "journal": "JHEP",
+        "volume": "9805",
+        "issue": "014",
+        "year": 1998,
+        "arxiv": "9805389",
+        "raw": "J. Bijnens, G. Colangelo and P. Talavera, JHEP 9805, 014 (1998) [arXiv:hep-ph/9805389]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Gasser",
+                "fullname": "J. Gasser"
+            },
+            {
+                "forename": "H.",
+                "surname": "Leutwyler",
+                "fullname": "H. Leutwyler"
+            }
+        ],
+        "journal": "Nucl. Phys. B.",
+        "volume": "250",
+        "issue": "517",
+        "year": 1985,
+        "raw": "J. Gasser and H. Leutwyler, Nucl. Phys. B 250, 517 (1985)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Bijnens",
+                "fullname": "J. Bijnens"
+            },
+            {
+                "forename": "P.",
+                "surname": "Talavera",
+                "fullname": "P. Talavera"
+            }
+        ],
+        "journal": "JHEP",
+        "volume": "0203",
+        "issue": "046",
+        "year": 2002,
+        "arxiv": "0203049",
+        "raw": "J. Bijnens and P. Talavera, JHEP 0203, 046 (2002) [arXiv:hep-ph/0203049]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "Y.",
+                "surname": "Nemoto",
+                "fullname": "Y. Nemoto"
+            },
+            {
+                "forename": "P.",
+                "surname": "Talavera",
+                "fullname": "P. Talavera"
+            }
+        ],
+        "journal": "Nucl. Phys. B (Proc.Suppl.)",
+        "volume": "129",
+        "issue": "299",
+        "year": 2004,
+        "arxiv": "0309173",
+        "raw": "Y. Nemoto (RBC collaboration), Nucl. Phys. B (Proc.Suppl.) 129, 299 (2004), [arXiv:hep-lat/0309173]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "van der Heide",
+                "fullname": "J. van der Heide"
+            },
+            {
+                "forename": "J. H.",
+                "surname": "Koch",
+                "fullname": "J. H. Koch"
+            },
+            {
+                "forename": "E",
+                "surname": "Laermann",
+                "fullname": "E. Laermann"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "69",
+        "issue": "094511",
+        "year": 2004,
+        "arxiv": "0312023",
+        "raw": "J. van der Heide, J.H. Koch and E. Laermann, Phys. Rev. D 69, 094511 (2004) [arXiv:hep-lat/0312023]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "A. M.",
+                "surname": "Abdel-Rehim",
+                "fullname": "A. M. Abdel-Rehim"
+            },
+            {
+                "forename": "R.",
+                "surname": "Lewis",
+                "fullname": "R. Lewis"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "71",
+        "issue": "014503",
+        "year": 2005,
+        "arxiv": "0410047",
+        "raw": "A.M. Abdel-Rehim and R. Lewis, Phys. Rev. D 71, 014503 (2005), [arXiv:hep-lat/0410047]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "F. D. R.",
+                "surname": "Bonnet",
+                "fullname": "F. D. R. Bonnet"
+            },
+            {
+                "forename": "R. G.",
+                "surname": "Edwards",
+                "fullname": "R. G. Edwards"
+            },
+            {
+                "forename": "G. T.",
+                "surname": "Fleming",
+                "fullname": "G. T. Fleming"
+            },
+            {
+                "forename": "R.",
+                "surname": "Lewis",
+                "fullname": "R. Lewis"
+            },
+            {
+                "forename": "D. G.",
+                "surname": "Richards",
+                "fullname": "D. G. Richards"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "72",
+        "issue": "054506",
+        "year": 2005,
+        "arxiv": "0411028",
+        "raw": "F.D.R. Bonnet, R.G. Edwards, G.T. Fleming, R. Lewis, D.G. Richards (LHP collaboration), Phys. Rev. D 72, 054506 (2005) [arXiv:hep-lat/0411028]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Hashimoto",
+                "fullname": "S. Hashimoto"
+            }
+        ],
+        "journal": "PoS LAT2005",
+        "volume": "336",
+        "year": 2005,
+        "arxiv": "0510085",
+        "raw": "S. Hashimoto et al. (JLQCD collaboration), PoS LAT2005, 336 (2005) [arXiv:hep-lat/0510085]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "D.",
+                "surname": "Brömmel",
+                "fullname": "D. Brömmel"
+            }
+        ],
+        "journal": "Eur. Phys. J. C.",
+        "volume": "C51",
+        "issue": "335",
+        "year": 2007,
+        "arxiv": "0608021",
+        "raw": "D.Brömmeletal.(QCDSFandUKQCDcollaborations),Eur.Phys.J.C51,335(2007)[arXiv:hep-lat/0608021]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Capitani",
+                "fullname": "S. Capitani"
+            },
+            {
+                "forename": "C.",
+                "surname": "Gattringer",
+                "fullname": "C. Gattringer"
+            },
+            {
+                "forename": "C. B.",
+                "surname": "Lang",
+                "fullname": "C. B. Lang"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "73",
+        "issue": "034505",
+        "year": 2006,
+        "arxiv": "0511040",
+        "raw": "S. Capitani, C. Gattringer and C.B. Lang (BGR collaboration), Phys. Rev. D 73, 034505 (2006) [arXiv:hep-lat/0511040]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "P. A.",
+                "surname": "Boyle",
+                "fullname": "P. A. Boyle"
+            }
+        ],
+        "journal": "JHEP",
+        "volume": "0807",
+        "issue": "112",
+        "year": 2008,
+        "arxiv": "0804.3971",
+        "raw": "P.A. Boyle et al. (RBC and UKQCD collaborations), JHEP 0807, 112 (2008) [arXiv:0804.3971 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "R.",
+                "surname": "Frezzotti",
+                "fullname": "R. Frezzotti"
+            },
+            {
+                "forename": "V.",
+                "surname": "Lubicz",
+                "fullname": "V. Lubicz"
+            },
+            {
+                "forename": "S.",
+                "surname": "Simula",
+                "fullname": "S. Simula"
+            }
+        ],
+        "arxiv": "0812.4042",
+        "raw": "R. Frezzotti, V. Lubicz, S. Simula (ETM collaboration), arXiv:0812.4042 [hep-lat]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "T.",
+                "surname": "Kaneko",
+                "fullname": "T. Kaneko"
+            }
+        ],
+        "journal": "PoS LATTICE",
+        "volume": "2008",
+        "issue": "158",
+        "year": 2008,
+        "arxiv": "0810.2590",
+        "raw": "T. Kaneko et al. (JLQCD and TWQCD collaborations), PoS LATTICE 2008 158, (2008) [arXiv:0810.2590 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "T.",
+                "surname": "Kaneko",
+                "fullname": "T. Kaneko"
+            }
+        ],
+        "journal": "PoS LATTICE",
+        "volume": "2007",
+        "issue": "148",
+        "year": 2007,
+        "arxiv": "0710.2390",
+        "raw": "T. Kaneko et al. (JLQCD collaboration), PoS LATTICE 2007, 148 (2007) [arXiv:0710.2390 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "Y.",
+                "surname": "Iwasaki",
+                "fullname": "Y. Iwasaki"
+            }
+        ],
+        "identifiers": [
+            {
+                "type": "unknown",
+                "identifier": "UTHEP-118"
+            }
+        ],
+        "year": 1983,
+        "arxiv": "0710.2390",
+        "raw": "T. Kaneko et al. (JLQCD collaboration), PoS LATTICE 2007, 148 (2007) [arXiv:0710.2390 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "M.",
+                "surname": "Lüscher",
+                "fullname": "M. Lüscher"
+            }
+        ],
+        "journal": "Phys. Lett. B.",
+        "volume": "428",
+        "issue": "342",
+        "year": 1998,
+        "arxiv": "9802011",
+        "raw": "M. Lüscher, Phys. Lett. B 428, 342 (1998) [arXiv:hep-lat/9802011]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "N.",
+                "surname": "Yamada",
+                "fullname": "N. Yamada"
+            }
+        ],
+        "journal": "PoS LAT",
+        "volume": "2006",
+        "issue": "060",
+        "year": 2006,
+        "arxiv": "0609073",
+        "raw": "N. Yamada et al. (JLQCD collaboration), PoS LAT2006, 060 (2006) [arXiv:hep-lat/0609073]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Aoki",
+                "fullname": "S. Aoki"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "78",
+        "issue": "014508",
+        "year": 2008,
+        "arxiv": "0803.3197",
+        "raw": "S. Aoki et al. (JLQCD collaboration), Phys. Rev. D 78, 014508 (2008) [arXiv:0803.3197 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "Z.",
+                "surname": "Fodor",
+                "fullname": "Z. Fodor"
+            },
+            {
+                "forename": "S. D.",
+                "surname": "Katz",
+                "fullname": "S. D. Katz"
+            },
+            {
+                "forename": "K. K.",
+                "surname": "Szabo",
+                "fullname": "K. K. Szabo"
+            }
+        ],
+        "journal": "JHEP",
+        "volume": "0408",
+        "issue": "003",
+        "year": 2004,
+        "arxiv": "0311010",
+        "raw": "Z. Fodor, S. D. Katz and K. K. Szabo, JHEP 0408, 003 (2004) [arXiv:hep-lat/0311010]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "P. M.",
+                "surname": "Vranas",
+                "fullname": "P. M. Vranas"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "74",
+        "issue": "034512",
+        "year": 2006,
+        "arxiv": "0606014",
+        "raw": "P. M. Vranas, arXiv:hep-lat/0001006; Phys. Rev. D 74, 034512 (2006) [arXiv:hep-lat/0606014]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "H.",
+                "surname": "Fukaya",
+                "fullname": "H. Fukaya"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "74",
+        "issue": "094505",
+        "year": 2006,
+        "arxiv": "0607020",
+        "raw": "H. Fukaya et al. (JLQCD collaboration), Phys. Rev. D 74, 094505 (2006) [arXiv:hep-lat/0607020]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "R.",
+                "surname": "Brower",
+                "fullname": "R. Brower"
+            },
+            {
+                "forename": "S.",
+                "surname": "Chandrasekharan",
+                "fullname": "S. Chandrasekharan"
+            },
+            {
+                "forename": "J. W.",
+                "surname": "Negele",
+                "fullname": "J. W. Negele"
+            },
+            {
+                "forename": "U.-J.",
+                "surname": "Wiese",
+                "fullname": "U.-J. Wiese"
+            }
+        ],
+        "journal": "Phys. Lett. B.",
+        "volume": "560",
+        "issue": "64",
+        "year": 2003,
+        "arxiv": "0302005",
+        "raw": "R. Brower, S. Chandrasekharan, J. W. Negele and U.-J. Wiese, Phys. Lett. B 560, 64 (2003) [arXiv:hep-lat/0302005]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S.",
+                "surname": "Aoki",
+                "fullname": "S. Aoki"
+            },
+            {
+                "forename": "H.",
+                "surname": "Fukaya",
+                "fullname": "H. Fukaya"
+            },
+            {
+                "forename": "S.",
+                "surname": "Hashimoto",
+                "fullname": "S. Hashimoto"
+            },
+            {
+                "forename": "T.",
+                "surname": "Onogi",
+                "fullname": "T. Onogi"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "76",
+        "issue": "054508",
+        "year": 2007,
+        "arxiv": "0707.0396",
+        "raw": "S. Aoki, H. Fukaya, S. Hashimoto and T. Onogi, Phys. Rev. D 76, 054508 (2007) [arXiv:0707.0396 [hep-lat]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "R.",
+                "surname": "Sommer",
+                "fullname": "R. Sommer"
+            }
+        ],
+        "journal": "Nucl. Phys. B.",
+        "volume": "411",
+        "issue": "839",
+        "year": 1994,
+        "arxiv": "9310022",
+        "raw": "R. Sommer, Nucl. Phys. B 411, 839 (1994) [arXiv:hep-lat/9310022]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "J.",
+                "surname": "Foley",
+                "fullname": "J. Foley"
+            }
+        ],
+        "journal": "Comput. Phys. Commun",
+        "volume": "172",
+        "issue": "145",
+        "year": 2005,
+        "arxiv": "0505023",
+        "raw": "J. Foley et al. (TrinLat collaboration), Comput. Phys. Commun, 172, 145 (2005) [arXiv:hep-lat/0505023]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "N.",
+                "surname": "Cundy",
+                "fullname": "N. Cundy"
+            }
+        ],
+        "journal": "Comput. Phys. Commun.",
+        "volume": "165",
+        "issue": "221",
+        "year": 2005,
+        "arxiv": "0405003",
+        "raw": "N. Cundy et al., Comput. Phys. Commun. 165, 221 (2005) [arXiv:hep-lat/0405003]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "L.",
+                "surname": "Giusti",
+                "fullname": "L. Giusti"
+            },
+            {
+                "forename": "P.",
+                "surname": "Hernandez",
+                "fullname": "P. Hernandez"
+            },
+            {
+                "forename": "M.",
+                "surname": "Laine",
+                "fullname": "M. Laine"
+            },
+            {
+                "forename": "P.",
+                "surname": "Weisz",
+                "fullname": "P. Weisz"
+            },
+            {
+                "forename": "H.",
+                "surname": "Wittig",
+                "fullname": "H. Wittig"
+            }
+
+        ],
+        "journal": "JHEP",
+        "volume": "0404",
+        "issue": "013",
+        "year": 2004,
+        "arxiv": "0402002",
+        "raw": "L. Giusti, P. Hernandez, M. Laine, P. Weisz and H. Wittig, JHEP 0404, 013 (2004) [arXiv:hep-lat/0402002]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "T. A.",
+                "surname": "DeGrand",
+                "fullname": "T. A. DeGrand"
+            },
+            {
+                "forename": "S.",
+                "surname": "Schaefer",
+                "fullname": "S. Schaefer"
+            }
+        ],
+        "journal": "Comput. Phys. Commun.",
+        "volume": "159",
+        "issue": "185",
+        "year": 2004,
+        "arxiv": "0401011",
+        "raw": "T.A. DeGrand, S. Schaefer, Comput. Phys. Commun. 159, 185 (2004) [arXiv:hep-lat/0401011]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "S",
+                "surname": "Hashimoto",
+                "fullname": "S. Hashimoto"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "61",
+        "issue": "014502",
+        "year": 1999,
+        "arxiv": "9906376",
+        "raw": "S. Hashimoto et al., Phys. Rev. D 61, 014502 (1999) [arXiv:hep-ph/9906376]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "T. B.",
+                "surname": "Bunton",
+                "fullname": "T. B. Bunton"
+            },
+            {
+                "forename": "F.-J.",
+                "surname": "Jiang",
+                "fullname": "F.-J. Jiang"
+            },
+            {
+                "forename": "B. C.",
+                "surname": "Tiburzi",
+                "fullname": "B. C. Tiburzi"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "74",
+        "issue": "034514",
+        "year": 2006,
+        "arxiv": "0607001",
+        "raw": "T.B. Bunton, F.-J. Jiang and B.C. Tiburzi, Phys. Rev. D 74, 034514 (2006) [arXiv:hep-lat/0607001, Erratum-ibid. D 74, 099902 (2006)]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "B.",
+                "surname": "Borasoy",
+                "fullname": "B. Borasoy"
+            },
+            {
+                "forename": "R.",
+                "surname": "Lewis",
+                "fullname": "R. Lewis"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "71",
+        "issue": "014033",
+        "year": 2005,
+        "arxiv": "0410042",
+        "raw":  "B. Borasoy and R. Lewis, Phys. Rev. D 71, 014033 (2005) [arXiv:hep-lat/0410042]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "D.",
+                "surname": "Bećirević",
+                "fullname": "D. Bećirević"
+            },
+            {
+                "forename": "G.",
+                "surname": "Villadoro",
+                "fullname": "R. Villadoro"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "69",
+        "issue": "054010",
+        "year": 2004,
+        "arxiv": "0311028",
+        "raw":  "D. Bećirević and G. Villadoro, Phys. Rev. D 69, 054010 (2004) [arXiv:hep-lat/0311028]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "C. T.",
+                "surname": "Sachrajda",
+                "fullname": "C. T. Sachrajda"
+            },
+            {
+                "forename": "G.",
+                "surname": "Villadoro",
+                "fullname": "R. Villadoro"
+            }
+        ],
+        "journal": "Phys. Lett. D.",
+        "volume": "609",
+        "issue": "73",
+        "year": 2005,
+        "arxiv": "0411033",
+        "raw":  "C.T. Sachrajda and G. Villadoro, Phys. Lett. B 609, 73 (2005) [arXiv:hep-lat/0411033]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "C.",
+                "surname": "Amsler",
+                "fullname": "C. Amsler"
+            }
+        ],
+        "journal": "Phys. Lett. B.",
+        "volume": "667",
+        "issue": "1",
+        "year": 2008,
+        "arxiv": "0411033",
+        "raw":  "C. Amsler et al. (Particle Data Group), Phys. Lett. B 667, 1 (2008)."
+    },
+    {
+        "authors": [
+            {
+                "forename": "G.",
+                "surname": "Colangelo",
+                "fullname": "G. Colangelo"
+            },
+            {
+                "forename": "J.",
+                "surname": "Gasser",
+                "fullname": "J. Gasser"
+            },
+            {
+                "forename": "H.",
+                "surname": "Leutwyler",
+                "fullname": "H. Leutwyler"
+            }
+        ],
+        "journal": "Nucl. Phys. B.",
+        "volume": "603",
+        "issue": "25",
+        "year": 2001,
+        "arxiv": "0103088",
+        "raw":  "G. Colangelo, J. Gasser and H. Leutwyler, Nucl. Phys. B 603, 125 (2001) [arXiv:hep-ph/0103088]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "G.",
+                "surname": "Colangelo",
+                "fullname": "G. Colangelo"
+            },
+            {
+                "forename": "S.",
+                "surname": "Dürr",
+                "fullname": "S. Dürr"
+            }
+        ],
+        "journal": "Eur. Phys. J. C.",
+        "volume": "33",
+        "issue": "543",
+        "year": 2004,
+        "arxiv": "0311023",
+        "raw":  "G. Colangelo and S. Dürr, Eur. Phys. J. C 33, 543 (2004) [arXiv:hep-lat/0311023]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "B.",
+                "surname": "Ananthanarayan",
+                "fullname": "B. Ananthanarayan"
+            },
+            {
+                "forename": "S.",
+                "surname": "Ramanan",
+                "fullname": "S. Ramanan"
+            }
+        ],
+        "arxiv": "0811.0482",
+        "raw":  "B. Ananthanarayan and S. Ramanan, arXiv:0811.0482 [hep-ph]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "F.-K.",
+                "surname": "Guo",
+                "fullname": "F.-K. Guo"
+            },
+            {
+                "forename": "C.",
+                "surname": "Hanhart",
+                "fullname": "C. Hanhart"
+            },
+            {
+                "forename": "F. J.",
+                "surname": "Llanes-Estrada",
+                "fullname": "F. J. Llanes-Estrada"
+            },
+            {
+                "forename": "U.-G.",
+                "surname": "Meißner",
+                "fullname": "U.-G. Meißner"
+            }
+        ],
+        "arxiv": "0812.3270",
+        "raw":  "F.-K. Guo, C. Hanhart, F.J. Llanes-Estrada and U.-G. Meißner, arXiv:0812.3270 [hep-ph]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "P.",
+                "surname": "Masjuan",
+                "fullname": "P. Masjuan"
+            },
+            {
+                "forename": "S.",
+                "surname": "Peris",
+                "fullname": "S. Peris"
+            },
+            {
+                "forename": "J. J.",
+                "surname": "Sanz-Cillero",
+                "fullname": "J. J. Sanz-Cillero"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "78",
+        "issue": "074028",
+        "year": 2008,
+        "arxiv": "0807.4893",
+        "raw":  "P. Masjuan, S. Peris and J.J. Sanz-Cillero, Phys. Rev. D 78, 074028 (2008) [arXiv:0807.4893 [hep-ph]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "A.",
+                "surname": "Bazavov",
+                "fullname": "A. Bazavov"
+            }
+        ],
+        "arxiv": "0903.3598",
+        "raw":  "A. Bazavov et al. (MILC collaboration), arXiv:0903.3598 [hep-lat]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "C.",
+                "surname": "Aubin",
+                "fullname": "C. Aubin"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "70",
+        "issue": "094505",
+        "year": 2004,
+        "arxiv": "0402030",
+        "raw":  "C. Aubin et al. (MILC collaboration), Phys. Rev. D 70, 094505 (2004) [arXiv:hep-lat/0402030]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "M.",
+                "surname": "Gonzárez-Alonso",
+                "fullname": "M. Gonzárez-Alonso"
+            },
+            {
+                "forename": "A.",
+                "surname": "Pich",
+                "fullname": "A. Pich"
+            },
+            {
+                "forename": "J.",
+                "surname": "Prades",
+                "fullname": "J. Prades"
+            }
+        ],
+        "journal": "Phys. Rev. D.",
+        "volume": "78",
+        "issue": "116012",
+        "year": 2008,
+        "arxiv": "0810.0760",
+        "raw":  "M. Gonzárez-Alonso, A. Pich and J. Prades, Phys. Rev. D 78, 116012 (2008) [arXiv:0810.0760 [hep-ph]]."
+    },
+    {
+        "authors": [
+            {
+                "forename": "P. F.",
+                "surname": "Bedaque",
+                "fullname": "P. F. Bedaque"
+            }
+        ],
+        "journal": "Phys. Lett. B.",
+        "volume": "593",
+        "issue": "82",
+        "year": 2004,
+        "arxiv": "0402051",
+        "raw":  "P.F. Bedaque, Phys. Lett. B 593, 82 (2004) [arXiv:nucl-th/0402051]."
+    }
+]

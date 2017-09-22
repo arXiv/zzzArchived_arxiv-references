@@ -1,0 +1,66 @@
+- name: make sure apache, other libraries are installed
+  yum:
+    name:
+      - httpd24
+      - httpd24-devel
+      - uuid
+      - libuuid-devel
+      - make
+      - gcc
+      - gcc-c++
+      - python35-devel
+    state: present
+
+- name: unarchive mod_wsgi
+  unarchive: src=files/mod_wsgi-4.5.15.tar.gz dest=/opt creates=/opt/mod_wsgi-4.5.15
+
+- name: make sure that mod_wsgi source is clean before building
+  command: make clean
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+  ignore_errors: yes
+
+- name: make sure that mod_wsgi source is clean before building
+  command: make distclean
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+  ignore_errors: yes
+
+- name: configure mod_wsgi build
+  command: ./configure --with-python=/usr/bin/python3
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+    creates: /opt/mod_wsgi-4.5.15/Makefile
+
+- name: build mod_wsgi
+  command: make
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+
+- name: install mod_wsgi
+  command: make install
+  args:
+    chdir: /opt/mod_wsgi-4.5.15
+
+- name: give apache execute access
+  file:
+    path: /opt/reflink/arxiv-reflink
+    owner: apache
+    group: apache
+    recurse: yes
+    mode: 0755
+
+- name: send custom apache configuration file
+  copy: src=files/httpd.conf dest=/etc/httpd/conf/httpd.conf force=yes
+
+- name: send mod_wsgi configuration file
+  copy: src=files/mod_wsgi.conf dest=/etc/httpd/conf.modules.d/mod_wsgi.conf force=yes
+
+- name: send reflink configuration file
+  template: src=templates/arxiv-reflink.conf dest=/etc/httpd/conf.d/arxiv-reflink.conf force=yes
+
+- name: copy Python secrets for webapp
+  template: src=templates/secrets.py dest=/opt/reflink/arxiv-reflink/reflink/secrets.py
+
+- name: enable and start service
+  service: name=httpd enabled=yes state=restarted

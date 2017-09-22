@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# reflink-consumer          Reflink Service Notification Consumer
+#
+# chkconfig: 2345 90 60
+# description: Runs the Kinesis notification consumer for the Reflink service.
+#
+
+case "$1" in
+start)
+   sudo /sbin/runuser reflinkconsumer -s /bin/bash -c "/opt/reflink/bin/start_kcl > /tmp/reflinkconsumer.pid"
+   ;;
+stop)
+   kill `cat /tmp/reflinkconsumer.pid`
+   rm /tmp/reflinkconsumer.pid
+   ;;
+restart)
+   $0 stop
+   $0 start
+   ;;
+status)
+   if [ -e /tmp/reflinkconsumer.pid ]; then
+      echo reflink consumer is running, pid=`cat /tmp/reflinkconsumer.pid`
+   else
+      echo reflink consumer is NOT running
+      exit 1
+   fi
+   ;;
+*)
+   echo "Usage: $0 {start|stop|status|restart}"
+esac
+
+exit 0

@@ -1,0 +1,45 @@
+diff -Naur TeX-AutoTeX-v0.906.0/lib/TeX/AutoTeX/File.pm perllib/TeX/AutoTeX/File.pm
+--- TeX-AutoTeX-v0.906.0/lib/TeX/AutoTeX/File.pm	2011-09-25 11:23:13.000000000 -0400
++++ perllib/TeX/AutoTeX/File.pm	2017-06-26 11:49:19.800214414 -0400
+@@ -372,7 +372,7 @@
+   $dvi_flags .= $self->{flags}->{keepcomments}? ' -K0' : ' -K1';
+ 
+   my $response;
+-  my $setenv = qq{export HOME=/tmp @{[$ENV{TEXMFCNF}? "TEXMFCNF=$ENV{TEXMFCNF}": q{}]} PATH=$process->{tex_env_path}};
++  my $setenv = qq{VAR=none}; #qq{export HOME=/tmp @{[$ENV{TEXMFCNF}? "TEXMFCNF=$ENV{TEXMFCNF}": q{}]} PATH=$process->{tex_env_path}};
+   my $crdir = substr $dir, length $TEX_PATH;
+   while (1) {
+     $log->verbose(" ~~~~~~~~~~~ Processing file '$file'");
+@@ -596,7 +596,7 @@
+     }
+   }
+ 
+-  my $setenv = qq{export HOME=/tmp @{[$ENV{TEXMFCNF}? "TEXMFCNF=$ENV{TEXMFCNF}": q{}]} PATH=$process->{tex_env_path}};
++  my $setenv = qq{VAR=none}; #qq{export HOME=/tmp @{[$ENV{TEXMFCNF}? "TEXMFCNF=$ENV{TEXMFCNF}": q{}]} PATH=$process->{tex_env_path}};
+   $log->verbose(qq{TEXMFCNF is @{[$ENV{TEXMFCNF}? "set to: '$ENV{TEXMFCNF}'": 'unset.']}});
+   my $crdir = substr $self->{fileset}->{dir}, length $TEX_PATH;
+   my $runtexcommand = qq#$TEXCHR $TEX_PATH "($setenv; cd $crdir && $program $escaped_tex_format '$self->{filename}' < $feeder)" 2>&1#;
+diff -Naur TeX-AutoTeX-v0.906.0/lib/TeX/AutoTeX/Process.pm perllib/TeX/AutoTeX/Process.pm
+--- TeX-AutoTeX-v0.906.0/lib/TeX/AutoTeX/Process.pm	2011-09-25 11:23:13.000000000 -0400
++++ perllib/TeX/AutoTeX/Process.pm	2017-06-26 11:49:19.800214414 -0400
+@@ -58,7 +58,7 @@
+   my $self = shift;
+ 
+   eval {
+-    delete @ENV{qw(IFS CDPATH ENV BASH_ENV)}; #make %ENV safer, see camel
++      #delete @ENV{qw(IFS CDPATH ENV BASH_ENV)}; #make %ENV safer, see camel
+     local $SIG{ALRM} = sub {
+       croak "AutoTeX process timed out after ${AUTOTEX_TIMEOUT}s (" . localtime(), q{)};
+     };
+diff -Naur TeX-AutoTeX-v0.906.0/lib/TeX/AutoTeX.pm perllib/TeX/AutoTeX.pm
+--- TeX-AutoTeX-v0.906.0/lib/TeX/AutoTeX.pm	2011-09-25 20:32:07.000000000 -0400
++++ perllib/TeX/AutoTeX.pm	2017-06-26 11:49:19.800214414 -0400
+@@ -116,7 +116,7 @@
+     $p->{use_stamp} = 0;
+   }
+ 
+-  local $ENV{PATH} = $AUTOTEX_ENV_PATH; # also untaints path
++  #local $ENV{PATH} = $AUTOTEX_ENV_PATH; # also untaints path
+ 
+   if ($p->{error} = $p->go()) {
+     $self->{log}->verbose("AutoTeX returned error: $p->{error}");

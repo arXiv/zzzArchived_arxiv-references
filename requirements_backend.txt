@@ -1,0 +1,18 @@
+simplejson==3.11.1
+amazon-kclpy==1.4.4
+boto3==1.4.4
+celery==4.0.2
+Flask==0.12.2
+jsonschema==2.6.0
+redis==2.10.5
+moto==1.0.1
+chardet==3.0.4
+unidecode==0.4.21
+ftfy==5.0.2
+-e git://github.com/erickpeirson/refextract.git#egg=refextract
+markupsafe
+regex==2017.7.11
+editdistance==0.3.1
+pybloof==0.7.1
+bitarray==0.8.1
+titlecase>=0.11.0

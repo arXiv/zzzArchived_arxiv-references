@@ -1,0 +1,877 @@
+[
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 0.3888888888888889,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 0.5,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 0.5,
+                "source": 1.0,
+                "year": 0.3888888888888889,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 0.25,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "raw": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 0.3888888888888889,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 0.6666666666666666,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0,
+                "arxiv_id": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0,
+                "arxiv_id": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0,
+                "arxiv_id": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "raw": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 0.8,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "cermine",
+            {
+                "authors": 1.0,
+                "raw": 1.0,
+                "title": 1.0,
+                "source": 1.0,
+                "year": 1.0,
+                "volume": 1.0,
+                "pages": 1.0,
+                "issue": 1.0
+            }
+        ],
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "pages": 0.5,
+                "raw": 1.0,
+                "source": 1.0,
+                "volume": 1.0,
+                "year": 1.0,
+                "authors": 1.0
+            }
+        ],
+        [
+            "grobid",
+            {
+                "identifiers": 0.0,
+                "raw": 1.0,
+                "volume": 1.0,
+                "issue": 1.0,
+                "pages": 1.0,
+                "reftype": 1.0,
+                "doi": 1.0,
+                "authors": 1.0,
+                "title": 1.0,
+                "year": 1.0,
+                "source": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "raw": 1.0,
+                "year": 1.0
+            }
+        ]
+    ],
+    [
+        [
+            "refextract",
+            {
+                "reftype": 1.0,
+                "raw": 1.0,
+                "authors": 1.0
+            }
+        ]
+    ]
+]

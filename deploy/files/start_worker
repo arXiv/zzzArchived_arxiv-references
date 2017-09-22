@@ -1,0 +1,7 @@
+#!/bin/sh
+source /opt/reflink/venv/bin/activate
+source /opt/reflink/secrets
+export PATH="/opt/reflink/arxiv-reflink:$PATH"
+cd /opt/reflink/arxiv-reflink
+/opt/reflink/venv/bin/celery worker -A reflink --loglevel=INFO -E --concurrency=4 >> /var/log/reflink-worker.log 2>&1&
+echo $!
