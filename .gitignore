@@ -104,3 +104,4 @@ ansible/roles/consumer/files/java
 *.zip
 *.tar.gz
 *.jar
+*.pdf

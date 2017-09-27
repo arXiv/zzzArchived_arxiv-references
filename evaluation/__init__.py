@@ -6,7 +6,7 @@ import sys
 from statistics import mean, stdev
 sys.path.append('.')
 
-from reflink.process import extract, merge
+from references.process import extract, merge
 
 
 if __name__ == '__main__':
