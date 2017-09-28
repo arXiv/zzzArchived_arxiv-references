@@ -16,9 +16,7 @@ from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 # from references.process import tasks
-from references.services.events import extractionEvents
-from references.services.retrieve import retrievePDF
-from references.services.extractor import requestExtraction
+from references.services import metrics, retrieve, events, extractor
 
 
 logger = logging.getLogger(__name__)
@@ -47,7 +45,9 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
         # self.proc = create_process_app()
-        self.events = extractionEvents
+        self.events = events.extractionEvents
+        self.retriever = retrieve.retrievePDF
+        self.extractor = extractor.requestExtraction
         # self.events.init_app(self.proc)
 
     def initialize(self, initialize_input):
@@ -92,6 +92,38 @@ class RecordProcessor(processor.RecordProcessorBase):
                                  " error was %s" % e)
             time.sleep(self._SLEEP_SECONDS)
 
+    @metrics.session.reporter
+    def retrieve_pdf(self, document_id: str) -> str:
+        """Retrieve a published arXiv PDF from the central document store."""
+        metrics_data = []
+        pdf_path = self.retriever.session.retrieve(document_id)
+        if pdf_path is None:
+            metrics_data.append({'metric': 'PDFIsAvailable', 'value': 0.})
+            msg = '%s: no PDF available' % document_id
+            logger.info(msg)
+            raise RuntimeError(msg)
+
+        metrics_data.append({'metric': 'PDFIsAvailable', 'value': 1.})
+        logger.info('%s: retrieved PDF' % document_id)
+        return pdf_path, metrics_data
+
+    @metrics.session.reporter
+    def requestExtraction(self, document_id: str, pdf_path: str) -> None:
+        """Request reference extraction from the extraction service."""
+        metrics_data = []
+        try:
+            self.extractor.extract_references(document_id, pdf_path)
+        except Exception as e:
+            msg = '%s: failed to extract references: %s' % (document_id, e)
+            logger.error(msg)
+            metrics_data.append({'metric': 'AgentExtracted', 'value': 0.})
+            raise RuntimeError(msg) from e
+        logger.info('%s: successfully extracted references' % document_id)
+        metrics_data.append({'metric': 'AgentExtracted', 'value': 1.})
+        return None, metrics_data
+
+
+
     def process_record(self, data: bytes, partition_key: bytes,
                        sequence_number: int, sub_sequence_number: int) -> None:
         """
@@ -126,13 +158,13 @@ class RecordProcessor(processor.RecordProcessorBase):
             raise RuntimeError(msg) from e
 
         try:
-            pdf_path = retrievePDF(document_id)
+            pdf_path = self.retrieve_pdf(document_id)
         except IOError as e:
             logger.error('%s: Could not retrieve pdf: %s' % (document_id, e))
             # tasks.process_document.delay(document_id, sequence_number)
 
         try:
-            requestExtraction(document_id, pdf_path)
+            self.request_extraction(document_id, pdf_path)
         except (RuntimeError, TaskError) as e:
             logger.error("Error while processing document: %s" % e)
             logger.error("Data payload: %s" % data)
