@@ -10,7 +10,7 @@ ADD wsgi.py /opt/refextract/
 RUN pip install -U pip
 RUN pip install -r /opt/refextract/requirements.txt
 
-RUN apt-get install -y gcc
+RUN apt-get install -y gcc libpcre3 libpcre3-dev
 RUN pip install uwsgi
 
 ENV PATH "/opt/refextract:${PATH}"
