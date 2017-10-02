@@ -3,7 +3,7 @@ import logging
 import sys
 
 default_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-default_level = os.environ.get('REFLINK_LOGLEVEL', logging.INFO)
+default_level = int(os.environ.get('LOGLEVEL', logging.INFO))
 LOGFILE = os.environ.get('LOGFILE', None)
 
 

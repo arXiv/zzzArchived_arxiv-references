@@ -60,7 +60,7 @@ def status() -> tuple:
     return jsonify({'iam': 'ok'}), HTTP_200_OK
 
 
-@blueprint.route('/', methods=['POST'])
+@blueprint.route('/extract', methods=['POST'])
 def extract() -> tuple:
     """Handle a request for reference extraction for a POSTed PDF."""
     logger = getLogger()

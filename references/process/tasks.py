@@ -40,7 +40,12 @@ def process_document(document_id: str, pdf_url: str) -> list:
     RuntimeError
     """
     metrics_data = []
+
+    # These are set up here so that they are always defined in the finally
+    # block, below.
     metadata = []
+    extraction_id = None
+
     start_time = datetime.now()
     logger.info('%s: started processing document' % document_id)
     try:
@@ -69,7 +74,7 @@ def process_document(document_id: str, pdf_url: str) -> list:
 
         # Merge references across extractors, if more than one succeeded.
         if len(extractions) == 1:
-            metadata = extractions.values()[0]
+            metadata = list(extractions.values())[0]
             logger.info('%s: skipping merge step ' % document_id)
         else:
             logger.info('%s: merging metadata ' % document_id)
@@ -102,8 +107,8 @@ process_document.async_result = AsyncResult
 
 
 @after_task_publish.connect
-def update_sent_state(sender=None, body=None, **kwargs):
+def update_sent_state(sender=None, headers=None, body=None, **kwargs):
     """Set state to SENT, so that we can tell whether a task exists."""
     task = current_app.tasks.get(sender)
     backend = task.backend if task else current_app.backend
-    backend.store_result(body['id'], None, "SENT")
+    backend.store_result(headers['id'], None, "SENT")

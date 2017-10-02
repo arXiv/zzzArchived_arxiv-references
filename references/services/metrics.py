@@ -13,12 +13,14 @@ class MetricsSession(object):
     namespace = 'arXiv/References'
 
     def __init__(self, endpoint_url: str=None, aws_access_key: str=None,
-                 aws_secret_key: str=None, region_name: str=None) -> None:
+                 aws_secret_key: str=None, region_name: str=None,
+                 verify: bool=True) -> None:
         """Initialize with AWS configuration."""
         self.cloudwatch = boto3.client('cloudwatch', region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
-                                       aws_secret_access_key=aws_secret_key)
+                                       aws_secret_access_key=aws_secret_key,
+                                       verify=verify)
 
     def report(self, metric: str, value: object, units: str=None,
                dimensions: dict=None) -> None:
@@ -77,10 +79,12 @@ class Metrics(object):
         app.config.setdefault('AWS_ACCESS_KEY_ID', 'asdf1234')
         app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
         app.config.setdefault('AWS_REGION', 'us-east-1')
+        app.config.setdefault('CLOUDWATCH_VERIFY', 'true')
 
     def get_session(self) -> None:
         try:
             endpoint_url = self.app.config['CLOUDWATCH_ENDPOINT']
+            verify = self.app.config['CLOUDWATCH_VERIFY']
             aws_access_key = self.app.config['AWS_ACCESS_KEY_ID']
             aws_secret_key = self.app.config['AWS_SECRET_ACCESS_KEY']
             region_name = self.app.config['AWS_REGION']
@@ -89,8 +93,9 @@ class Metrics(object):
             aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', 'asdf')
             aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'fdsa')
             region_name = os.environ.get('AWS_REGION', 'us-east-1')
+            verify = os.environ.get('CLOUDWATCH_VERIFY', 'true') == 'true'
         return MetricsSession(endpoint_url, aws_access_key, aws_secret_key,
-                              region_name)
+                              region_name, verify=verify)
 
     @property
     def session(self):

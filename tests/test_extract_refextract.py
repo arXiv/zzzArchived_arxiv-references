@@ -33,8 +33,8 @@ class TestRefextractExtractor(unittest.TestCase):
 
         self.assertEqual(mock_post.call_count, 1,
                          "The service module should POST.")
-        self.assertEqual(mock_post.call_args[0][0], endpoint_url,
-                         "The service should POST to the configured endpoint.")
+        self.assertTrue(mock_post.call_args[0][0].startswith(endpoint_url),
+                        "The service should POST to the configured endpoint.")
 
         self.assertIsInstance(references, list)
         self.assertIsInstance(references[0], dict)

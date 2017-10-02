@@ -12,6 +12,8 @@ class RefExtractSession(object):
 
     def __init__(self, endpoint: str) -> None:
         """Set the endpoint for Refextract service."""
+        if endpoint.endswith('/'):
+            endpoint = endpoint[:-1]
         self.endpoint = endpoint
         response = requests.get('%s/status' % self.endpoint)
         if not response.ok:
@@ -31,7 +33,7 @@ class RefExtractSession(object):
         dict
             Raw output from RefExtract.
         """
-        response = requests.post(self.endpoint,
+        response = requests.post('%s/extract' % self.endpoint,
                                  files={'file': open(filename, 'rb')},
                                  timeout=300)
         if not response.ok:

@@ -35,31 +35,31 @@ class ExtractionSession(object):
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
-        try:
-            self._create_table()
-        except ClientError as e:
-            logger.info('Table already exists: %s' % self.table_name)
         self.table = self.dynamodb.Table(self.table_name)
 
-    def _create_table(self) -> None:
+    def create_table(self) -> None:
         """Set up a new table in DynamoDB. Blocks until table is available."""
-        table = self.dynamodb.create_table(
-            TableName=self.table_name,
-            KeySchema=[
-                {'AttributeName': 'document', 'KeyType': 'HASH'},
-                {'AttributeName': 'version', 'KeyType': 'RANGE'}
-            ],
-            AttributeDefinitions=[
-                {"AttributeName": 'document', "AttributeType": "S"},
-                {"AttributeName": 'version', "AttributeType": "N"}
-            ],
-            ProvisionedThroughput={    # TODO: make this configurable.
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5
-            }
-        )
-        waiter = table.meta.client.get_waiter('table_exists')
-        waiter.wait(TableName=self.table_name)
+        try:
+            table = self.dynamodb.create_table(
+                TableName=self.table_name,
+                KeySchema=[
+                    {'AttributeName': 'document', 'KeyType': 'HASH'},
+                    {'AttributeName': 'version', 'KeyType': 'RANGE'}
+                ],
+                AttributeDefinitions=[
+                    {"AttributeName": 'document', "AttributeType": "S"},
+                    {"AttributeName": 'version', "AttributeType": "N"}
+                ],
+                ProvisionedThroughput={    # TODO: make this configurable.
+                    'ReadCapacityUnits': 5,
+                    'WriteCapacityUnits': 5
+                }
+            )
+            waiter = table.meta.client.get_waiter('table_exists')
+            waiter.wait(TableName=self.table_name)
+        except ClientError:
+            logger.debug('Table exists: %s' % self.table_name)
+            pass
 
     def _prepare(self, entry: dict) -> dict:
         extraction = self.hash(entry['document'], entry['version'],
@@ -127,13 +127,16 @@ class ExtractionSession(object):
         -------
         dict
         """
+        logger.debug('%s: Get latest extraction' % document_id)
         response = self.table.query(
             Limit=1,
             ScanIndexForward=False,
             KeyConditionExpression=Key('document').eq(document_id)
         )
         if len(response['Items']) == 0:
+            logger.debug('%s: No extraction available' % document_id)
             return None
+        logger.debug('%s: Got extraction' % document_id)
         return response['Items'][0]
 
 
@@ -167,7 +170,11 @@ class ReferenceStoreSession(object):
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
-
+        logger.debug('New ReferenceStoreSession with...')
+        logger.debug('verify %s' % verify)
+        logger.debug('region_name %s' % region_name)
+        logger.debug('endpoint_url %s' % endpoint_url)
+        logger.debug('aws_access_key_id %s' % aws_access_key)
         try:
             with open(stored_schema_path) as f:
                 self.stored_schema = json.load(f)
@@ -189,56 +196,56 @@ class ReferenceStoreSession(object):
             logger.info("Extracted reference validation is disabled")
             self.extracted_schema = None
             # self.table_name = 'ExtractedReference'
-
-        try:
-            self._create_table()
-        except ClientError as e:
-            logger.info('Table already exists: %s' % self.table_name)
         self.table = self.dynamodb.Table(self.table_name)
-
         self.extractions = ExtractionSession(endpoint_url, aws_access_key,
                                              aws_secret_key, region_name,
                                              verify=verify)
 
-    def _create_table(self) -> None:
+    def create_table(self) -> None:
         """Set up a new table in DynamoDB. Blocks until table is available."""
-        table = self.dynamodb.create_table(
-            TableName=self.table_name,
-            KeySchema=[
-                {'AttributeName': 'document_extraction', 'KeyType': 'HASH'},
-                {'AttributeName': 'order', 'KeyType': 'RANGE'}
-            ],
-            AttributeDefinitions=[
-                {"AttributeName": 'document_extraction', "AttributeType": "S"},
-                {"AttributeName": 'document', "AttributeType": "S"},
-                # {"AttributeName": 'extraction', "AttributeType": "S"},
-                {"AttributeName": 'identifier', "AttributeType": "S"},
-                {"AttributeName": 'order', "AttributeType": "N"},
-                # {"AttributeName": 'version', "AttributeType": "N"}
-            ],
-            GlobalSecondaryIndexes=[
-                {
-                    'IndexName': 'DocumentVersionIndex',
-                    'KeySchema': [
-                        {'AttributeName': 'document', 'KeyType': 'HASH'},
-                        {'AttributeName': 'identifier', 'KeyType': 'RANGE'}
-                    ],
-                    'ProvisionedThroughput': {
-                        'ReadCapacityUnits': 5,
-                        'WriteCapacityUnits': 5
+        try:
+            table = self.dynamodb.create_table(
+                TableName=self.table_name,
+                KeySchema=[
+                    {'AttributeName': 'document_extraction', 'KeyType': 'HASH'},
+                    {'AttributeName': 'order', 'KeyType': 'RANGE'}
+                ],
+                AttributeDefinitions=[
+                    {"AttributeName": 'document_extraction', "AttributeType": "S"},
+                    {"AttributeName": 'document', "AttributeType": "S"},
+                    # {"AttributeName": 'extraction', "AttributeType": "S"},
+                    {"AttributeName": 'identifier', "AttributeType": "S"},
+                    {"AttributeName": 'order', "AttributeType": "N"},
+                    # {"AttributeName": 'version', "AttributeType": "N"}
+                ],
+                GlobalSecondaryIndexes=[
+                    {
+                        'IndexName': 'DocumentVersionIndex',
+                        'KeySchema': [
+                            {'AttributeName': 'document', 'KeyType': 'HASH'},
+                            {'AttributeName': 'identifier', 'KeyType': 'RANGE'}
+                        ],
+                        'ProvisionedThroughput': {
+                            'ReadCapacityUnits': 5,
+                            'WriteCapacityUnits': 5
+                        },
+                        'Projection': {
+                            "ProjectionType": 'ALL'
+                        }
                     },
-                    'Projection': {
-                        "ProjectionType": 'ALL'
-                    }
-                },
-            ],
-            ProvisionedThroughput={    # TODO: make this configurable.
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5
-            }
-        )
-        waiter = table.meta.client.get_waiter('table_exists')
-        waiter.wait(TableName=self.table_name)
+                ],
+                ProvisionedThroughput={    # TODO: make this configurable.
+                    'ReadCapacityUnits': 5,
+                    'WriteCapacityUnits': 5
+                }
+            )
+            waiter = table.meta.client.get_waiter('table_exists')
+            waiter.wait(TableName=self.table_name)
+        except ClientError:
+            logger.debug('Table exists: %s' % self.table_name)
+            pass
+
+        self.extractions.create_table()
 
     def validate_extracted(self, reference: dict,
                            raise_on_invalid: bool = True) -> bool:
@@ -330,7 +337,8 @@ class ReferenceStoreSession(object):
         hash_string = bytes(unidecode(to_encode), encoding='ascii')
         return str(b64encode(hash_string), encoding='utf-8')[:100]
 
-    def _clean(self, reference: dict) -> dict:
+    @staticmethod
+    def _clean(reference: dict) -> dict:
         """
         Remove empty values.
 
@@ -342,12 +350,18 @@ class ReferenceStoreSession(object):
         -------
         dict
         """
-        def _inner_clean(datum):
-            return {k: v for k, v in datum.items() if v}
+        if reference is None:
+            return
 
-        return {k: v if v and k not in ['authors', 'identifiers']
-                else [_inner_clean(datum) for datum in v]
-                for k, v in reference.items()}
+        def _inner_clean(datum):
+            if isinstance(datum, dict):
+                return {k: _inner_clean(v) for k, v in datum.items() if v}
+            elif isinstance(datum, list):
+                return [_inner_clean(v) for v in datum if v]
+            return datum
+
+        return {field: _inner_clean(value) for field, value
+                in reference.items() if value}
 
     def create(self, document_id: str, references: ReferenceData,
                version: str) -> None:
@@ -428,6 +442,7 @@ class ReferenceStoreSession(object):
         -------
         dict
         """
+        logger.debug('%s: Retrieve reference %s' % (document_id, identifier))
         expression = Key('document').eq(document_id) \
             & Key('identifier').eq(identifier)
 
@@ -437,7 +452,9 @@ class ReferenceStoreSession(object):
             Limit=1
         )
         if len(response['Items']) == 0:
+            logger.debug('%s: not found %s' % (document_id, identifier))
             return None
+        logger.debug('%s: found %s' % (document_id, identifier))
         return response['Items'][0]
 
     def retrieve_latest(self, document_id: str,
@@ -456,6 +473,7 @@ class ReferenceStoreSession(object):
         -------
         list or None
         """
+        logger.debug('%s: Retrieve latest references' % document_id)
         latest = self.extractions.latest(document_id)
         if latest is None:
             return None    # No extractions for this document.
@@ -486,6 +504,7 @@ class ReferenceStoreSession(object):
             Raised when we are unable to read from the DynamoDB database, or
             when the database returns a malformed response.
         """
+        logger.debug('%s: Retrieve extraction %s' % (document_id, extraction))
         document_extraction = '%s#%s' % (document_id, extraction)
         expression = Key('document_extraction').eq(document_extraction)
         try:
@@ -498,9 +517,11 @@ class ReferenceStoreSession(object):
             raise IOError('Failed to read: %s' % e) from e
 
         if 'Items' not in response or len(response['Items']) == 0:
+            logger.debug('%s: not found %s' % (document_id, extraction))
             return None    # No such record.
 
         references = response['Items']
+        logger.debug('%s: found %s' % (document_id, extraction))
         if reftype != '__all__':
             return [ref for ref in references if ref['reftype'] == reftype]
         return references

@@ -22,6 +22,8 @@ class CermineSession(object):
         ----------
         endpoint : str
         """
+        if endpoint.endswith('/'):
+            endpoint = endpoint[:-1]
         self.endpoint = endpoint
         response = requests.get('%s/status' % self.endpoint)
         if not response.ok:
@@ -42,7 +44,7 @@ class CermineSession(object):
             Raw XML response from Cermine.
         """
         # This can take a while.
-        response = requests.post(self.endpoint,
+        response = requests.post('%s/extract' % self.endpoint,
                                  files={'file': open(filename, 'rb')},
                                  timeout=300)
         if not response.ok:

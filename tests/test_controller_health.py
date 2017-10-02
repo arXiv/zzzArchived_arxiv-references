@@ -29,10 +29,12 @@ class TestHealthCheck(unittest.TestCase):
     def test_health_check_failure(self, *mocks):
         """A dict of health states is returned."""
         for obj in mocks:
+            print(obj)
             type(obj).session = mock.PropertyMock(side_effect=RuntimeError)
 
         status = health_check()
         self.assertIsInstance(status, dict)
         self.assertEqual(len(status), 6)
+        print(status)
         for stat in status.values():
             self.assertFalse(stat)

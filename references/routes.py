@@ -36,7 +36,7 @@ def extract_references() -> tuple:
 @blueprint.route('/status/<string:task_id>', methods=['GET'])
 def task_status(task_id: str) -> tuple:
     """Get the status of a reference extraction task."""
-    data, status, headers = ExtractionController().extraction_status(task_id)
+    data, status, headers = ExtractionController().status(task_id)
     return jsonify(data), status, headers
 
 

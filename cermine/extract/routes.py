@@ -96,7 +96,7 @@ def extract_with_cermine(filepath: str) -> str:
     return result
 
 
-@blueprint.route('/', methods=['POST'])
+@blueprint.route('/extract', methods=['POST'])
 def extract() -> tuple:
     """Handle a request for reference extraction for a POSTed PDF."""
     logger = getLogger()

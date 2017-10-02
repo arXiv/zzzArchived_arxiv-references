@@ -242,3 +242,4 @@ SOURCE_WHITELIST = os.environ.get('SOURCE_WHITELIST',
                                   'arxiv.org,export.arxiv.org')
 
 CLOUDWATCH_ENDPOINT = os.environ.get('CLOUDWATCH_ENDPOINT', None)
+CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true') == 'true'

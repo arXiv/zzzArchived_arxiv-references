@@ -89,12 +89,11 @@ class ExtractionStatusIsRequested(unittest.TestCase):
         mock_ref_store.session = mock_session
         self.ctrl = extraction.ExtractionController(0.2)
 
+    @mock.patch('references.controllers.extraction.AsyncResult')
     @mock.patch('references.controllers.extraction.process_document')
-    def test_request_is_valid_and_task_does_not_exist(self, mock_process):
+    def test_request_valid_task_does_not_exist(self, mock_process, mock_async):
         """The request includes an id for a task that doesn't exist."""
-        mock_async_result = mock.MagicMock()
-        type(mock_async_result).status = "PENDING"
-        mock_process.async_result = mock_async_result
+        type(mock_async).status = "PENDING"
 
         task_id = 'asdf1234-5678'
         response, status, headers = self.ctrl.status(task_id)
@@ -105,12 +104,13 @@ class ExtractionStatusIsRequested(unittest.TestCase):
         except TypeError:
             self.fail("Response content should be JSON-serializable")
 
+    @mock.patch('references.controllers.extraction.AsyncResult')
     @mock.patch('references.controllers.extraction.process_document')
-    def test_request_is_valid_and_pending(self, mock_process):
+    def test_request_is_valid_and_pending(self, mock_process, mock_async):
         """The request includes an id for an existing task that is pending."""
         mock_result = mock.MagicMock()
         mock_result.status = "SENT"
-        mock_process.async_result = mock.MagicMock(return_value=mock_result)
+        mock_async.return_value = mock_result
 
         task_id = 'asdf1234-5678'
         response, status, headers = self.ctrl.status(task_id)
@@ -120,12 +120,13 @@ class ExtractionStatusIsRequested(unittest.TestCase):
         except TypeError:
             self.fail("Response content should be JSON-serializable")
 
+    @mock.patch('references.controllers.extraction.AsyncResult')
     @mock.patch('references.controllers.extraction.process_document')
-    def test_request_is_valid_and_started(self, mock_process):
+    def test_request_is_valid_and_started(self, mock_process, mock_async):
         """The request includes an id for an existing task that is started."""
         mock_result = mock.MagicMock()
         mock_result.status = "STARTED"
-        mock_process.async_result = mock.MagicMock(return_value=mock_result)
+        mock_async.return_value = mock_result
 
         task_id = 'asdf1234-5678'
         response, status, headers = self.ctrl.status(task_id)
@@ -135,12 +136,13 @@ class ExtractionStatusIsRequested(unittest.TestCase):
         except TypeError:
             self.fail("Response content should be JSON-serializable")
 
+    @mock.patch('references.controllers.extraction.AsyncResult')
     @mock.patch('references.controllers.extraction.process_document')
-    def test_request_is_valid_and_failed(self, mock_process):
+    def test_request_is_valid_and_failed(self, mock_process, mock_async):
         """The request includes an id for an existing task that is failed."""
         mock_result = mock.MagicMock()
         mock_result.status = "FAILURE"
-        mock_process.async_result = mock.MagicMock(return_value=mock_result)
+        mock_async.return_value = mock_result
         mock_result.result = RuntimeError('Something went wrong')
         task_id = 'asdf1234-5678'
         response, status, headers = self.ctrl.status(task_id)
@@ -150,12 +152,13 @@ class ExtractionStatusIsRequested(unittest.TestCase):
         except TypeError:
             self.fail("Response content should be JSON-serializable")
 
+    @mock.patch('references.controllers.extraction.AsyncResult')
     @mock.patch('references.controllers.extraction.process_document')
-    def test_request_is_valid_and_retrying(self, mock_process):
+    def test_request_is_valid_and_retrying(self, mock_process, mock_aync):
         """The request includes an id for a task that is being retried."""
         mock_result = mock.MagicMock()
         mock_result.status = "RETRY"
-        mock_process.async_result = mock.MagicMock(return_value=mock_result)
+        mock_aync.return_value = mock_result
 
         task_id = 'asdf1234-5678'
         response, status, headers = self.ctrl.status(task_id)
@@ -165,9 +168,11 @@ class ExtractionStatusIsRequested(unittest.TestCase):
         except TypeError:
             self.fail("Response content should be JSON-serializable")
 
+    @mock.patch('references.controllers.extraction.AsyncResult')
     @mock.patch('references.controllers.extraction.url_for')
     @mock.patch('references.controllers.extraction.process_document')
-    def test_request_is_valid_and_successful(self, mock_process, mock_url_for):
+    def test_request_is_valid_and_successful(self, mock_process, mock_url_for,
+                                             mock_async):
         """The request includes an id for a task that is finished (success)."""
         mock_result = mock.MagicMock()
         mock_result.status = "SUCCESS"
@@ -178,7 +183,7 @@ class ExtractionStatusIsRequested(unittest.TestCase):
             "references": [],
             "extraction": "bazbat"
         }
-        mock_process.async_result = mock.MagicMock(return_value=mock_result)
+        mock_async.return_value = mock_result
 
         def url_for(endpoint, doc_id=None):
             """Mock :func:`flask.url_for`."""
@@ -197,12 +202,11 @@ class ExtractionStatusIsRequested(unittest.TestCase):
         except TypeError:
             self.fail("Response content should be JSON-serializable")
 
+    @mock.patch('references.controllers.extraction.AsyncResult')
     @mock.patch('references.controllers.extraction.process_document')
-    def test_request_is_invalid(self, mock_process):
+    def test_request_is_invalid(self, mock_process, mock_async):
         """The request includes an id for a task that does not exist."""
-        mock_async_result = mock.MagicMock()
-        type(mock_async_result).status = "PENDING"
-        mock_process.async_result = mock_async_result
+        type(mock_async).status = "PENDING"
 
         task_id = 'asdf1234-5678'
         response, status, headers = self.ctrl.status(task_id)

@@ -163,5 +163,40 @@ class RetrieveReference(unittest.TestCase):
         self.assertEqual(data, None)
 
 
+class TestPreSaveDataIsMessy(unittest.TestCase):
+    def test_reference_is_none(self):
+        """A NoneType object slipped into the reference metadata."""
+        try:
+            self.assertEqual(data_store.ReferenceStoreSession._clean(None),
+                             None)
+        except Exception as E:
+            self.fail('NoneType objects should be handled gracefully')
+
+    def test_reference_contains_a_none(self):
+        """A value in the reference is a NoneType object."""
+        try:
+            ref = data_store.ReferenceStoreSession._clean({
+                'foo': 'bar',
+                'baz': None
+            })
+            self.assertDictEqual(ref, {'foo': 'bar'},
+                                 "The null field should be dropped.")
+        except Exception as E:
+            self.fail('NoneType objects should be handled gracefully')
+
+    def test_reference_value_contains_a_none(self):
+        """A value in the reference contains a NoneType object."""
+        try:
+            ref = data_store.ReferenceStoreSession._clean({
+                'foo': 'bar',
+                'baz': ['bat', None]
+            })
+            self.assertDictEqual(ref, {'foo': 'bar', 'baz': ['bat']},
+                                 "The null value should be dropped.")
+        except Exception as E:
+            self.fail('NoneType objects should be handled gracefully')
+
+
+
 if __name__ == '__main__':
     unittest.main()

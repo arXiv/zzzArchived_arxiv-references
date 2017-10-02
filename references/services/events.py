@@ -33,14 +33,9 @@ class ExtractionEventSession(object):
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
         self.version = version
-        try:
-            self._create_table()
-        except ClientError as e:
-            # logger.info('Table already exists: %s' % self.table_name)
-            pass
         self.table = self.dynamodb.Table(self.table_name)
 
-    def _create_table(self) -> None:
+    def create_table(self) -> None:
         """Set up a new table in DynamoDB. Blocks until table is available."""
         table = self.dynamodb.create_table(
             TableName=self.table_name,
@@ -170,6 +165,11 @@ class ExtractionEvents(object):
         if ctx is not None:
             if not hasattr(ctx, 'extraction_events'):
                 ctx.extraction_events = self.get_session()
+                try:
+                    ctx.extraction_events.create_table()
+                except ClientError as e:
+                    logger.info('Table already exists for extraction_events')
+                    pass
             return ctx.extraction_events
         return self.get_session()     # No application context.
 
