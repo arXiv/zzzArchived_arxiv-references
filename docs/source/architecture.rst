@@ -1,61 +1,105 @@
 Architecture
 ============
 
-This document describes the architecture of the reference linking service,
+This document describes the architecture of the reference extraction subsystem,
 using a loose interpretation of the
 [C4 architectural model](https://www.structurizr.com/help/c4).
 
-
-
 Context
 -------
-The reference extraction feature is a stand-alone service deployed in
-the AWS cloud environment. The legacy arXiv system will issue notifications
-about new publications via a message broker. The message broker will in turn
-notify the reference linking service. For each new publication, the reference
-linking service will retrieve published PDFs and LaTeX source packages,
-extract and parse cited references, and produce a new link-injected PDF.
+The reference extraction system provides two integration options:
+
+1. The legacy arXiv system will issue notifications about new publications via
+   a message broker. The notification includes the paper ID and the location of
+   a PDF. The reference extraction agent will consume those notifications and
+   trigger reference extraction on those documents.
+2. A client (e.g. another service) can request extraction directly by POSTing
+   to the reference extraction service REST API.
 
 The legacy arXiv system, and/or other consumers, can subsequently request
-reference metadata or the location of the link-injected PDF for individual
-arXiv publications via a REST API.
-
-.. image:: static/images/context.png
+reference metadata for individual arXiv publications via the extraction REST
+API.
 
 Subsystems
 ----------
 
+.. figure:: static/images/components.png
+
+   Subsystem diagram for the reference extraction system.
+
+
+The reference extraction system is comprised of three primary subsystems,
+each deployed and scaled separately:
+
+1. The reference extraction REST API.
+#. The reference extraction worker.
+#. The reference extraction agent.
+
+In addition, there are three third-part extractor services deployed separately:
+
+1. RefExtract. See ``refextract/Dockerfile``.
+2. Cermine. See ``cermine/Dockerfile``.
+3. Grobid. See ``grobid/Dockerfile``.
+
+
+Extraction REST API
+^^^^^^^^^^^^^^^^^^^
+Described by ``Dockerfile-web``.
+
+Handles requests for reference extraction from clients (including the reference
+extraction agent), and generates extraction tasks for the reference extraction
+worker. Provides access to extracted reference metadata.
+
+Integration with the extraction worker is achieved using the `Celery
+<http://www.celeryproject.org/>` distributed task queue system. A `Redis
+<https://redis.io/>`_ instance acts as both the message queue and the results
+backend.
+
+Extraction requests
+```````````````````
 Since reference extraction is time-consuming (several minutes per document),
-we isolate the reference extraction process from the REST API. The reference
-extraction process is responsible for processing notifications from the
-notification broker, extracting and storing reference metadata, and producing
-link-injected PDFs. We further isolate the notification consumption role from
-the actually execution of the reference extraction steps. This results in three
-independently deployable subsystems:
+the actual work of extraction is performed asynchronously by a worker service.
+When a POST request is received by the extraction service REST API, an
+asynchronous extraction task is generated, and the API responds with the
+location of a task status resource.
 
-1. The notification agent, which receives notifications from the broker and
-   generates processing tasks. This will be deployed on a dedicated EC2 virtual
-   machine.
-2. The reference extraction backend service (worker), which executes processing
-   tasks and stores the results. Deployed as an Auto Scaling Group in EC2.
-3. The REST API, which responds to client requests for reference metadata and
-   link-injected PDFs. This is deployed as a WSGI web application running
-   on ElasticBeanstalk.
+1. Client sends a POST request to the service endpoint (e.g.
+   ``https://references.arxiv.org/references``) with a payload (e.g. a file).
+2. If the upload checks out, the service initiates an asynchronous task.
+3. The service responds with ``202 Accepted`` and a ``Location`` header that
+   points to a task status endpoint (e.g.
+   ``https://references.arxiv.org/task/<task id>``).
+4. The task status endpoint responds to GET requests with the current status
+   of the task. E.g. if the task ID is a Celery task UUID, the responsible
+   controller uses the `AsyncResult API
+   <http://docs.celeryproject.org/en/latest/reference/celery.result.html#celery.result.AsyncResult>`_
+   to retrieve the task state.
+5. When the task completes, the task status endpoint responds with ``303 See
+   Other`` and a ``Location`` header that points to the created resource. E.g.
+   ``https://references.arxiv.org/references/<document id>``
 
-Those second two containers have access to a shared object store (S3) and a
-shared data store (DynamoDB). The REST API will only *read* from those object
-stores, and the reference extraction process will only *write* to those object
-stores.
+Extraction worker
+^^^^^^^^^^^^^^^^^
+Described by ``Dockerfile-worker``.
 
-.. image:: static/images/containers.png
+Does the actual work of retrieving a PDF and extracting, enhancing, and storing
+cited references. Consumes tasks generated by the reference extraction API.
+Calls third-party extractor services via their REST APIs.
 
-Components
-----------
+See `this blog post
+<https://blogs.cornell.edu/arxiv/2017/09/27/development-update-reference-extraction-linking/>`_
+for a description of the reference validation and arbitration process.
 
-.. image:: static/images/components.png
+Extraction agent
+^^^^^^^^^^^^^^^^
+Described by ``Dockerfile-agent``.
 
-Notification Agent
-``````````````````
+A Kinesis consumer that listens for notifications on the ``PDFIsAvailable``
+stream. For each such notification, requests reference extraction by POSTing to
+the extraction REST API.
+
+Kinesis integration
+```````````````````
 Notification handling is provided by two components: a notification consumer
 provided by Amazon, implemented using the Java-based Kinesis Consumer
 Library, and a record processor component implemented in Python that
@@ -63,41 +107,6 @@ processes new notifications received by the consumer. A so-called
 MultiLangDaemon, a stand-alone Java process, provides the glue between the
 KCL and our record processor. When new notifications are received by the
 consumer, the MultiLangDaemon invokes the record processor, which in turn
-starts the processing pipeline. See :mod:`reflink.agent.consumer` for
-details.
-
-The :class:`reflink.agent.consumer.RecordProcessor` is responsible for
-creating a new processing task for each new publication. The Celery instance
-running in this container passes those requested tasks to the reference
-extraction container (worker processes) via a messaging broker (such as SQS)
-for execution.
-
-Reference extraction
-````````````````````
-A Celery instance running on the reference extraction (worker) container
-listens for new task requests coming through the messaging broker (e.g. SQS),
-and coordinates the execution of those tasks. The entry point to the processing
-pipeline is the :mod:`reflink.process.tasks` component, which calls a
-series of functions in series for each arXiv publication.
-
-* :mod:`reflink.process.retrieve`
-* :mod:`reflink.process.extract`
-* :mod:`reflink.process.merge`
-* :mod:`reflink.process.store`
-
-Access to the data store (for reference metadata) and object store (for link
-injected PDFs) are provided by corresponding service components that expose a
-very simple CRUD API. Those service components are used by both the reference
-extraction process and the web application. See
-:mod:`reflink.services.data_store`.
-
-REST API
-`````````
-The REST API is provided by a web application, implemented in Flask, running
-on AWS ElasticBeanstalk. This uses a fairly straightforward MVC pattern;
-blueprints and view functions (:mod:`reflink.web.views`\) arbitrate client
-requests and serialize responses, lightweight controllers
-(:mod:`reflink.web.references`\) are responsible for interpreting request
-content and retrieving relevant data from the data store;
-the :mod:`reflink.services.data_store` service components provide access to
-the underlying DynamoDB service.
+starts the processing pipeline handled by
+:class:`references.agent.consumer.RecordProcessor`.
+See :mod:`references.agent.consumer`.

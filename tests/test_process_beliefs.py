@@ -1,8 +1,8 @@
-"""Tests for :mod:`reflink.process.orchestrate` module."""
+"""Tests for :mod:`references.process.orchestrate` module."""
 
 import unittest
 
-from reflink.process.merge import beliefs
+from references.process.merge import beliefs
 
 
 class TestBeliefs(unittest.TestCase):

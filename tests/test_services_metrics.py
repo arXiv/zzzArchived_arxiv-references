@@ -1,8 +1,8 @@
-"""Tests for :mod:`reflink.services.metrics` module."""
+"""Tests for :mod:`references.services.metrics` module."""
 
 import unittest
 from unittest import mock
-from reflink.services.metrics import MetricsSession
+from references.services.metrics import MetricsSession
 
 
 class TestMetricsReport(unittest.TestCase):

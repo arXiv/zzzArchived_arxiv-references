@@ -1,17 +1,17 @@
-"""Tests for the :mod:`reflink.web.health` module."""
+"""Tests for the :mod:`references.controllers.health` module."""
 
 import unittest
 from unittest import mock
-from reflink.web.health import health_check
+from references.controllers.health import health_check
 
 
 class TestHealthCheck(unittest.TestCase):
-    @mock.patch('reflink.web.health.cermine')
-    @mock.patch('reflink.web.health.referencesStore')
-    @mock.patch('reflink.web.health.extractionEvents')
-    @mock.patch('reflink.web.health.grobid')
-    @mock.patch('reflink.web.health.metrics')
-    @mock.patch('reflink.web.health.refExtract')
+    @mock.patch('references.controllers.health.cermine')
+    @mock.patch('references.controllers.health.referencesStore')
+    @mock.patch('references.controllers.health.extractionEvents')
+    @mock.patch('references.controllers.health.grobid')
+    @mock.patch('references.controllers.health.metrics')
+    @mock.patch('references.controllers.health.refExtract')
     def test_health_check_ok(self, *mocks):
         """A dict of health states is returned."""
         status = health_check()
@@ -20,19 +20,21 @@ class TestHealthCheck(unittest.TestCase):
         for stat in status.values():
             self.assertTrue(stat)
 
-    @mock.patch('reflink.web.health.cermine')
-    @mock.patch('reflink.web.health.referencesStore')
-    @mock.patch('reflink.web.health.extractionEvents')
-    @mock.patch('reflink.web.health.grobid')
-    @mock.patch('reflink.web.health.metrics')
-    @mock.patch('reflink.web.health.refExtract')
+    @mock.patch('references.controllers.health.cermine')
+    @mock.patch('references.controllers.health.referencesStore')
+    @mock.patch('references.controllers.health.extractionEvents')
+    @mock.patch('references.controllers.health.grobid')
+    @mock.patch('references.controllers.health.metrics')
+    @mock.patch('references.controllers.health.refExtract')
     def test_health_check_failure(self, *mocks):
         """A dict of health states is returned."""
         for obj in mocks:
+            print(obj)
             type(obj).session = mock.PropertyMock(side_effect=RuntimeError)
 
         status = health_check()
         self.assertIsInstance(status, dict)
         self.assertEqual(len(status), 6)
+        print(status)
         for stat in status.values():
             self.assertFalse(stat)

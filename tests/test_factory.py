@@ -1,24 +1,24 @@
-"""Tests for :mod:`reflink.factory`."""
+"""Tests for :mod:`references.factory`."""
 
 import unittest
-from reflink.factory import create_web_app, create_process_app
+from references.factory import create_web_app, create_worker_app
 from flask import Flask
 from celery import Celery
 
 
 class TestWebAppFactory(unittest.TestCase):
-    """Tests for :func:`.create_web_app`."""
+    """We require a Flask application instance."""
 
     def test_returns_flask_app(self):
-        """A :class:`flask.Flask` application is returned."""
+        """:func:`.create_web_app` returns a :class:`flask.Flask` instance."""
         app = create_web_app()
         self.assertIsInstance(app, Flask)
 
 
 class TestProcessAppFactory(unittest.TestCase):
-    """Tests for :func:`.create_process_app`."""
+    """We require a Celery worker application instance."""
 
     def test_returns_celery_app(self):
-        """A :class:`celery.Celery` application is returned."""
-        app = create_process_app()
+        """:func:`.create_web_app` returns a :class:`.Celery` instance."""
+        app = create_worker_app()
         self.assertIsInstance(app, Celery)

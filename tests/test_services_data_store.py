@@ -1,10 +1,10 @@
-"""Tests for the :mod:`reflink.services.data_store` module."""
+"""Tests for the :mod:`references.services.data_store` module."""
 
 import unittest
 import os
 from moto import mock_dynamodb2
 
-from reflink.services import data_store
+from references.services import data_store
 import logging
 for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
              'botocore.credentials', 'botocore.client',
@@ -19,7 +19,7 @@ extracted_path = 'schema/ExtractedReference.json'
 dynamodb_endpoint = 'http://localhost:4569'
 os.environ.setdefault('REFLINK_STORED_SCHEMA', schema_path)
 os.environ.setdefault('REFLINK_EXTRACTED_SCHEMA', extracted_path)
-# os.environ.setdefault('REFLINK_DYNAMODB_ENDPOINT', dynamodb_endpoint)
+# os.environ.setdefault('DYNAMODB_ENDPOINT', dynamodb_endpoint)
 
 
 valid_data = [
@@ -60,13 +60,17 @@ class StoreReference(unittest.TestCase):
         invalid_data = [{"foo": "bar", "baz": 347}]
 
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         with self.assertRaises(ValueError):
             session.create(document_id, invalid_data, version)
 
     @mock_dynamodb2
-    def test_valid_data_is_stored(self):
+    def test_valid_data_are_stored(self):
         """Valid data are inserted into the datastore."""
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         extraction, data = session.create(document_id, valid_data, version)
 
         # Get the data that we just inserted.
@@ -87,6 +91,8 @@ class RetrieveReference(unittest.TestCase):
         those references using the arXiv identifier and extraction id.
         """
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         extraction, data = session.create(document_id, valid_data, version)
 
         retrieved = session.retrieve_all(document_id, extraction)
@@ -101,6 +107,8 @@ class RetrieveReference(unittest.TestCase):
     def test_retrieve_specific_reftype(self):
         """Retrieve only references of a specific reftype."""
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         data = valid_data + valid_href_data
         extraction, data = session.create(document_id, data, version)
 
@@ -120,6 +128,8 @@ class RetrieveReference(unittest.TestCase):
         the latest references using the arXiv identifier.
         """
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         first_extraction, _ = session.create(document_id, valid_data, version)
         new_version = '0.2'
         second_extraction, _ = session.create(document_id, valid_data[::-1],
@@ -143,6 +153,8 @@ class RetrieveReference(unittest.TestCase):
         a specific reference by its document id and identifier.
         """
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         extraction, data = session.create(document_id, valid_data, version)
         identifier = data[0]['identifier']
         retrieved = session.retrieve(document_id, identifier)
@@ -152,6 +164,8 @@ class RetrieveReference(unittest.TestCase):
     def test_retrieving_nonexistant_record_returns_none(self):
         """Return ``None`` when references for a paper do not exist."""
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         data = session.retrieve_latest('nonsense')
         self.assertEqual(data, None)
 
@@ -159,8 +173,44 @@ class RetrieveReference(unittest.TestCase):
     def test_retrieving_nonexistant_reference_returns_none(self):
         """Return ``None`` when an extraction does not exist."""
         session = data_store.referencesStore.session
+        session.create_table()
+        session.extractions.create_table()
         data = session.retrieve('nonsense', 'gibberish')
         self.assertEqual(data, None)
+
+
+class TestPreSaveDataIsMessy(unittest.TestCase):
+    def test_reference_is_none(self):
+        """A NoneType object slipped into the reference metadata."""
+        try:
+            self.assertEqual(data_store.ReferenceStoreSession._clean(None),
+                             None)
+        except Exception as E:
+            self.fail('NoneType objects should be handled gracefully')
+
+    def test_reference_contains_a_none(self):
+        """A value in the reference is a NoneType object."""
+        try:
+            ref = data_store.ReferenceStoreSession._clean({
+                'foo': 'bar',
+                'baz': None
+            })
+            self.assertDictEqual(ref, {'foo': 'bar'},
+                                 "The null field should be dropped.")
+        except Exception as E:
+            self.fail('NoneType objects should be handled gracefully')
+
+    def test_reference_value_contains_a_none(self):
+        """A value in the reference contains a NoneType object."""
+        try:
+            ref = data_store.ReferenceStoreSession._clean({
+                'foo': 'bar',
+                'baz': ['bat', None]
+            })
+            self.assertDictEqual(ref, {'foo': 'bar', 'baz': ['bat']},
+                                 "The null value should be dropped.")
+        except Exception as E:
+            self.fail('NoneType objects should be handled gracefully')
 
 
 if __name__ == '__main__':

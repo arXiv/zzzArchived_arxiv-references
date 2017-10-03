@@ -1,11 +1,11 @@
-"""Unit tests for :mod:`reflink.process.merge.arbitrate`."""
+"""Unit tests for :mod:`references.process.merge.arbitrate`."""
 
 import unittest
-from reflink.process.merge import arbitrate
+from references.process.merge import arbitrate
 
 
 class TestArbitrate(unittest.TestCase):
-    """Tests for :func:`reflink.process.merge.arbitrate.arbitrate` function."""
+    """Tests for :func:`references.process.merge.arbitrate.arbitrate` function."""
 
     def test_arbitrate(self):
         """Successful arbitration with valid data."""
@@ -195,7 +195,7 @@ class TestArbitrate(unittest.TestCase):
             arbitrate.arbitrate(metadata, valid, priors)
 
     def test_arbitrate_all(self):
-        """Exercise :func:`reflink.process.merge.arbitrate.arbitrate_all`."""
+        """Exercise :func:`references.process.merge.arbitrate.arbitrate_all`."""
         metadata = [[
             ('cermine', {'title': 'yep', 'doi': '10.123/123.4567'}),
             ('refextract', {'title': 'asdf', 'doi': 'nonsense',

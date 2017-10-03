@@ -43,12 +43,12 @@ class ReferenceExtractionAndArbitration(unittest.TestCase):
             time.sleep(1)
 
     def setUp(self):
-        os.environ['REFLINK_GROBID_HOSTNAME'] = 'localhost'
-        os.environ['REFLINK_GROBID_PORT'] = '80'
+        os.environ['GROBID_HOSTNAME'] = 'localhost'
+        os.environ['GROBID_PORT'] = '80'
 
     def test_extraction(self):
-        from reflink.process import extract
-        from reflink.process.merge import align, arbitrate, priors, beliefs, \
+        from references.process import extract
+        from references.process.merge import align, arbitrate, priors, beliefs, \
             normalize
         # refs = extract.extract('evaluation/pdfs/0801.0012.pdf',
         #                        document_id="0801.0012", report=False)

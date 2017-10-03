@@ -1,12 +1,12 @@
 import unittest
 from unittest import mock
 
-from reflink.process.merge import merge_records
-from reflink.process.merge.normalize import filter_records
+from references.process.merge import merge_records
+from references.process.merge.normalize import filter_records
 
 
 class TestNormalize(unittest.TestCase):
-    """Tests for :func:`reflink.process.merge.normalize.filter_records`."""
+    """Tests for :func:`references.process.merge.normalize.filter_records`."""
 
     def setUp(self):
         """Given some records..."""
@@ -33,7 +33,7 @@ class TestNormalize(unittest.TestCase):
 
 
 class TestMergeSimple(unittest.TestCase):
-    """Tests for :func:`reflink.process.merge_records` function."""
+    """Tests for :func:`references.process.merge_records` function."""
 
     def setUp(self):
         """Given aligned references from several extractors, and priors..."""
@@ -56,10 +56,10 @@ class TestMergeSimple(unittest.TestCase):
             ('ext3', {'source': 0.2, 'volume': 0.9, 'year': 0.001}),
         ]
 
-    @mock.patch('reflink.process.merge.normalize.filter_records')
-    @mock.patch('reflink.process.merge.arbitrate.arbitrate_all')
-    @mock.patch('reflink.process.merge.beliefs.validate')
-    @mock.patch('reflink.process.merge.align.align_records')
+    @mock.patch('references.process.merge.normalize.filter_records')
+    @mock.patch('references.process.merge.arbitrate.arbitrate_all')
+    @mock.patch('references.process.merge.beliefs.validate')
+    @mock.patch('references.process.merge.align.align_records')
     def test_merge_call_pattern(self, mock_align_records, mock_validate,
                                 mock_arbitrate_all, mock_filter_records):
         """Test that :func:`.merge_records` calls correct fnx when called."""

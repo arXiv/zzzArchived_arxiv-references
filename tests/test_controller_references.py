@@ -1,11 +1,11 @@
-"""Tests for the :mod:`reflink.web.references` module."""
+"""Tests for the :mod:`references.controllers.references` module."""
 
 import unittest
 from unittest import mock
-from reflink.web.references import ReferenceMetadataController
+from references.controllers.references import ReferenceMetadataController
 from moto import mock_dynamodb2
-from reflink.services import data_store
-from reflink import status
+from references.services import data_store
+from references import status
 from urllib import parse
 
 import logging

@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from reflink.process.merge import beliefs
+from references.process.merge import beliefs
 
 
 class TestValidateSimpleRecords(unittest.TestCase):
