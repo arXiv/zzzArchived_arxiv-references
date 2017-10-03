@@ -4,6 +4,7 @@ import requests
 import os
 from references import logging
 from urllib.parse import urlparse
+# See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 import tempfile
 

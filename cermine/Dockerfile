@@ -3,8 +3,13 @@ FROM python:3.6
 ENV VERSION "1.12"
 LABEL cermine.version $VERSION
 
-RUN apt-get -y update
-RUN apt-get install -y ca-certificates wget default-jdk gcc
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    wget \
+    default-jdk \
+    gcc \
+ && rm -rf /var/lib/apt/lists/*
+ 
 RUN pip install uwsgi
 
 RUN mkdir /opt/cermine

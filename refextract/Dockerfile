@@ -2,7 +2,12 @@
 
 FROM python:3.6
 
-RUN apt update && apt install -f -y poppler-utils
+RUN apt-get update && apt-get install -f -y \
+    poppler-utils \
+    gcc \
+    libpcre3 \
+    libpcre3-dev \
+ && rm -rf /var/lib/apt/lists/*
 
 ADD requirements.txt /opt/refextract/
 ADD wsgi.py /opt/refextract/
@@ -10,7 +15,6 @@ ADD wsgi.py /opt/refextract/
 RUN pip install -U pip
 RUN pip install -r /opt/refextract/requirements.txt
 
-RUN apt-get install -y gcc libpcre3 libpcre3-dev
 RUN pip install uwsgi
 
 ENV PATH "/opt/refextract:${PATH}"

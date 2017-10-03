@@ -6,6 +6,8 @@ from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 from datetime import datetime
 import os
+
+# See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 
 logger = logging.getLogger(__name__)

@@ -3,6 +3,7 @@
 import requests
 import os
 from references.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
+# See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 
 

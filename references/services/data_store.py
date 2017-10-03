@@ -10,6 +10,7 @@ import json
 import jsonschema
 import os
 
+# See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 from base64 import b64encode
 from decimal import Decimal

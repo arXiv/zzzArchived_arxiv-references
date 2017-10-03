@@ -3,6 +3,7 @@
 import requests
 import os
 from references import logging
+# See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 from urllib.parse import urljoin
 logger = logging.getLogger(__name__)
