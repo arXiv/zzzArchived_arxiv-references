@@ -2,16 +2,13 @@
 
 FROM ubuntu:zesty
 
-RUN apt-get update
 RUN apt-get -y update
-RUN apt-get install -y ca-certificates wget
+RUN apt-get install -y ca-certificates wget gcc g++
 
 # Install Python 3.6 and friends.
 RUN apt-get install -y libpython3.6 python3.6 python3.6-dev python3.6-venv
 RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python3.6 get-pip.py
-
-RUN apt-get install -y gcc g++
 
 # Add Python consumer and configuration.
 ADD requirements/worker.txt /opt/arxiv/requirements.txt

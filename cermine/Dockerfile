@@ -4,9 +4,7 @@ ENV VERSION "1.12"
 LABEL cermine.version $VERSION
 
 RUN apt-get -y update
-RUN apt-get install -y ca-certificates wget
-RUN apt-get install -y default-jdk
-RUN apt-get install -y gcc
+RUN apt-get install -y ca-certificates wget default-jdk gcc
 RUN pip install uwsgi
 
 RUN mkdir /opt/cermine
