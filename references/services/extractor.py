@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import json
 from references import logging
 from flask import _app_ctx_stack as stack
+from urllib.parse import urljoin
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ class RequestExtractionSession(object):
     def __init__(self, endpoint: str) -> None:
         """Set the endpoint for Refextract service."""
         self.endpoint = endpoint
-        response = requests.get('%s/status' % self.endpoint)
+        response = requests.get(urljoin(self.endpoint, '/status'))
         if not response.ok:
             raise IOError('Extraction endpoint not available: %s' %
                           response.content)
@@ -36,13 +37,13 @@ class RequestExtractionSession(object):
         dict
         """
         payload = {'document_id': document_id, 'url': pdf_url}
-        response = requests.post('%s/references' % self.endpoint,
+        response = requests.post(urljoin(self.endpoint, '/references'),
                                  data=json.dumps(payload))
         if not response.ok:
             raise IOError('Extraction request failed with status %i: %s' %
                           (response.status_code, response.content))
 
-        target_url = '%s/references/%s' % (self.endpoint, document_id)
+        target_url = urljoin(self.endpoint, '/references/%s' % document_id)
 
         failed = 0
         start = datetime.now()    # If this runs too long, we'll abort.

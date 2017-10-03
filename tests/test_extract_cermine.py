@@ -25,7 +25,7 @@ class TestRefextractExtractor(unittest.TestCase):
         mock_response.status_code = 200
         mock_response.headers = {'content-type': 'application/xml'}
         mock_post.return_value = mock_response
-        endpoint_url = 'http://refex/foo/'
+        endpoint_url = 'http://refex/'
         os.environ['CERMINE_ENDPOINT'] = endpoint_url
 
         pdf_path = 'tests/data/1702.07336.pdf'

@@ -4,6 +4,7 @@ import requests
 import os
 from references import logging
 from flask import _app_ctx_stack as stack
+from urllib.parse import urljoin
 logger = logging.getLogger(__name__)
 
 
@@ -12,10 +13,8 @@ class RefExtractSession(object):
 
     def __init__(self, endpoint: str) -> None:
         """Set the endpoint for Refextract service."""
-        if endpoint.endswith('/'):
-            endpoint = endpoint[:-1]
         self.endpoint = endpoint
-        response = requests.get('%s/status' % self.endpoint)
+        response = requests.get(urljoin(self.endpoint, '/refextract/status'))
         if not response.ok:
             raise IOError('Refextract endpoint not available: %s' %
                           response.content)
@@ -33,7 +32,7 @@ class RefExtractSession(object):
         dict
             Raw output from RefExtract.
         """
-        response = requests.post('%s/extract' % self.endpoint,
+        response = requests.post(urljoin(self.endpoint, '/refextract/extract'),
                                  files={'file': open(filename, 'rb')},
                                  timeout=300)
         if not response.ok:

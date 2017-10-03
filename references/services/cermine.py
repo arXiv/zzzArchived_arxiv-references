@@ -3,6 +3,7 @@
 import os
 import requests
 from flask import _app_ctx_stack as stack
+from urllib.parse import urljoin
 
 
 class ExtractionError(Exception):
@@ -22,10 +23,8 @@ class CermineSession(object):
         ----------
         endpoint : str
         """
-        if endpoint.endswith('/'):
-            endpoint = endpoint[:-1]
         self.endpoint = endpoint
-        response = requests.get('%s/status' % self.endpoint)
+        response = requests.get(urljoin(self.endpoint, '/cermine/status'))
         if not response.ok:
             raise IOError('CERMINE endpoint not available: %s' %
                           response.content)
@@ -44,7 +43,7 @@ class CermineSession(object):
             Raw XML response from Cermine.
         """
         # This can take a while.
-        response = requests.post('%s/extract' % self.endpoint,
+        response = requests.post(urljoin(self.endpoint, '/cermine/extract'),
                                  files={'file': open(filename, 'rb')},
                                  timeout=300)
         if not response.ok:
