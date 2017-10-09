@@ -12,9 +12,9 @@ on my machine, but you could probably get away with less.
    git clone git@github.com:cul-it/arxiv-reflink.git
    cd arxiv-reflink
 
-   docker build ./ -t arxiv/references-web:latest -f ./Dockerfile-web
+   docker build ./ -t arxiv/references-api:latest -f ./Dockerfile-api
    docker build ./ -t arxiv/references-worker:latest -f ./Dockerfile-worker
-   docker build ./ -t arxiv/references-web:agent -f ./Dockerfile-agent
+   docker build ./ -t arxiv/references-api:agent -f ./Dockerfile-agent
 
    cd refextract
    docker build ./ -t arxiv/refextract:latest
@@ -83,7 +83,7 @@ on my machine, but you could probably get away with less.
        -e "GROBID_HOSTNAME=grobid" \
        -p 8000:8000 \
        -e "LOGLEVEL=10" \
-       arxiv/references-web:latest
+       arxiv/references-api:latest
 
    # Start the agent.
    docker run -d --network=test \
