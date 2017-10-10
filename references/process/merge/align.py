@@ -163,7 +163,10 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
             ]
 
     """
-    # records = dict())
+    # If only one extraction succeeded, there is nothing to do.
+    if len(records) == 1:
+        extractor = list(records.keys())[0]
+        return [[(extractor, ref)] for ref in list(records.values())[0]]
 
     def _jacard_max(r0, rlist):
         # calculate the maximum jacard score between r0 and the list rlist

@@ -11,9 +11,4 @@ def create_refextract_app() -> Flask:
     app.config['LOGFILE'] = os.environ.get('LOGFILE', None)
     app.config['LOGLEVEL'] = os.environ.get('LOGLEVEL', logging.INFO)
     app.register_blueprint(routes.blueprint)
-
-    @app.before_request
-    def before_request():
-        print(request.__dict__)
-        print("The route is: {}".format(request.url_rule))
     return app

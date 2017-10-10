@@ -2,6 +2,9 @@ from flask import _app_ctx_stack as stack
 import requests
 import os
 from datetime import datetime, timedelta
+from references import logging
+
+logger = logging.getLogger(__name__)
 
 DEF_ENDPT = "http://169.254.169.254/latest/meta-data/iam/security-credentials"
 
@@ -9,13 +12,17 @@ DEF_ENDPT = "http://169.254.169.254/latest/meta-data/iam/security-credentials"
 class CredentialsSession(object):
     """Responsible for maintaining current access credentials for this role."""
 
+    fmt = "%Y-%m-%dT%H:%M:%SZ"
+
     def __init__(self, endpoint, role):
         """Set the instance metadata URL."""
         self.url = '%s/%s' % (endpoint, role)
+        self.aws_access_key_id = None
+        self.aws_secret_access_key = None
         self.get_credentials()
-        
+
     def _parse_datestring(self, datestring):
-        return datetime.strptime(datestring, "%Y-%m-%dT%H:%M:%SZ")
+        return datetime.strptime(datestring, self.fmt)
 
     def _refresh_credentials(self):
         """Retrieve fresh credentials for the service role."""
@@ -26,19 +33,32 @@ class CredentialsSession(object):
         self.expires = self._parse_datestring(data['Expiration'])
         self.aws_access_key_id = data['AccessKeyId']
         self.aws_secret_access_key = data['SecretAccessKey']
+        self.aws_session_token = data['Token']
         os.environ['AWS_ACCESS_KEY_ID'] = self.aws_access_key_id
         os.environ['AWS_SECRET_ACCESS_KEY'] = self.aws_secret_access_key
+        os.environ['AWS_SESSION_TOKEN'] = self.aws_session_token
+        os.environ['CREDENTIALS_EXPIRE'] = self.expires.strftime(self.fmt)
+
+    @property
+    def expired(self):
+        """Indicate whether the current credentials are expired."""
+        expires = os.environ.get('CREDENTIALS_EXPIRE')
+        if expires is not None:
+            self.expires = self._parse_datestring(expires)
+        else:
+            self.expires = datetime.now()
+        # This is padded by 15 seconds, just to be safe.
+        return self.expires - datetime.now() <= timedelta(seconds=15)
 
     def get_credentials(self):
         """Retrieve the current credentials for this role."""
-        self.expires = os.environ.get('CREDENTIALS_EXPIRE')
-        if self.expires is not None:
-            self.expires = self._parse_datestring(self.expires)
-        else:
-            self.expires = datetime.now()
-        if self.expires - datetime.now() <= timedelta(seconds=30):
+        logger.debug('get credentials...')
+        if self.expired or self.aws_access_key_id is None:
+            logger.debug('expired, refreshing')
             self._refresh_credentials()
-        return self.aws_access_key_id, self.aws_secret_access_key
+        logger.debug('new expiry: %s' % self.expires.strftime(self.fmt))
+        return self.aws_access_key_id, self.aws_secret_access_key, \
+            self.aws_session_token
 
 
 class Credentials(object):

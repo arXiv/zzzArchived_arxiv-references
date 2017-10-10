@@ -36,6 +36,7 @@ ENV AWS_SECRET_ACCESS_KEY ""
 # If not set, secrets will not be retrieved.
 ENV SECRETS_BUCKET_NAME ""
 ENV ARXIV_HOME "https://arxiv.org"
+ENV REFEXTRACT_ENDPOINT ""
 
 EXPOSE 8000
 

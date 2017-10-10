@@ -15,7 +15,7 @@ import amazon_kclpy
 from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
-from references.services import events, extractor
+from references.services import events, extractor, credentials
 from references.services.metrics import metrics
 
 
@@ -49,12 +49,14 @@ class RecordProcessor(processor.RecordProcessorBase):
         # self.proc = create_process_app()
         self.events = events.extractionEvents
         self.extractor = extractor.requestExtraction
+        self.credentials = credentials.credentials
         # self.events.init_app(self.proc)
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
         self._largest_seq = (None, None)
         self._last_checkpoint_time = time.time()
+        self.credentials.session.get_credentials()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
                    sequence_number: BytesOrNone = None,
@@ -181,6 +183,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         """
         try:
             for record in records.records:
+                if self.credentials.session.expired:
+                    self.credentials.session.get_credentials()
                 data = record.binary_data
                 seq = int(record.sequence_number)
                 sub_seq = record.sub_sequence_number

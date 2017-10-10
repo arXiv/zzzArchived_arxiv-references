@@ -70,8 +70,12 @@ class ExtractionController(object):
             return TASK_IN_PROGRESS, status.HTTP_200_OK, {}
         elif result.status == 'FAILURE':
             logger.error('%s: failed task: %s' % (task_id, result.result))
-            return TASK_FAILED, status.HTTP_200_OK, {}
+            reason = TASK_FAILED
+            reason.update({'reason': str(result.result)})
+            return reason, status.HTTP_200_OK, {}
         elif result.status == 'SUCCESS':
+            task_result = result.result
+            logger.debug(str(task_result))
             document_id = result.result.get('document_id')
             headers = {'Location': url_for('references.references',
                                            doc_id=document_id)}

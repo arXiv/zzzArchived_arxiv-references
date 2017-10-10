@@ -28,14 +28,15 @@ class ExtractionSession(object):
     table_name = 'Extractions'
 
     def __init__(self, endpoint_url: str, aws_access_key: str,
-                 aws_secret_key: str, region_name: str,
-                 verify: bool=True) -> None:
+                 aws_secret_key: str, aws_session_token: str,
+                 region_name: str, verify: bool=True) -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb', verify=verify,
                                        region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
-                                       aws_secret_access_key=aws_secret_key)
+                                       aws_secret_access_key=aws_secret_key,
+                                       aws_session_token=aws_session_token)
         self.table = self.dynamodb.Table(self.table_name)
 
     def create_table(self) -> None:
@@ -163,14 +164,15 @@ class ReferenceStoreSession(object):
 
     def __init__(self, endpoint_url: str, extracted_schema_path: str,
                  stored_schema_path: str, aws_access_key: str,
-                 aws_secret_key: str, region_name: str,
+                 aws_secret_key: str, aws_session_token: str, region_name: str,
                  verify: bool=True) -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.dynamodb = boto3.resource('dynamodb', verify=verify,
                                        region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
-                                       aws_secret_access_key=aws_secret_key)
+                                       aws_secret_access_key=aws_secret_key,
+                                       aws_session_token=aws_session_token)
         logger.debug('New ReferenceStoreSession with...')
         logger.debug('verify %s' % verify)
         logger.debug('region_name %s' % region_name)
@@ -199,8 +201,8 @@ class ReferenceStoreSession(object):
             # self.table_name = 'ExtractedReference'
         self.table = self.dynamodb.Table(self.table_name)
         self.extractions = ExtractionSession(endpoint_url, aws_access_key,
-                                             aws_secret_key, region_name,
-                                             verify=verify)
+                                             aws_secret_key, aws_session_token,
+                                             region_name, verify=verify)
 
     def create_table(self) -> None:
         """Set up a new table in DynamoDB. Blocks until table is available."""
@@ -554,8 +556,8 @@ class DataStore(object):
         app.config.setdefault('REFLINK_EXTRACTED_SCHEMA', None)
         app.config.setdefault('REFLINK_STORED_SCHEMA', None)
         app.config.setdefault('DYNAMODB_ENDPOINT', None)
-        app.config.setdefault('AWS_ACCESS_KEY_ID', 'asdf1234')
-        app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
+        # app.config.setdefault('AWS_ACCESS_KEY_ID', None)
+        # app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
         app.config.setdefault('AWS_REGION', 'us-east-1')
         app.config.setdefault('DYNAMODB_VERIFY', 'true')
 
@@ -573,6 +575,7 @@ class DataStore(object):
             endpoint_url = self.app.config['DYNAMODB_ENDPOINT']
             aws_access_key = self.app.config['AWS_ACCESS_KEY_ID']
             aws_secret_key = self.app.config['AWS_SECRET_ACCESS_KEY']
+            aws_session_token = self.app.config['AWS_SESSION_TOKEN']
             region_name = self.app.config['AWS_REGION']
             verify = self.app.config['DYNAMODB_VERIFY'] == 'true'
         except (RuntimeError, AttributeError) as e:   # No application context.
@@ -580,14 +583,15 @@ class DataStore(object):
                                                    None)
             stored_schema_path = os.environ.get('REFLINK_STORED_SCHEMA', None)
             endpoint_url = os.environ.get('DYNAMODB_ENDPOINT', None)
-            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', 'asdf')
-            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'fdsa')
+            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', None)
+            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
+            aws_session_token = os.environ.get('AWS_SESSION_TOKEN', None)
             region_name = os.environ.get('AWS_REGION', 'us-east-1')
             verify = os.environ.get('DYNAMODB_VERIFY', 'true') == 'true'
         return ReferenceStoreSession(endpoint_url, extracted_schema_path,
                                      stored_schema_path, aws_access_key,
-                                     aws_secret_key, region_name,
-                                     verify=verify)
+                                     aws_secret_key, aws_session_token,
+                                     region_name, verify=verify)
 
     @property
     def session(self) -> ReferenceStoreSession:
