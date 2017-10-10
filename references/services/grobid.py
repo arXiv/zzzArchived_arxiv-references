@@ -5,12 +5,12 @@ import os
 from references.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
 # See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
-
+from urllib.parse import urljoin
 
 class GrobidSession(object):
     """Represents a configured session with Grobid."""
 
-    def __init__(self, hostname: str, port: int, path: str) -> None:
+    def __init__(self, endpoint: str, path: str) -> None:
         """
         Set up configuration for Grobid, and test the connection.
 
@@ -25,9 +25,10 @@ class GrobidSession(object):
         IOError
             Raised when unable to contact Grobid with the provided parameters.
         """
-        self.endpoint = 'http://%s:%s/%s' % (hostname, port, path)
+        self.endpoint = endpoint
+        self.path = path
         try:
-            head = requests.head(self.endpoint)
+            head = requests.head(urljoin(self.endpoint, self.path))
         except Exception as e:
             raise IOError('Failed to connect to Grobid at %s: %s' %
                           (self.endpoint, e)) from e
@@ -53,7 +54,8 @@ class GrobidSession(object):
         try:
             with open(filename, 'rb') as filehandle:
                 files = {'input': filehandle}
-                response = requests.post(self.endpoint, files=files)
+                response = requests.post(urljoin(self.endpoint, self.path),
+                                         files=files)
         except Exception as e:
             raise IOError('Request to Grobid failed: %s' % e) from e
 
@@ -78,23 +80,20 @@ class Grobid(object):
 
     def init_app(self, app) -> None:
         """Configure an application instance."""
-        app.config.setdefault('GROBID_HOSTNAME', 'localhost')
-        app.config.setdefault('GROBID_PORT', '8889')
+        app.config.setdefault('GROBID_ENDPOINT', 'http://localhost:8080')
         app.config.setdefault('GROBID_PATH', 'processFulltextDocument')
 
     def get_session(self) -> None:
         """Generate a new configured :class:`.GrobidSession`."""
         try:
-            hostname = self.app.config['GROBID_HOSTNAME']
-            port = int(self.app.config['GROBID_PORT'])
+            endpoint = self.app.config['GROBID_ENDPOINT']
             path = self.app.config['GROBID_PATH']
         except (RuntimeError, AttributeError) as e:   # No application context.
-            hostname = os.environ.get('GROBID_HOSTNAME', 'localhost')
-            port = int(os.environ.get('GROBID_PORT', '8889'))
-            path = os.environ.get('GROBID_PATH',
-                                  'processFulltextDocument')
+            endpoint = os.environ.get('GROBID_ENDPOINT',
+                                      'http://localhost:8080')
+            path = os.environ.get('GROBID_PATH', 'processFulltextDocument')
 
-        return GrobidSession(hostname, port, path)
+        return GrobidSession(endpoint, path)
 
     @property
     def session(self):

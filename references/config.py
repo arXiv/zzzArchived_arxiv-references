@@ -232,11 +232,9 @@ REFEXTRACT_ENDPOINT = os.environ.get('REFEXTRACT_ENDPOINT',
                                      'http://localhost/refextract/')
 
 # Grobid configuration.
-GROBID_HOSTNAME = os.environ.get('GROBID_HOSTNAME',
-                                         'localhost')
-GROBID_PORT = os.environ.get('GROBID_PORT', '8889')
+GROBID_ENDPOINT = os.environ.get('GROBID_ENDPOINT', 'http://localhost:8080')
 GROBID_PATH = os.environ.get('GROBID_PATH',
-                                     'processFulltextDocument')
+                             'processFulltextDocument')
 
 SOURCE_WHITELIST = os.environ.get('SOURCE_WHITELIST',
                                   'arxiv.org,export.arxiv.org')

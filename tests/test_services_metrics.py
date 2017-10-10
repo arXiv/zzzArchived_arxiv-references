@@ -85,15 +85,3 @@ class TestMetricsReporterDecorator(unittest.TestCase):
         self.assertIn('MetricData', kwargs)
         self.assertEqual(kwargs['MetricData'][0]['MetricName'], 'Success')
         self.assertEqual(kwargs['MetricData'][0]['Value'], 1e9)
-
-    @mock.patch('boto3.client')
-    def test_moves_on_if_tuple_has_no_metrics(self, mock_client):
-        """If a tuple is returned and no metrics are provided, returns all."""
-        session = MetricsSession()
-
-        @session.reporter
-        def test_func():
-            return 1, 'not metrics'
-
-        self.assertEqual(test_func(), (1, 'not metrics'))
-        self.assertEqual(session.cloudwatch.put_metric_data.call_count, 0)

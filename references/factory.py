@@ -19,6 +19,8 @@ def create_web_app() -> Flask:
     """Initialize an instance of the extractor backend service."""
     from references import routes
     from references.services.data_store import referencesStore
+    from references.services.credentials import credentials
+
     logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
     logging.getLogger('botocore').setLevel(logging.ERROR)
@@ -26,6 +28,12 @@ def create_web_app() -> Flask:
     app = Flask('references', static_folder='static',
                 template_folder='templates')
     app.config.from_pyfile('config.py')
+
+    if not app.config.get('AWS_ACCESS_KEY_ID') or \
+            not app.config.get('AWS_SECRET_ACCESS_KEY'):
+        credentials.init_app(app)
+        credentials.session.get_credentials()
+
     referencesStore.init_app(app)
     referencesStore.session.create_table()
     referencesStore.session.extractions.create_table()
@@ -41,6 +49,7 @@ def create_web_app() -> Flask:
 
 def create_worker_app() -> Celery:
     """Initialize an instance of the worker application."""
+    from references.services.credentials import credentials
 
     logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
@@ -52,7 +61,12 @@ def create_worker_app() -> Celery:
                      broker=celeryconfig.broker_url)
     app.config_from_object(celeryconfig)
     app.config.update(flask_app.config)
+
+    if not app.config.get('AWS_ACCESS_KEY_ID') or \
+            not app.config.get('AWS_SECRET_ACCESS_KEY'):
+        credentials.init_app(app)
+        credentials.session.get_credentials()
+
     app.autodiscover_tasks(['references.process'], force=True)
     app.conf.task_default_queue = 'references-worker'
-    print(app)
     return app

@@ -44,7 +44,7 @@ In addition, there are three third-part extractor services deployed separately:
 
 Extraction REST API
 ^^^^^^^^^^^^^^^^^^^
-Described by ``Dockerfile-web``.
+Described by ``Dockerfile-api``.
 
 Handles requests for reference extraction from clients (including the reference
 extraction agent), and generates extraction tasks for the reference extraction

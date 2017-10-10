@@ -20,7 +20,6 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-@metrics.session.reporter
 def process_document(document_id: str, pdf_url: str) -> list:
     """
     Processing chain for a single arXiv document.
@@ -52,19 +51,18 @@ def process_document(document_id: str, pdf_url: str) -> list:
         # Retrieve PDF from arXiv central document store.
         pdf_path = retrieve(pdf_url, document_id)
         if pdf_path is None:
-            metrics_data.append({'metric': 'PDFIsAvailable', 'value': 0.})
+            metrics.session.report('PDFIsAvailable', 0.)
             msg = '%s: no PDF available' % document_id
             logger.info(msg)
             raise RuntimeError(msg)
-
-        metrics_data.append({'metric': 'PDFIsAvailable', 'value': 1.})
+        metrics.session.report('PDFIsAvailable', 1.)
         logger.info('%s: retrieved PDF' % document_id)
 
         # Extract references using an array of extractors.
         logger.info('%s: extracting metadata' % document_id)
         extractions = extract(pdf_path, document_id)
-        metrics_data.append({'metric': 'NumberExtractorsSucceeded',
-                             'value': len(extractions)})
+        metrics.session.report('NumberExtractorsSucceeded', len(extractions))
+
         if len(extractions) == 0:
             raise RuntimeError('%s: no extractors succeeded' % document_id)
 
@@ -73,32 +71,30 @@ def process_document(document_id: str, pdf_url: str) -> list:
                      ', '.join(extractions.keys())))
 
         # Merge references across extractors, if more than one succeeded.
-        if len(extractions) == 1:
-            metadata = list(extractions.values())[0]
-            logger.info('%s: skipping merge step ' % document_id)
-        else:
-            logger.info('%s: merging metadata ' % document_id)
-            metadata, score = merge_records(extractions)
-            logger.info('%s: merged, contains %i records with score %f' %
-                        (document_id, len(metadata), score))
+        # if len(extractions) == 1:
+        #     metadata = list(extractions.values())[0]
+        #     logger.info('%s: skipping merge step ' % document_id)
+        # else:
+        logger.info('%s: merging metadata ' % document_id)
+        metadata, score = merge_records(extractions)
+        logger.info('%s: merged, contains %i records with score %f' %
+                    (document_id, len(metadata), score))
 
         # Store final reference set.
         extraction_id = store(metadata, document_id)
         end_time = datetime.now()
-        metrics_data.append({'metric': 'FinalQuality', 'value': score})
-        metrics_data.append({'metric': 'ProcessingDuration',
-                             'value': (start_time - end_time).microseconds,
-                             'units': 'Microseconds'})
-
+        metrics.session.report('FinalQuality', score)
+        metrics.session.report('ProcessingDuration',
+                               (start_time - end_time).microseconds,
+                               'Microseconds')
     except Exception as e:
         logger.error('Failed to process %s: %s' % (document_id, e))
-    finally:
-        # MetricsSession.report decorator expects a 2-tuple.
-        return {
-            'document_id': document_id,
-            'references': metadata,
-            'extraction': extraction_id
-        }, metrics_data
+        raise e
+    return {
+        'document_id': document_id,
+        'references': metadata,
+        'extraction': extraction_id
+    }
 
 
 # We want to be able to use this without introducing Celery explicitly in

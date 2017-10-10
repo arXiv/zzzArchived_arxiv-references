@@ -11,12 +11,18 @@ from unittest import mock
 from references.process.extract import cermine
 
 
-class TestRefextractExtractor(unittest.TestCase):
-    """We'd like to extract references from a PDF using CERMINE."""
+class TestCermineExtractor(unittest.TestCase):
+    """CERMINE is available as an HTTP service."""
 
-    @mock.patch('references.services.cermine.requests.post')
-    def test_extract(self, mock_post):
+    @mock.patch('references.services.refextract.requests.get')
+    @mock.patch('references.services.refextract.requests.post')
+    def test_extract(self, mock_post, mock_get):
         """The cermine module generates valid extractions for a PDF."""
+        # The extractor service will GET a status endpoint first.
+        mock_get_response = mock.MagicMock()
+        mock_get_response.status_code = 200
+        mock_get.return_value = mock_get_response
+
         with open('tests/data/cermine-service-response.xml', 'rb') as f:
             raw = f.read()
 
@@ -25,7 +31,7 @@ class TestRefextractExtractor(unittest.TestCase):
         mock_response.status_code = 200
         mock_response.headers = {'content-type': 'application/xml'}
         mock_post.return_value = mock_response
-        endpoint_url = 'http://refex/'
+        endpoint_url = 'http://refex.com/'
         os.environ['CERMINE_ENDPOINT'] = endpoint_url
 
         pdf_path = 'tests/data/1702.07336.pdf'

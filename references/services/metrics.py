@@ -14,13 +14,14 @@ class MetricsSession(object):
     namespace = 'arXiv/References'
 
     def __init__(self, endpoint_url: str=None, aws_access_key: str=None,
-                 aws_secret_key: str=None, region_name: str=None,
-                 verify: bool=True) -> None:
+                 aws_secret_key: str=None, aws_session_token: str=None,
+                 region_name: str=None, verify: bool=True) -> None:
         """Initialize with AWS configuration."""
         self.cloudwatch = boto3.client('cloudwatch', region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key,
+                                       aws_session_token=aws_session_token,
                                        verify=verify)
 
     def report(self, metric: str, value: object, units: str=None,
@@ -53,14 +54,15 @@ class MetricsSession(object):
             """Report metrics data returned by ``func``."""
             result = func(*args, **kwargs)
             if type(result) is tuple and len(result) > 1 \
-                    and hasattr(result[-1], '__iter__') \
-                    and len(result[-1]) > 0 and 'metric' in result[-1][0]:
+                    and hasattr(result[-1], '__iter__'):
                 metrics = result[-1]
                 remainder = result[:-1]
                 for item in metrics:
+                    if 'metric' not in item:
+                        continue
                     self.report(item['metric'], item['value'],
                                 item.get('units'), item.get('dimensions'))
-                if len(remainder) == 1:
+                if type(remainder) in [list, tuple] and len(remainder) == 1:
                     return remainder[0]
                 return remainder
             return result
@@ -77,10 +79,11 @@ class Metrics(object):
 
     def init_app(self, app) -> None:
         app.config.setdefault('CLOUDWATCH_ENDPOINT', None)
-        app.config.setdefault('AWS_ACCESS_KEY_ID', 'asdf1234')
-        app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
+        app.config.setdefault('AWS_ACCESS_KEY_ID', None)
+        app.config.setdefault('AWS_SECRET_ACCESS_KEY', None)
         app.config.setdefault('AWS_REGION', 'us-east-1')
         app.config.setdefault('CLOUDWATCH_VERIFY', 'true')
+        app.config.setdefault('AWS_SESSION_TOKEN', None)
 
     def get_session(self) -> None:
         try:
@@ -89,14 +92,16 @@ class Metrics(object):
             aws_access_key = self.app.config['AWS_ACCESS_KEY_ID']
             aws_secret_key = self.app.config['AWS_SECRET_ACCESS_KEY']
             region_name = self.app.config['AWS_REGION']
+            aws_session_token = self.app.config['AWS_SESSION_TOKEN']
         except (RuntimeError, AttributeError) as e:    # No app context.
             endpoint_url = os.environ.get('CLOUDWATCH_ENDPOINT', None)
-            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', 'asdf')
-            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'fdsa')
+            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', None)
+            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
             region_name = os.environ.get('AWS_REGION', 'us-east-1')
+            aws_session_token = os.environ.get('AWS_SESSION_TOKEN', None)
             verify = os.environ.get('CLOUDWATCH_VERIFY', 'true') == 'true'
         return MetricsSession(endpoint_url, aws_access_key, aws_secret_key,
-                              region_name, verify=verify)
+                              aws_session_token, region_name, verify=verify)
 
     @property
     def session(self):

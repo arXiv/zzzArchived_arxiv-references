@@ -24,8 +24,8 @@ class ExtractionEventSession(object):
     STATES = (REQUESTED, FAILED, COMPLETED)
 
     def __init__(self, endpoint_url: str, aws_access_key: str,
-                 aws_secret_key: str, region_name: str, version: str,
-                 verify: bool=True) -> None:
+                 aws_secret_key: str, aws_session_token: str, region_name: str,
+                 version: str, verify: bool=True) -> None:
         """Set up remote table."""
         logger.info('Connect to dynamodb on %s' % endpoint_url)
         self.dynamodb = boto3.resource('dynamodb',
@@ -33,7 +33,8 @@ class ExtractionEventSession(object):
                                        region_name=region_name,
                                        endpoint_url=endpoint_url,
                                        aws_access_key_id=aws_access_key,
-                                       aws_secret_access_key=aws_secret_key)
+                                       aws_secret_access_key=aws_secret_key,
+                                       aws_session_token=aws_session_token)
         self.version = version
         self.table = self.dynamodb.Table(self.table_name)
 
@@ -136,30 +137,33 @@ class ExtractionEvents(object):
 
     def init_app(self, app) -> None:
         app.config.setdefault('DYNAMODB_ENDPOINT', None)
-        app.config.setdefault('AWS_ACCESS_KEY_ID', 'asdf1234')
-        app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
+        app.config.setdefault('AWS_ACCESS_KEY_ID', None)
+        app.config.setdefault('AWS_SECRET_ACCESS_KEY', None)
         app.config.setdefault('AWS_REGION', 'us-east-1')
         app.config.setdefault('VERSION', 'none')
         app.config.setdefault('DYNAMODB_VERIFY', 'true')
+        app.config.setdefault('AWS_SESSION_TOKEN', None)
 
     def get_session(self) -> None:
         try:
             endpoint_url = self.app.config['DYNAMODB_ENDPOINT']
             aws_access_key = self.app.config['AWS_ACCESS_KEY_ID']
             aws_secret_key = self.app.config['AWS_SECRET_ACCESS_KEY']
+            aws_session_token = self.app.config['AWS_SESSION_TOKEN']
             region_name = self.app.config['AWS_REGION']
             version = self.app.config['VERSION']
             verify = self.app.config['DYNAMODB_VERIFY'] == 'true'
         except (RuntimeError, AttributeError) as e:    # No app context.
             endpoint_url = os.environ.get('DYNAMODB_ENDPOINT', None)
-            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', 'asdf')
-            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'fdsa')
+            aws_access_key = os.environ.get('AWS_ACCESS_KEY_ID', None)
+            aws_secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
+            aws_session_token = os.environ.get('AWS_SESSION_TOKEN', None)
             region_name = os.environ.get('AWS_REGION', 'us-east-1')
             version = os.environ.get('VERSION', 'none')
             verify = os.environ.get('DYNAMODB_VERIFY', 'true') == 'true'
         return ExtractionEventSession(endpoint_url, aws_access_key,
-                                      aws_secret_key, region_name, version,
-                                      verify=verify)
+                                      aws_secret_key, aws_session_token,
+                                      region_name, version, verify=verify)
 
     @property
     def session(self):

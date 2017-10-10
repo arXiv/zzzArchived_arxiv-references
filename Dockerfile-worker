@@ -1,4 +1,4 @@
-# arxiv/references-agent
+# arxiv/references-worker
 
 FROM ubuntu:zesty
 
