@@ -241,3 +241,5 @@ SOURCE_WHITELIST = os.environ.get('SOURCE_WHITELIST',
 
 CLOUDWATCH_ENDPOINT = os.environ.get('CLOUDWATCH_ENDPOINT', None)
 CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true') == 'true'
+
+INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', 'true') == 'true'

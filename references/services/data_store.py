@@ -556,8 +556,6 @@ class DataStore(object):
         app.config.setdefault('REFLINK_EXTRACTED_SCHEMA', None)
         app.config.setdefault('REFLINK_STORED_SCHEMA', None)
         app.config.setdefault('DYNAMODB_ENDPOINT', None)
-        # app.config.setdefault('AWS_ACCESS_KEY_ID', None)
-        # app.config.setdefault('AWS_SECRET_ACCESS_KEY', 'fdsa5678')
         app.config.setdefault('AWS_REGION', 'us-east-1')
         app.config.setdefault('DYNAMODB_VERIFY', 'true')
 

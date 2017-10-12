@@ -1,0 +1,94 @@
+version: '3'
+
+services:
+  references-test-redis:
+    image: redis
+    container_name: references-test-redis
+    networks:
+      - references-test
+  references-test-localstack:
+    image: atlassianlabs/localstack
+    container_name: references-test-localstack
+    networks:
+      - references-test
+    ports:
+      - "5568:4568"
+      - "5569:4569"
+    environment:
+      USE_SSL: 'true'
+      DEBUG: 'true'
+  references-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile-worker
+    environment:
+      REDIS_ENDPOINT: "references-test-redis:6379"
+      AWS_ACCESS_KEY_ID: "foo"
+      AWS_SECRET_ACCESS_KEY: "bar"
+      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
+      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
+      DYNAMODB_VERIFY: "false"
+      CLOUDWATCH_VERIFY: "false"
+      references_DOCKER_IMAGE: "references:test"
+      INSTANCE_CREDENTIALS: "false"
+      LOGLEVEL: 10
+    networks:
+      - references-test
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/pdfs:/tmp/pdfs
+    depends_on:
+      - references-test-redis
+      - references-test-localstack
+  references-api:
+    build:
+      context: .
+      dockerfile: Dockerfile-api
+    container_name: references-api
+    environment:
+      REDIS_ENDPOINT: "references-test-redis:6379"
+      AWS_ACCESS_KEY_ID: "foo"
+      AWS_SECRET_ACCESS_KEY: "bar"
+      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
+      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
+      DYNAMODB_VERIFY: "false"
+      CLOUDWATCH_VERIFY: "false"
+      INSTANCE_CREDENTIALS: "false"
+      LOGLEVEL: 10
+    ports:
+      - "8001:8000"
+    networks:
+      - references-test
+    depends_on:
+      - references-test-redis
+      - references-test-localstack
+      - references-worker
+  references-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile-agent
+    environment:
+      AWS_ACCESS_KEY_ID: "foo"
+      AWS_SECRET_ACCESS_KEY: "bar"
+      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
+      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
+      KINESIS_ENDPOINT: "https://references-test-localstack:4568"
+      KINESIS_VERIFY: "false"
+      DYNAMODB_VERIFY: "false"
+      CLOUDWATCH_VERIFY: "false"
+      EXTRACTION_ENDPOINT: "http://references-api:8000"
+      LOGLEVEL: 10
+      LOGFILE: "/var/log/references-agent-processor.log"
+      MODE: "test"
+      JAVA_FLAGS: "-Dcom.amazonaws.sdk.disableCertChecking"
+      AWS_CBOR_DISABLE: "true"
+      INSTANCE_CREDENTIALS: "false"
+    networks:
+      - references-test
+    depends_on:
+      - references-test-localstack
+      - references-worker
+      - references-api
+
+networks:
+  references-test:
