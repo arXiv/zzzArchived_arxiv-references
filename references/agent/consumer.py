@@ -8,6 +8,7 @@ https://github.com/awslabs/amazon-kinesis-client-python/blob/master/samples/samp
 import time
 from references import logging
 import json
+import os
 from references.types import IntOrNone, BytesOrNone
 # from references.factory import create_process_app
 
@@ -46,17 +47,16 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
-        # self.proc = create_process_app()
         self.events = events.extractionEvents
         self.extractor = extractor.requestExtraction
         self.credentials = credentials.credentials
-        # self.events.init_app(self.proc)
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
         self._largest_seq = (None, None)
         self._last_checkpoint_time = time.time()
-        self.credentials.session.get_credentials()
+        if os.environ.get('INSTANCE_CREDENTIALS', 'true') == 'true':
+            self.credentials.session.get_credentials()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
                    sequence_number: BytesOrNone = None,
@@ -96,7 +96,7 @@ class RecordProcessor(processor.RecordProcessorBase):
             time.sleep(self._SLEEP_SECONDS)
 
     @metrics.session.reporter
-    def requestExtraction(self, document_id: str) -> None:
+    def request_extraction(self, document_id: str) -> None:
         """Request reference extraction from the extraction service."""
         metrics_data = []
         try:

@@ -29,8 +29,7 @@ def create_web_app() -> Flask:
                 template_folder='templates')
     app.config.from_pyfile('config.py')
 
-    if not app.config.get('AWS_ACCESS_KEY_ID') or \
-            not app.config.get('AWS_SECRET_ACCESS_KEY'):
+    if app.config.get('INSTANCE_CREDENTIALS'):
         credentials.init_app(app)
         credentials.session.get_credentials()
 
@@ -62,8 +61,7 @@ def create_worker_app() -> Celery:
     app.config_from_object(celeryconfig)
     app.config.update(flask_app.config)
 
-    if not app.config.get('AWS_ACCESS_KEY_ID') or \
-            not app.config.get('AWS_SECRET_ACCESS_KEY'):
+    if app.config.get('INSTANCE_CREDENTIALS'):
         credentials.init_app(app)
         credentials.session.get_credentials()
 
