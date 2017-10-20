@@ -23,7 +23,7 @@ def article2(ext):
 
 def mock_full_dock(references):
     # there is no public way to format a document correctly
-    # (ReferenceStoreSession._prepare) so here it is duplicated for now
+    # (ReferenceSession._prepare) so here it is duplicated for now
     now = datetime.datetime.now().isoformat()
     data = {
         'document': 'arxiv:1703.00020',

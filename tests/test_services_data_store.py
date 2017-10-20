@@ -1,9 +1,11 @@
 """Tests for the :mod:`references.services.data_store` module."""
 
 import unittest
+from unittest import mock
 import os
 from moto import mock_dynamodb2
-
+import dateutil.parser
+import datetime
 from references.services import data_store
 import logging
 for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
@@ -51,36 +53,85 @@ document_id = 'arxiv:1234.5678'
 version = '0.1'
 
 
+class StoreAndRetrieveRawExtractions(unittest.TestCase):
+    """Raw extraction metadata from individual extractors should be stored."""
+
+    @mock_dynamodb2
+    def setUp(self):
+        """Initialize the datastore session."""
+        default_args = (None, 'nope', 'nope', None, 'us-east-1')
+        default_kwargs = {}
+        self.session = data_store.RawExtractionSession(*default_args,
+                                                       **default_kwargs)
+
+    @mock_dynamodb2
+    def test_can_create_and_retrieve(self):
+        """Should be able to create and retrieve raw extraction metadata."""
+        self.session.create_table()
+        before = datetime.datetime.now()
+        self.session.store_extraction(document_id, 'baz', valid_data)
+        after = datetime.datetime.now()
+        raw = self.session.get_extraction(document_id, 'baz')
+        self.assertIsInstance(raw, dict)
+        self.assertIn('created', raw, "A timestamp is added")
+        try:
+            created = dateutil.parser.parse(raw['created'])
+            self.assertTrue(before < created)
+            self.assertTrue(created < after)
+        except ValueError:
+            self.fail('Timestamp should be interpretable as a datetime')
+
+        self.assertIn('references', raw)
+        self.assertEqual(len(raw['references']), 4)
+
+
 class StoreReference(unittest.TestCase):
     """The data store should store a reference."""
+
+    @mock_dynamodb2
+    def setUp(self):
+        """Initialize the datastore session."""
+        default_args = (None, 'nope', 'nope', None, 'us-east-1')
+        default_kwargs = {
+            'extracted_schema': extracted_path,
+            'stored_schema': schema_path
+        }
+        self.session = data_store.ReferenceSession(*default_args,
+                                                        **default_kwargs)
 
     @mock_dynamodb2
     def test_invalid_data_raises_valueerror(self):
         """A ValueError is raised when invalid data are passed."""
         invalid_data = [{"foo": "bar", "baz": 347}]
+        self.session.create_table()
+        self.session.extractions.create_table()
 
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
         with self.assertRaises(ValueError):
-            session.create(document_id, invalid_data, version)
+            self.session.create(document_id, invalid_data, version)
 
     @mock_dynamodb2
     def test_valid_data_are_stored(self):
         """Valid data are inserted into the datastore."""
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
-        extraction, data = session.create(document_id, valid_data, version)
-
+        self.session.create_table()
+        self.session.extractions.create_table()
+        extraction, data = self.session.create(document_id, valid_data,
+                                               version)
         # Get the data that we just inserted.
-        retrieved = session.retrieve_all(document_id, extraction)
+        retrieved = self.session.retrieve_all(document_id, extraction)
         self.assertEqual(len(data), len(retrieved))
         self.assertEqual(len(valid_data), len(retrieved))
 
 
 class RetrieveReference(unittest.TestCase):
     """Test retrieving data from the datastore."""
+
+    @mock_dynamodb2
+    def setUp(self):
+        """Initialize the datastore session."""
+        default_args = (None, 'nope', 'nope', None, 'us-east-1')
+        default_kwargs = {}
+        self.session = data_store.ReferenceSession(*default_args,
+                                                        **default_kwargs)
 
     @mock_dynamodb2
     def test_retrieve_by_arxiv_id_and_extraction(self):
@@ -90,12 +141,11 @@ class RetrieveReference(unittest.TestCase):
         After a set of references are saved, we should be able to retrieve
         those references using the arXiv identifier and extraction id.
         """
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
-        extraction, data = session.create(document_id, valid_data, version)
+        self.session.create_table()
+        self.session.extractions.create_table()
+        ext, data = self.session.create(document_id, valid_data, version)
 
-        retrieved = session.retrieve_all(document_id, extraction)
+        retrieved = self.session.retrieve_all(document_id, ext)
         self.assertEqual(len(data), len(valid_data))
 
         # Order should be preserved.
@@ -106,16 +156,15 @@ class RetrieveReference(unittest.TestCase):
     @mock_dynamodb2
     def test_retrieve_specific_reftype(self):
         """Retrieve only references of a specific reftype."""
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
+        self.session.create_table()
+        self.session.extractions.create_table()
         data = valid_data + valid_href_data
-        extraction, data = session.create(document_id, data, version)
-
-        citations = session.retrieve_all(document_id, extraction, 'citation')
+        extraction, data = self.session.create(document_id, data, version)
+        citations = self.session.retrieve_all(document_id, extraction,
+                                              'citation')
         self.assertEqual(len(citations), len(valid_data))
 
-        hrefs = session.retrieve_all(document_id, extraction, 'href')
+        hrefs = self.session.retrieve_all(document_id, extraction, 'href')
         self.assertEqual(len(hrefs), len(valid_href_data))
         self.assertEqual(valid_href_data[0]['href'], hrefs[0]['href'])
 
@@ -127,15 +176,16 @@ class RetrieveReference(unittest.TestCase):
         After a set of references are saved, we should be able to retrieve
         the latest references using the arXiv identifier.
         """
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
-        first_extraction, _ = session.create(document_id, valid_data, version)
+        self.session.create_table()
+        self.session.extractions.create_table()
+        first_extraction, _ = self.session.create(document_id, valid_data,
+                                                  version)
         new_version = '0.2'
-        second_extraction, _ = session.create(document_id, valid_data[::-1],
-                                              new_version)
+        second_extraction, _ = self.session.create(document_id,
+                                                   valid_data[::-1],
+                                                   new_version)
 
-        data = session.retrieve_latest(document_id)
+        data = self.session.retrieve_latest(document_id)
         self.assertEqual(len(data), len(valid_data),
                          "Only one set of references should be retrieved.")
 
@@ -152,38 +202,37 @@ class RetrieveReference(unittest.TestCase):
         After a set of references are saved, we should be able to retrieve
         a specific reference by its document id and identifier.
         """
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
-        extraction, data = session.create(document_id, valid_data, version)
+        self.session.create_table()
+        self.session.extractions.create_table()
+        _, data = self.session.create(document_id, valid_data, version)
         identifier = data[0]['identifier']
-        retrieved = session.retrieve(document_id, identifier)
+        retrieved = self.session.retrieve(document_id, identifier)
         self.assertEqual(data[0]['raw'], retrieved['raw'])
 
     @mock_dynamodb2
     def test_retrieving_nonexistant_record_returns_none(self):
         """Return ``None`` when references for a paper do not exist."""
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
-        data = session.retrieve_latest('nonsense')
+        self.session.create_table()
+        self.session.extractions.create_table()
+        data = self.session.retrieve_latest('nonsense')
         self.assertEqual(data, None)
 
     @mock_dynamodb2
     def test_retrieving_nonexistant_reference_returns_none(self):
         """Return ``None`` when an extraction does not exist."""
-        session = data_store.referencesStore.session
-        session.create_table()
-        session.extractions.create_table()
-        data = session.retrieve('nonsense', 'gibberish')
+        self.session.create_table()
+        self.session.extractions.create_table()
+        data = self.session.retrieve('nonsense', 'gibberish')
         self.assertEqual(data, None)
 
 
 class TestPreSaveDataIsMessy(unittest.TestCase):
+    """In some cases, None-ish and Falsey values will slip through."""
+
     def test_reference_is_none(self):
         """A NoneType object slipped into the reference metadata."""
         try:
-            self.assertEqual(data_store.ReferenceStoreSession._clean(None),
+            self.assertEqual(data_store.ReferenceSession._clean(None),
                              None)
         except Exception as E:
             self.fail('NoneType objects should be handled gracefully')
@@ -191,7 +240,7 @@ class TestPreSaveDataIsMessy(unittest.TestCase):
     def test_reference_contains_a_none(self):
         """A value in the reference is a NoneType object."""
         try:
-            ref = data_store.ReferenceStoreSession._clean({
+            ref = data_store.ReferenceSession._clean({
                 'foo': 'bar',
                 'baz': None
             })
@@ -203,7 +252,7 @@ class TestPreSaveDataIsMessy(unittest.TestCase):
     def test_reference_value_contains_a_none(self):
         """A value in the reference contains a NoneType object."""
         try:
-            ref = data_store.ReferenceStoreSession._clean({
+            ref = data_store.ReferenceSession._clean({
                 'foo': 'bar',
                 'baz': ['bat', None]
             })
@@ -211,7 +260,3 @@ class TestPreSaveDataIsMessy(unittest.TestCase):
                                  "The null value should be dropped.")
         except Exception as E:
             self.fail('NoneType objects should be handled gracefully')
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -3,7 +3,10 @@
 from flask import Flask
 from celery import Celery
 from references import celeryconfig
+from references.services.data_store import referencesStore
+from references.services.credentials import credentials
 
+from references import routes
 import logging
 
 
@@ -17,10 +20,6 @@ class MetaCelery(Celery):
 
 def create_web_app() -> Flask:
     """Initialize an instance of the extractor backend service."""
-    from references import routes
-    from references.services.data_store import referencesStore
-    from references.services.credentials import credentials
-
     logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
     logging.getLogger('botocore').setLevel(logging.ERROR)
@@ -34,8 +33,6 @@ def create_web_app() -> Flask:
         credentials.session.get_credentials()
 
     referencesStore.init_app(app)
-    referencesStore.session.create_table()
-    referencesStore.session.extractions.create_table()
     app.register_blueprint(routes.blueprint)
 
     celery = Celery(app.name, results=celeryconfig.result_backend,
@@ -48,13 +45,13 @@ def create_web_app() -> Flask:
 
 def create_worker_app() -> Celery:
     """Initialize an instance of the worker application."""
-    from references.services.credentials import credentials
 
     logging.getLogger('boto').setLevel(logging.ERROR)
     logging.getLogger('boto3').setLevel(logging.ERROR)
     logging.getLogger('botocore').setLevel(logging.ERROR)
     flask_app = Flask('references')
     flask_app.config.from_pyfile('config.py')
+
 
     app = MetaCelery(flask_app.name, results=celeryconfig.result_backend,
                      broker=celeryconfig.broker_url)
@@ -67,4 +64,5 @@ def create_worker_app() -> Celery:
 
     app.autodiscover_tasks(['references.process'], force=True)
     app.conf.task_default_queue = 'references-worker'
+    referencesStore.init_app(app)
     return app

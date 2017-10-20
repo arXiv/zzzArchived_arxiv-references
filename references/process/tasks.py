@@ -7,7 +7,7 @@ from references import logging
 
 from references.process.extract import extract
 from references.process.merge import merge_records
-from references.process.store import store
+from references.process.store import store, store_raw
 from references.process.retrieve import retrieve
 from references.services.metrics import metrics
 
@@ -70,6 +70,13 @@ def process_document(document_id: str, pdf_url: str) -> list:
                     (document_id, len(extractions),
                      ', '.join(extractions.keys())))
 
+        for extractor_name, extractor_metadata in extractions.items():
+            try:
+                store_raw(document_id, extractor_name, extractor_metadata)
+            except IOError as e:
+                logger.error('%s: Could not store raw extraction: %s' %
+                             (document_id, e))
+
         # Merge references across extractors, if more than one succeeded.
         # if len(extractions) == 1:
         #     metadata = list(extractions.values())[0]
@@ -81,7 +88,8 @@ def process_document(document_id: str, pdf_url: str) -> list:
                     (document_id, len(metadata), score))
 
         # Store final reference set.
-        extraction_id = store(metadata, document_id)
+        extraction_id = store(metadata, document_id, score=score,
+                              extractors=list(extractions.keys()))
         end_time = datetime.now()
         metrics.session.report('FinalQuality', score)
         metrics.session.report('ProcessingDuration',

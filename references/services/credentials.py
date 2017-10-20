@@ -1,3 +1,5 @@
+"""Provides access to EC2 instance role credentials."""
+
 from flask import _app_ctx_stack as stack
 import requests
 import os
