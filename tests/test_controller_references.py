@@ -2,7 +2,7 @@
 
 import unittest
 from unittest import mock
-from references.controllers.references import ReferenceMetadataController
+from references.controllers import extracted_references #import ReferenceMetadataController
 from moto import mock_dynamodb2
 from references.services import data_store
 from references import status
@@ -18,11 +18,11 @@ for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
 
 
 class TestReferenceResolver(unittest.TestCase):
-    """Test the behavior of :meth:`.ReferenceMetadataController.resolve`."""
+    """Test the behavior of :func:`.reference.resolve`."""
 
-    def test_resolve_with_arxiv_id(self):
+    @mock.patch('references.controllers.reference.get')
+    def test_resolve_with_arxiv_id(self, mock_get):
         """When arXiv ID is available, returns a redirect to arXiv.org."""
-        controller = ReferenceMetadataController()
         data = {'identifiers': [{'identifier_type': 'arxiv',
                                  'identifier': '1234.5678'},
                                 {'identifier_type': 'isbn',
@@ -32,14 +32,14 @@ class TestReferenceResolver(unittest.TestCase):
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        type(controller).get = mock.MagicMock(return_value=(data, 200))
-        target_url, status_code = controller.resolve('5432.6789', 'asdf1234')
+        mock_get.return_value = (data, 200)
+        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertTrue(target_url.startswith('https://arxiv.org/abs'))
 
-    def test_resolve_with_doi(self):
+    @mock.patch('references.controllers.reference.get')
+    def test_resolve_with_doi(self, mock_get):
         """When DOI is available, returns a redirect to dx.doi.org."""
-        controller = ReferenceMetadataController()
         data = {'identifiers': [{'identifier_type': 'isbn',
                                  'identifier': '9999999999999'}],
                 'doi': '10.12345/5444',
@@ -47,34 +47,34 @@ class TestReferenceResolver(unittest.TestCase):
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        type(controller).get = mock.MagicMock(return_value=(data, 200))
-        target_url, status_code = controller.resolve('5432.6789', 'asdf1234')
+        mock_get.return_value = (data, 200)
+        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertTrue(target_url.startswith('https://dx.doi.org/'))
 
-    def test_resolve_with_isbn(self):
+    @mock.patch('references.controllers.reference.get')
+    def test_resolve_with_isbn(self, mock_get):
         """When ISBN is available, returns a redirect to worldcat."""
-        controller = ReferenceMetadataController()
         data = {'identifiers': [{'identifier_type': 'isbn',
                                  'identifier': '9999999999999'}],
                 'title': 'Camelot',
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        type(controller).get = mock.MagicMock(return_value=(data, 200))
-        target_url, status_code = controller.resolve('5432.6789', 'asdf1234')
+        mock_get.return_value = (data, 200)
+        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertTrue(target_url.startswith('https://www.worldcat.org/'))
 
-    def test_resolve_with_meta(self):
+    @mock.patch('references.controllers.reference.get')
+    def test_resolve_with_meta(self, mock_get):
         """If no identifier is available, redirects to Google Scholar."""
-        controller = ReferenceMetadataController()
         data = {'title': 'Camelot',
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        type(controller).get = mock.MagicMock(return_value=(data, 200))
-        target_url, status_code = controller.resolve('5432.6789', 'asdf1234')
+        mock_get.return_value = (data, 200)
+        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
         url = parse.urlparse(target_url)
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertEqual(url.netloc, 'scholar.google.com')
@@ -90,31 +90,25 @@ class TestReferenceResolver(unittest.TestCase):
 class TestReferenceMetadataControllerList(unittest.TestCase):
     """Test the ReferenceMetadataController.list method."""
 
-    @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
+    @mock.patch.object(data_store, 'get_latest_extractions')
     def test_list_calls_datastore_session(self, retrieve_mock):
-        """Test ReferenceMetadataController.list method."""
+        """Test :func:`.reference.list` function."""
         retrieve_mock.return_value = []
-        controller = ReferenceMetadataController()
-
         try:
-            response, status_code = controller.list('arxiv:1234.5678')
+            response, status_code = reference.list('arxiv:1234.5678')
         except TypeError:
-            self.fail('ReferenceMetadataController.list should return a tuple')
+            self.fail('list() should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
 
-    @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
+    @mock.patch.object(data_store, 'get_latest_extractions')
     def test_list_calls_datastore_with_reftype(self, retrieve_mock):
         """Test calls with reftype argument."""
         retrieve_mock.return_value = []
-        controller = ReferenceMetadataController()
-
         try:
-            response, status_code = controller.list('arxiv:1234.5678',
+            response, status_code = reference.list('arxiv:1234.5678',
                                                     'citation')
         except TypeError:
-            self.fail('ReferenceMetadataController.list should return a tuple')
+            self.fail('list() should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
         try:
             retrieve_mock.assert_called_with('arxiv:1234.5678',
@@ -122,83 +116,61 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
         except AssertionError as e:
             self.fail('%s' % e)
 
-    @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
+    @mock.patch.object(data_store, 'get_latest_extractions')
     def test_list_handles_IOError(self, retrieve_mock):
         """Test the case that the underlying datastore raises an IOError."""
         def raise_ioerror(*args, **kwargs):
             raise IOError('Whoops!')
         retrieve_mock.side_effect = raise_ioerror
-
-        controller = ReferenceMetadataController()
-
         try:
-            response, status_code = controller.list('arxiv:1234.5678')
+            response, status_code = reference.list('arxiv:1234.5678')
         except TypeError:
-            self.fail('ReferenceMetadataController.list should return a tuple')
-
+            self.fail('list() should return a tuple')
         self.assertEqual(status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve_latest')
+    @mock.patch.object(data_store, 'get_latest_extractions')
     def test_list_handles_nonexistant_record(self, retrieve_mock):
         """Test the case that a non-existant record is requested."""
         retrieve_mock.return_value = None
-
-        controller = ReferenceMetadataController()
-
         try:
-            response, status_code = controller.list('arxiv:1234.5678')
+            response, status_code = reference.list('arxiv:1234.5678')
         except TypeError:
-            self.fail('ReferenceMetadataController.list should return a tuple')
-
+            self.fail('list() should return a tuple')
         self.assertEqual(status_code, status.HTTP_404_NOT_FOUND)
 
 
 class TestReferenceMetadataControllerGet(unittest.TestCase):
-    """Test the ReferenceMetadataController.get method."""
+    """Test the :func:`.reference.get` function."""
 
-    @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
+    @mock.patch.object(data_store, 'get_reference')
     def test_get_calls_datastore_session(self, retrieve_mock):
-        """Test ReferenceMetadataController.get method."""
+        """Test :func:`.reference.get` function."""
         retrieve_mock.return_value = {}
-        controller = ReferenceMetadataController()
-
         try:
-            response, status_code = controller.get('arxiv:1234.5678', 'asdf')
+            response, status_code = reference.get('arxiv:1234.5678', 'asdf')
         except TypeError:
-            self.fail('ReferenceMetadataController.get should return a tuple')
+            self.fail('get() should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
 
-    @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
+    @mock.patch.object(data_store, 'get_reference')
     def test_get_handles_IOError(self, retrieve_mock):
-        """Test the case that the underlying datastore raises an IOError."""
+        """The underlying datastore raises an IOError."""
         def raise_ioerror(*args):
             raise IOError('Whoops!')
         retrieve_mock.side_effect = raise_ioerror
-
-        controller = ReferenceMetadataController()
-
         try:
-            response, status_code = controller.get('arxiv:1234.5678', 'asdf')
+            response, status_code = reference.get('arxiv:1234.5678', 'asdf')
         except TypeError:
-            self.fail('ReferenceMetadataController.get should return a tuple')
+            self.fail('get() should return a tuple')
 
         self.assertEqual(status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @mock_dynamodb2
-    @mock.patch.object(data_store.ReferenceStoreSession, 'retrieve')
+    @mock.patch.object(data_store, 'get_reference')
     def test_get_handles_nonexistant_record(self, retrieve_mock):
-        """Test the case that a non-existant record is requested."""
+        """A non-existant record is requested."""
         retrieve_mock.return_value = None
-
-        controller = ReferenceMetadataController()
-
         try:
-            response, status_code = controller.get('arxiv:1234.5678', 'asdf')
+            response, status_code = reference.get('arxiv:1234.5678', 'asdf')
         except TypeError:
-            self.fail('ReferenceMetadataController.get should return a tuple')
-
+            self.fail('get() should return a tuple')
         self.assertEqual(status_code, status.HTTP_404_NOT_FOUND)

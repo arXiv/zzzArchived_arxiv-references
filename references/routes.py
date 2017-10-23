@@ -3,8 +3,8 @@
 from flask.json import jsonify
 from flask import Blueprint, render_template, redirect, request, url_for
 
-from references.controllers.extraction import ExtractionController
-from references.controllers.references import ReferenceMetadataController
+from references.controllers import extraction
+from references.controllers import extracted_references
 from references.controllers.health import health_check
 from references import status
 
@@ -28,15 +28,14 @@ def ok() -> tuple:
 @blueprint.route('/references', methods=['POST'])
 def extract_references() -> tuple:
     """Handle requests for reference extraction."""
-    ec = ExtractionController()
-    data, status, headers = ec.extract(request.get_json(force=True))
+    data, status, headers = extraction.extract(request.get_json(force=True))
     return jsonify(data), status, headers
 
 
 @blueprint.route('/status/<string:task_id>', methods=['GET'])
 def task_status(task_id: str) -> tuple:
     """Get the status of a reference extraction task."""
-    data, status, headers = ExtractionController().status(task_id)
+    data, status, headers = extraction.status(task_id)
     return jsonify(data), status, headers
 
 
@@ -58,8 +57,7 @@ def resolve_reference(doc_id: str, ref_id: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    controller = ReferenceMetadataController()
-    url, status_code = controller.resolve(doc_id, ref_id)
+    url, status_code = extracted_references.resolve(doc_id, ref_id)
     if status_code != status.HTTP_303_SEE_OTHER:
         return jsonify(url), status_code
     return redirect(url, code=status_code)
@@ -83,8 +81,7 @@ def reference(doc_id: str, ref_id: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    controller = ReferenceMetadataController()
-    response, status_code = controller.get(doc_id, ref_id)
+    response, status_code = extracted_references.get(doc_id, ref_id)
     return jsonify(response), status_code
 
 
@@ -104,7 +101,29 @@ def references(doc_id: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    controller = ReferenceMetadataController()
     reftype = request.args.get('reftype', '__all__')
-    response, status_code = controller.list(doc_id, reftype=reftype)
+    response, status_code = extracted_references.list(doc_id, reftype=reftype)
+    return jsonify(response), status_code
+
+
+@blueprint.route('/references/<string:doc_id>/raw/<string:extractor>',
+                 methods=['GET'])
+def raw(doc_id: str, extractor: str) -> tuple:
+    """
+    Retrieve raw reference metadata for a specific extractor.
+
+    Parameters
+    ----------
+    doc_id : str
+    extractor : str
+
+    Returns
+    -------
+    :class:`flask.Response`
+        JSON response.
+    int
+        HTTP status code. See :mod:`references.status` for details.
+    """
+    response, status_code = extracted_references.get_raw_extraction(doc_id,
+                                                                    extractor)
     return jsonify(response), status_code

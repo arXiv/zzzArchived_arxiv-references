@@ -1,6 +1,20 @@
 version: '3'
 
 services:
+  references-cermine:
+    build:
+      context: ./extractors/cermine
+      dockerfile: Dockerfile
+    container_name: references-cermine
+    networks:
+      - references-test
+  references-refextract:
+    build:
+      context: ./extractors/refextract
+      dockerfile: Dockerfile
+    container_name: references-refextract
+    networks:
+      - references-test
   references-test-redis:
     image: redis
     container_name: references-test-redis
@@ -12,6 +26,7 @@ services:
     networks:
       - references-test
     ports:
+      - "5582:4582"
       - "5568:4568"
       - "5569:4569"
     environment:
@@ -27,9 +42,10 @@ services:
       AWS_SECRET_ACCESS_KEY: "bar"
       CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
       DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
+      CERMINE_ENDPOINT: "http://references-cermine:8000"
+      REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
       DYNAMODB_VERIFY: "false"
       CLOUDWATCH_VERIFY: "false"
-      references_DOCKER_IMAGE: "references:test"
       INSTANCE_CREDENTIALS: "false"
       LOGLEVEL: 10
     networks:
@@ -40,6 +56,8 @@ services:
     depends_on:
       - references-test-redis
       - references-test-localstack
+      - references-cermine
+      - references-refextract
   references-api:
     build:
       context: .
@@ -51,6 +69,8 @@ services:
       AWS_SECRET_ACCESS_KEY: "bar"
       CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
       DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
+      CERMINE_ENDPOINT: "http://references-cermine:8000"
+      REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
       DYNAMODB_VERIFY: "false"
       CLOUDWATCH_VERIFY: "false"
       INSTANCE_CREDENTIALS: "false"
@@ -63,6 +83,8 @@ services:
       - references-test-redis
       - references-test-localstack
       - references-worker
+      - references-cermine
+      - references-refextract
   references-agent:
     build:
       context: .

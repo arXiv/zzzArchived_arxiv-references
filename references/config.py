@@ -243,3 +243,8 @@ CLOUDWATCH_ENDPOINT = os.environ.get('CLOUDWATCH_ENDPOINT', None)
 CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true') == 'true'
 
 INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', 'true') == 'true'
+
+
+RAW_TABLE_NAME = os.environ.get('RawExtractions')
+EXTRACTIONS_TABLE_NAME = os.environ.get('Extractions')
+REFERENCES_TABLE_NAME = os.environ.get('StoredReference')
