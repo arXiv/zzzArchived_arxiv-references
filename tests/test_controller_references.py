@@ -2,7 +2,7 @@
 
 import unittest
 from unittest import mock
-from references.controllers import extracted_references #import ReferenceMetadataController
+from references.controllers import extracted_references
 from moto import mock_dynamodb2
 from references.services import data_store
 from references import status
@@ -20,7 +20,7 @@ for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
 class TestReferenceResolver(unittest.TestCase):
     """Test the behavior of :func:`.reference.resolve`."""
 
-    @mock.patch('references.controllers.reference.get')
+    @mock.patch('references.controllers.extracted_references.get')
     def test_resolve_with_arxiv_id(self, mock_get):
         """When arXiv ID is available, returns a redirect to arXiv.org."""
         data = {'identifiers': [{'identifier_type': 'arxiv',
@@ -33,11 +33,12 @@ class TestReferenceResolver(unittest.TestCase):
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
         mock_get.return_value = (data, 200)
-        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
+        target_url, status_code = extracted_references.resolve('5432.6789',
+                                                               'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertTrue(target_url.startswith('https://arxiv.org/abs'))
 
-    @mock.patch('references.controllers.reference.get')
+    @mock.patch('references.controllers.extracted_references.get')
     def test_resolve_with_doi(self, mock_get):
         """When DOI is available, returns a redirect to dx.doi.org."""
         data = {'identifiers': [{'identifier_type': 'isbn',
@@ -48,11 +49,12 @@ class TestReferenceResolver(unittest.TestCase):
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
         mock_get.return_value = (data, 200)
-        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
+        target_url, status_code = extracted_references.resolve('5432.6789',
+                                                               'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertTrue(target_url.startswith('https://dx.doi.org/'))
 
-    @mock.patch('references.controllers.reference.get')
+    @mock.patch('references.controllers.extracted_references.get')
     def test_resolve_with_isbn(self, mock_get):
         """When ISBN is available, returns a redirect to worldcat."""
         data = {'identifiers': [{'identifier_type': 'isbn',
@@ -62,11 +64,12 @@ class TestReferenceResolver(unittest.TestCase):
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
         mock_get.return_value = (data, 200)
-        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
+        target_url, status_code = extracted_references.resolve('5432.6789',
+                                                               'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertTrue(target_url.startswith('https://www.worldcat.org/'))
 
-    @mock.patch('references.controllers.reference.get')
+    @mock.patch('references.controllers.extracted_references.get')
     def test_resolve_with_meta(self, mock_get):
         """If no identifier is available, redirects to Google Scholar."""
         data = {'title': 'Camelot',
@@ -74,7 +77,8 @@ class TestReferenceResolver(unittest.TestCase):
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
         mock_get.return_value = (data, 200)
-        target_url, status_code = reference.resolve('5432.6789', 'asdf1234')
+        target_url, status_code = extracted_references.resolve('5432.6789',
+                                                               'asdf1234')
         url = parse.urlparse(target_url)
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
         self.assertEqual(url.netloc, 'scholar.google.com')
@@ -93,9 +97,9 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
     @mock.patch.object(data_store, 'get_latest_extractions')
     def test_list_calls_datastore_session(self, retrieve_mock):
         """Test :func:`.reference.list` function."""
-        retrieve_mock.return_value = []
+        retrieve_mock.return_value = {'references': []}
         try:
-            response, status_code = reference.list('arxiv:1234.5678')
+            response, code = extracted_references.list('arxiv:1234.5678')
         except TypeError:
             self.fail('list() should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
@@ -103,10 +107,10 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
     @mock.patch.object(data_store, 'get_latest_extractions')
     def test_list_calls_datastore_with_reftype(self, retrieve_mock):
         """Test calls with reftype argument."""
-        retrieve_mock.return_value = []
+        retrieve_mock.return_value = {'references': []}
         try:
-            response, status_code = reference.list('arxiv:1234.5678',
-                                                    'citation')
+            response, code = extracted_references.list('arxiv:1234.5678',
+                                                       'citation')
         except TypeError:
             self.fail('list() should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
@@ -123,20 +127,20 @@ class TestReferenceMetadataControllerList(unittest.TestCase):
             raise IOError('Whoops!')
         retrieve_mock.side_effect = raise_ioerror
         try:
-            response, status_code = reference.list('arxiv:1234.5678')
+            response, code = extracted_references.list('arxiv:1234.5678')
         except TypeError:
             self.fail('list() should return a tuple')
-        self.assertEqual(status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(code, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @mock.patch.object(data_store, 'get_latest_extractions')
     def test_list_handles_nonexistant_record(self, retrieve_mock):
         """Test the case that a non-existant record is requested."""
         retrieve_mock.return_value = None
         try:
-            response, status_code = reference.list('arxiv:1234.5678')
+            response, code = extracted_references.list('arxiv:1234.5678')
         except TypeError:
             self.fail('list() should return a tuple')
-        self.assertEqual(status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(code, status.HTTP_404_NOT_FOUND)
 
 
 class TestReferenceMetadataControllerGet(unittest.TestCase):
@@ -147,7 +151,8 @@ class TestReferenceMetadataControllerGet(unittest.TestCase):
         """Test :func:`.reference.get` function."""
         retrieve_mock.return_value = {}
         try:
-            response, status_code = reference.get('arxiv:1234.5678', 'asdf')
+            response, code = extracted_references.get('arxiv:1234.5678',
+                                                      'asdf')
         except TypeError:
             self.fail('get() should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
@@ -159,18 +164,19 @@ class TestReferenceMetadataControllerGet(unittest.TestCase):
             raise IOError('Whoops!')
         retrieve_mock.side_effect = raise_ioerror
         try:
-            response, status_code = reference.get('arxiv:1234.5678', 'asdf')
+            response, code = extracted_references.get('arxiv:1234.5678',
+                                                      'asdf')
         except TypeError:
             self.fail('get() should return a tuple')
-
-        self.assertEqual(status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(code, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @mock.patch.object(data_store, 'get_reference')
     def test_get_handles_nonexistant_record(self, retrieve_mock):
         """A non-existant record is requested."""
         retrieve_mock.return_value = None
         try:
-            response, status_code = reference.get('arxiv:1234.5678', 'asdf')
+            response, code = extracted_references.get('arxiv:1234.5678',
+                                                      'asdf')
         except TypeError:
             self.fail('get() should return a tuple')
-        self.assertEqual(status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(code, status.HTTP_404_NOT_FOUND)

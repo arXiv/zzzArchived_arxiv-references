@@ -186,11 +186,12 @@ class RetrieveReference(unittest.TestCase):
                                                    new_version)
 
         data = self.session.retrieve_latest(document_id)
-        self.assertEqual(len(data), len(valid_data),
+        self.assertEqual(len(data['references']), len(valid_data),
                          "Only one set of references should be retrieved.")
 
         # Order should be preserved.
-        for first, second, final in zip(valid_data, valid_data[::-1], data):
+        for first, second, final in zip(valid_data, valid_data[::-1],
+                                        data['references']):
             self.assertNotEqual(first['raw'], final['raw'])
             self.assertEqual(second['raw'], final['raw'])
 
@@ -232,7 +233,7 @@ class TestPreSaveDataIsMessy(unittest.TestCase):
     def test_reference_is_none(self):
         """A NoneType object slipped into the reference metadata."""
         try:
-            self.assertEqual(data_store.ReferenceSession._clean(None),
+            self.assertEqual(data_store.util.clean(None),
                              None)
         except Exception as E:
             self.fail('NoneType objects should be handled gracefully')
@@ -240,7 +241,7 @@ class TestPreSaveDataIsMessy(unittest.TestCase):
     def test_reference_contains_a_none(self):
         """A value in the reference is a NoneType object."""
         try:
-            ref = data_store.ReferenceSession._clean({
+            ref = data_store.util.clean({
                 'foo': 'bar',
                 'baz': None
             })
@@ -252,7 +253,7 @@ class TestPreSaveDataIsMessy(unittest.TestCase):
     def test_reference_value_contains_a_none(self):
         """A value in the reference contains a NoneType object."""
         try:
-            ref = data_store.ReferenceSession._clean({
+            ref = data_store.util.clean({
                 'foo': 'bar',
                 'baz': ['bat', None]
             })

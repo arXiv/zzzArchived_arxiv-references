@@ -18,9 +18,11 @@ class CredentialsSession(object):
 
     def __init__(self, endpoint, role):
         """Set the instance metadata URL."""
+        logger.debug('New CredentialsSession %s' % str(id(self)))
         self.url = '%s/%s' % (endpoint, role)
         self.aws_access_key_id = None
         self.aws_secret_access_key = None
+        self.aws_session_token = None
         self.get_credentials()
 
     def _parse_datestring(self, datestring):
