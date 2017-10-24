@@ -19,7 +19,11 @@ on my machine, but you could probably get away with less.
 
    docker-compose up
 
-   # To run e2e tests:
+The references API should be available on ``http://localhost:8001``.
+
+To run e2e tests (after everything is up):
+
+.. code-block:: bash
    docker build ./ -t references-test -f ./Dockerfile-test
    docker run -it --network=arxivreferences_references-test references-test
 

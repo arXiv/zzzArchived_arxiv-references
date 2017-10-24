@@ -30,7 +30,11 @@ def create_web_app() -> Flask:
 
     if app.config.get('INSTANCE_CREDENTIALS'):
         credentials.init_app(app)
-        credentials.session.get_credentials()
+        aws_access_key_id, aws_secret_access_key, \
+            aws_session_token = credentials.session.get_credentials()
+        app.config['AWS_ACCESS_KEY_ID'] = aws_access_key_id
+        app.config['AWS_SECRET_ACCESS_KEY'] = aws_secret_access_key
+        app.config['AWS_SESSION_TOKEN'] = aws_session_token
 
     referencesStore.init_app(app)
     app.register_blueprint(routes.blueprint)
@@ -52,7 +56,6 @@ def create_worker_app() -> Celery:
     flask_app = Flask('references')
     flask_app.config.from_pyfile('config.py')
 
-
     app = MetaCelery(flask_app.name, results=celeryconfig.result_backend,
                      broker=celeryconfig.broker_url)
     app.config_from_object(celeryconfig)
@@ -60,7 +63,11 @@ def create_worker_app() -> Celery:
 
     if app.config.get('INSTANCE_CREDENTIALS'):
         credentials.init_app(app)
-        credentials.session.get_credentials()
+        aws_access_key_id, aws_secret_access_key, \
+            aws_session_token = credentials.session.get_credentials()
+        app.config['AWS_ACCESS_KEY_ID'] = aws_access_key_id
+        app.config['AWS_SECRET_ACCESS_KEY'] = aws_secret_access_key
+        app.config['AWS_SESSION_TOKEN'] = aws_session_token
 
     app.autodiscover_tasks(['references.process'], force=True)
     app.conf.task_default_queue = 'references-worker'

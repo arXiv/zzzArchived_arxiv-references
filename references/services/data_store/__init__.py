@@ -129,6 +129,8 @@ class DataStore(object):
         """
         if app is None:
             app = self.get_app()
+        logger.debug('get_session')
+        logger.debug('app is %s' % str(app))
 
         try:
             extracted_schema = app.config['REFLINK_EXTRACTED_SCHEMA']
@@ -142,6 +144,7 @@ class DataStore(object):
             extractions_table = app.config['EXTRACTIONS_TABLE_NAME']
             references_table = app.config['REFERENCES_TABLE_NAME']
             verify = app.config['DYNAMODB_VERIFY'] == 'true'
+            logger.debug('got config from app')
         except (RuntimeError, AttributeError) as e:   # No application context.
             extracted_schema = os.environ.get('REFLINK_EXTRACTED_SCHEMA', None)
             stored_schema = os.environ.get('REFLINK_STORED_SCHEMA', None)
@@ -154,6 +157,7 @@ class DataStore(object):
             extractions_table = os.environ.get('EXTRACTIONS_TABLE_NAME')
             references_table = os.environ.get('REFERENCES_TABLE_NAME')
             verify = os.environ.get('DYNAMODB_VERIFY', 'true') == 'true'
+            logger.debug('got config from environ')
         return DataStoreSession(endpoint_url, aws_access_key, aws_secret_key,
                                 aws_session_token, region_name, verify=verify,
                                 stored_schema=stored_schema,
