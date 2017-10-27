@@ -29,8 +29,8 @@ ADD schema /opt/arxiv/schema/
 ENV PATH "/opt/arxiv:${PATH}"
 
 # Runtime configuration.
-ENV AWS_ACCESS_KEY_ID ""
-ENV AWS_SECRET_ACCESS_KEY ""
+ENV AWS_ACCESS_KEY_ID "baz"
+ENV AWS_SECRET_ACCESS_KEY "bat"
 
 ENV ARXIV_HOME "https://arxiv.org"
 ENV REFEXTRACT_ENDPOINT ""

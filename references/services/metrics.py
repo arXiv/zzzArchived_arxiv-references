@@ -88,17 +88,21 @@ def get_session(app: object = None) -> MetricsSession:
     """Get a new metrics session."""
     config = get_application_config(app)
     g = get_application_global()
-    access_key, secret_key, sess_token = None, None, None
-    if g is not None and 'credentials' in g:
-        access_key, secret_key, sess_token = g.credentials.get_credentials()
-    else:
+    access_key, secret_key, token = None, None, None
+    if g is not None and 'credentials' in g and \
+            config.get('INSTANCE_CREDENTIALS') == 'true':
+        try:
+            access_key, secret_key, token = g.credentials.get_credentials()
+        except IOError as e:
+            pass
+    if access_key is None or secret_key is None:
         access_key = config.get('AWS_ACCESS_KEY_ID', None)
         secret_key = config.get('AWS_SECRET_ACCESS_KEY', None)
-        sess_token = config.get('AWS_SESSION_TOKEN', None)
+        token = config.get('AWS_SESSION_TOKEN', None)
     endpoint_url = config.get('CLOUDWATCH_ENDPOINT', None)
     region_name = config.get('AWS_REGION', 'us-east-1')
     verify = config.get('CLOUDWATCH_VERIFY', 'true') == 'true'
-    return MetricsSession(endpoint_url, access_key, secret_key, sess_token,
+    return MetricsSession(endpoint_url, access_key, secret_key, token,
                           region_name, verify=verify)
 
 

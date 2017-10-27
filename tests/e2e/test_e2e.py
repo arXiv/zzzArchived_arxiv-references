@@ -54,14 +54,11 @@ with open('schema/StoredReference.json') as f:
 
 class TestReferenceExtractionViaAPI(unittest.TestCase):
     @classmethod
-    @mock.patch('references.services.data_store.current_app')
+    @mock.patch('flask.current_app')
     def setUpClass(cls, mock_app):
         status_endpoint = urljoin(EXTRACTION_ENDPOINT, "/status")
         logger.debug('Check status at %s' % status_endpoint)
 
-        # while True:
-            # try:
-        
         response = requests.get(status_endpoint, timeout=1)
         if response.status_code != 200:
             raise IOError('ack!')
@@ -74,19 +71,25 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
             'DYNAMODB_VERIFY': DYNAMODB_VERIFY,
             'CLOUDWATCH_ENDPOINT': CLOUDWATCH_ENDPOINT,
             'CLOUDWATCH_VERIFY': CLOUDWATCH_VERIFY,
-            'AWS_REGION': AWS_REGION
+            'AWS_REGION': AWS_REGION,
+            'RAW_TABLE_NAME': RAW_TABLE_NAME,
+            'EXTRACTIONS_TABLE_NAME': EXTRACTIONS_TABLE_NAME,
+            'REFERENCES_TABLE_NAME': REFERENCES_TABLE_NAME,
+            'INSTANCE_CREDENTIALS': 'nope',
+            'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
+            'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
         }
         mock_app._get_current_object = mock.MagicMock(return_value=mock_app)
 
         from references.services import data_store
-        data_store.referencesStore.init_app(mock_app)
+        data_store.init_app(mock_app)
         data_store.init_db()
         cls.dyn = boto3.client('dynamodb', verify=DYNAMODB_VERIFY,
-                                 region_name=AWS_REGION,
-                                 endpoint_url=DYNAMODB_ENDPOINT,
-                                 aws_access_key_id=AWS_ACCESS_KEY_ID,
-                                 aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-                                 aws_session_token=AWS_SESSION_TOKEN)
+                               region_name=AWS_REGION,
+                               endpoint_url=DYNAMODB_ENDPOINT,
+                               aws_access_key_id=AWS_ACCESS_KEY_ID,
+                               aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+                               aws_session_token=AWS_SESSION_TOKEN)
 
     def test_extraction_via_api(self):
         """Exercise full extraction lifecycle via API."""
@@ -121,8 +124,13 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
                 self.fail('Extraction should complete in reasonable time')
 
         # POST again with the same request.
-        response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
-                                 json=payload)
+        try:
+            response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
+                                     json=payload)
+        except requests.exceptions.ConnectionError:
+            time.sleep(1)
+            response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
+                                     json=payload)
         self.assertEqual(response.status_code, 200,
                          "Response status for duplicate request should be OK")
         target_url = urljoin(EXTRACTION_ENDPOINT,

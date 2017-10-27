@@ -28,7 +28,7 @@ def create_web_app() -> Flask:
                 template_folder='templates')
     app.config.from_pyfile('config.py')
 
-    if app.config.get('INSTANCE_CREDENTIALS'):
+    if app.config.get('INSTANCE_CREDENTIALS') == 'true':
         credentials.init_app(app)
         credentials.current_session(app)   # Will get fresh creds.
 
@@ -61,7 +61,7 @@ def create_worker_app() -> Celery:
     app.config_from_object(celeryconfig)
     app.config.update(flask_app.config)
 
-    if app.config.get('INSTANCE_CREDENTIALS'):
+    if app.config.get('INSTANCE_CREDENTIALS') == 'true':
         credentials.init_app(app)
         credentials.current_session(app)   # Will get fresh creds.
 

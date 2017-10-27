@@ -39,7 +39,12 @@ class CredentialsSession(object):
 
     def _refresh_credentials(self) -> None:
         """Retrieve fresh credentials for the service role."""
-        response = requests.get(self.url)
+        try:
+            response = requests.get(self.url)
+        except requests.exceptions.ConnectionError as e:
+            logger.error(str(e))
+            raise IOError('Could not retrieve credentials') from e
+
         if not response.ok:
             raise IOError('Could not retrieve credentials')
         data = response.json()

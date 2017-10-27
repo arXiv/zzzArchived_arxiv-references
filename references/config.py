@@ -234,9 +234,9 @@ SOURCE_WHITELIST = os.environ.get('SOURCE_WHITELIST',
                                   'arxiv.org,export.arxiv.org')
 
 CLOUDWATCH_ENDPOINT = os.environ.get('CLOUDWATCH_ENDPOINT', None)
-CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true') == 'true'
+CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true')
 
-INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', 'true') == 'true'
+INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', 'true')
 
 
 RAW_TABLE_NAME = os.environ.get('RawExtractions')

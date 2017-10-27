@@ -37,9 +37,11 @@ ENV AWS_SECRET_ACCESS_KEY ""
 ENV SECRETS_BUCKET_NAME ""
 ENV ARXIV_HOME "https://arxiv.org"
 ENV REFEXTRACT_ENDPOINT ""
+ENV INSTANCE_CREDENTIALS "true"
 
 EXPOSE 8000
 
 RUN chmod +x /opt/arxiv/start_web.sh
 
+WORKDIR /opt/arxiv/
 CMD ["/bin/bash", "/opt/arxiv/start_web.sh"]

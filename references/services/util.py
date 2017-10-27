@@ -2,7 +2,7 @@ from flask import g, Flask
 from flask import current_app as flask_app
 #from celery import current_app as celery_app
 #from celery._state import default_app as default_celery_app
-import celery
+
 import os
 import subprocess
 import shlex
@@ -113,12 +113,15 @@ def get_application_config(app: object = None) -> dict:
         Celery), or ``os.environ``. Any of these should support the ``get()``
         method.
     """
-    import celery
-    import celery._state
+    try:
+        import celery
+        import celery._state
+    except ImportError:
+        celery = None
     if app is not None:
         if isinstance(app, Flask):
             return app.config
-        if isinstance(app, celery.Celery):
+        if celery is not None and isinstance(app, celery.Celery):
             return app.conf
     if flask_app:    # Proxy object; falsey if there is no application context.
         return flask_app.config
@@ -126,7 +129,7 @@ def get_application_config(app: object = None) -> dict:
     # Celery application, the default_app. Since it's a Celery, too, the only
     # way that I can see to detect this case is to directly compare it to the
     # object proxied by current_app.
-    if celery._state.current_app and \
+    if celery is not None and celery._state.current_app and \
             celery._state.current_app._get_current_object() \
             is not celery._state.default_app:
         return celery.current_app.conf
