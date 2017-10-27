@@ -58,9 +58,16 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
     def setUpClass(cls, mock_app):
         status_endpoint = urljoin(EXTRACTION_ENDPOINT, "/status")
         logger.debug('Check status at %s' % status_endpoint)
+
+        # while True:
+            # try:
+        
         response = requests.get(status_endpoint, timeout=1)
-        if not response.status_code == 200:
-            logger.error('Could not connect at %s' % status_endpoint)
+        if response.status_code != 200:
+            raise IOError('ack!')
+            #         break
+            # except Exception as e:
+            #     logger.info('Could not connect at %s, retry' % status_endpoint)
 
         mock_app.config = {
             'DYNAMODB_ENDPOINT': DYNAMODB_ENDPOINT,

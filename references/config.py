@@ -218,12 +218,6 @@ DYNAMODB_ENDPOINT = os.environ.get('DYNAMODB_ENDPOINT', None)
 DYNAMODB_VERIFY = os.environ.get('DYNAMODB_VERIFY', 'true')
 """For testing only."""
 
-# ScienceParse configuration.
-REFLINK_SCIENCEPARSE_HOSTNAME = os.environ.get('REFLINK_SCIENCEPARSE_HOSTNAME',
-                                               'localhost')
-REFLINK_SCIENCEPARSE_PORT = os.environ.get('REFLINK_SCIENCEPARSE_PORT', '8888')
-REFLINK_SCIENCEPARSE_PATH = os.environ.get('REFLINK_SCIENCEPARSE_PATH', 'v1')
-
 # Cermine configuration.
 CERMINE_ENDPOINT = os.environ.get('CERMINE_ENDPOINT',
                                   'http://localhost/cermine/')

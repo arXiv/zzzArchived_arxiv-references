@@ -35,7 +35,7 @@ def merge_records(records: dict,
     records : dict
         The reference records from multiple extraction servies/lookup services.
         Keys are extractor names, values are lists of references (dict).
-        E.g. ``{"cermine": [references], "scienceparse": [references]}``.
+        E.g. ``{"cermine": [references], "grobid": [references]}``.
     extractor_priors : list
         Represents prior level of trust in field output for each extractor.
 

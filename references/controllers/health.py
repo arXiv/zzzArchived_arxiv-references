@@ -1,11 +1,7 @@
 """Provides health-check controller(s)."""
 
-from references.services.cermine import cermine
-from references.services.data_store import referencesStore
-from references.services.events import extractionEvents
-from references.services.grobid import grobid
-from references.services.metrics import metrics
-from references.services.refextract import refExtract
+from references.services import cermine, data_store, metrics, grobid
+from references.services import refextract
 
 from references import logging
 logger = logging.getLogger(__name__)
@@ -14,20 +10,21 @@ logger = logging.getLogger(__name__)
 def _getServices() -> list:
     """Yield a list of services to check for connectivity."""
     return [
-        ('datastore', referencesStore),
-        ('events', extractionEvents),
+        ('datastore', data_store),
         ('metrics', metrics),
         ('grobid', grobid),
         ('cermine', cermine),
-        ('refextract', refExtract),
+        ('refextract', refextract),
     ]
 
 
 def _healthy_session(service):
     """Evaluate whether we have an healthy session with ``service``."""
     try:
-        print(service)
-        service.session
+        if hasattr(service, 'session'):
+            service.session
+        else:
+            service.current_session()
     except Exception as e:
         logger.info('Could not initiate session for %s: %s' %
                     (str(service), e))

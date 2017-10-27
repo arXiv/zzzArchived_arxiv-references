@@ -11,7 +11,7 @@ from references import types
 from references import logging
 from references.process import util
 from references.process.extract import regex_identifiers
-from references.services.cermine import cermine
+from references.services import cermine
 
 
 logger = logging.getLogger(__name__)
@@ -188,6 +188,8 @@ def convert_cxml_json(raw_data: bytes, document_id: str) -> dict:
 def extract_references(filename: str, document_id: str,
                        cleanup: bool = True) -> types.ReferenceMetadata:
     """
+    Extract references from ``filename`` using Cermine.
+
     Copy the pdf to a temporary directory, run CERMINE and return the extracted
     references as a string. Cleans up all temporary files.
 
@@ -212,7 +214,7 @@ def extract_references(filename: str, document_id: str,
         raise FileNotFoundError(filename)
 
     try:
-        data = cermine.session.extract_references(filename)
+        data = cermine.extract_references(filename)
     except IOError as e:
         msg = 'Cermine extraction failed for %s: %s' % (filename, e)
         logger.error(msg)

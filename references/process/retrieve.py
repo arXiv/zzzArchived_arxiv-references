@@ -1,7 +1,8 @@
 """Retrieves PDFs of published papers from the core arXiv document store."""
 
-from references.services.retrieve import retrievePDF
-from references.services.metrics import metrics
+
+from references.services import metrics
+from references.services import retrieve as retrieve_service
 
 
 def is_valid_url(url: str) -> bool:
@@ -17,10 +18,9 @@ def is_valid_url(url: str) -> bool:
     -------
     bool
     """
-    return retrievePDF.session.is_valid_url(url)
+    return retrieve_service.is_valid_url(url)
 
 
-@metrics.session.reporter
 def retrieve(url: str, document_id: str) -> tuple:
     """
     Retrieve PDF for an arXiv document.
@@ -34,16 +34,15 @@ def retrieve(url: str, document_id: str) -> tuple:
     -------
     pdf_path : str
     """
-    metrics_data = []
     try:
-        pdf_path = retrievePDF.session.retrieve(url, document_id)
+        pdf_path = retrieve_service.retrieve_pdf(url, document_id)
     except IOError as e:
-        metrics_data.append({'metric': 'PDFIsAvailable', 'value': 0.})
+        metrics.report('PDFIsAvailable', 0.)
         pdf_path = None
     except ValueError as e:
         raise ValueError('%s: %s' % (document_id, e)) from e
     if pdf_path is None:
-        metrics_data.append({'metric': 'PDFIsAvailable', 'value': 0.})
+        metrics.report('PDFIsAvailable', 0.)
     else:
-        metrics_data.append({'metric': 'PDFIsAvailable', 'value': 1.})
-    return pdf_path, metrics_data
+        metrics.report('PDFIsAvailable', 1.)
+    return pdf_path

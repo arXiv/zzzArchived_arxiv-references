@@ -14,7 +14,7 @@ class TestWebAppFactory(unittest.TestCase):
     def setUp(self):
         os.environ['INSTANCE_CREDENTIALS'] = 'false'
 
-    @mock.patch('references.services.credentials.credentials')
+    @mock.patch('references.services.credentials')
     def test_returns_flask_app(self, mock_credentials):
         """:func:`.create_web_app` returns a :class:`flask.Flask` instance."""
         type(mock_credentials).init_app = mock.MagicMock()
@@ -28,7 +28,7 @@ class TestProcessAppFactory(unittest.TestCase):
     def setUp(self):
         os.environ['INSTANCE_CREDENTIALS'] = 'false'
 
-    @mock.patch('references.services.credentials.credentials')
+    @mock.patch('references.services.credentials')
     def test_returns_celery_app(self, mock_credentials):
         """:func:`.create_web_app` returns a :class:`.Celery` instance."""
         type(mock_credentials).init_app = mock.MagicMock()

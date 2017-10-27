@@ -9,6 +9,7 @@ from references import logging
 # See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 from urllib.parse import urljoin
+from .util import get_application_config, get_application_global
 
 logger = logging.getLogger(__name__)
 
@@ -75,36 +76,19 @@ class RequestExtractionSession(object):
         return response.json()
 
 
-class RequestExtraction(object):
-    """Extraction service integration."""
-
-    def __init__(self, app=None):
-        """Set and configure application, if provided."""
-        self.app = app
-        if app is not None:
-            self.init_app(app)
-
-    def init_app(self, app) -> None:
-        """Configure an application instance."""
-        pass
-
-    def get_session(self) -> None:
-        """Create a new :class:`.RequestExtractionSession`."""
-        try:
-            endpoint = self.app.config['EXTRACTION_ENDPOINT']
-        except (RuntimeError, AttributeError) as e:   # No application context.
-            endpoint = os.environ.get('EXTRACTION_ENDPOINT')
-        return RequestExtractionSession(endpoint)
-
-    @property
-    def session(self):
-        """Get/create :class:`.RequestExtractionSession` for this context."""
-        ctx = stack.top
-        if ctx is not None:
-            if not hasattr(ctx, 'extract'):
-                ctx.retrieve = self.get_session()
-            return ctx.retrieve
-        return self.get_session()     # No application context.
+def get_session(app: object = None) -> RequestExtractionSession:
+    """Get a new extraction session."""
+    endpoint = get_application_config(app).get('EXTRACTION_ENDPOINT')
+    if not endpoint:
+        raise RuntimeError('No extraction endpoint set')
+    return RequestExtractionSession(endpoint)
 
 
-requestExtraction = RequestExtraction()
+def current_session():
+    """Get/create :class:`.MetricsSession` for this context."""
+    g = get_application_global()
+    if g is None:
+        return get_session()
+    if 'extract' not in g:
+        g.extract = get_session()
+    return g.extract

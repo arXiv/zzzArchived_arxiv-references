@@ -5,6 +5,7 @@ import requests
 # See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 from urllib.parse import urljoin
+from .util import get_application_config, get_application_global
 
 
 class ExtractionError(Exception):
@@ -53,39 +54,34 @@ class CermineSession(object):
         return response.content
 
 
-class Cermine(object):
-    """Cermine integration from references worker application."""
-
-    def __init__(self, app=None):
-        """Set and configure the current application instance, if provided."""
-        self.app = app
-        if app is not None:
-            self.init_app(app)
-
-    def init_app(self, app) -> None:
-        """Configure an application instance."""
-        app.config.setdefault('REFLINK_CERMINE_DOCKER_IMAGE', 'arxiv/cermine')
-
-    def get_session(self) -> CermineSession:
-        """Generate a new configured :class:`.CermineSession`."""
-        try:
-            endpoint = self.app.config['CERMINE_ENDPOINT']
-            # image = self.app.config['REFLINK_CERMINE_DOCKER_IMAGE']
-        except (RuntimeError, AttributeError) as e:   # No application context.
-            endpoint = os.environ.get('CERMINE_ENDPOINT')
-            # image = os.environ.get('REFLINK_CERMINE_DOCKER_IMAGE',
-            #                        'arxiv/cermine')
-        return CermineSession(endpoint)
-
-    @property
-    def session(self):
-        """Get or creates a :class:`.CermineSession` for the current app."""
-        ctx = stack.top
-        if ctx is not None:
-            if not hasattr(ctx, 'cermine'):
-                ctx.cermine = self.get_session()
-            return ctx.cermine
-        return self.get_session()     # No application context.
+def init_app(app: object = None) -> None:
+    """Set default configuration parameters for an application instance."""
+    config = get_application_config(app)
+    config.setdefault('REFLINK_CERMINE_DOCKER_IMAGE', 'arxiv/cermine')
 
 
-cermine = Cermine()
+def get_session(app: object = None) -> CermineSession:
+    """Get a new Cermine session."""
+    endpoint = get_application_config(app).get('CERMINE_ENDPOINT')
+    if not endpoint:
+        raise RuntimeError('Cermine endpoint is not set.')
+    return CermineSession(endpoint)
+
+
+def current_session():
+    """Get/create :class:`.MetricsSession` for this context."""
+    g = get_application_global()
+    if g is None:
+        return get_session()
+    if 'cermine' not in g:
+        g.cermine = get_session()
+    return g.cermine
+
+
+def extract_references(filename: str, cleanup: bool=False) -> dict:
+    """
+    Extract references from the PDF at ``filename``.
+
+    See :meth:`.CermineSession.extract_references`.
+    """
+    return current_session().extract_references(filename)

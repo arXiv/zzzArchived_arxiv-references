@@ -6,7 +6,7 @@ import xml.etree.ElementTree
 
 from references import types
 from references import logging
-from references.services.grobid import grobid
+from references.services import grobid
 
 logger = logging.getLogger(__name__)
 
@@ -112,10 +112,12 @@ def _xml_format_biblStruct(bbl):
 
 def format_grobid_output(output: str) -> types.ReferenceMetadata:
     """
+    Transform GROBID output to internal metadata struct.
+
     Take the output of GROBID and return the metadata in the format expected by
-    the references schema. For a description of TEI, Text Encoding Initiative (the
-    format of the XML), see the documentation on the website (particularly,
-    the bibliography section):
+    the references schema. For a description of TEI, Text Encoding Initiative
+    (the format of the XML), see the documentation on the website
+    (particularly, the bibliography section):
 
     http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-biblStruct.html
 
@@ -177,9 +179,8 @@ def extract_references(filename: str,
         Dictionary of reference metadata with metadata separated into author,
         journal, year, etc
     """
-
     try:
-        data = grobid.session.extract_references(filename)
+        data = grobid.extract_references(filename)
     except IOError as e:
         raise RuntimeError('Extraction with Grobid failed: %s' % e) from e
     return format_grobid_output(data)

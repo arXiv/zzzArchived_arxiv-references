@@ -3,8 +3,8 @@
 from flask import Flask
 from celery import Celery
 from references import celeryconfig
-from references.services.data_store import referencesStore
-from references.services.credentials import credentials
+from references.services import credentials, data_store, cermine, grobid
+from references.services import refextract, retrieve
 
 from references import routes
 import logging
@@ -30,13 +30,13 @@ def create_web_app() -> Flask:
 
     if app.config.get('INSTANCE_CREDENTIALS'):
         credentials.init_app(app)
-        aws_access_key_id, aws_secret_access_key, \
-            aws_session_token = credentials.session.get_credentials()
-        app.config['AWS_ACCESS_KEY_ID'] = aws_access_key_id
-        app.config['AWS_SECRET_ACCESS_KEY'] = aws_secret_access_key
-        app.config['AWS_SESSION_TOKEN'] = aws_session_token
+        credentials.current_session(app)   # Will get fresh creds.
 
-    referencesStore.init_app(app)
+    data_store.init_app(app)
+    cermine.init_app(app)
+    grobid.init_app(app)
+    refextract.init_app(app)
+    retrieve.init_app(retrieve)
     app.register_blueprint(routes.blueprint)
 
     celery = Celery(app.name, results=celeryconfig.result_backend,
@@ -63,13 +63,13 @@ def create_worker_app() -> Celery:
 
     if app.config.get('INSTANCE_CREDENTIALS'):
         credentials.init_app(app)
-        aws_access_key_id, aws_secret_access_key, \
-            aws_session_token = credentials.session.get_credentials()
-        app.config['AWS_ACCESS_KEY_ID'] = aws_access_key_id
-        app.config['AWS_SECRET_ACCESS_KEY'] = aws_secret_access_key
-        app.config['AWS_SESSION_TOKEN'] = aws_session_token
+        credentials.current_session(app)   # Will get fresh creds.
 
     app.autodiscover_tasks(['references.process'], force=True)
     app.conf.task_default_queue = 'references-worker'
-    referencesStore.init_app(app)
+    data_store.init_app(app)
+    cermine.init_app(app)
+    grobid.init_app(app)
+    refextract.init_app(app)
+    retrieve.init_app(retrieve)
     return app

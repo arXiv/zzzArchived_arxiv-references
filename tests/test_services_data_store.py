@@ -97,7 +97,7 @@ class StoreReference(unittest.TestCase):
             'stored_schema': schema_path
         }
         self.session = data_store.ReferenceSession(*default_args,
-                                                        **default_kwargs)
+                                                   **default_kwargs)
 
     @mock_dynamodb2
     def test_invalid_data_raises_valueerror(self):
@@ -131,7 +131,7 @@ class RetrieveReference(unittest.TestCase):
         default_args = (None, 'nope', 'nope', None, 'us-east-1')
         default_kwargs = {}
         self.session = data_store.ReferenceSession(*default_args,
-                                                        **default_kwargs)
+                                                   **default_kwargs)
 
     @mock_dynamodb2
     def test_retrieve_by_arxiv_id_and_extraction(self):

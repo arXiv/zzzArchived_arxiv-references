@@ -1,3 +1,8 @@
+from flask import g, Flask
+from flask import current_app as flask_app
+#from celery import current_app as celery_app
+#from celery._state import default_app as default_celery_app
+import celery
 import os
 import subprocess
 import shlex
@@ -91,3 +96,51 @@ def tempdir(cleanup: bool = True) -> str:
     finally:
         if cleanup:
             shutil.rmtree(directory)
+
+
+def get_application_config(app: object = None) -> dict:
+    """
+    Get a configuration from the current app, or fall back to env.
+
+    Parameters
+    ----------
+    app : :class:`flask.Flask` or :class:`celery.Celery`
+
+    Returns
+    -------
+    dict-like
+        This is either the current application configuration (from Flask or
+        Celery), or ``os.environ``. Any of these should support the ``get()``
+        method.
+    """
+    import celery
+    import celery._state
+    if app is not None:
+        if isinstance(app, Flask):
+            return app.config
+        if isinstance(app, celery.Celery):
+            return app.conf
+    if flask_app:    # Proxy object; falsey if there is no application context.
+        return flask_app.config
+    # If no application context is available, current_app will proxy a new
+    # Celery application, the default_app. Since it's a Celery, too, the only
+    # way that I can see to detect this case is to directly compare it to the
+    # object proxied by current_app.
+    if celery._state.current_app and \
+            celery._state.current_app._get_current_object() \
+            is not celery._state.default_app:
+        return celery.current_app.conf
+    return os.environ
+
+
+def get_application_global() -> object:
+    """
+    Get the current application global proxy object.
+
+    Returns
+    -------
+    proxy or None
+    """
+    if g:
+        return g
+    return
