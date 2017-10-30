@@ -16,8 +16,7 @@ import amazon_kclpy
 from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
-from references.services import extractor, credentials
-from references.services.metrics import metrics
+from references.services import extractor, credentials, metrics
 
 
 logger = logging.getLogger(__name__)
@@ -48,7 +47,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
         self.extractor = extractor.current_session()
-        self.credentials = credentials.current_sesion()
+        self.credentials = credentials.current_session()
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
@@ -93,21 +92,19 @@ class RecordProcessor(processor.RecordProcessorBase):
                                  " error was %s" % e)
             time.sleep(self._SLEEP_SECONDS)
 
-    @metrics.session.reporter
     def request_extraction(self, document_id: str) -> None:
         """Request reference extraction from the extraction service."""
-        metrics_data = []
         try:
             pdf_url = '%s/pdf/%s' % (ARXIV_HOME, document_id)
             self.extractor.extract_references(document_id, pdf_url)
         except Exception as e:
             msg = '%s: failed to extract references: %s' % (document_id, e)
             logger.error(msg)
-            metrics_data.append({'metric': 'AgentExtracted', 'value': 0.})
+            metrics.report('AgentExtracted', 0.)
             raise RuntimeError(msg) from e
         logger.info('%s: successfully extracted references' % document_id)
-        metrics_data.append({'metric': 'AgentExtracted', 'value': 1.})
-        return None, metrics_data
+        metrics.report('AgentExtracted', 1.)
+        return
 
     def process_record(self, data: bytes, partition_key: bytes,
                        sequence_number: int, sub_sequence_number: int) -> None:
@@ -170,18 +167,29 @@ class RecordProcessor(processor.RecordProcessorBase):
         ----------
         records : :class:`amazon_kclpy.messages.ProcessRecordsInput`
         """
-        try:
-            for record in records.records:
-                if self.credentials.session.expired:
-                    self.credentials.session.get_credentials()
-                data = record.binary_data
-                seq = int(record.sequence_number)
-                sub_seq = record.sub_sequence_number
-                key = record.partition_key
+        # try:
+        for record in records.records:
+            try:
+                if self.credentials.expired:
+                    self.credentials.get_credentials()
+            except Exception as e:
+                logger.error('Failed to get fresh credentials')
+                raise RuntimeError('%s' % e) from e
+            data = record.binary_data
+            seq = int(record.sequence_number)
+            sub_seq = record.sub_sequence_number
+            key = record.partition_key
+            try:
                 self.process_record(data, key, seq, sub_seq)
-                if self.should_update_sequence(seq, sub_seq):
-                    self._largest_seq = (seq, sub_seq)
+            except Exception as e:
+                logger.error("Failed to process record: %s" % e)
+                logger.error("Seq: %i; Sub seq: %i; Key: %s" %
+                             (seq, sub_seq, key))
+                raise RuntimeError('%s' % e) from e
+            if self.should_update_sequence(seq, sub_seq):
+                self._largest_seq = (seq, sub_seq)
 
+        try:
             # Checkpoints every self._CHECKPOINT_FREQ seconds
             last_check = time.time() - self._last_checkpoint_time
             if last_check > self._CHECKPOINT_FREQ:
@@ -189,12 +197,9 @@ class RecordProcessor(processor.RecordProcessorBase):
                                 str(self._largest_seq[0]),
                                 self._largest_seq[1])
                 self._last_checkpoint_time = time.time()
-
         except Exception as e:
-            logger.error("Encountered an exception while processing records."
-                         " Exception was %s" % e)
-            logger.error("Seq: %i; Sub seq: %i; Key: %s" % (seq, sub_seq, key))
-            logger.error("{}".format(data))
+            logger.error('Failed to checkpoint: %s' % e)
+            raise RuntimeError('%s' % e) from e
 
     def shutdown(self, shutdown: ShutdownInput) -> None:
         """
