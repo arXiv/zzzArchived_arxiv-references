@@ -244,3 +244,6 @@ CREDENTIALS_URL = os.environ.get('CREDENTIALS_URL',
 RAW_TABLE_NAME = os.environ.get('RawExtractions')
 EXTRACTIONS_TABLE_NAME = os.environ.get('Extractions')
 REFERENCES_TABLE_NAME = os.environ.get('StoredReference')
+
+
+EXTRACTION_ENDPOINT = os.environ.get('EXTRACTION_ENDPOINT')
