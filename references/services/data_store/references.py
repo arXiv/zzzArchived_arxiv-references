@@ -258,7 +258,7 @@ class ReferenceSession(object):
                         'created': created,
                         'version': Decimal(version),
                         'identifier': identifier,
-                        'order': order
+                        'order': order + 1
                     })
 
                     self.validate_stored(reference)
