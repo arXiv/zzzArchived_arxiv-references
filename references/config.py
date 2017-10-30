@@ -218,12 +218,6 @@ DYNAMODB_ENDPOINT = os.environ.get('DYNAMODB_ENDPOINT', None)
 DYNAMODB_VERIFY = os.environ.get('DYNAMODB_VERIFY', 'true')
 """For testing only."""
 
-# ScienceParse configuration.
-REFLINK_SCIENCEPARSE_HOSTNAME = os.environ.get('REFLINK_SCIENCEPARSE_HOSTNAME',
-                                               'localhost')
-REFLINK_SCIENCEPARSE_PORT = os.environ.get('REFLINK_SCIENCEPARSE_PORT', '8888')
-REFLINK_SCIENCEPARSE_PATH = os.environ.get('REFLINK_SCIENCEPARSE_PATH', 'v1')
-
 # Cermine configuration.
 CERMINE_ENDPOINT = os.environ.get('CERMINE_ENDPOINT',
                                   'http://localhost/cermine/')
@@ -240,10 +234,12 @@ SOURCE_WHITELIST = os.environ.get('SOURCE_WHITELIST',
                                   'arxiv.org,export.arxiv.org')
 
 CLOUDWATCH_ENDPOINT = os.environ.get('CLOUDWATCH_ENDPOINT', None)
-CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true') == 'true'
+CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true')
 
-INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', 'true') == 'true'
-
+INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', 'true')
+CREDENTIALS_ROLE = os.environ.get('CREDENTIALS_ROLE', 'arxiv-references')
+CREDENTIALS_URL = os.environ.get('CREDENTIALS_URL',
+    'http://169.254.169.254/latest/meta-data/iam/security-credentials')
 
 RAW_TABLE_NAME = os.environ.get('RawExtractions')
 EXTRACTIONS_TABLE_NAME = os.environ.get('Extractions')

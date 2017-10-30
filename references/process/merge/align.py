@@ -90,7 +90,7 @@ def similarity_cutoff(records: dict) -> float:
     ----------
     records : dict
         A set of records where each reference list is labelled by the extractor
-        name i.e. {"cermine": [references], "scienceparse": [references]}
+        name i.e. {"cermine": [references], "grobid": [references]}
 
     Returns
     -------
@@ -141,7 +141,7 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
     ----------
     records : dict of metadata
         A set of records where each reference list is labelled by the extractor
-        name i.e. {"cermine": [references], "scienceparse": [references]}
+        name i.e. {"cermine": [references], "grobid": [references]}
 
     Returns
     -------

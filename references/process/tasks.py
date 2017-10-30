@@ -9,7 +9,7 @@ from references.process.extract import extract
 from references.process.merge import merge_records
 from references.process.store import store, store_raw
 from references.process.retrieve import retrieve
-from references.services.metrics import metrics
+from references.services import metrics
 
 from celery import shared_task
 from celery.result import AsyncResult
@@ -38,8 +38,6 @@ def process_document(document_id: str, pdf_url: str) -> list:
     ------
     RuntimeError
     """
-    metrics_data = []
-
     # These are set up here so that they are always defined in the finally
     # block, below.
     metadata = []
@@ -51,17 +49,17 @@ def process_document(document_id: str, pdf_url: str) -> list:
         # Retrieve PDF from arXiv central document store.
         pdf_path = retrieve(pdf_url, document_id)
         if pdf_path is None:
-            metrics.session.report('PDFIsAvailable', 0.)
+            metrics.report('PDFIsAvailable', 0.)
             msg = '%s: no PDF available' % document_id
             logger.info(msg)
             raise RuntimeError(msg)
-        metrics.session.report('PDFIsAvailable', 1.)
+        metrics.report('PDFIsAvailable', 1.)
         logger.info('%s: retrieved PDF' % document_id)
 
         # Extract references using an array of extractors.
         logger.info('%s: extracting metadata' % document_id)
         extractions = extract(pdf_path, document_id)
-        metrics.session.report('NumberExtractorsSucceeded', len(extractions))
+        metrics.report('NumberExtractorsSucceeded', len(extractions))
 
         if len(extractions) == 0:
             raise RuntimeError('%s: no extractors succeeded' % document_id)
@@ -91,10 +89,9 @@ def process_document(document_id: str, pdf_url: str) -> list:
         extraction_id = store(metadata, document_id, score=score,
                               extractors=list(extractions.keys()))
         end_time = datetime.now()
-        metrics.session.report('FinalQuality', score)
-        metrics.session.report('ProcessingDuration',
-                               (start_time - end_time).microseconds,
-                               'Microseconds')
+        metrics.report('FinalQuality', score)
+        metrics.report('ProcessingDuration',
+                       (start_time - end_time).microseconds, 'Microseconds')
     except Exception as e:
         logger.error('Failed to process %s: %s' % (document_id, e))
         raise e

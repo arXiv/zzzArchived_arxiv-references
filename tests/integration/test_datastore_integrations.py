@@ -59,7 +59,8 @@ class TestDataStoreIntegrationWithDynamoDB(unittest.TestCase):
             'DYNAMODB_VERIFY': 'false'
         }
         mock_app._get_current_object = mock.MagicMock(return_value=mock_app)
-        data_store.referencesStore.init_app(mock_app)
+        data_store.init_app(mock_app)
+        data_store.init_db()
         data_store.store_raw_extraction(document_id, extractor, valid_data)
         data = data_store.get_raw_extraction(document_id, extractor)
         self.assertEqual(data['document'], document_id)

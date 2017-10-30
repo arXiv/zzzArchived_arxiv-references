@@ -16,7 +16,7 @@ import amazon_kclpy
 from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
-from references.services import events, extractor, credentials
+from references.services import extractor, credentials
 from references.services.metrics import metrics
 
 
@@ -47,16 +47,14 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
-        self.events = events.extractionEvents
-        self.extractor = extractor.requestExtraction
-        self.credentials = credentials.credentials
+        self.extractor = extractor.current_session()
+        self.credentials = credentials.current_sesion()
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
         self._largest_seq = (None, None)
         self._last_checkpoint_time = time.time()
-        if os.environ.get('INSTANCE_CREDENTIALS', 'true') == 'true':
-            self.credentials.session.get_credentials()
+        self.credentials.get_credentials()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
                    sequence_number: BytesOrNone = None,
@@ -134,15 +132,6 @@ class RecordProcessor(processor.RecordProcessorBase):
         document_id = deserialized.get('document_id')
         if document_id is None:
             logger.error("%s: no document id" % sequence_number)
-        try:
-            self.events.session.update_or_create(sequence_number,
-                                                 document_id=document_id)
-        except IOError as e:
-            # If we can't connect, there is no reason to proceed. Make noise.
-            msg = "%s: could not connect to extraction events database: %s" \
-                  % (sequence_number, e)
-            logger.error(msg)
-            raise RuntimeError(msg) from e
 
         try:
             self.request_extraction(document_id)

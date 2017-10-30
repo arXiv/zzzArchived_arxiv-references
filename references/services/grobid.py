@@ -3,9 +3,9 @@
 import requests
 import os
 from references.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
-from flask import _app_ctx_stack as stack
 from urllib.parse import urljoin
+from .util import get_application_config, get_application_global
+
 
 class GrobidSession(object):
     """Represents a configured session with Grobid."""
@@ -38,7 +38,7 @@ class GrobidSession(object):
             raise IOError('Failed to connect to Grobid at %s: %s' %
                           (self.endpoint, head.content))
 
-    def extract_references(self, filename: str):
+    def extract_references(self, filename: str) -> dict:
         """
         Extract references from the PDF represented by ``filehandle``.
 
@@ -68,42 +68,35 @@ class GrobidSession(object):
         return response.content
 
 
-class Grobid(object):
-    """Grobid integration from references worker application."""
-
-    def __init__(self, app=None) -> None:
-        """Set and configure an application instance, if provided."""
-
-        self.app = app
-        if app is not None:
-            self.init_app(app)
-
-    def init_app(self, app) -> None:
-        """Configure an application instance."""
-        app.config.setdefault('GROBID_ENDPOINT', 'http://localhost:8080')
-        app.config.setdefault('GROBID_PATH', 'processFulltextDocument')
-
-    def get_session(self) -> None:
-        """Generate a new configured :class:`.GrobidSession`."""
-        try:
-            endpoint = self.app.config['GROBID_ENDPOINT']
-            path = self.app.config['GROBID_PATH']
-        except (RuntimeError, AttributeError) as e:   # No application context.
-            endpoint = os.environ.get('GROBID_ENDPOINT',
-                                      'http://localhost:8080')
-            path = os.environ.get('GROBID_PATH', 'processFulltextDocument')
-
-        return GrobidSession(endpoint, path)
-
-    @property
-    def session(self):
-        """Get or create a :class:`.GrobidSession` for the current context."""
-        ctx = stack.top
-        if ctx is not None:
-            if not hasattr(ctx, 'grobid'):
-                ctx.grobid = self.get_session()
-            return ctx.grobid
-        return self.get_session()     # No application context.
+def init_app(app: object = None) -> None:
+    """Set default configuration parameters for an application instance."""
+    config = get_application_config(app)
+    config.setdefault('GROBID_ENDPOINT', 'http://localhost:8080')
+    config.setdefault('GROBID_PATH', 'processFulltextDocument')
 
 
-grobid = Grobid()
+def get_session(app: object = None) -> GrobidSession:
+    """Get a new Grobid session."""
+    config = get_application_config(app)
+    endpoint = config.get('GROBID_ENDPOINT', 'http://localhost:8080')
+    path = config.get('GROBID_PATH', 'processFulltextDocument')
+    return GrobidSession(endpoint, path)
+
+
+def current_session():
+    """Get/create :class:`.MetricsSession` for this context."""
+    g = get_application_global()
+    if g is None:
+        return get_session()
+    if 'grobid' not in g:
+        g.grobid = get_session()
+    return g.grobid
+
+
+def extract_references(filename: str) -> dict:
+    """
+    Extract references from the PDF at ``filename``.
+
+    See :meth:`.GrobidSession.extract_references`.
+    """
+    return current_session().extract_references(filename)

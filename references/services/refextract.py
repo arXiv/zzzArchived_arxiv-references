@@ -3,9 +3,9 @@
 import requests
 import os
 from references import logging
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
-from flask import _app_ctx_stack as stack
 from urllib.parse import urljoin
+from .util import get_application_config, get_application_global
+
 logger = logging.getLogger(__name__)
 
 
@@ -20,7 +20,7 @@ class RefExtractSession(object):
             raise IOError('Refextract endpoint not available: %s' %
                           response.content)
 
-    def extract_references(self, filename):
+    def extract_references(self, filename: str) -> dict:
         """
         Extract references from the PDF at ``filename``.
 
@@ -42,36 +42,34 @@ class RefExtractSession(object):
         return response.json()
 
 
-class RefExtract(object):
-    """RefExtract integration from references worker application."""
-
-    def __init__(self, app=None):
-        """Set and configure application, if provided."""
-        self.app = app
-        if app is not None:
-            self.init_app(app)
-
-    def init_app(self, app) -> None:
-        """Configure an application instance."""
-        pass
-
-    def get_session(self) -> None:
-        """Create a new :class:`.RefExtractSession`."""
-        try:
-            endpoint = self.app.config['REFEXTRACT_ENDPOINT']
-        except (RuntimeError, AttributeError) as e:   # No application context.
-            endpoint = os.environ.get('REFEXTRACT_ENDPOINT')
-        return RefExtractSession(endpoint)
-
-    @property
-    def session(self):
-        """Get or create a :class:`.RefExtractSession` for this context."""
-        ctx = stack.top
-        if ctx is not None:
-            if not hasattr(ctx, 'refextract'):
-                ctx.refextract = self.get_session()
-            return ctx.refextract
-        return self.get_session()     # No application context.
+def init_app(app: object = None) -> None:
+    """Set default configuration parameters for an application instance."""
+    config = get_application_config(app)
+    config.setdefault('REFEXTRACT_ENDPOINT', 'http://localhost:8080')
 
 
-refExtract = RefExtract()
+def get_session(app: object = None) -> RefExtractSession:
+    """Get a new refextract session."""
+    endpoint = get_application_config(app).get('REFEXTRACT_ENDPOINT')
+    if not endpoint:
+        raise RuntimeError('Refextract endpoint not set')
+    return RefExtractSession(endpoint)
+
+
+def current_session():
+    """Get/create :class:`.RefExtractSession` for this context."""
+    g = get_application_global()
+    if g is None:
+        return get_session()
+    if 'refextract' not in g:
+        g.refextract = get_session()
+    return g.refextract
+
+
+def extract_references(filename: str) -> dict:
+    """
+    Extract references from the PDF at ``filename``.
+
+    See :meth:`.RefExtractSession.extract_references`.
+    """
+    return current_session().extract_references(filename)

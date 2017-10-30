@@ -1,3 +1,6 @@
+from flask import g, Flask
+from flask import current_app as flask_app
+
 import os
 import subprocess
 import shlex
@@ -91,3 +94,43 @@ def tempdir(cleanup: bool = True) -> str:
     finally:
         if cleanup:
             shutil.rmtree(directory)
+
+
+def get_application_config(app: Flask = None) -> dict:
+    """
+    Get a configuration from the current app, or fall back to env.
+
+    Parameters
+    ----------
+    app : :class:`flask.Flask`
+
+    Returns
+    -------
+    dict-like
+        This is either the current Flask application configuration, or
+        ``os.environ``. Either of these should support the ``get()`` method.
+    """
+    if app is not None:
+        if isinstance(app, Flask):
+            logger.debug('Passed app is Flask application')
+            return app.config
+    if flask_app:    # Proxy object; falsey if there is no application context.
+        logger.debug('In Flask application context')
+        return flask_app.config
+    logger.debug('No application context, falling back to os.environ')
+    return os.environ
+
+
+def get_application_global() -> object:
+    """
+    Get the current application global proxy object.
+
+    Returns
+    -------
+    proxy or None
+    """
+    if g:
+        logger.debug('Got application global')
+        return g
+    logger.debug('No application global')
+    return

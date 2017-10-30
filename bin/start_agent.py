@@ -2,11 +2,12 @@
 import boto3
 from botocore.exceptions import ClientError
 import os
-from references.services.credentials import credentials
+from references.services import credentials
 
 if __name__ == '__main__':
     if os.environ.get('INSTANCE_CREDENTIALS', 'true') == 'true':
-        access_key, secret, token = credentials.session.get_credentials()
+        session = credentials.current_session()
+        access_key, secret, token = session.get_credentials()
     else:
         access_key = os.environ.get('AWS_ACCESS_KEY_ID')
         secret = os.environ.get('AWS_SECRET_ACCESS_KEY')
