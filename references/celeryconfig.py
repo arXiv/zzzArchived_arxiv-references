@@ -4,9 +4,9 @@ Celery configuration module.
 See `the celery docs
 <http://docs.celeryproject.org/en/latest/userguide/configuration.html>`_.
 """
-
 import os
 from urllib import parse
+
 
 AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')

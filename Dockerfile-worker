@@ -33,9 +33,11 @@ ENV REDIS_ENDPOINT ""
 # If not set, secrets will not be retrieved.
 ENV SECRETS_BUCKET_NAME ""
 ENV ARXIV_HOME "https://arxiv.org"
+ENV CREDENTIALS_ROLE "arxiv-references-worker"
+ENV CREDENTIALS_URL "http://169.254.169.254/latest/meta-data/iam/security-credentials"
 
 ADD references /opt/arxiv/references/
 
 WORKDIR /opt/arxiv
 ENTRYPOINT ["celery", "worker"]
-CMD ["-A", "references.celery", "--loglevel=DEBUG", "-E", "--concurrency=4"]
+CMD ["-A", "references.worker.celery_app", "--loglevel=DEBUG", "-E", "--concurrency=4"]

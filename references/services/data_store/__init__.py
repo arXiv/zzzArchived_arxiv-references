@@ -99,7 +99,7 @@ def get_session(app: object = None) -> DataStoreSession:
     g = get_application_global()
     access_key, secret_key, token = None, None, None
     if g is not None and 'credentials' in g and \
-            config.get('INSTANCE_CREDENTIALS') == 'true':
+            config.get('INSTANCE_CREDENTIALS', 'true') == 'true':
         try:
             access_key, secret_key, token = g.credentials.get_credentials()
         except IOError as e:
@@ -109,9 +109,6 @@ def get_session(app: object = None) -> DataStoreSession:
         secret_key = config.get('AWS_SECRET_ACCESS_KEY', None)
         token = config.get('AWS_SESSION_TOKEN', None)
     if not access_key or not secret_key:
-        print(access_key)
-        print(secret_key)
-        print(config)
         raise RuntimeError('Could not find usable credentials')
     extracted_schema = config.get('REFLINK_EXTRACTED_SCHEMA', None)
     stored_schema = config.get('REFLINK_STORED_SCHEMA', None)

@@ -18,8 +18,9 @@ class CredentialsSession(object):
 
     def __init__(self, endpoint, role, config):
         """Set the instance metadata URL."""
-        logger.debug('New CredentialsSession %s' % str(id(self)))
         self.url = '%s/%s' % (endpoint, role)
+        logger.debug('New CredentialsSession %s with endpoint %s' %
+                     (str(id(self)), self.url))
         self.config = config
         self.get_credentials()
 
@@ -46,6 +47,7 @@ class CredentialsSession(object):
             raise IOError('Could not retrieve credentials') from e
 
         if not response.ok:
+            logger.error(response.content)
             raise IOError('Could not retrieve credentials')
         data = response.json()
         self.expires = self._datetime(data['Expiration'])

@@ -38,35 +38,6 @@ class FlaskApplicationContext(TestCase):
                             "config has __setitem__() method")
 
 
-class CeleryApplicationContext(TestCase):
-    """A :class:`celery.Celery` application context is available."""
-
-    def setUp(self):
-        """Initialize the app."""
-        self.app = Celery('test')
-
-    def test_get_application_global(self):
-        """:func:`.util.get_application_global` returns ``None``."""
-        self.assertIsNone(util.get_application_global())
-
-    def test_get_application_config(self):
-        """:func:`.util.get_application_config` returns :class:`.Settings`."""
-        config = util.get_application_config()
-        self.assertTrue(hasattr(config, 'get') and
-                        hasattr(config.get, '__call__'),
-                        "config has get() method")
-        self.assertTrue(hasattr(config, '__setitem__') and
-                        hasattr(config.__setitem__, '__call__'),
-                        "config has __setitem__() method")
-        self.assertIsInstance(config, Settings, "config is a Settings object")
-
-    def tearDown(self):
-        """Delete the app."""
-        del self.app
-        from celery import _state as celery_state
-        del celery_state._tls.current_app
-
-
 class NoApplicationContext(TestCase):
     """No application context is available."""
 

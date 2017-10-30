@@ -90,7 +90,7 @@ def get_session(app: object = None) -> MetricsSession:
     g = get_application_global()
     access_key, secret_key, token = None, None, None
     if g is not None and 'credentials' in g and \
-            config.get('INSTANCE_CREDENTIALS') == 'true':
+            config.get('INSTANCE_CREDENTIALS', 'true') == 'true':
         try:
             access_key, secret_key, token = g.credentials.get_credentials()
         except IOError as e:
