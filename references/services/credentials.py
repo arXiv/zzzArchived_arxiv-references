@@ -1,14 +1,15 @@
 """Provides access to EC2 instance role credentials."""
 
-import requests
 import os
 from datetime import datetime, timedelta
+
+import requests
+import werkzeug
+
 from references import logging
-from .util import get_application_config, get_application_global
+from references.context import get_application_config, get_application_global
 
 logger = logging.getLogger(__name__)
-
-DEF_ENDPT = "http://169.254.169.254/latest/meta-data/iam/security-credentials"
 
 
 class CredentialsSession(object):
@@ -19,8 +20,8 @@ class CredentialsSession(object):
     def __init__(self, endpoint, role, config):
         """Set the instance metadata URL."""
         self.url = '%s/%s' % (endpoint, role)
-        logger.debug('New CredentialsSession %s with endpoint %s' %
-                     (str(id(self)), self.url))
+        logger.debug('New CredentialsSession %s with endpoint %s',
+                     str(id(self)), self.url)
         self.config = config
         self.get_credentials()
 
@@ -47,10 +48,9 @@ class CredentialsSession(object):
             raise IOError('Could not retrieve credentials') from e
 
         if not response.ok:
-            logger.error(response.content)
+            logger.error(str(response.content))
             raise IOError('Could not retrieve credentials')
         data = response.json()
-        self.expires = self._datetime(data['Expiration'])
         self.config['AWS_ACCESS_KEY_ID'] = data['AccessKeyId']
         self.config['AWS_SECRET_ACCESS_KEY'] = data['SecretAccessKey']
         self.config['AWS_SESSION_TOKEN'] = data['Token']
@@ -73,16 +73,17 @@ class CredentialsSession(object):
 
     def _get_expires(self) -> datetime:
         """The datetime at which the current credentials expire."""
-        expires = self.config.get('CREDENTIALS_EXPIRE')
-        if isinstance(expires, str):
-            return self._datetime(expires)
+        _expires = self.config.get('CREDENTIALS_EXPIRE')
+        if isinstance(_expires, str):
+            return self._datetime(_expires)
         return datetime.now()
 
     def _set_expires(self, expiry: datetime) -> None:
         """Set the current expiry."""
         if not isinstance(expiry, datetime):
             raise ValueError("Expiry must be a datetime object")
-        self.config['CREDENTIALS_EXPIRE'] = expiry.strftime(self.fmt)
+        exp = expiry.strftime(self.fmt)
+        self.config['CREDENTIALS_EXPIRE'] = exp
 
     expires = property(_get_expires, _set_expires)
 
@@ -98,7 +99,7 @@ class CredentialsSession(object):
         if self.expired or self.access_key is None:
             logger.debug('expired, refreshing')
             self._refresh_credentials()
-        logger.debug('new expiry: %s' % self.expires.strftime(self.fmt))
+        logger.debug('new expiry: %s', self.expires.strftime(self.fmt))
         return self.access_key, self.secret_key, self.session_token
 
 
@@ -106,18 +107,24 @@ def init_app(app) -> None:
     """Configure an application instance."""
     config = get_application_config(app)
     config.setdefault('CREDENTIALS_ROLE', 'arxiv-references')
-    config.setdefault('CREDENTIALS_URL', DEF_ENDPT)
+    config.setdefault(
+        'CREDENTIALS_URL',
+        'http://169.254.169.254/latest/meta-data/iam/security-credentials'
+    )
 
 
 def get_session(app: object = None) -> CredentialsSession:
     """Create a new :class:`.CredentialsSession`."""
     config = get_application_config(app)
     role = config.get('CREDENTIALS_ROLE', "arxiv-references")
-    endpoint = config.get('CREDENTIALS_URL', DEF_ENDPT)
+    endpoint = config.get(
+        'CREDENTIALS_URL',
+        'http://169.254.169.254/latest/meta-data/iam/security-credentials'
+    )
     return CredentialsSession(endpoint, role, config)
 
 
-def current_session(app: object = None):
+def current_session(app: werkzeug.local.LocalProxy=None) -> CredentialsSession:
     """Get/create :class:`.CredentialsSession` for this context."""
     g = get_application_global()
     if g:

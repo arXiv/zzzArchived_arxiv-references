@@ -43,50 +43,6 @@ class TestMetricsReport(unittest.TestCase):
                          'This')
 
 
-class TestMetricsReporterDecorator(unittest.TestCase):
-    """Tests for the :func:`.metrics.MetricsSession.reporter` decorator."""
-
-    @mock.patch('boto3.client')
-    def test_wraps_function(self, mock_client):
-        """:func:`MetricsSession.reporter` returns a callable."""
-        session = MetricsSession()
-
-        @session.reporter
-        def test_func():
-            return 1
-
-        self.assertTrue(hasattr(test_func, '__call__'))
-        self.assertEqual(test_func(), 1)
-
-    @mock.patch('boto3.client')
-    def test_returns_value_when_no_metrics_passed(self, mock_client):
-        """If no metrics returned, the return value is returned unchanged."""
-        session = MetricsSession()
-
-        @session.reporter
-        def test_func():
-            return 1
-
-        self.assertEqual(test_func(), 1)
-        self.assertEqual(session.cloudwatch.put_metric_data.call_count, 0)
-
-    @mock.patch('boto3.client')
-    def test_reports_metrics_and_returns_the_rest(self, mock_client):
-        """Provided metrics are reported and the remainder is returned."""
-        session = MetricsSession()
-
-        @session.reporter
-        def test_func():
-            return 1, [{'metric': 'Success', 'value': 1e9}]
-
-        self.assertEqual(test_func(), 1)
-        self.assertEqual(session.cloudwatch.put_metric_data.call_count, 1)
-        args, kwargs = session.cloudwatch.put_metric_data.call_args
-        self.assertIn('MetricData', kwargs)
-        self.assertEqual(kwargs['MetricData'][0]['MetricName'], 'Success')
-        self.assertEqual(kwargs['MetricData'][0]['Value'], 1e9)
-
-
 class TestMetricsCredentials(unittest.TestCase):
     """Metrics reporting depends on credential availabilty."""
 
@@ -168,19 +124,6 @@ class TestMetricsCredentials(unittest.TestCase):
             self.assertEqual(session.aws_access_key, creds.access_key)
             self.assertEqual(session.aws_secret_key, creds.secret_key)
             self.assertEqual(session.aws_session_token, creds.session_token)
-
-    def test_celery_app_with_no_credentials(self):
-        """Should rely on app config for when credentials not available."""
-        from celery import Celery, current_app
-        from references.services import metrics
-        app = Celery('test')
-        app.conf['AWS_ACCESS_KEY_ID'] = 'qwerty'
-        app.conf['AWS_SECRET_ACCESS_KEY'] = 'ytrewq'
-        app.conf['AWS_SESSION_TOKEN'] = 'asdfghjkl'
-        session = metrics.current_session()
-        self.assertEqual(session.aws_access_key, 'qwerty')
-        self.assertEqual(session.aws_secret_key, 'ytrewq')
-        self.assertEqual(session.aws_session_token, 'asdfghjkl')
 
     @mock.patch('requests.get')
     def test_celery_app_with_credentials(self, mock_get):

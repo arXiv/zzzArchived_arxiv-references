@@ -1,3 +1,6 @@
+"""Helpers for data store."""
+
+
 def clean(reference: dict) -> dict:
     """
     Remove empty values.

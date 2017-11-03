@@ -1,13 +1,15 @@
 """Service integration for central arXiv document store."""
 
-import requests
 import os
-from references import logging
 from urllib.parse import urlparse
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
-from flask import _app_ctx_stack as stack
 import tempfile
-from .util import get_application_config, get_application_global
+
+import requests
+from flask import _app_ctx_stack as stack
+
+from references import logging
+from references.context import get_application_config, get_application_global
+
 logger = logging.getLogger(__name__)
 
 
@@ -57,19 +59,23 @@ class RetrievePDFSession(object):
         IOError
             When there is a problem retrieving the resource at ``target``.
         """
-        # target = '%s/pdf/%s.pdf' % (self.endpoint, document_id)
         if not self.is_valid_url(target):
+            logger.error('Target URL not valid: %s', target)
             raise ValueError('URL not allowed: %s' % target)
 
         pdf_response = requests.get(target)
         if pdf_response.status_code == requests.codes.NOT_FOUND:
-            logger.info('Could not retrieve PDF for %s' % document_id)
+            logger.error('Could not retrieve PDF for %s', document_id)
             return None
         elif pdf_response.status_code != requests.codes.ok:
+            logger.error('Failed to retrieve PDF %s: %s, %s',
+                         document_id, pdf_response.status_code,
+                         pdf_response.content)
             raise IOError('%s: unexpected status for PDF: %i' %
                           (document_id, pdf_response.status_code))
 
-        _, pdf_path = tempfile.mkstemp(prefix=document_id, suffix='.pdf')
+        _, pdf_path = tempfile.mkstemp(prefix=document_id.split('/')[-1],
+                                       suffix='.pdf')
         with open(pdf_path, 'wb') as f:
             f.write(pdf_response.content)
         os.chmod(pdf_path, 0o775)

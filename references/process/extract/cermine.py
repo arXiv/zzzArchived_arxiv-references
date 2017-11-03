@@ -1,13 +1,14 @@
 """Business logic for processing Cermine extracted references."""
 
-import regex as re
 import os
 from io import BytesIO
 import shutil
 import subprocess
 import xml.etree.ElementTree
+from typing import List
 
-from references import types
+import regex as re
+
 from references import logging
 from references.process import util
 from references.process.extract import regex_identifiers
@@ -108,7 +109,7 @@ def _cxml_format_reference_line(elm):
     return text
 
 
-def cxml_format_document(root, documentid=''):
+def cxml_format_document(root, documentid: str='') -> List[dict]:
     """
     Convert a CERMINE XML element into a reference document i.e.:
 
@@ -165,11 +166,9 @@ def cxml_format_document(root, documentid=''):
     return references
 
 
-def convert_cxml_json(raw_data: bytes, document_id: str) -> dict:
+def convert_cxml_json(raw_data: bytes, document_id: str) -> List[dict]:
     """
-    Transforms a CERMINE XML file into human and machine readable references:
-        1. Reference lines i.e. the visual form in the paper
-        2. JSON documents with separated metadata
+    Transforms a CERMINE XML file into internal reference struct.
 
     Parameters
     ----------
@@ -186,7 +185,7 @@ def convert_cxml_json(raw_data: bytes, document_id: str) -> dict:
 
 
 def extract_references(filename: str, document_id: str,
-                       cleanup: bool = True) -> types.ReferenceMetadata:
+                       cleanup: bool=True) -> List[dict]:
     """
     Extract references from ``filename`` using Cermine.
 
@@ -216,7 +215,6 @@ def extract_references(filename: str, document_id: str,
     try:
         data = cermine.extract_references(filename)
     except IOError as e:
-        msg = 'Cermine extraction failed for %s: %s' % (filename, e)
-        logger.error(msg)
-        raise RuntimeError(msg) from e
+        logger.error('%s: Cermine extraction failed: %s', filename, e)
+        raise RuntimeError('Cermine extraction failed') from e
     return convert_cxml_json(data, document_id)

@@ -6,18 +6,16 @@ https://github.com/awslabs/amazon-kinesis-client-python/blob/master/samples/samp
 """
 
 import time
-from references import logging
 import json
 import os
-from references.types import IntOrNone, BytesOrNone
-# from references.factory import create_process_app
 
 import amazon_kclpy
 from amazon_kclpy import kcl
 from amazon_kclpy.v2 import processor
 from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
-from references.services import extractor, credentials, metrics
 
+from references.services import extractor, credentials, metrics
+from references import logging
 
 logger = logging.getLogger(__name__)
 
@@ -56,15 +54,15 @@ class RecordProcessor(processor.RecordProcessorBase):
         self.credentials.get_credentials()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
-                   sequence_number: BytesOrNone = None,
-                   sub_sequence_number: IntOrNone = None) -> None:
+                   sequence_number: bytes = None,
+                   sub_sequence_number: int = None) -> None:
         """Make periodic checkpoints while processing records."""
         for n in range(0, self._CHECKPOINT_RETRIES):
             try:
                 checkpointer.checkpoint(sequence_number, sub_sequence_number)
                 return
             except kcl.CheckpointError as e:
-                if 'ShutdownException' == e.value:
+                if e.value == 'ShutdownException':
                     # A ShutdownException indicates that this record processor
                     #  should be shutdown. This is due to some failover event,
                     #  e.g. another MultiLangDaemon has taken the lease for
@@ -72,24 +70,24 @@ class RecordProcessor(processor.RecordProcessorBase):
                     logger.info("Encountered shutdown exception, skipping"
                                 " checkpoint")
                     return
-                elif 'ThrottlingException' == e.value:
+                elif e.value == 'ThrottlingException':
                     # A ThrottlingException indicates that one of our
                     #  dependencies is is over burdened, e.g. too many dynamo
                     #  writes. We will sleep temporarily to let it recover.
                     if self._CHECKPOINT_RETRIES - 1 == n:
                         logger.error("Failed to checkpoint after %i attempts,"
-                                     " giving up." % n)
+                                     " giving up.", n)
                         return
                     else:
                         logger.info("Was throttled while checkpointing, will"
-                                    " attempt again in %i seconds"
-                                    % self._SLEEP_SECONDS)
-                elif 'InvalidStateException' == e.value:
+                                    " attempt again in %i seconds",
+                                    self._SLEEP_SECONDS)
+                elif e.value == 'InvalidStateException':
                     logger.error("MultiLangDaemon reported an invalid state"
                                  " while checkpointing.")
                 else:  # Some other error
                     logger.error("Encountered an error while checkpointing,"
-                                 " error was %s" % e)
+                                 " error was %s", e)
             time.sleep(self._SLEEP_SECONDS)
 
     def request_extraction(self, document_id: str) -> None:
@@ -98,11 +96,12 @@ class RecordProcessor(processor.RecordProcessorBase):
             pdf_url = '%s/pdf/%s' % (ARXIV_HOME, document_id)
             self.extractor.extract_references(document_id, pdf_url)
         except Exception as e:
-            msg = '%s: failed to extract references: %s' % (document_id, e)
-            logger.error(msg)
+            logger.error('%s: failed to extract references: %s',
+                         document_id, e)
             metrics.report('AgentExtracted', 0.)
-            raise RuntimeError(msg) from e
-        logger.info('%s: successfully extracted references' % document_id)
+            raise RuntimeError('%s: failed to extract references: %s' %
+                               (document_id, e)) from e
+        logger.info('%s: successfully extracted references', document_id)
         metrics.report('AgentExtracted', 1.)
         return
 
@@ -121,20 +120,20 @@ class RecordProcessor(processor.RecordProcessorBase):
         try:
             deserialized = json.loads(data.decode('utf-8'))
         except Exception as e:
-            logger.error("%s: eror while deserializing data: %s" %
-                         (sequence_number, e))
-            logger.error("%s: data payload: %s" % (sequence_number, data))
+            logger.error("%s: eror while deserializing data: %s",
+                         sequence_number, e)
+            logger.error("%s: data payload: %s", sequence_number, data)
             return   # Don't bring down the whole batch.
 
         document_id = deserialized.get('document_id')
         if document_id is None:
-            logger.error("%s: no document id" % sequence_number)
+            logger.error("%s: no document id", sequence_number)
 
         try:
             self.request_extraction(document_id)
         except Exception as e:
-            logger.error("Error while processing document: %s" % e)
-            logger.error("Data payload: %s" % data)
+            logger.error("Error while processing document: %s", e)
+            logger.error("Data payload: %s", data)
 
     def should_update_sequence(self, sequence_number: int,
                                sub_sequence_number: int) -> bool:
@@ -182,10 +181,9 @@ class RecordProcessor(processor.RecordProcessorBase):
             try:
                 self.process_record(data, key, seq, sub_seq)
             except Exception as e:
-                logger.error("Failed to process record: %s" % e)
-                logger.error("Seq: %i; Sub seq: %i; Key: %s" %
-                             (seq, sub_seq, key))
-                raise RuntimeError('%s' % e) from e
+                logger.error("Failed to process record: %s", e)
+                logger.error("Seq %i; Sub seq %i; Key %s", seq, sub_seq, key)
+                raise RuntimeError(str(e)) from e
             if self.should_update_sequence(seq, sub_seq):
                 self._largest_seq = (seq, sub_seq)
 
@@ -194,11 +192,11 @@ class RecordProcessor(processor.RecordProcessorBase):
             last_check = time.time() - self._last_checkpoint_time
             if last_check > self._CHECKPOINT_FREQ:
                 self.checkpoint(records.checkpointer,
-                                str(self._largest_seq[0]),
+                                str(self._largest_seq[0]).encode('ascii'),
                                 self._largest_seq[1])
                 self._last_checkpoint_time = time.time()
         except Exception as e:
-            logger.error('Failed to checkpoint: %s' % e)
+            logger.error('Failed to checkpoint: %s', e)
             raise RuntimeError('%s' % e) from e
 
     def shutdown(self, shutdown: ShutdownInput) -> None:
@@ -226,4 +224,4 @@ class RecordProcessor(processor.RecordProcessorBase):
                 # **ATTEMPTING TO CHECKPOINT ONCE A LEASE IS LOST WILL FAIL**
                 logger.info("Shutting down due to failover. Won't checkpoint.")
         except Exception as e:
-            logger.error("Encountered exception while shutting down: %s" % e)
+            logger.error("Encountered exception while shutting down: %s", e)

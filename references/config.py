@@ -8,7 +8,7 @@ import os
 
 
 
-VERSION = '0.1'
+VERSION = '0.2'
 """The application version, used to sign extracted references."""
 
 ON = 'yes'
@@ -238,8 +238,10 @@ CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true')
 
 INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', 'true')
 CREDENTIALS_ROLE = os.environ.get('CREDENTIALS_ROLE', 'arxiv-references')
-CREDENTIALS_URL = os.environ.get('CREDENTIALS_URL',
-    'http://169.254.169.254/latest/meta-data/iam/security-credentials')
+CREDENTIALS_URL = os.environ.get(
+    'CREDENTIALS_URL',
+    'http://169.254.169.254/latest/meta-data/iam/security-credentials'
+)
 
 RAW_TABLE_NAME = os.environ.get('RawExtractions')
 EXTRACTIONS_TABLE_NAME = os.environ.get('Extractions')
@@ -247,3 +249,6 @@ REFERENCES_TABLE_NAME = os.environ.get('StoredReference')
 
 
 EXTRACTION_ENDPOINT = os.environ.get('EXTRACTION_ENDPOINT')
+
+LOGFILE = os.environ.get('LOGFILE')
+LOGLEVEL = os.environ.get('LOGLEVEL', 20)

@@ -1,23 +1,21 @@
+"""RegEx patterns for arXiv identifiers in citations."""
+
+from references.process.util import CATEGORIES
+
 __all__ = (
     'REGEX_ARXIV_SIMPLE',
     'REGEX_ARXIV_STRICT',
     'REGEX_ARXIV_FLEXIBLE'
 )
 
-categories = [
-    "acc-phys", "adap-org", "alg-geom", "ao-sci", "astro-ph", "atom-ph",
-    "bayes-an", "chao-dyn", "chem-ph", "cmp-lg", "comp-gas", "cond-mat", "cs",
-    "dg-ga", "funct-an", "gr-qc", "hep-ex", "hep-lat", "hep-ph", "hep-th",
-    "math", "math-ph", "mtrl-th", "nlin", "nucl-ex", "nucl-th", "patt-sol",
-    "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int", "supr-con"
-]
+
 # A common typo is to exclude the hyphen in the category.
-categories += [cat.replace('-', '') for cat in categories]
+categories = CATEGORIES + [cat.replace('-', '') for cat in CATEGORIES]
 
 RE_SEPS = r'.{1,5}'
 RE_CATEGORIES = r'(?:{})(?:[.][A-Z]{{2}})?'.format(r'|'.join(categories))
 RE_DATE = r'[0-9]{2}(?:0[1-9]|1[0-2])'
-RE_VERSION = r'(?:[vV]\d+)?'
+RE_VERSION = r'(?:[vV][1-9]\d*)?'
 
 # =============================================================================
 RE_NUM_NEW = RE_DATE + r'[.]\d{4,5}' + RE_VERSION

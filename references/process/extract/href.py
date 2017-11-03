@@ -6,12 +6,9 @@ extracts links from PDFs.
 """
 
 import pdfx
-import logging
+from references import logging
 
-log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-logging.basicConfig(format=log_format)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 def _transform(metadatum: pdfx.backends.Reference) -> dict:

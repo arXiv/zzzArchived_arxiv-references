@@ -1,5 +1,4 @@
-from flask import g, Flask
-from flask import current_app as flask_app
+"""Helpers for service integrations."""
 
 import os
 import subprocess
@@ -7,7 +6,8 @@ import shlex
 import shutil
 import tempfile
 from contextlib import contextmanager
-from references.types import List
+
+from typing import List
 from references import logging
 
 logger = logging.getLogger(__name__)
@@ -17,11 +17,13 @@ PortList = List[List[int]]
 
 
 def run_docker(image: str, volumes: VolumeList = [], ports: PortList = [],
-               args: str = '', daemon: bool = False) -> (str, str):
+               args: str='', daemon: bool=False) -> (str, str):
     """
-    Run a generic docker image. In our uses, we wish to set the userid to that
-    of running process (getuid) by default. Additionally, we do not expose
-    any ports for running services making this a rather simple function.
+    Run a docker image in a subprocess.
+
+    In our uses, we wish to set the userid to that of running process (getuid)
+    by default. Additionally, we do not expose any ports for running services
+    making this a rather simple function.
 
     Parameters
     ----------
@@ -56,22 +58,18 @@ def run_docker(image: str, volumes: VolumeList = [], ports: PortList = [],
         cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
     if result.returncode:
-        logger.error(
-            "Docker image call '{}' returned error {}".format(
-                ' '.join(cmd), result.returncode
-            )
-        )
-        logger.error(
-            "STDOUT: {}\nSTDERR: {}".format(result.stdout, result.stderr)
-        )
+        logger.error("Docker image call '%s' returned error %s",
+                     ' '.join(cmd), result.returncode)
+        logger.error("STDOUT: %s\nSTDERR: %s", result.stdout, result.stderr)
         result.check_returncode()
-
     return result
 
 
 @contextmanager
-def tempdir(cleanup: bool = True) -> str:
+def tempdir(cleanup: bool=True) -> str:
     """
+    Generate a temporary directory.
+
     A near copy of tempfile.TemporaryDirectory but does not clean up
     automatically after calling. Useful for debugging purposes for troublesome
     pdfs in the workflow.
@@ -94,43 +92,3 @@ def tempdir(cleanup: bool = True) -> str:
     finally:
         if cleanup:
             shutil.rmtree(directory)
-
-
-def get_application_config(app: Flask = None) -> dict:
-    """
-    Get a configuration from the current app, or fall back to env.
-
-    Parameters
-    ----------
-    app : :class:`flask.Flask`
-
-    Returns
-    -------
-    dict-like
-        This is either the current Flask application configuration, or
-        ``os.environ``. Either of these should support the ``get()`` method.
-    """
-    if app is not None:
-        if isinstance(app, Flask):
-            logger.debug('Passed app is Flask application')
-            return app.config
-    if flask_app:    # Proxy object; falsey if there is no application context.
-        logger.debug('In Flask application context')
-        return flask_app.config
-    logger.debug('No application context, falling back to os.environ')
-    return os.environ
-
-
-def get_application_global() -> object:
-    """
-    Get the current application global proxy object.
-
-    Returns
-    -------
-    proxy or None
-    """
-    if g:
-        logger.debug('Got application global')
-        return g
-    logger.debug('No application global')
-    return

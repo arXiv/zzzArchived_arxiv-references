@@ -1,9 +1,9 @@
 """
 This module is responsible for merging extracted reference metadata.
 
-The :mod:`references.process.extract` module provides several reference extraction
-mechanisms, each of which provides variable levels of completeness and
-quality.
+The :mod:`references.process.extract` module provides several reference
+extraction mechanisms, each of which provides variable levels of completeness
+and quality.
 
 
 
@@ -11,15 +11,18 @@ quality.
    :members:
 
 """
+from typing import Tuple
 
 from references import logging
-from references.process.merge import align, arbitrate, priors, beliefs, normalize
+from references.process.merge import align, arbitrate, priors, beliefs
+from references.process.merge.priors import EXTRACTORS
+from references.process.merge import normalize
 
 logger = logging.getLogger(__name__)
 
 
 def merge_records(records: dict,
-                  extractor_priors: list=priors.EXTRACTORS) -> list:
+                  extractor_priors: list=EXTRACTORS) -> Tuple[list, float]:
     """
     Merge extracted references into a single authoritative set of references.
 

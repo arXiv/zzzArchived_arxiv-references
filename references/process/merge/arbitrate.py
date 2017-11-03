@@ -1,14 +1,16 @@
 """Generate authoritative reference metadata using validity probabilities."""
 
-from references.process.util import argmax
-from statistics import mean
 from collections import Counter, defaultdict
-from references import logging
-from references.process.merge.align import align_records
+from statistics import mean
 from itertools import repeat
 import re
+from typing import Tuple
+
 import editdistance    # For string similarity.
 
+from references.process.util import argmax
+from references import logging
+from references.process.merge.align import align_records
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +41,7 @@ def _validate(extractors: list, priors: dict, metadata: dict,
         missing = set(extractors) - set(priors.keys())
         assert len(missing) == 0
     except AssertionError as e:
-        logger.error('Missing priors for %s' % '; '.join(list(missing)))
+        logger.error('Missing priors for %s',  '; '.join(list(missing)))
         raise ValueError('Priors missing for one or more extractors') from e
     try:
         assert len(metadata) == len(valid)
@@ -166,7 +168,7 @@ def _pool(metadata: dict, fields: list, prob_valid: object,
             for field, scores in pooled.items()}
 
 
-def _select(pooled: dict) -> tuple:
+def _select(pooled: dict) -> Tuple[dict, float]:
     """Select the most likely values given their pooled weights."""
     result = {}
     max_probs = []
@@ -196,7 +198,7 @@ def _score(result: dict) -> float:
 
 
 def arbitrate(metadata: list, valid: list, priors: list,
-              similarity_threshold: float=0.9) -> dict:
+              similarity_threshold: float=0.9) -> Tuple[dict, float]:
     """
     Apply arbitration logic to raw extraction metadata for a single reference.
 
@@ -218,6 +220,8 @@ def arbitrate(metadata: list, valid: list, priors: list,
     -------
     dict
         Authoritative metadata record for a single extracted reference.
+    float
+        Reference quality score.
     """
     # Kind of hoakie to coerce to dict, but it does make some things easier.
     metadata = dict(metadata)
@@ -243,7 +247,6 @@ def arbitrate(metadata: list, valid: list, priors: list,
 
     pooled = _pool(metadata, fields, _prob_valid,
                    similarity_threshold=similarity_threshold)
-
     # Here we select the value with the highest P for each field.
     return _select(pooled)
 

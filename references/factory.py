@@ -1,13 +1,16 @@
 """Application factory for references service components."""
 
+import logging
+
 from flask import Flask
 from celery import Celery
 from references import celeryconfig
+
 from references.services import credentials, data_store, cermine, grobid
 from references.services import refextract, retrieve
 
 from references import routes
-import logging
+
 
 
 celery_app = Celery(__name__, results=celeryconfig.result_backend,
@@ -26,6 +29,8 @@ def create_web_app() -> Flask:
     app = Flask('references', static_folder='static',
                 template_folder='templates')
     app.config.from_pyfile('config.py')
+    from references.converter import ArXivConverter
+    app.url_map.converters['arxiv'] = ArXivConverter
 
     if app.config.get('INSTANCE_CREDENTIALS') == 'true':
         credentials.init_app(app)

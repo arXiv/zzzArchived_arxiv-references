@@ -1,12 +1,15 @@
 """Metric reporting for extractions."""
 
-import boto3
 import os
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
+
+import boto3
 from flask import _app_ctx_stack as stack
-from references.types import Callable
-from functools import wraps
-from .util import get_application_config, get_application_global
+
+from typing import Callable
+from references.context import get_application_config, get_application_global
+from references import logging
+
+logger = logging.getLogger(__name__)
 
 
 class MetricsSession(object):
@@ -53,27 +56,6 @@ class MetricsSession(object):
         self.cloudwatch.put_metric_data(Namespace=self.namespace,
                                         MetricData=[metric_data])
 
-    def reporter(self, func) -> Callable:
-        """Generate a decorator to handle metrics reporting."""
-        @wraps(func)
-        def metrics_wrapper(*args, **kwargs):
-            """Report metrics data returned by ``func``."""
-            result = func(*args, **kwargs)
-            if type(result) is tuple and len(result) > 1 \
-                    and hasattr(result[-1], '__iter__'):
-                metrics = result[-1]
-                remainder = result[:-1]
-                for item in metrics:
-                    if 'metric' not in item:
-                        continue
-                    self.report(item['metric'], item['value'],
-                                item.get('units'), item.get('dimensions'))
-                if type(remainder) in [list, tuple] and len(remainder) == 1:
-                    return remainder[0]
-                return remainder
-            return result
-        return metrics_wrapper
-
 
 def init_app(app: object = None) -> None:
     """Set default configuration parameters for an application instance."""
@@ -94,7 +76,7 @@ def get_session(app: object = None) -> MetricsSession:
         try:
             access_key, secret_key, token = g.credentials.get_credentials()
         except IOError as e:
-            pass
+            logger.debug('failed to load instance credentials: %s', str(e))
     if access_key is None or secret_key is None:
         access_key = config.get('AWS_ACCESS_KEY_ID', None)
         secret_key = config.get('AWS_SECRET_ACCESS_KEY', None)
@@ -113,6 +95,9 @@ def current_session():
         return get_session()
     if 'metrics' not in g:
         g.metrics = get_session()
+    if 'credentials' in g and g.credentials.expired:
+        g.metrics.aws_access_key, g.metrics.aws_secret_key, g.metrics.aws_session_token  = g.credentials.get_credentials()
+
     return g.metrics
 
 

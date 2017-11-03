@@ -1,11 +1,12 @@
 """Service layer integration for CERMINE."""
 
 import os
-import requests
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
-from flask import _app_ctx_stack as stack
 from urllib.parse import urljoin
-from .util import get_application_config, get_application_global
+
+import requests
+from flask import _app_ctx_stack as stack
+
+from references.context import get_application_config, get_application_global
 
 
 class ExtractionError(Exception):
@@ -31,7 +32,7 @@ class CermineSession(object):
             raise IOError('CERMINE endpoint not available: %s' %
                           response.content)
 
-    def extract_references(self, filename: str, cleanup: bool=False):
+    def extract_references(self, filename: str):
         """
         Extract references from the PDF represented by ``filehandle``.
 
@@ -78,7 +79,7 @@ def current_session():
     return g.cermine
 
 
-def extract_references(filename: str, cleanup: bool=False) -> dict:
+def extract_references(filename: str) -> bytes:
     """
     Extract references from the PDF at ``filename``.
 

@@ -1,21 +1,23 @@
-from references import logging
-from .extractions import ExtractionSession
-from .util import clean
+"""Storage for extracted reference metadata."""
+
+import datetime
+import json
+from base64 import b64encode
+from decimal import Decimal
+import os
+
+import jsonschema
 import boto3
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
-# from botocore.errorfactory import ResourceInUseException
-import datetime
-import json
-import jsonschema
-import os
-
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
-from base64 import b64encode
-from decimal import Decimal
 from unidecode import unidecode
 
-from references.types import List
+from references import logging
+from typing import List
+
+from .extractions import ExtractionSession
+from .util import clean
+
 ReferenceData = List[dict]
 
 logger = logging.getLogger(__name__)
@@ -109,8 +111,7 @@ class ReferenceSession(object):
             waiter = table.meta.client.get_waiter('table_exists')
             waiter.wait(TableName=self.table_name)
         except ClientError:
-            logger.debug('Table exists: %s' % self.table_name)
-            pass
+            logger.debug('Table exists: %s', self.table_name)
 
         self.extractions.create_table()
 
@@ -143,7 +144,7 @@ class ReferenceSession(object):
         try:
             jsonschema.validate(reference, self.extracted_schema)
         except jsonschema.ValidationError as e:
-            logger.error("Invalid data: %s" % e)
+            logger.error("Invalid data: %s", e)
             if raise_on_invalid:
                 raise ValueError('%s' % e) from e
             return False
@@ -178,13 +179,14 @@ class ReferenceSession(object):
         try:
             jsonschema.validate(reference, self.stored_schema)
         except jsonschema.ValidationError as e:
-            logger.error("Invalid data: %s" % e)
+            logger.error("Invalid data: %s", e)
             if raise_on_invalid:
                 raise ValueError('%s' % e) from e
             return False
         return True
 
-    def hash(self, document_id: str, raw: str, version: str):
+    @staticmethod
+    def hash(document_id: str, raw: str, version: str):
         """
         Generate a unique hash for an extracted reference.
 
@@ -284,7 +286,7 @@ class ReferenceSession(object):
         -------
         dict
         """
-        logger.debug('%s: Retrieve reference %s' % (document_id, identifier))
+        logger.debug('%s: Retrieve reference %s', document_id, identifier)
         expression = Key('document').eq(document_id) \
             & Key('identifier').eq(identifier)
 
@@ -294,9 +296,9 @@ class ReferenceSession(object):
             Limit=1
         )
         if len(response['Items']) == 0:
-            logger.debug('%s: not found %s' % (document_id, identifier))
+            logger.debug('%s: not found %s', document_id, identifier)
             return None
-        logger.debug('%s: found %s' % (document_id, identifier))
+        logger.debug('%s: found %s', document_id, identifier)
         return response['Items'][0]
 
     def retrieve_latest(self, document_id: str,
@@ -315,7 +317,7 @@ class ReferenceSession(object):
         -------
         list or None
         """
-        logger.debug('%s: Retrieve latest references' % document_id)
+        logger.debug('%s: Retrieve latest references', document_id)
         latest = self.extractions.latest(document_id)
         if latest is None:
             return None    # No extractions for this document.
@@ -348,7 +350,7 @@ class ReferenceSession(object):
             Raised when we are unable to read from the DynamoDB database, or
             when the database returns a malformed response.
         """
-        logger.debug('%s: Retrieve extraction %s' % (document_id, extraction))
+        logger.debug('%s: Retrieve extraction %s', document_id, extraction)
         document_extraction = '%s#%s' % (document_id, extraction)
         expression = Key('document_extraction').eq(document_extraction)
         try:
@@ -361,11 +363,11 @@ class ReferenceSession(object):
             raise IOError('Failed to read: %s' % e) from e
 
         if 'Items' not in response or len(response['Items']) == 0:
-            logger.debug('%s: not found %s' % (document_id, extraction))
+            logger.debug('%s: not found %s', document_id, extraction)
             return None    # No such record.
 
         references = response['Items']
-        logger.debug('%s: found %s' % (document_id, extraction))
+        logger.debug('%s: found %s', document_id, extraction)
         if reftype != '__all__':
             return [ref for ref in references if ref['reftype'] == reftype]
         return references

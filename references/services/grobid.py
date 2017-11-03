@@ -1,10 +1,12 @@
 """Service layer integration for GROBID."""
 
-import requests
 import os
-from references.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
 from urllib.parse import urljoin
-from .util import get_application_config, get_application_global
+
+import requests
+
+from references.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
+from references.context import get_application_config, get_application_global
 
 
 class GrobidSession(object):
@@ -38,7 +40,7 @@ class GrobidSession(object):
             raise IOError('Failed to connect to Grobid at %s: %s' %
                           (self.endpoint, head.content))
 
-    def extract_references(self, filename: str) -> dict:
+    def extract_references(self, filename: str) -> bytes:
         """
         Extract references from the PDF represented by ``filehandle``.
 
@@ -93,7 +95,7 @@ def current_session():
     return g.grobid
 
 
-def extract_references(filename: str) -> dict:
+def extract_references(filename: str) -> bytes:
     """
     Extract references from the PDF at ``filename``.
 

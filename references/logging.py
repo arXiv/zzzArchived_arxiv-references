@@ -1,10 +1,14 @@
-import os
+"""Provides a logger factory that applies app-wide logging configuration."""
+
 import logging
 import sys
 
+from references.context import get_application_config
+
+CONFIG = get_application_config()
 default_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
-default_level = int(os.environ.get('LOGLEVEL', logging.INFO))
-LOGFILE = os.environ.get('LOGFILE', None)
+default_level = int(CONFIG.get('LOGLEVEL', logging.INFO))
+LOGFILE = CONFIG.get('LOGFILE', None)
 
 
 def getLogger(name: str, fmt: str=default_format,
