@@ -38,6 +38,7 @@ ENV SECRETS_BUCKET_NAME ""
 ENV ARXIV_HOME "https://arxiv.org"
 ENV REFEXTRACT_ENDPOINT ""
 ENV INSTANCE_CREDENTIALS "true"
+ENV CREDENTIALS_URL "http://169.254.169.254/latest/meta-data/iam/security-credentials"
 
 EXPOSE 8000
 
