@@ -66,7 +66,7 @@ class ExtractionSession(object):
         return entry
 
     @staticmethod
-    def hash(document_id: str, version: float, created: str) -> str:
+    def hash(document_id: str, version: str, created: str) -> str:
         """
         Generate a unique ID for the extraction entry.
 

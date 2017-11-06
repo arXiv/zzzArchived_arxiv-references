@@ -13,7 +13,7 @@ from botocore.exceptions import ClientError
 from unidecode import unidecode
 
 from references import logging
-from typing import List
+from typing import List, Tuple
 
 from .extractions import ExtractionSession
 from .util import clean
@@ -207,7 +207,8 @@ class ReferenceSession(object):
         return str(b64encode(hash_string), encoding='utf-8')[:100]
 
     def create(self, document_id: str, references: ReferenceData,
-               version: str, score: float=1.0, extractors: list=[]) -> None:
+               version: str, score: float=1.0,
+               extractors: list=[]) -> Tuple[str, list]:
         """
         Insert a new reference data set into the data store.
 
@@ -327,7 +328,7 @@ class ReferenceSession(object):
         return latest
 
     def retrieve_all(self, document_id: str, extraction: str = None,
-                     reftype: str='__all__') -> dict:
+                     reftype: str='__all__') -> list:
         """
         Retrieve reference metadata for an arXiv document.
 
@@ -342,7 +343,7 @@ class ReferenceSession(object):
 
         Returns
         -------
-        list or None
+        list
 
         Raises
         ------

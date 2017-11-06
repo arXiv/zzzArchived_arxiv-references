@@ -7,7 +7,6 @@ import shutil
 import tempfile
 import subprocess
 import datetime
-from contextlib import contextmanager
 from typing import List
 
 from references import logging
@@ -25,61 +24,6 @@ CATEGORIES = [
     "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int",
     "supr-con", "eess", "econ"
 ]
-
-
-@contextmanager
-def indir(directory: str) -> None:
-    """
-    Context manager for performing actions within a given directory.
-
-    Guaranteed to return to previous directory upon exit.
-
-    Parameters
-    ----------
-    directory: str
-
-    Returns
-    -------
-    None
-    """
-    cwd = os.getcwd()
-    try:
-        os.chdir(directory)
-        yield
-        os.chdir(cwd)
-    except Exception as e:
-        raise e
-    finally:
-        os.chdir(cwd)
-
-
-@contextmanager
-def tempdir(cleanup: bool = True) -> str:
-    """
-    Generate a temporary directory.
-
-    A near copy of tempfile.TemporaryDirectory but does not clean up
-    automatically after calling. Useful for debugging purposes for troublesome
-    pdfs in the workflow.
-
-    Parameters
-    ----------
-    cleanup: bool
-        Whether to delete the directory after use
-
-    Returns
-    -------
-    directory: str
-        Temporary directory name
-    """
-    directory = tempfile.mkdtemp()
-    try:
-        yield directory
-    except Exception as e:
-        raise e
-    finally:
-        if cleanup:
-            shutil.rmtree(directory)
 
 
 def files_modified_since(fldr: str, timestamp: datetime.datetime,
@@ -177,6 +121,7 @@ def rotating_backup_name(filename: str) -> str:
         if os.path.exists(n):
             continue
         return n
+    return None
 
 
 def backup(filename: str):

@@ -12,7 +12,7 @@ LOGFILE = CONFIG.get('LOGFILE', None)
 
 
 def getLogger(name: str, fmt: str=default_format,
-              level: str=default_level) -> logging.Logger:
+              level: int=default_level) -> logging.Logger:
     """
     Wrapper for :func:`logging.getLogger` that applies configuration.
 

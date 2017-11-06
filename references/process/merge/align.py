@@ -3,7 +3,7 @@
 import copy
 import statistics
 from itertools import islice, chain
-from typing import List, Dict
+from typing import List, Dict, Tuple, Any
 
 from references.process.textutil import clean_text
 
@@ -138,7 +138,7 @@ def similarity_cutoff(records: dict) -> float:
     return _cutoff(flatten(copy.deepcopy(jac)))
 
 
-def align_records(records: Dict[str, List[dict]]) -> List[List[tuple]]:
+def align_records(records: Dict[str, List[dict]]) -> List[List[Tuple[str, dict]]]:
     """
     Align records across extractor outputs.
 
@@ -187,7 +187,7 @@ def align_records(records: Dict[str, List[dict]]) -> List[List[tuple]]:
                   key=lambda extraction: -len(extraction[1]))]
     output = [[(extractors[0], rec)] for rec in records[extractors[0]]]
     for ikey, extractor in islice(enumerate(extractors), 1, len(records)):
-        used = []
+        used: List[int] = []
 
         record = records[extractor]
         for iref, ref in enumerate(record):
@@ -212,6 +212,7 @@ def align_records(records: Dict[str, List[dict]]) -> List[List[tuple]]:
             entry = [(extractor, ref)]
             if scores:
                 score, index = scores[0]
+                # used.append(index) 
                 if extractor not in list(zip(*output[index]))[0]:
                     output[index] = output[index] + entry
                 else:

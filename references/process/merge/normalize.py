@@ -3,7 +3,7 @@
 from statistics import mean, median
 from decimal import Decimal
 import re
-from typing import Tuple
+from typing import Tuple, Union, List, Callable
 
 from references.process.util import CATEGORIES
 from references import logging
@@ -32,7 +32,7 @@ def _remove_leading_trailing_nonalpha(string: str) -> str:
     return re.sub(r"[^0-9a-zA-Z]+$", "", re.sub(r"^[^0-9a-zA-Z]+", "", string))
 
 
-def _fix_arxiv_id(value: object) -> object:
+def _fix_arxiv_id(value: Union[list, str]) -> Union[list, str]:
     """Fix common mistakes in arXiv identifiers."""
     if isinstance(value, list):
         return [_fix_arxiv_id(obj) for obj in value]
@@ -43,7 +43,7 @@ def _fix_arxiv_id(value: object) -> object:
     return value
 
 
-NORMALIZERS = [
+NORMALIZERS: List[Tuple[str, Callable]] = [
     ('authors', _remove_dots_from_author_names),
     ('title', _remove_leading_trailing_nonalpha),
     ('source', lambda string: _remove_dots(string).title()),

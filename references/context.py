@@ -1,13 +1,13 @@
 """Helpers for working with Flask globals."""
 
 import os
-
+from typing import Union
 from flask import g, Flask
 from flask import current_app as flask_app
 import werkzeug
 
 
-def get_application_config(app: Flask=None) -> dict:
+def get_application_config(app: Flask=None) -> Union[dict, os._Environ]:
     """
     Get a configuration from the current app, or fall back to env.
 
@@ -39,4 +39,4 @@ def get_application_global() -> werkzeug.local.LocalProxy:
     """
     if g:
         return g
-    return
+    return None

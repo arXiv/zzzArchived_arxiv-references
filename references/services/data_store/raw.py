@@ -148,6 +148,6 @@ class RawExtractionSession(object):
                           (self.table_name, e)) from e
         if len(response['Items']) == 0:
             logger.debug('%s: no extraction from %s', document_id, extractor)
-            return
+            return None
         logger.debug('%s: got extraction from %s', document_id, extractor)
         return response['Items'][0]

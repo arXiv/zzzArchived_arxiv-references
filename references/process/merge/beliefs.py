@@ -307,7 +307,7 @@ def identity_belief(reference: dict) -> dict:
     return {key: unity(value) for key, value in reference.keys()}
 
 
-def validate(aligned_references: list) -> List[List[Tuple[str, float]]]:
+def validate(aligned_references: list) -> List[List[Tuple[str, dict]]]:
     """
     Apply expectations about field values to generate probabilities.
 

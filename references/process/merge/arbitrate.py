@@ -4,7 +4,7 @@ from collections import Counter, defaultdict
 from statistics import mean
 from itertools import repeat
 import re
-from typing import Tuple
+from typing import Tuple, Any, Union, Callable
 
 import editdistance    # For string similarity.
 
@@ -52,7 +52,45 @@ def _validate(extractors: list, priors: dict, metadata: dict,
         raise ValueError(msg) from e
 
 
-def _similarity(value_a: object, value_b: object) -> float:
+def _similarity_int_float(value_a: Union[float, int],
+                          value_b: Union[float, int]) -> float:
+    """Relative similarity of two numeric values."""
+    diff = float(value_a) - float(value_b)
+    if mean([value_a, value_b]) == 0:
+        return 0.
+    return 1. - max(diff, -1. * diff)/mean([value_a, value_b])
+
+
+def _similarity_str(value_a: str, value_b: str) -> float:
+    """Relative similarity of two strings, based on edit distance."""
+    N_max = max(len(value_a), len(value_b))
+    if N_max == 0:
+        return 0.
+    return (N_max - editdistance.eval(value_a, value_b))/N_max
+
+
+def _similarity_dict(value_a: dict, value_b: dict) -> float:
+    """Similarity of two dictionaries, based on shared keys and values."""
+    fields = set(value_a.keys()) | set(value_b.keys())
+    scores = [_similarity(value_a.get(field, None),
+                          value_b.get(field, None)) for field in fields]
+    return mean(scores)
+
+
+def _similarity_list(value_a: list, value_b: list) -> float:
+    """Similarity of two lists, based on values (without regard to order)."""
+    aligned = align_records({'a': value_a, 'b': value_b})
+    scores = []
+    for item in aligned:
+        if len(item) != 2:
+            scores.append(0.)
+            continue
+        _item: dict = {k: v for k, v in item}
+        scores.append(_similarity(_item['a'], _item['b']))
+    return mean(scores)
+
+
+def _similarity(value_a: Any, value_b: Any) -> float:
     """
     Calculate the similarity of two field values.
 
@@ -68,43 +106,26 @@ def _similarity(value_a: object, value_b: object) -> float:
     """
     # Since we need a value in 0-1., diff for numbers is 1. - % diff.
     if type(value_a) in [int, float] and type(value_b) in [int, float]:
-        diff = value_a - value_b
-        if mean([value_a, value_b]) == 0:
-            return 0.
-        return 1. - max(diff, -1. * diff)/mean([value_a, value_b])
+        return _similarity_int_float(value_a, value_b)
     elif type(value_a) is str and type(value_b) is str:
-        N_max = max(len(value_a), len(value_b))
-        if N_max == 0:
-            return 0.
-        return (N_max - editdistance.eval(value_a, value_b))/N_max
+        return _similarity_str(value_a, value_b)
     elif type(value_a) is dict and type(value_b) is dict:
-        fields = set(value_a.keys()) | set(value_b.keys())
-        scores = [_similarity(value_a.get(field, None),
-                              value_b.get(field, None)) for field in fields]
-        return mean(scores)
+        return _similarity_dict(value_a, value_b)
     elif type(value_a) is list and type(value_b) is list:
-        aligned = align_records({'a': value_a, 'b': value_b})
-        scores = []
-        for item in aligned:
-            if len(item) != 2:
-                scores.append(0.)
-                continue
-            item = dict(item)
-            scores.append(_similarity(item['a'], item['b']))
-        return mean(scores)
+        return _similarity_list(value_a, value_b)
     if type(value_a) != type(value_b):
         logger.debug('Comparing objects with different types')
     return 0.
 
 
-def _prep_value(value: object) -> object:
+def _prep_value(value: object) -> Any:
     """Ensure that ``value`` is hashable."""
     if value.__hash__ is None:
         return str(value)
     return value
 
 
-def _cast_value(field: str, value: object) -> object:
+def _cast_value(field: str, value: Union[str, int]) -> Any:
     """Retrieve the original value type."""
     if field == 'year':
         try:
@@ -135,12 +156,12 @@ def _fix_authors(authors: list) -> list:
     return fixed
 
 
-def _pool(metadata: dict, fields: list, prob_valid: object,
+def _pool(metadata: dict, fields: list, prob_valid: Callable,
           similarity_threshold: float=0.9) -> dict:
     """Pool similar values for a field across extractions."""
     # Similar values (above a threshold) for fields are grouped together, and
     #  their P(value|extractor, field) are combined (summed, then normalized).
-    pooled = defaultdict(Counter)
+    pooled: defaultdict = defaultdict(Counter)
     for extractor, metadatum in metadata.items():
         for field in fields:
             value = _prep_value(metadatum.get(field, None))
@@ -224,28 +245,28 @@ def arbitrate(metadata: list, valid: list, priors: list,
         Reference quality score.
     """
     # Kind of hoakie to coerce to dict, but it does make some things easier.
-    metadata = dict(metadata)
-    valid = dict(valid)
-    priors = dict(priors)
-    extractors = list(metadata.keys())
+    _metadata = dict(metadata)
+    _valid = dict(valid)
+    _priors = dict(priors)
+    _extractors = list(_metadata.keys())
 
-    _validate(extractors, priors, metadata, valid)
+    _validate(_extractors, _priors, _metadata, _valid)
 
     # We want to know all of the unique field names present across the aligned
     #  extractions.
     fields = list({
-        field for metadatum in metadata.values() for field in metadatum.keys()
+        field for metadatum in _metadata.values() for field in metadatum.keys()
     })
 
     # Pulling this out for readability.
     def _prob_valid(extractor: str, field: str) -> float:
         """The probability that the value for ``field`` is correct."""
-        p_val = valid[extractor].get(field, 0.)
-        p_extr = priors[extractor].get('__all__', 0.)
-        p_extr_field = priors[extractor].get(field, p_extr)
+        p_val = _valid[extractor].get(field, 0.)
+        p_extr = _priors[extractor].get('__all__', 0.)
+        p_extr_field = _priors[extractor].get(field, p_extr)
         return p_val * p_extr_field
 
-    pooled = _pool(metadata, fields, _prob_valid,
+    pooled = _pool(_metadata, fields, _prob_valid,
                    similarity_threshold=similarity_threshold)
     # Here we select the value with the highest P for each field.
     return _select(pooled)
