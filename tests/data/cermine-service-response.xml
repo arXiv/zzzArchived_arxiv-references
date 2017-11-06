@@ -1,0 +1,572 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>PUZ] F. Przytycki, M. Urban´ski, A. Zdunik, Harmonic, Gibbs and Hausdorff measures for holomorphic
+maps. Part</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <pub-date>
+        <year>1992</year>
+      </pub-date>
+      <volume>3</volume>
+      <issue>1991</issue>
+      <abstract>
+        <p>We prove that if A is the basin of immediate attraction to a periodic attracting or parabolic point for a rational map f on the Riemann sphere, if A is completely invariant (i.e. f −1(A) = A), and if µ is an arbitrary f -invariant measure with positive Lyapunov exponents on ∂A, then µ -almost every point q ∈ ∂A is accessible along a curve from A. In fact we prove the accessability of every ”good” q i.e. such q for which ”small neighbourhoods arrive at large scale” under iteration of f . This generalizes Douady-Eremenko-Levin-Petersen theorem on the accessability of periodic sources. We prove a general ”tree” version of this theorem. This allows to deduce that on the limit set of a geometric coding tree (in particular on the whole Julia set), if diameters of the edges converge to 0 uniformly with the number of generation converging to ∞, every f -invariant probability ergodic measure with positive Lyapunov exponent is the image through coding with the help of the tree, of an invariant measure on the full one-sided shift space. The assumption that f is holomorphic on A, or on the domain U of the tree, can be relaxed and one does not need to assume f extends beyond A or U . Finally we prove that in the case f is polynomial-like on a neighbourhood of CI \ A every ”good” q ∈ ∂A is accessible along an external ray.</p>
+      </abstract>
+      <kwd-group>
+        <kwd>lim diam(Bn</kwd>
+        <kwd>0) → 0 n→∞</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>In the definition of good q we assume also that lim taken over good n’s. Finally in the definition of good q we assume about each good n that We shall prove the following</title>
+      <p>Theorem A generalizes Douady-Eremenko-Levin-Petersen theorem on the accessability of periodic sources.
+Remark that in the case of periodic sources one obtains curves along which periodic q is accessible, of finite
+lengths, see Section 1. Condition (0.1) holds in the case q is a periodic source for all n’s. Condition (0.3) is
+true if A is the basin of attraction to ∞ for f a polynomial, and more generally if A is completely invariant,
+i.e f −1(A) = A.</p>
+      <p>Condition (0.3) in the case of a source is equivalent to Petersen’s condition [Pe].</p>
+      <p>Under the assumption of the complete invariance of A µ -almost every point for µ an invariant probability
+measure with positive Lyapunov exponents is good hence accessible, cf. Corollary 0.2.</p>
+      <p>In fact we shall introduce in Section 2 a weaker definition of good q and prove Theorem A with that
+weaker definition. In that weaker definition parabolic periodic points in ∂A are good. The traces of telescopes
+built there can sit in an arbitrary interpetal, so one obtains the accessability in each interpetal. One obtains
+in particular Theorem 18.9 in [Mi1].</p>
+      <p>Remark that the above conditions of being good are already quite weak. In particular we do not exclude
+critical points in Bn,l.</p>
+      <p>For example every point in ∂A is good if A is the basin of attraction to ∞ for a polynomial z 7→ z2 + c
+which is non-renormalizable, c outside the ”cardioid”. This is Yoccoz-Branner-Hubbard theory, see [Mi2].
+(In this case however theorem A is worthless because one proves directly the local connectedness of ∂A.)</p>
+      <p>Remark that complete invariance of A, a basin of attraction to a sink, does not imply that f on a
+neighbourhood of CI \ A is polynomial-like. (Polynomial-like maps were first defined and studied in [DH].) In
+[P4] an example of degree 3, of the form z → z2 + c + z−b a , with a completely invariant basin of attraction
+to ∞, not simply-connected, with only 2 critical points in the basin, is described.</p>
+      <p>We prove in the paper a theorem more general than Theorem A, namely a theorem on the accessability
+along branches of a geometric coding tree. We recall now basic definitions from [P1, P2, PUZ, PS].</p>
+      <p>Let U be an open connected subset of the Riemann sphere CI . Consider any holomorphic mapping
+f : U → CI such that f (U ) ⊃ U and f : U → f (U ) is a proper map. Denote Crit(f ) = {z : f ′(z) = 0}.
+This is called the set of critical points for f . Suppose that Crit(f ) is finite. Consider any z ∈ f (U ). Let
+z1, z2, ..., zd be all the f -preimages of z in U where d = degf ≥ 2. (Pay attention that we consider here,
+unlike in the other papers, only the full tree i.e. not only some preimages but all preimages of z in U .)
+Consider smooth curves γj : [0, 1] → f (U ), j = 1, ..., d, joining z with zj respectively (i.e. γj(0) =
+d
+z, γj(1) = zj), such that there are no critical values for iterations of f in Sj=1 γj, i.e. γj ∩ f n(Crit(f )) = ∅
+for every j and n &gt; 0. We allow self-intersections of each γj.</p>
+      <p>Let Σd := {1, ..., d}ZZ+ denote the one-sided shift space and σ the shift to the left, i.e. σ((αn)) = (αn+1).
+We consider the standard metric on Σd</p>
+      <p>ρ((αn), (βn)) = exp −k((αn), (βn))
+where k((αn), (βn)) is the least integer for which αk 6= βk.</p>
+      <p>For every sequence α = (αn)n∞=0 ∈ Σd we define γ0(α) := γα0 . Suppose that for some n ≥ 0, for every
+0 ≤ m ≤ n, and all α ∈ Σd, the curves γm(α) are already defined. Suppose that for 1 ≤ m ≤ n we have
+f ◦ γm(α) = γm−1(σ(α)), and γm(α)(0) = γm−1(α)(1).</p>
+      <p>Define the curves γn+1(α) so that the previous equalities hold by taking respective f -preimages of curves
+γn. For every α ∈ Σd and n ≥ 0 denote zn(α) := γn(α)(1).</p>
+      <p>For every n ≥ 0 denote by Σn = Σdn the space of all sequences of elements of {1, ..., d} of length n + 1.
+Let πn denote the projection πn : Σd → Σn defined by πn(α) = (α0, ..., αn). As zn(α) and γn(α) depends
+only on (α0, ..., αn), we can consider zn and γn as functions on Σn.</p>
+      <p>The graph T = T (z, γ1, ..., γd) with the vertices z and zn(α) and edges γn(α) is called a geometric
+coding tree with the root at z. For every α ∈ Σd the subgraph composed of z, zn(α) and γn(α) for all n ≥ 0
+is called a geometric branch and denoted by b(α). The branch b(α) is called convergent if the sequence γn(α)
+is convergent to a point in clU . We define the coding map z∞ : D(z∞) → clU by z∞(α) := limn→∞ zn(α) on
+the domain D = D(z∞) of all such α’s for which b(α) is convergent.</p>
+      <p>In Sections 1-3, for any curve (maybe with self-intersections) γ : I → CI where I is a closed interval in
+IR, we call γ restricted to J a subinterval (maybe degenerated to a point) of I a part of γ. Consider γ on
+J1 ⊂ [0, 1] and γ′ on J2 ⊂ [0, 1] either both γ and γ′ being parts of one γn(α), J1 ∩ J2 = ∅, J1 between
+0 and J2 , or γ a part of γn1 (α) and γ′ a part of γn2 where n1 &lt; n2. Let Γ : [0, n2 − n1 + 1] → CI be
+the concatenation of γn1, γn1+1, ..., γn2. We call the restriction of Γ to the convex hull of J1 ⊂ [0, 1] and
+J2 ⊂ [n2 − n1, n2 − n1 + 1] (we identified here [0, 1] with [n2 − n1, n2 − n1 + 1]) a part of b(α) between γ and
+γ′ .</p>
+      <p>For every continuous map F : X → X of a compact space X denote by M (F ) the set of all probability
+F -invariant measures on X. In the case X is a compact subset of the Riemann sphere CI and F extends
+holomorphically to a neighbourhood of X and µ ∈ M (F ) we can consider for µ -a.e. x Lyapunov characteristic
+exponent</p>
+    </sec>
+    <sec id="sec-2">
+      <title>If µ is ergodic then for µ -a.e. x χ(F, x) = lim</title>
+      <p>n→∞ n
+1</p>
+      <p>log |(F n)′(x)|.
+χ(F, x) = χμ(F ) =</p>
+      <p>Z log(F ′)dµ.</p>
+      <p>In this paper where we shall discuss properties of µ -a.e. point, it is enough to consider only ergodic
+measures, because by Rochlin Decomposition Theorem every µ ∈ M (F ) can be decomposed into ergodic
+ones.</p>
+      <p>Denote</p>
+      <p>Meχ+(F ) = {µ ∈ M (F ) : µ ergodic χμ(F ) &gt; 0}</p>
+      <p>Meh+(F ) = {µ ∈ M (F ) : µ ergodic hμ(F ) &gt; 0}
+where hμ(F ) denotes measure-theoretic entropy.</p>
+      <p>From Ruelle Theorem it follows that hμ(F ) ≤ 2χμ(F ) see [R], so Meh+(F ) ⊂ Meχ+(F ).
+The basic theorem concerning convergence of geometric coding trees is the following:</p>
+      <p>Convergence Theorem. 1. Every branch except branches in a set of Hausdorff dimension 0 in
+the metric ρ on Σd, is convergent. (i.e HD(Σd \ D) = 0). In particular for every ν ∈ M h+(σ) we have
+ν(Σd \ D) = 0, so the measure (z∞)∗(ν) makes sense.</p>
+      <p>2. For every z ∈ clU , HD(z∞−1({z})) = 0. Hence for every ν ∈ M (σ) we have for the entropies:
+hνϕ (σ) = h(z∞)∗(νϕ)(f ) &gt; 0, (if we assume that there exists f a continuous extension of f to clU ).</p>
+      <p>The proof of this Theorem can be found in [P1] and [P2] under some assumptions on a slow convergence
+of f n(Crit(f ) to γj for n → ∞) and in [PS] in full generality ( even with f n(Crit(f )) ∩ γj 6= ∅ allowed).</p>
+      <p>Let Λˆ denote the set of all limit points of f −n(z), n → ∞. Analogously to the case q ∈ ∂A we say that
+q ∈ Λˆ is good if f extends holomorphically to a neighbourhood of {f n(q), n = 0, 1, ...} ( we use the same
+symbol f to denote the extension) and conditions (0.0’), (0.1’), (0.2’) and (0.3’) hold. These conditions are
+defined similarly to (0.0)-(0.3), with A replaced by U and ∂A replaced by Λˆ.</p>
+      <p>Again pay attention that we shall give a precise weaker definition of q good in Section 2. and prove
+Theorem B with that weaker definition. That definition will not demand f extending beyond U .</p>
+      <p>Theorem B. Let f be a holomorphic mapping f : U → CI and T be a geometric coding tree in U as
+above. Suppose
+diam(γn(α)) → 0 as n → ∞
+(0.4)
+uniformly with respect to α ∈ Σd.</p>
+      <p>Using a lemma belonging to Pesin Theory (see Section 2) we prove that µ -a.e.q below is good and easily
+obtain the following</p>
+      <p>Corollary 0.1. Let f be a holomorphic mapping f : U → CI and T be a geometric coding tree in U such
+that the condition (0.4) holds. If µ is a probability measure on Λˆ and the map f extends holomorphically
+from U to a neighbourhood of suppµ so that µ ∈ Meχ+(f ), then for µ -almost every q ∈ Λˆ satisfying (0.3’)
+there exists α ∈ Σd such that b(α) converges to q. In particular µ is a (z∞)∗-image of a measure m ∈ M (σ)
+on Σd.</p>
+      <p>Remark that Corollary 0.1 concerns in particular every µ with hμ(f ) &gt; 0. Assuming that f extends
+holomorphically to a neighbourhood of Λˆ and refering also to Convergence Theorem we see that (z∞)∗ maps
+Meh+(σ) onto Meh+(f |Λˆ) preserving entropy.</p>
+      <p>The question whether this correspondence is onto is stated in [P3]. Thus Corollary 0.1 answers this
+question in positive under additional assumptions (0.3’) and (0.4).</p>
+      <p>We do not know whether this correspondence is finite-to-one except measures supported by orbits of
+periodic sources for which the answer is positive, see Proposition 1.2.</p>
+      <p>Two special cases are of particular interest. The first one corresponds to Theorem A:</p>
+      <p>Corollary 0.2. Let f : CI → CI be a rational mapping and A be a completely invariant basin of attraction
+to a sink or a parabolic point. Then for every µ ∈ Meχ+(f |∂A) µ -a.e. q ∈ ∂A is accessible from A.</p>
+      <p>Corollary 0.3. Let f : CI → CI be a rational mapping, degf = d, and T = T (z, γ1, ..., γd) be a geometric
+coding tree. Assume (0.4). Let µ ∈ Meχ+(f ). Then for µ -a.e. q there exists α ∈ Σd such that b(α) converges
+to q.</p>
+      <p>In Theorem A and Corollary 0.2 in the case f is a polynomial (or a polynomial-like map) and A is
+the basin of attraction to ∞, the accessability of a point along a curve often implies automathically the
+accessability along an external ray. In the case A is simply-connected this follows from Lindelo¨f’s Theorem.
+External rays are defined as images under standard Riemann map of rays tζ, ζ ∈ ∂ID, 1 &lt; t &lt; ∞.</p>
+      <p>In the case A is not simply-connected one should first define external rays in the absence of Riemann
+map. This is done in [GM] and [LevS] in the case of f a polynomial and in [LevP] in the polynomial- like
+situation. We recall these definitions in Section 3.</p>
+      <p>We prove in Section 3 the following</p>
+      <p>Theorem C. Let W1 ⊂ W be open, connected, simply-connected domains in CI such that clW1 ⊂ W
+and f : W1 → W be a polynomial-like map. denote K = Tn≥0 f −n(W ). Then every good q ∈ ∂K is
+accessible along an external ray in W \ K.</p>
+      <p>An alternative way to prove the accessability along an external ray is to use somehow, as in the
+simplyconnected case, Lindelo¨f’s Theorem. This is performed in [LevP]. It is proved there that if q is accessible
+along a curve in W \ K and q belongs to a periodic or preperiodic component K(q) of K then it is accessible
+along an external ray.</p>
+      <p>Pay attention also that for any q ∈ ∂K if K(q) is one point then q is accessible along an external ray.
+This is easy, see [GM, Appendix] and [LevP].</p>
+      <p>Remark 0.4. (Proof of Theorem A from B and Corollary 0.2 from 0.1). We do not know
+how to get rid of the assumption (0.4) in Theorem B and Corollary 1. In Theorem A and Corollary 2 this
+condition is guaranteed automathically. More precisely to deduce Theorem A from B and Corollary 2 from 1
+we consider an arbitrary tree T = T (z, γ1, ..., γd) in A, where d = deg(f |A), so that γj ∩Sn&gt;0 f n(Crit(f )) = ∅
+and p ∈/ Sj=1,...,d γj. Only critical points in A account here. Forward orbits of these critical points converge
+to p hence the following condition holds:</p>
+      <p>Hence we can take open discs U j ⊃ γj such that
+j=1,...,d
+[ γj ∩ cl [ f n(Crit(f )) = ∅</p>
+      <p>n&gt;0
+[
+j=1,...,d</p>
+      <p>U j ∩ cl [ f n(Crit(f )) = ∅</p>
+      <p>n&gt;0
+and consider univalent branches Fn(α) of f −n mapping respective γj to γn(α). {Fn(α)}α,n is a normal
+family of maps. If it had a non-constant limit function G then we would find an open domain V such that
+Fnt (V ) ⊂ U as nt → ∞. If we assumed p ∈/ U j we arrive at a contradiction. This proves (0.4). Finally by
+the complete invariance of A we have Λˆ = ∂A.</p>
+      <p>In Corollary 0.3 to find T such that (0.4) holds it is enough to assume that the forward limit set of
+f n(Crit(f )) does not dissect CI , because then we find T so that (0.5) holds.</p>
+      <p>We believe however that in Proof of Corollary 3 we can omit (0.4), or maybe often find a tree such that
+(0.3) holds.</p>
+      <p>Remark 0.5. Observe that there are examples where (0.4) does not hold. Take for example z in a
+Siegel disc or z being just a sink. Even if J (f ) = CI one should be careful: for M. Herman’s examples
+z 7→ λz 1z−−aaz / z−b , |λ| = 1, a 6= 0 6= b, a ≈ b,see [H1], the unit circe is invariant and for a branch in it (0.4)
+1−bz
+fails. These examples are related with the notion of neutral sets, see [GPS].</p>
+      <p>Remark 0.6. The assumption f is holomorphic on U (or A) can be replaced by the assumption f is
+just a continuous map, a branched cover over f (U ) ⊃ U .</p>
+      <p>However without the holomorphy of f we do not know how the assumption (0.4) could be verified.</p>
+      <p>Remark 0.7. The fact that in, say, Theorem A we do not need to assume that f extends holomorphically
+beyond the basin A suggests that maybe the assumption (0.3) is substantial and without it the accessability
+in Theorem A is not true. We have in mind here an analogous situation of a Siegel disc with the boundary
+not simply-connected, where the map is only smooth beyond it, see [H2]. Accessability of periodic sources
+in the boundary of A in the absence of the assumption (0.3) is a famous open problem and we think that if
+the answer is positive one should substantially use in a proof the holomorphy of f outside A.</p>
+      <p>The paper is organised as follows: in Section 1 we prove theorem B for q a periodic source, in Section
+2 we deal with the general case. The case of sources was known in the polynomial-like and parabolic p
+situations [D], [EL], [Pe]. The general case contains the case of sources but it is more tricky (though not
+more complicated) so we decided to separate the case of sources to make the paper more understandable.
+Section 3 is devoted to Theorem C.</p>
+      <sec id="sec-2-1">
+        <title>Section 1. Accessability of periodic sources.</title>
+        <p>Theorem D. Let f : U → CI be a holomorphic map and T (z, γ1, ...γd) be a geometric coding tree in
+U , d = degf |U . Assume (0.4). Next assume that f extends holomorphically to a neighbourhood of a family
+of points q0, ..., qn−1 ∈ Λˆ so that this family is a periodic repelling orbit for this extension (the extension is
+also denoted by f ).</p>
+        <p>Assume finally that there exists V a neighbourhood of q on which f n is linearizable and if F is its inverse
+on V such that F (q) = q then</p>
+        <p>F (V ∩ U ) ⊂ U
+(0.5)
+(1.1)</p>
+        <p>Then there exists a periodic α ∈ Σd such that b(α) is convergent to q. Moreover the convergence is
+exponential, in particular the curve being the body of b(α) is of finite length.</p>
+        <p>Proof of Theorem D. As usually we can suppose that q is a fixed point by passing to the iterate f n
+if n &gt; 1.</p>
+        <p>Assume that q 6= z. We shall deal with the case q = z later.</p>
+        <p>Let h denote the linearizing map i.e. a map conjugating f on a neighbourhood of clV to z → λz with
+λ = f ′(q), mapping q to 0 ∈ CI .</p>
+        <p>Replace if necessary the set V by a smaller neighbourhood of q so that z ∈/ V and ∂V = h−1 exp{ℜξ = a}
+for a constant a ∈ IR.</p>
+        <p>For every set K ⊂ clV \ {q} consider its diameter in the radial direction (with origin at q) in the
+logarithmic scale, namely the diameter of the projection of the set log h(K) to the real axis. This will be
+denoted by diamℜ log(K).
+and</p>
+        <p>Vm := h−1 exp({ζ ∈ CI : ℜζ &lt; a − m log |λ|}).</p>
+        <p>Observe the following important property of γn(w)’s, n ≥ 0, w ∈ Σd :
+For every ε &gt; 0 there exists N (ε) such that if a component γ of γn(w) ∩ Rm satisfies
+diamℜ log(γ) &gt; ε log |λ| and zn(w) ∈ Vm</p>
+        <p>0 &lt; n − m &lt; N (ε)</p>
+        <p>Indeed, by (1.2) for every t = 0, 1, ..., m we have f t(zn(w)) ∈ Vm−t so f t(zn(w)) 6= z. Hence n &gt; m. On
+the other hand we have</p>
+        <p>ε ≤ diamℜ log(γ) = diamℜ log(f m(γ) ≤ Const diam(f m(γ)
+So from (0.3) and from the estimate diamf m(γn(w)) = diamγn−m(σm(w)) ≥ ε, we deduce that n − m is
+bounded by a constant depending only on ε. This proves (1.3).</p>
+        <p>Fix topological discs U 1, ..., U d being neighbourhoods of γ1, ..., γd respectively such that SiN=(1ε) f i(Crit(f ))∩
+U j = ∅ for every j = 1, ..., d.</p>
+        <p>(There is a minor inaccuracy here because this concerns the case the curves γj are embedded. If they
+have self-intersections we should cover them by families of small discs and later lift them by branches of f −t
+one by one along the curves.)</p>
+        <p>For every γ being a part of γn(w) satisfying (1.2) we can consider
+which is a neighbourhood of f m−1(γn(w)). We used here the notation Ft(v) for the branch of f −t mapping
+γj to γt(v), v ∈ Σd. Here j = vt.</p>
+        <p>Next consider the component W2 of W1 ∩ V containing f m−1(γ). Using Koebe’s Bounded Distortion
+Theorem we can find a disc</p>
+        <p>W1 = Fn−(m−1)(σm−1(w))(U j )</p>
+        <p>W (γ) = B(x, Constελ−m)
+diamℜ logW (γ) &lt;
+(Remark that this part is easier if (0.5) is assumed. Then we just consider U j’s disjoint with cl Sn∞=1 Crit(f ).)</p>
+        <p>By the definition of Λˆ there exist n0 ≥ 0 and α ∈ Σd such that γn0 (α) ∩ V 6= ∅ . By (1.1) there exist
+β1, β2, ... each in {1, ..., d} such that for each k ≥ 0 we have</p>
+        <p>F k(b(α)) = b(βk, βk−1, ..., β1, α).</p>
+        <p>More precisely we consider an arbitrary component γˆ of γn0(α) ∩ V and extend F k from it holomorphically
+along b(α).</p>
+        <p>Denote for abbreviation βk, βk−1, ..., β1, α by k]α.</p>
+        <p>Denote also F k(γˆ) by γˆk] and the part of γn0+k(k]α) between γˆk] and zn0+k−1(k]α) by γk].</p>
+        <p>For each k ≥ 0 denote by Nk the set of all pairs of integers (t, m) such that t : 0 ≤ t ≤ k + n0, 0 &lt; m &lt; k
+and γt(k]α) satisfies (1.2) for a curve γ being a part of γt(k]α) or a part of γ ⊂ γk] if t = k + n0 and for the
+integer m and additionally
+{ the part of b(α) between γ and γˆk]} ⊂ Vm.
+We write in this case W (γ) = Wk,t,m and γ = γk,t,m. Figure 1 illustrates our definitions:</p>
+        <p>Wk1,T,m1 ∩ Wk2,T,m2 = ∅.</p>
+        <p>We have now two possibilities:
+1. For every k2 &gt; k1 ≥ 0, 0 &lt; m1 &lt; k1, 0 &lt; m2 &lt; k2 and 0 ≤ T ≤ k2 + n0 such that (T, m1) ∈
+Nk1 , (T, m2) ∈ Nk2 , supposed the equality of the T -th entries (k1]α)T = (k2]α)T , we have
+(The equality of the T -th entries means that f T (Wk1,T,m1 ), f T (Wk2,T,m2 ) are in the same U j.)
+2. The case 1. does not hold, what implies obviously the existence of T and the other integers as above
+such that πT (k1]α) = πT (k2]α), (i.e. the blocks of k1]α and k2]α from 0 to T are the same).</p>
+        <p>Later we shall prove that the case 1. leads to a contradiction. Now we shall prove that the case 2.
+allows to find a periodic branch convergent to q what proves our Theorem.</p>
+        <p>Denote K = k2 − k1. Repeat that we have
+πT (σK (k2]α)) = πT (k1]α) = πT (k2]α).
+Denote k2]α by ϑ. We get by the above:</p>
+        <p>f K (zT +K (ϑ)) = zT (ϑ).
+or writing this with the help of F which is the inverse of f on V so that F (q) = q we have F K (zT (ϑ)) =</p>
+        <p>T +K
+zT +K (ϑ). We know also that γ := St=T +1 γt(ϑ) being a curve joining zT (ϑ) with zT +K (ϑ)) is contained in
+V (even in Vm(k2,t)) by (1.4).</p>
+        <p>Hence the curve Γ := Sn≥0 F nK (γ) is the body of the part starting from the T -th vertex of the periodic
+branch (ϑ0, ..., ϑK−1, ϑ0, ..., ϑK−1, ϑ0, ...).</p>
+        <p>To finish Proof of Theorem D we should now eliminate the disjointness case 1. We shall just prove there
+is not enough room for that.</p>
+        <p>Denote for every k ≥ 0
+Let Ak− := {1, ..., k − 1} \ Ak+.</p>
+        <p>Ak+ := {m : 0 &lt; m &lt; k, there exists t such that (t, m) ∈ Nk}</p>
+        <p>As γk+n0 (k]α) intersects Vk (at γˆk]), each 0 &lt; m ≤ k − 1 is fully intersected by the curve built from the
+curves γt(k]α), t = 0, ..., k + n0 − 1 and γk].</p>
+        <p>Hence
+♯Ak− log |λ| ≤</p>
+        <p>diamℜ log(γs(k]α) ∩ Rm) ≤ 2(k + n0 + 1)ε log |λ|.</p>
+        <p>The coefficient 2 takes into account the possibility that one γs(k]α) intersects Rm and Rm+1, where
+m, m + 1 ∈ Ak− (it cannot intersect more than two Rm’s because diamℜ log(γs(k]α) ∩ Rm) &lt; ε).
+(1.7)
+(1.8)</p>
+        <p>Hence
+So</p>
+        <p>4dN (1/4)
+|mi − ti| &lt; N (1/4), i = 1, 2</p>
+        <p>|t1 − t2| &lt; 2N (1/4).</p>
+        <p>Fix from now on ε = 1/4. Fix an arbitrary large k0. Let N + = S0≤k≤k0 (k, Nk).</p>
+        <p>Observe that each point ξ ∈ V belongs to at most
+sets W (k, t, m) where (k, (t, m)) ∈ N +.</p>
+        <p>Indeed if W (k1, t1, m1) ∩ W (k2, t2, m2) 6= ∅ then |m1 − m2| ≤ 1 by (1.5), and by (1.3) we have
+(In the case ti = ki + n0 for i = 1 or 2 we cannot in fact refer to (1.3). The trouble is with its n − m &gt; 0
+part, because we do not know whether zki+n0 ∈ Vmi . But then directly mi &lt; ki ≤ ti.)</p>
+        <p>But we assumed (this is our case 1.) that for every t, m and j all the sets W (k, t, m) with the t-th entry
+of k]α equal to j, variable k, are pairwise disjoint. This finishes the proof of the estimate (1.8).</p>
+        <p>The conclusion from (1.8) and (1.4) is that because of the lack of room ♯N + &lt; Constk0. This contradicts
+(1.7) for ε = 1/4 and k0 large enough.</p>
+        <p>The disjointness case 1. is eliminated. Theorem D in the case z 6= q is proved.</p>
+        <p>Consider the case z = q. Then, unless γj ≡ q in which case Theorem is trivial, the role of z in the above
+proof can be played by arbitrary zj ∈ γj \ {q}. Formally on the level 0 we have now d2 curves joining each
+zj with preimages of zi in γ1((i, j)). ♣</p>
+        <p>Remark 1.1. Under the assumption z 6= q and moreover q ∈/ Sj=1,...,d γj (which is the case when we
+apply Theorem B to prove theorem A) observe that there exists a constant M such that for every n ≥ 0 and
+ϑ ∈ Σd we have diamℜ logγn(ϑ) &lt; M .</p>
+        <p>Indeed let m = m1 ≥ 0 be the smallest integer such that γn(ϑ) intersects Rm and let m2 be the largest
+one. Suppose that m2 − m1 &gt; 1. Then by (1.3) n &lt; m1 + 1 + N (1) and m2 &lt; n. (The role of zn(ϑ) in the
+proof of this part of (1.3) is played by Vm2 ∩ γn(ϑ).) Thus m2 − m1 &lt; N (1).</p>
+        <p>This observation allows to modify (simplify) slightly Proof of Theorem B. One does not need (1.6) then
+.</p>
+        <p>Proposition 1.2. Every branch b(α) convergent to a periodic source q is periodic (i.e α is periodic).
+There is only a finite number of α’s such that b(α) converges to q.</p>
+        <p>Proof. Suppose z 6= q and b(α) converges to q. We can take V , a neighbourhood of q, arbitrarily small.
+Then the constant n0 will depend on it. However the above proof shows that we obtain the equality
+πT (k1]α) = πT (k2]α)
+for k1 − k2 bounded by a constant independent of n0. z 6= q implies that T → ∞ as V shrinks to q. So there
+exists a finite block of symbols β such that α = βββ...βα′ (α′ infinite) with arbitrarily many b’s. So α is
+periodic. This consideration gives also a bound for the period of α hence it proves finitness of the set of α’s
+with b(α) convergent to q. ♣</p>
+        <p>Remark that with some additional effort we could obtain an estimate for the number of branches
+convergent to q. In the case q is in the boundary of a basin of attarction to a sink this estimate should give
+so called Pommerenke-Levin-Yoccoz inequality (see for example [Pe]).</p>
+      </sec>
+      <sec id="sec-2-2">
+        <title>Section 2. Theorem B and Corollary 0.1.</title>
+        <p>Given f : U → CI a holomorphic map and T = T (z, γ1, ..., γd) a geometric coding tree in U as in
+Introduction we shall give a definition of q ∈ Λˆ good more general then in Introduction.</p>
+        <p>Let us start with some preliminary definitions:</p>
+        <p>Definition 2.1. D ⊂ U is called n0-significant if there exists α ∈ Σd and 0 ≤ n ≤ n0 such that
+γn(α) ∩ D 6= ∅.</p>
+        <p>Definition 2.2. For every δ, κ &gt; 0 and integer k &gt; 0 a pair of sequences (Dt)t=0,1,...,k and (Dt,t−1)t=1,...,k
+is called a telescope or a (δ, κ, k)-telescope if each Dt is an open connected subset of U , there exists a
+strictly increasing sequence of integers 0 = n0, n1, ..., nk such that each Dt,t−1 is a nonempty component of
+f −(nt−nt−1)(Dt) contained in Dt−1 (of course f nt−nt−1 can have critical points in Dt,t−1),
+and else</p>
+        <p>t/nt &gt; κ for each t,
+dist(∂UessDt,t−1, ∂U Dt−1) &gt; δ.
+(2.0)
+(2.1)
+Here the subscript U means the boundary in U and the essential boundary ∂UessDt,t−1 is defined as ∂U Dt,t−1 \
+Snnt=−1nt−1 f −n(∂U ).</p>
+        <p>Definition 2.3. A (δ, κ, k)-telescope is called n0-significant if Dk is n0-significant.</p>
+        <p>Definition 2.4. For any (δ, κ, k)-telescope we can choose inductively sets Dt,l, where l = t−2, t−3, ..., 0
+by choosing Dt,l−1 as a component of f −(nl−nl−1(Dt,l) in Dt−1,l−1. We call the sequence</p>
+        <p>Dk,0 ⊂ Dk−1,0 ⊂ ... ⊂ D1,0 ⊂ D0
+a trace of the telescope.</p>
+        <p>Definition 2.5. We call q ∈ Λˆ good if there exist δ, κ &gt; 0 an integer n0 ≥ 0 and a sequence of
+n0-significant telescopes Telk, k = 1, 2, ..., where Telk is a (δ, κ, k)-telescope, with traces Dkk,0, Dkk−1,0, ..., D0k
+respectively (to the notation of each object related to the telescope Telk we add the superscript k) such that</p>
+        <sec id="sec-2-2-1">
+          <title>Dlk,0 → q as l → ∞ uniformly over k.</title>
+          <p>Remark 2.6. q ∈ Λˆ good in the sense of Introduction (conditions (0.0’)-(0.3’) satisfied) is of course
+good in the above sense. Indeed we choose each Δ’s good time and denote these times by n0, n1, ..., of course
+then κ in (2.0) is κ/Δ for the old κ from (0.0).</p>
+          <p>For each k we define a telescope Telk by taking as Dkk an arbitrary n0-significant component of
+B(f nk (q), r). Such a component exists with n0 depending only on r because the set all vertices of the
+tree T is by definition dense in Λˆ. Then inductively for each 0 ≤ t &lt; k we choose as Dtk a component of
+B(f nt (q), r) ∩ U containing a component Dtk+1,t of f −(nt+1−nt)(Dtk+1), (such a component Dtk+1,t exists by
+(0.3’). By (0.2’) an arbitrary choice of traces will be OK.</p>
+          <p>Of course in the case of U = A a basin of immediate attraction to a sink or a parabolic point one can
+build telescopes with Dtk,l not containing critical points, but there is no reason for that to be possible in
+general.</p>
+          <p>Proof of Theorem B. Let q ∈ Λˆ be a good point according to the definition above. Fix constants δ, κ
+and n0 and a sequence of δ, κ, k telescopes and their traces ,k = 0, 1, ... as in Definition 2.5.</p>
+          <p>We can suppose that z ∈/ D0k or at least that each γj, j = 1, ..., d has a point outside D0k. If it is not
+so then either there exists l such that each γj has a point outside Dlk,0 for every k in which case in the
+considerations below we should consider m ≥ l rather than m &gt; 0 or else there exists j such that γj ≡ q in
+which case obviously b(j, j, j, ...) converges to q.
+zn(k)+nkk−1(k]αk) and γˆk] by γk]</p>
+          <p>Denote Dmk,0 \ Dmk+1,0 by Rmk for m = 0, 1, ..., k − 1 and Dkk,0 by Rkk. These sets replace rings from
+Section 1.</p>
+          <p>Choose for each k a curve γn(k)(αk) for αk ∈ Σd and n(k) ≤ n0 intersecting Dkk. Choose a part γˆk of
+γn(k)(αk) in this intersection.</p>
+          <p>As in Section 1 there exists k]αk = β0kβ1k...βnkk−1αk ∈ Σd such that γn(k)+nkk (k]αk) intersects Dkk,0 and
+moreover it contains a part γˆk] which is a lift of γˆk by f nk . Denote the part of γn(k)+nkk (k]αk) between</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="sec-3">
+      <title>Fix an integer E &gt; 0 to be specified later.</title>
+      <p>Define Nk as the set of such pairs (t, m) that 0 &lt; m &lt; k, 0 ≤ t ≤ nkk + n(k), there exist integers
+E1, E2 ≥ 0, E1 + E2 &lt; E such that γt+E2(k]αk) ∩ Rmk+1 6= ∅, γt−E1 (k]αk) ∩ Rmk−1 6= ∅ and there exists a
+part γ(t, m) of γt(k]αk) in Rmk, or of γk] if t = nkk + n(k), such that
+{ the part of b(k]α) between γ(t, m) and γˆk]} ⊂ Dmk,0
+(2.3)
+analogously to (1.6), see Figure 2.
+We claim that analogously to the right hand inequality of (1.3) we have for (t, m) ∈ Nk
+t ≤ nkm+1 + E + N (δ/E)
+where N (ε) := sup{n : there exists α ∈ Σd such that diam(γn(α) ≥ ε}. (The number N (ε) is finite by
+(0.4).)</p>
+      <p>Indeed, denote the part of the curve being the concatenation of γl(k]αk), l = t − E1, ..., t + E2 in Rmk
+jjooiinnisnag pRomkin−t1ξw∈it∂hURDmkmk++11,bmyinΓ.a scuuprpveose that t − E1 ≥ nkm (otherwise the claim is proved). Then f nkm (Γ)
+f nkm (γt(k]αk) = γt′+nkm (σnkm (k]αk)), t − E1 ≤ t′ ≤ t + E2
+with ∂Dmk.</p>
+      <p>If ξ ∈/ ∂UessDmk+1,m, then</p>
+      <p>t′ &lt; nknm+1
+Otherwise there exists n ≤ nkm+1 such that f n(ξ) ∈ ∂U . This is already outside U so the trajectory of ξ hits
+S γj before the time nm+1 comes.</p>
+      <p>k
+If ξ ∈ ∂essDmk+1,m then by (2.1) at least one of the curves f nkm (γl(k]αk), t − E1 ≤ l ≤ t + E2 has the</p>
+      <p>U
+diameter not less than δ/E. Hence</p>
+      <p>l − nm ≤ N (δ/E).
+and</p>
+      <p>Define</p>
+      <p>Ak+ := {m : 0 &lt; m &lt; nkk, there exists t such that (t, m) ∈ Nk}</p>
+      <p>As each set Rmk for m ∈ Ak− is crossed by a part of b(k]αk) between γj for respective j and γˆk] consisting
+of at least E edges and one edge cannot serve for more then two Rmk’s we obtain similarly to (1.7):
+Ak− := {1, ..., k − 1} \ Ak+ .</p>
+      <p>E · ♯Ak− ≤ 2(nkk + n(k) + 1)
+♯Ak+ ≥ k − 1 −
+(n(k) + nkk + 1) ≥ k(1 −
+Fix from now on E &gt; 3/κ and denote η = 1 − E3κ &gt; 0.</p>
+      <p>For every 0 &lt; M ≤ k define</p>
+      <p>Ak+(M ) := {m ∈ Ak+ : m &lt; M }
+♯Ak+(M ) ≥ ηM.
+This means that the property (2.6) true for M = k, see (2.5), extends miraculously to every M ∈ Ak+ large
+enough. The proof of this claim is the same as for A+:</p>
+      <p>k</p>
+      <p>Indeed M ∈ Ak+ implies the existence of t such that (t, M ) ∈ Nk. By (2.3) t ≤ nkM+1 + E + N ( Eδ ). Next
+we estimate ♯Ak+(M ) similarly as we estimated ♯Ak+ with nkk + n(k) + 1 replaced by nkM+1 + E + N ( Eδ ). We
+succeed for all M large enough.</p>
+      <p>Now we can conclude our Proof of Theorem B: Let Mn := ( 12 η)−nM0. By (2.6) for every k ≥ 0 and
+n ≥ 0 there exists m ∈ Ak+ such that Mn ≤ m &lt; Mn+1.</p>
+      <p>For each n = 0, 1, ... there is only a finite number of blocks of symbols of the form πt(k]nk) such that
+(t, m) ∈ Nk, m &lt; Mn+1. This is so by (2.4).</p>
+      <p>So there are constants t0 ≥ 0 and D0 ∈ Σt0 and an infinite set</p>
+      <p>K0 ={k ≥ 0 : there exists m such that</p>
+      <p>M0 ≤ m &lt; M1, (t0, m) ∈ Nk, πt0 (k]αk) = D0}</p>
+      <p>In K0 we find an infinite K1 etc. by induction. For every n &gt; 0 we obtain infinite Kn ⊂ Kn−1 and
+constants tn, Dn such that</p>
+      <p>Kn ={k ∈ Kn−1 : there exists m such that</p>
+      <p>Mn ≤ m &lt; Mn+1, (tn, m) ∈ Nk, πtn (k]αk) = Dn}
+For α ∈ Σd such that πtn (α) = πtn (k]αk), we have that b(α) converges to q.</p>
+      <p>We assumed here that tn → ∞ as n → ∞. If sup tn = t∗ &lt; ∞ then also Dn stabilize at D∗ and by (2.3)
+zt∗ (D∗) = q. Moreover there exists a sequence of integers j1, j2, ... ∈ {1, ..., d} such that γt(D∗, j1, j2, ...) ≡ q
+for all t ≥ t∗ so b(D∗, j1, j2, ...) converges to q.</p>
+      <p>(This is not an imaginary case. Consider a source f (q) = q ∈ U and a tree T (q, γ1, γ2) such that
+γ1 ≡ q and γ2 joins q with q′ ∈ f −1(q), q 6= q′. Then the above proof gives b(2, 1, 1, ...) the branch for which
+γn((2, 1, 1, ...)) =≡ q′ for every n ≥ 1. ♣</p>
+      <p>Remark 2.1. It is curious that we did not need in the above proof neither the left hand side inequality
+(1.3): t ≥ m − Const for (t, m) ∈ Nk, nor the sets W (k, t, m). As mentioned already in Introduction no
+distortion estimates , i.e. no holomorphy was needed. The holomorphy of f is useful only to verify (0.4).</p>
+      <p>Proof of Corollary 0.1. This follows immediately from Theorem B and the following fact belonging
+to Pesin Theory:</p>
+      <p>Let X be a compact subset of CI and F be a holomorphic mapping on a neighbourhood of X such that
+F (X) = X. Let µ ∈ Meχ+(F ). Let (X˜ , F˜, µ˜) be a natural extension (inverse limit) of (X, F, µ ). Denote by
+π the projection to the 0 coordinate, π : X˜ → X and by πn the projection to an arbitrary n-th coordinate.</p>
+      <p>Then for µ˜-a.e. x˜ ∈ X˜ there exists r = r(x˜) &gt; 0 such that univalent branches Fn of F −n on B(π(x), r)
+for n = 1, 2, ... such that Fn(π(x)) = π−n(x)), exist. Moreover for an arbitrary l : exp(−χμ) &lt; λ &lt; 1 (not
+depending on x˜) and a constant C = C(x˜) &gt; 0
+for every z ∈ B(π(x), r), n &gt; 0, (distances and derivatives in the Riemann metric on CI ).</p>
+      <p>Moreover r and C are measurable functions of x˜.</p>
+      <p>|Fn′ (π(x))| &lt; Cλn
+and
+|Fn′ (π(x))
+|Fn′ (z)|</p>
+      <sec id="sec-3-1">
+        <title>Section 3. External rays.</title>
+        <p>Let W1 ⊂ W be open, connected, simply-connected bounded domains in the complex planeCI such that
+clW1 ⊂ W . Let f : W1 → W be a holomorphic proper map ”onto” W of degree d ≥ 2. We call such a map
+f a polynomial-like map. Denote K = Tn≥0 f −n(W ). This set K is called a filled in Julia set [DH]. We can
+assume that ∂W is smooth. Let M be an arbitrary smooth function on a neighbourhood of clW \ W1 not
+having critical points, such that M |∂W ≡ 0 and M |∂W1 ≡ 1 and M ◦ f = M − 1 whereever it makes sense.
+Extend M to W \ K by M (z) = M (f n(z)) + n where n is such that f n(z) ∈ W \ W1.</p>
+        <p>Fix τ : 0 &lt; τ &lt; π and consider curves γ : [0, ∞) → clW \ K, intersecting lines of constant M at the angle
+τ , (this demands fixing orientations), not containing critical points for M with γ(0) ∈ ∂W and converging
+to K as the parameter converges to ∞. One can change the standard euclidean metric on CI so that τ is the
+right angle and think about gradient lines in the new metric. We call such a line a smooth τ -ray. Instead
+of parametrizing such a curve with the gradient flow time we parametrize it by the values of M . Limits of
+smooth τ -rays are called τ -rays. They can pass through critical points of M . (Such a τ -ray enters a critical
+point along a stable separatrix and leaves it along an unstable one, the closest clockwise or counter-clockwise.
+If it hits again a critical point for the first time it leaves it along an unstable separatrix on the same side
+from which it came to the previous critical point, see [GM] and [LevP] for the more detailed description. See
+Fig. 3:</p>
+        <p>One easily proves the fact corresponding to (0.4):</p>
+        <p>C. Divide each τ -ray γ into pieces γn, n ≥ 1 each joining f −n(∂W ) with
+length(γn) → 0 as n → ∞
+(3.0)
+uniformly over τ -rays γ.</p>
+        <p>The proof is the same as that of the implication (0.5) ⇒ 0.4) in Remark 0.4. We have univalent branches
+of f −k for all k on neighbourhoods of γn for external rays γ, neighbourhoods not depending on k, for n large
+enough, because then critical points of f in W \ K do not interfere. There is finite number of them and their
+forward trajectories escape out of W .</p>
+        <p>For our q find significant telescopes Telk as in Section 2, where n0-significant means here that Dkk
+intersects γnk(k) for a τ -ray γk and n(k) ≤ n0 a constant independent of k. This is possible by (3.0).</p>
+        <p>Denote by γk] the τ -ray containing a point of f −nk (γk) being in Dkk,0.</p>
+        <p>We consider, similarly to Section 2, (2.3), the set</p>
+        <p>Nk = {(t, m) : the same conditions as in Section 2, in particular γtk] ∩ Rm 6= ∅}</p>
+        <sec id="sec-3-1-1">
+          <title>Similarly we define Ak+ and Ak+(M ), M ≤ k .</title>
+          <p>The same miracle that</p>
+          <p>♯Ak+(M ) ≥ ηM
+takes place for M ≥ M0, M ∈ A+.</p>
+          <p>k
+To get it we prove and use the estimate t ≤ m+Const for (t, m) ∈ Nk.</p>
+          <p>Because for M0 ≤ m &lt; M1, (t, m) ∈ Nk integers t are uniformly bounded over all k by say T0, the parts
+γ′k] = SlT=01 γlk] of respective τ -rays γk] have a convergent subsequence and the limit ray (joining levels 0 and
+T0) intersects Rm.</p>
+          <p>Choosing consecutive subsequences we find a limit ray converging to q. ♣
+References.
+[D] A. Douady, Informal talk at the Durham Symposium, 1988.</p>
+          <p>[DH] A. Douady, J. H. Hubbard, On the dynamics of polynomial-like mappings, Ann. Ec. Norm. Sup.
+18 (1985), 287-343.</p>
+          <p>[EL] A. E. Eremenko, G. M. Levin, On periodic points of polynomials. Ukr. Mat. Journal 41.11 (1989),
+1467-1471.</p>
+          <p>[GPS] P. Grzegorczyk, F. Przytycki, W. Szlenk, On iterations of Misiurewicz’s rational maps on the
+Riemann sphere, Ann. Inst. Henri Poincar´e, Physique Th´eorique, 53.4 (1990), 431-444.</p>
+          <p>[H1] M. Herman, Exemples de fractions rationnelles ayant une orbite dense sur la sph`ere de Riemann,
+Bull. Soc. Math. France 112 (1984), 93-142.</p>
+          <p>[H2] M. Herman, Construction of some curious diffeomorphism of the Riemann sphere, J. London Math.
+Soc. 34 (1986), 375-384
+[LevP] G. Levin, F. Przytycki, External rays to periodic points, manuscript.</p>
+          <p>[LevS] G. Levin, M. Sodin, Polynomials with disconnected Julia sets and Green maps, preprint 23
+(1990/1991), the Hebrew University of Jerusalem.</p>
+          <p>[Mi1] J. Milnor, Dynamics in one complex variable: Introductory lectures, preprint SUNY at Stony
+Brook, IMS, 1990/5.</p>
+          <p>[Mi2] J. Milnor, Local connectivity of Julia sets: Expository lectures, preprint SUNY at Stony Brook,
+IMS, 1992/11.</p>
+          <p>[Pe] C. L. Petersen, On the Pommerenke-Levin-Yoccoz inequality, preprint</p>
+          <p>[P1] F. Przytycki, Hausdorff dimension of harmonic measure on the boundary of an attractive basin for
+a holomorphic map. Invent. Math. 80 (1985), 161-179.</p>
+          <p>[P2] F. Przytycki, Riemann map and holomorphic dynamics. Invent. Math. 85 (1986), 439-455.</p>
+          <p>[P4] F. Przytycki, Polynomials in hyperbolic components, manuscript, Stony Brook 1992.</p>
+          <p>[PS] F. Przytycki, J. Skrzypczak, Convergence and pre-images of limit points for coding trees for
+iterations of holomorphic maps, Math. Annalen 290 (1991), 425-440.</p>
+          <p>[R] D. Ruelle, An inequality for the entropy of differentiable maps, Bol. Soc. Brasil. Mat. 9 (1978),
+83-87.</p>
+        </sec>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [GM]
+          <string-name>
+            <given-names>L. R.</given-names>
+            <surname>Goldberg</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Milnor</surname>
+          </string-name>
+          ,
+          <article-title>Fixed points of polynomial maps. Part II. Fixed point portraits</article-title>
+          . Ann. scient E´c. Norm. Sup., 4e s´erie,
+          <volume>26</volume>
+          (
+          <year>1993</year>
+          ),
+          <fpage>51</fpage>
+          -
+          <lpage>98</lpage>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

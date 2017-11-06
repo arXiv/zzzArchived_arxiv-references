@@ -1,0 +1,542 @@
+[
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "1",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "S",
+                "surname": "Tomonaga"
+            },
+            {
+                "givennames": "",
+                "surname": "Prog"
+            }
+        ],
+        "title": "",
+        "year": "1946",
+        "source": "Theor. Phys"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "73",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Schwinger"
+            },
+            {
+                "givennames": "V",
+                "surname": "Weisskopf"
+            }
+        ],
+        "title": "",
+        "year": "1948",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "",
+        "issue": "",
+        "pages": "407-1970",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Schwinger"
+            }
+        ],
+        "title": "",
+        "year": "1961",
+        "source": "Particles and Sources"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "47",
+        "issue": "20",
+        "pages": "1515-1018",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "L V",
+                "surname": "Keldysh"
+            },
+            {
+                "givennames": "",
+                "surname": "Zh"
+            },
+            {
+                "givennames": "",
+                "surname": "Eksp"
+            }
+        ],
+        "title": "",
+        "year": "1964",
+        "source": "Teor. Fiz.Sov. Phys. JETP"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "74",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Polonyi"
+            }
+        ],
+        "title": "",
+        "year": "2006",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "H D",
+                "surname": "Zeh"
+            }
+        ],
+        "title": "",
+        "year": "",
+        "source": ""
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "24",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "W H",
+                "surname": "Zurek"
+            }
+        ],
+        "title": "",
+        "year": "1981",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "26",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "W H",
+                "surname": "Zurek"
+            }
+        ],
+        "title": "",
+        "year": "1982",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "70",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "W H",
+                "surname": "Zurek"
+            },
+            {
+                "givennames": "S",
+                "surname": "Habib"
+            },
+            {
+                "givennames": "J P",
+                "surname": "Paz"
+            }
+        ],
+        "title": "",
+        "year": "1993",
+        "source": "Phys. Rev. Lett"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "65",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "H M",
+                "surname": "Wisemann"
+            },
+            {
+                "givennames": "J A",
+                "surname": "Vaccaro"
+            }
+        ],
+        "title": "",
+        "year": "2002",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "69",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "J",
+                "surname": "Dziarmaga"
+            },
+            {
+                "givennames": "A R",
+                "surname": "Dalvit"
+            },
+            {
+                "givennames": "W H",
+                "surname": "Zurek"
+            }
+        ],
+        "title": "",
+        "year": "2004",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "72",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "D A",
+                "surname": "Dalvit"
+            },
+            {
+                "givennames": "J",
+                "surname": "Dziarmaga"
+            },
+            {
+                "givennames": "W H",
+                "surname": "Zurek"
+            }
+        ],
+        "title": "",
+        "year": "2005",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "H Y",
+                "surname": "Elze"
+            }
+        ],
+        "title": "",
+        "year": "",
+        "source": "the Proceedings of the 5th Rio de Janeiro International Workshop on Relativistic Aspects of Nuclear Physics"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "67",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "O",
+                "surname": "Dreyer"
+            }
+        ],
+        "title": "",
+        "year": "2007",
+        "source": "J. Phys. Conf. Ser"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "B",
+                "surname": "Groisman"
+            },
+            {
+                "givennames": "D",
+                "surname": "Kenigsberg"
+            },
+            {
+                "givennames": "T",
+                "surname": "Mor"
+            }
+        ],
+        "title": "Quantumness \" versus \" Classicality \" of Quantum States",
+        "year": "2007",
+        "source": ""
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "G",
+                "surname": "Mahajan"
+            },
+            {
+                "givennames": "T",
+                "surname": ""
+            }
+        ],
+        "title": "Padmanabhan Particle creation, classicality and related issues in quantum field theory: I. Formalism and toy models",
+        "year": "2007",
+        "source": ""
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "V V",
+                "surname": "Dodonov"
+            },
+            {
+                "givennames": "M B",
+                "surname": "Reno"
+            },
+            {
+                "givennames": "",
+                "surname": "Phys"
+            },
+            {
+                "givennames": "",
+                "surname": "Lett"
+            }
+        ],
+        "title": "",
+        "year": "2003",
+        "source": ""
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "V I",
+                "surname": "Arnold"
+            },
+            {
+                "givennames": "A",
+                "surname": "Avez"
+            }
+        ],
+        "title": "Ergodic Problems in Classical Mechanics",
+        "year": "1968",
+        "source": ""
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "34",
+        "issue": "",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "M",
+                "surname": "Feingold"
+            },
+            {
+                "givennames": "A",
+                "surname": "Peres"
+            }
+        ],
+        "title": "",
+        "year": "1968",
+        "source": "Phys. Rev"
+    },
+    {
+        "identifiers": [
+            {
+                "identifier_type": "",
+                "identifier": ""
+            }
+        ],
+        "raw": "",
+        "volume": "24",
+        "issue": "118",
+        "pages": "",
+        "reftype": "",
+        "doi": "",
+        "authors": [
+            {
+                "givennames": "R P",
+                "surname": "Feynman"
+            },
+            {
+                "givennames": "F L",
+                "surname": "Vernon"
+            }
+        ],
+        "title": "",
+        "year": "1963",
+        "source": "Ann. Phys"
+    }
+]

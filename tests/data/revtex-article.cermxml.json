@@ -1,0 +1,187 @@
+[
+    {
+        "authors": [
+            {
+                "givennames": "B. E.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Peirson"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "51",
+        "pages": "",
+        "raw": "B. E. Peirson Studies in History and Philosophy of Science Part C: Studies in History and Philosophy of Biological Biomedical Sciences 50 51 2015 ISSN 1369-8486",
+        "reftype": "",
+        "source": "Biomedical Sciences ISSN 1369-8486",
+        "title": "Studies in History and Philosophy of Science Part C: Studies in History and Philosophy of Biological",
+        "volume": "50",
+        "year": "2015"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "A. A.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Alemi"
+            },
+            {
+                "givennames": "M.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Bierbaum"
+            },
+            {
+                "givennames": "C. R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Myers"
+            },
+            {
+                "givennames": "J. P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sethna"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "052801",
+        "pages": "",
+        "raw": "A. A. Alemi M. Bierbaum C. R. Myers J. P. Sethna 92 052801 2015",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "92",
+        "year": "2015"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "Y.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Kajikawa"
+            },
+            {
+                "givennames": "J.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Ohno"
+            },
+            {
+                "givennames": "Y.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Takeda"
+            },
+            {
+                "givennames": "K.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Matsushima"
+            },
+            {
+                "givennames": "H.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Komiyama"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "221",
+        "pages": "",
+        "raw": "Y. Kajikawa J. Ohno Y. Takeda K. Matsushima H. Komiyama Sustainability Science 2 221 2007",
+        "reftype": "",
+        "source": "Sustainability Science 2",
+        "title": "",
+        "volume": "",
+        "year": "2007"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "N. P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Hummon"
+            },
+            {
+                "givennames": "P.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Dereian"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "39",
+        "pages": "",
+        "raw": "N. P. Hummon P. Dereian 11 39 1989",
+        "reftype": "",
+        "source": "",
+        "title": "",
+        "volume": "11",
+        "year": "1989"
+    },
+    {
+        "authors": [
+            {
+                "givennames": "S.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Nerur"
+            },
+            {
+                "givennames": "R.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Sikora"
+            },
+            {
+                "givennames": "V.",
+                "prefix": "",
+                "suffix": "",
+                "surname": "Balijepally"
+            }
+        ],
+        "doi": "",
+        "identifiers": [
+            {
+                "identifier": "",
+                "identifier_type": ""
+            }
+        ],
+        "issue": "71",
+        "pages": "",
+        "raw": "S. Nerur R. Sikora V. Balijepally Communications of the ACM 48 71 2005",
+        "reftype": "",
+        "source": "Communications of the ACM",
+        "title": "",
+        "volume": "48",
+        "year": "2005"
+    }
+]
