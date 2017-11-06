@@ -3,8 +3,8 @@
 import re
 import io
 import xml.etree.ElementTree
+from typing import List
 
-from references import types
 from references import logging
 from references.services import grobid
 
@@ -110,7 +110,7 @@ def _xml_format_biblStruct(bbl):
     }
 
 
-def format_grobid_output(output: str) -> types.ReferenceMetadata:
+def format_grobid_output(output: bytes) -> List[dict]:
     """
     Transform GROBID output to internal metadata struct.
 
@@ -128,8 +128,8 @@ def format_grobid_output(output: str) -> types.ReferenceMetadata:
 
     Returns
     -------
-    metadata : types.ReferenceMetadata
-        List of reference metadata conforming to references schema
+    metadata : list
+        List of reference metadata (dict) conforming to references schema.
     """
     filestring = io.StringIO(output.decode('utf-8'))
     root = xml.etree.ElementTree.parse(filestring).getroot()
@@ -160,8 +160,7 @@ def format_grobid_output(output: str) -> types.ReferenceMetadata:
     return references
 
 
-def extract_references(filename: str,
-                       document_id: str) -> types.ReferenceMetadata:
+def extract_references(filename: str, document_id: str) -> List[dict]:
     """
     Extract references from the PDF at ``filename`` using GROBID.
 

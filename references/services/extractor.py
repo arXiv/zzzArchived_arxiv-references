@@ -1,15 +1,16 @@
 """Service integration for central arXiv document store."""
 
-import requests
 import os
 import time
 from datetime import datetime, timedelta
 import json
-from references import logging
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
-from flask import _app_ctx_stack as stack
 from urllib.parse import urljoin
-from .util import get_application_config, get_application_global
+
+import requests
+from flask import _app_ctx_stack as stack
+
+from references import logging
+from references.context import get_application_config, get_application_global
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,7 @@ class RequestExtractionSession(object):
         self.endpoint = endpoint
         response = requests.get(urljoin(self.endpoint, '/status'))
         if not response.ok:
-            raise IOError('Extraction endpoint not available: %s' %
+            raise IOError('Extraction endpoint not available: %s',
                           response.content)
 
     def extract(self, document_id: str, pdf_url: str) -> dict:
@@ -40,7 +41,7 @@ class RequestExtractionSession(object):
         """
         payload = {'document_id': document_id, 'url': pdf_url}
         response = requests.post(urljoin(self.endpoint, '/references'),
-                                 data=json.dumps(payload))
+                                 json=payload)
         if not response.ok:
             raise IOError('Extraction request failed with status %i: %s' %
                           (response.status_code, response.content))
@@ -51,24 +52,23 @@ class RequestExtractionSession(object):
         start = datetime.now()    # If this runs too long, we'll abort.
         while not response.url.startswith(target_url):
             if failed > 2:    # TODO: make this configurable?
-                msg = '%s: cannot get extraction state: %s, %s' % \
-                      (document_id, response.status_code, response.content)
-                logger.error(msg)
-                raise IOError(msg)
+                logger.error('%s: cannot get extraction state: %s, %s',
+                             document_id, response.status_code,
+                             response.content)
+                raise IOError("Failed to get extraction state")
 
             if datetime.now() - start > timedelta(seconds=300):
-                msg = '%s: extraction did not complete within five minutes' % \
-                      document_id
-                logger.error(msg)
-                raise IOError(msg)
+                logger.error('%s: extraction running after five minutes',
+                             document_id)
+                raise IOError('Extraction exceeded five minutes')
 
             time.sleep(2 + failed * 2)    # Back off.
             try:
                 response = requests.get(response.url)
             except Exception as e:
-                msg = '%s: cannot get extraction state: %s' % (document_id, e)
-                logger.error(msg)
-                raise IOError(msg) from e
+                logger.error('%s: cannot get extraction state: %s',
+                             document_id, e)
+                raise IOError("Failed to get extraction state") from e
 
             if not response.ok:
                 failed += 1

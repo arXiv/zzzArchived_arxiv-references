@@ -1,8 +1,15 @@
+"""Validation mechanisms based on metadata and extractor expectations."""
+
 import os
 import re
 from functools import partial
+try:
+    from array import array
+    from pybloof import StringBloomFilter
+except ImportError as e:
+    StringBloomFilter = None
 
-from references.types import Callable
+from typing import Callable, Dict, List, Any, Sized, Tuple
 from references import logging
 from references.process.textutil import clean_text
 from references.process.extract.regex_arxiv import REGEX_ARXIV_STRICT
@@ -15,14 +22,6 @@ RE_INTEGER = (
     r'(\d+)'
     r'(?:$|(?:\s+))'
 )
-
-
-try:
-    from array import array
-    from pybloof import StringBloomFilter
-except ImportError as e:
-    StringBloomFilter = None
-
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +71,7 @@ def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
 
 
 def minimum_length(length: int) -> Callable:
-    def _min_len(value: object) -> float:
+    def _min_len(value: Sized) -> float:
         if length > len(value) > 0:
             return 0.
         return 1.
@@ -89,17 +88,6 @@ def does_not_contain_arxiv(value: object) -> float:
     if not isinstance(value, str):
         return 0.0
     return 0. if 'arxiv' in value else 1.
-
-
-def is_integer_like(value: object) -> float:
-    if value is None:
-        return 0.
-    if isinstance(value, int):
-        return 1.0
-    if len(value) == 0:
-        return 0.0
-    numbers = re.findall(r'(?:\s+)?(\d+)(?:\s+)?', value)
-    return (1. * sum([is_integer(i) for i in numbers]))/len(value)
 
 
 def contains(substring: str, false_prob: float=0.0,
@@ -133,16 +121,20 @@ def is_integer(value: str) -> float:
     return 1.0
 
 
-def is_integer_like(value: object) -> float:
+def is_integer_like(value: Any) -> float:
+    if value is None:
+        return 0.
     if isinstance(value, int):
         return 1.0
-    if len(value) == 0:
+    if hasattr(value, '__len__') and len(value) == 0:
         return 0.0
+    if not isinstance(value, str):
+        return 0.
 
-    numbers = re.findall(RE_INTEGER, value)
-    leftovers = re.subn(RE_INTEGER, '', value)[0]
+    numbers: list = re.findall(RE_INTEGER, value)
+    leftovers: str = re.subn(RE_INTEGER, '', value)[0]
 
-    if not numbers:
+    if not numbers:    # Nothing here that remotely looks like an integer.
         return 0.0
 
     return (
@@ -217,12 +209,12 @@ def unity(r):
 
 
 bloom_filters = _prepare_filters_or_not()
+words_title: Callable = unity
+words_auth: Callable = unity
 if StringBloomFilter and bloom_filters:
     words_title = partial(bloom_match, bloom_filter=bloom_filters['title'])
     words_auth = partial(bloom_match, bloom_filter=bloom_filters['auth'])
-else:
-    words_title = unity
-    words_auth = unity
+
 
 
 def words_author_structure(value: list) -> float:
@@ -243,7 +235,7 @@ def words_author_structure(value: list) -> float:
     return num_good / num_authors
 
 
-BELIEF_FUNCTIONS = {
+BELIEF_FUNCTIONS: Dict[str, List[Callable]] = {
     'title': [words_title, minimum_length(5)],
     'raw': [words_title, words_auth],
     'authors': [words_author_structure],
@@ -283,7 +275,7 @@ def calculate_belief(reference: dict) -> dict:
             # that we can say about them.
             output[key] = 1.
             continue
-        funcs = BELIEF_FUNCTIONS.get(key, [unity])
+        funcs: list = BELIEF_FUNCTIONS.get(key, [unity])
         score = 0.
         for func in funcs:
             # We don't want the whole process to get derailed when one
@@ -291,10 +283,8 @@ def calculate_belief(reference: dict) -> dict:
             try:
                 score += func(value)
             except Exception as e:
-                logger.error('Validation function for %s failed with: %s' %
-                             (key, e))
+                logger.error('Validation for %s failed with: %s', key, e)
         output[key] = score/len(funcs)
-
     return output
 
 
@@ -317,7 +307,7 @@ def identity_belief(reference: dict) -> dict:
     return {key: unity(value) for key, value in reference.keys()}
 
 
-def validate(aligned_references: list) -> list:
+def validate(aligned_references: list) -> List[List[Tuple[str, dict]]]:
     """
     Apply expectations about field values to generate probabilities.
 
@@ -334,7 +324,6 @@ def validate(aligned_references: list) -> list:
         have the same shape as ``aligned_references``, except that values are
         replaced by floats in the range 0.0 to 1.0.
     """
-
     return [
         [
             (extractor, calculate_belief(metadatum))

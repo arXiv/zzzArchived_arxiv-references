@@ -30,7 +30,7 @@ class TestProcessAppFactory(unittest.TestCase):
 
     @mock.patch('references.services.credentials')
     def test_returns_celery_app(self, mock_credentials):
-        """:func:`.create_web_app` returns a :class:`.Celery` instance."""
+        """:func:`.create_web_app` returns a :class:`.Flask` instance."""
         type(mock_credentials).init_app = mock.MagicMock()
         app = create_worker_app()
-        self.assertIsInstance(app, Celery)
+        self.assertIsInstance(app, Flask)

@@ -1,10 +1,13 @@
 """Service integration for RefExtract."""
 
-import requests
 import os
-from references import logging
 from urllib.parse import urljoin
-from .util import get_application_config, get_application_global
+from typing import List
+
+import requests
+
+from references import logging
+from references.context import get_application_config, get_application_global
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +23,7 @@ class RefExtractSession(object):
             raise IOError('Refextract endpoint not available: %s' %
                           response.content)
 
-    def extract_references(self, filename: str) -> dict:
+    def extract_references(self, filename: str) -> List[dict]:
         """
         Extract references from the PDF at ``filename``.
 
@@ -30,7 +33,7 @@ class RefExtractSession(object):
 
         Returns
         -------
-        dict
+        list
             Raw output from RefExtract.
         """
         response = requests.post(urljoin(self.endpoint, '/refextract/extract'),
@@ -66,7 +69,7 @@ def current_session():
     return g.refextract
 
 
-def extract_references(filename: str) -> dict:
+def extract_references(filename: str) -> List[dict]:
     """
     Extract references from the PDF at ``filename``.
 

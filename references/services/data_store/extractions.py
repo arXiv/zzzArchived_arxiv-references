@@ -1,11 +1,16 @@
+"""Stores entry about an extraction session."""
+
+from base64 import b64encode
+from decimal import Decimal
+
 import boto3
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
-from base64 import b64encode
-from decimal import Decimal
 from unidecode import unidecode
+
 from references import logging
-from references.types import List
+from typing import List
+
 ReferenceData = List[dict]
 
 logger = logging.getLogger(__name__)
@@ -49,8 +54,7 @@ class ExtractionSession(object):
             waiter = table.meta.client.get_waiter('table_exists')
             waiter.wait(TableName=self.table_name)
         except ClientError:
-            logger.debug('Table exists: %s' % self.table_name)
-            pass
+            logger.debug('Table exists: %s', self.table_name)
 
     def _prepare(self, entry: dict) -> dict:
         extraction = self.hash(entry['document'], entry['version'],
@@ -61,7 +65,8 @@ class ExtractionSession(object):
         })
         return entry
 
-    def hash(self, document_id: str, version: float, created: str) -> str:
+    @staticmethod
+    def hash(document_id: str, version: str, created: str) -> str:
         """
         Generate a unique ID for the extraction entry.
 
@@ -122,14 +127,14 @@ class ExtractionSession(object):
         -------
         dict
         """
-        logger.debug('%s: Get latest extraction' % document_id)
+        logger.debug('%s: Get latest extraction', document_id)
         response = self.table.query(
             Limit=1,
             ScanIndexForward=False,
             KeyConditionExpression=Key('document').eq(document_id)
         )
         if len(response['Items']) == 0:
-            logger.debug('%s: No extraction available' % document_id)
+            logger.debug('%s: No extraction available', document_id)
             return None
-        logger.debug('%s: Got extraction' % document_id)
+        logger.debug('%s: Got extraction', document_id)
         return response['Items'][0]

@@ -1,12 +1,16 @@
-from references import logging
-from .util import clean
+"""Stores raw extraction metadata from individual extractors."""
+
+import os
+import json
+import datetime
+
 import boto3
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
-import datetime
-import json
+
 import jsonschema
-import os
+from references import logging
+from .util import clean
 
 logger = logging.getLogger(__name__)
 
@@ -66,10 +70,10 @@ class RawExtractionSession(object):
             waiter = table.meta.client.get_waiter('table_exists')
             waiter.wait(TableName=self.table_name)
         except ClientError:
-            logger.debug('Table exists: %s' % self.table_name)
-            pass
+            logger.debug('Table exists: %s', self.table_name)
 
-    def _hash(self, document_id: str, extractor: str) -> str:
+    @staticmethod
+    def hash(document_id: str, extractor: str) -> str:
         """Generate the hash key for the primary index."""
         return "%s:%s" % (document_id, extractor)
 
@@ -102,7 +106,7 @@ class RawExtractionSession(object):
             raise ValueError('Invalid value for references, expected list')
 
         entry = {
-            'document_extractor': self._hash(document_id, extractor),
+            'document_extractor': self.hash(document_id, extractor),
             'document': document_id,
             'created': datetime.datetime.now().isoformat(),
             'extractor': extractor,
@@ -131,9 +135,8 @@ class RawExtractionSession(object):
             Includes metadata about the extraction, and the references
             themselves.
         """
-        logger.debug('%s: Get latest extraction from %s' %
-                     (document_id, extractor))
-        key = self._hash(document_id, extractor)
+        logger.debug('%s: get latest from %s', document_id, extractor)
+        key = self.hash(document_id, extractor)
         try:
             response = self.table.query(
                 Limit=1,
@@ -144,8 +147,7 @@ class RawExtractionSession(object):
             raise IOError('Failed to query DynamoDB table %s: %s' %
                           (self.table_name, e)) from e
         if len(response['Items']) == 0:
-            logger.debug('%s: No extraction available from %s' %
-                         (document_id, extractor))
-            return
-        logger.debug('%s: Got extraction from %s' % (document_id, extractor))
+            logger.debug('%s: no extraction from %s', document_id, extractor)
+            return None
+        logger.debug('%s: got extraction from %s', document_id, extractor)
         return response['Items'][0]

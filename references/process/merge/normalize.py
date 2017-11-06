@@ -1,9 +1,13 @@
 """Normalize extracted references."""
 
-from references import logging
 from statistics import mean, median
 from decimal import Decimal
 import re
+from typing import Tuple, Union, List, Callable
+
+from references.process.util import CATEGORIES
+from references import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -28,27 +32,18 @@ def _remove_leading_trailing_nonalpha(string: str) -> str:
     return re.sub(r"[^0-9a-zA-Z]+$", "", re.sub(r"^[^0-9a-zA-Z]+", "", string))
 
 
-categories = [
-    "acc-phys", "adap-org", "alg-geom", "ao-sci", "astro-ph", "atom-ph",
-    "bayes-an", "chao-dyn", "chem-ph", "cmp-lg", "comp-gas", "cond-mat", "cs",
-    "dg-ga", "funct-an", "gr-qc", "hep-ex", "hep-lat", "hep-ph", "hep-th",
-    "math-ph", "mtrl-th", "math", "nlin", "nucl-ex", "nucl-th", "patt-sol",
-    "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int", "supr-con"
-]
-
-
-def _fix_arxiv_id(value: object) -> object:
+def _fix_arxiv_id(value: Union[list, str]) -> Union[list, str]:
     """Fix common mistakes in arXiv identifiers."""
     if isinstance(value, list):
         return [_fix_arxiv_id(obj) for obj in value]
-    for category in categories:
+    for category in CATEGORIES:
         typo = category.replace('-', '')
         if typo in value:
             return value.replace(typo, category)
     return value
 
 
-NORMALIZERS = [
+NORMALIZERS: List[Tuple[str, Callable]] = [
     ('authors', _remove_dots_from_author_names),
     ('title', _remove_leading_trailing_nonalpha),
     ('source', lambda string: _remove_dots(string).title()),
@@ -94,7 +89,7 @@ def normalize_records(records: list) -> list:
     return [_normalize_record(record) for record in records]
 
 
-def filter_records(records: list, threshold: float=0.5) -> tuple:
+def filter_records(records: list, threshold: float=0.5) -> Tuple[list, float]:
     """
     Remove low-quality extracted references, and generate a composite score.
 

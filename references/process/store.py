@@ -22,19 +22,16 @@ def store(metadata: list, document_id: str, score: float=1.0,
     str
         Unique identifier for this extraction.
     """
-    logger.info('%s: storing metadata' % document_id)
-
+    logger.debug('%s: storing metadata', document_id)
     try:
         # Returns the data with reference hashes inserted.
         extraction, metadata = data_store.store_references(document_id,
                                                            metadata, VERSION,
                                                            score, extractors)
     except Exception as e:
-        msg = '%s: could not store metadata: %s' % (document_id, e)
-        logger.error(msg)
-        raise RuntimeError(msg) from e
-    logger.info('%s: stored metadata with extraction %s' %
-                (document_id, extraction))
+        logger.error('%s: could not store metadata: %s', document_id, e)
+        raise RuntimeError('%s: could not store: %s' % (document_id, e)) from e
+    logger.debug('%s: refs stored with extraction %s', document_id, extraction)
     return extraction
 
 
@@ -58,13 +55,12 @@ def store_raw(document_id: str, extractor: str, metadata: list) -> None:
     ValueError
         Invalid value for one or more parameters.
     """
-    logger.info('%s: storing raw metadata: %s' % (document_id, extractor))
+    logger.info('%s: storing raw metadata: %s', document_id, extractor)
 
     try:
         data_store.store_raw_extraction(document_id, extractor, metadata)
     except Exception as e:
-        msg = '%s: could not store metadata for %s: %s' % \
-              (document_id, extractor, e)
-        logger.error(msg)
-        raise RuntimeError(msg) from e
-    logger.info('%s: stored metadata for %s' % (document_id, extractor))
+        logger.error('%s: could not store %s: %s', document_id, extractor, e)
+        raise RuntimeError('%s: could not store %s: %s' %
+                           (document_id, extractor, e)) from e
+    logger.debug('%s: refs stored for %s', document_id, extractor)

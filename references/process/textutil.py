@@ -1,3 +1,5 @@
+"""Text cleanup utilities."""
+
 import re
 import ftfy
 import unidecode
@@ -12,8 +14,9 @@ purenum = re.compile(r"\b[0-9]+\b")
 
 def clean_text(txt, numok=False):
     """
-    Normalize a set of text so that it can be compared with different sources,
-    potentially with different encodings and varying whitespace etc.
+    Normalize a set of text so that it can be compared with different sources.
+
+    Potentially with different encodings and varying whitespace etc.
     """
     txt = txt.lower()
     txt = cid_pat.sub(" UNK ", txt)

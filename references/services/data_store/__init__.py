@@ -1,25 +1,17 @@
-"""
-Service layer for reference metadata storage and retrieval.
+"""Integration with reference metadata store."""
 
-All of the work is done by the submodules:
-
-.. autodoc::
-   :members:
-
-
-"""
-
-from references import logging
 import os
 
-# See http://flask.pocoo.org/docs/0.12/extensiondev/
 from flask import _app_ctx_stack as stack
 from flask import current_app
-from references.types import List
+from references import logging
+from typing import List
+from references.context import get_application_config, get_application_global
 from .raw import RawExtractionSession
 from .references import ReferenceSession
 from .extractions import ExtractionSession
-from ..util import get_application_config, get_application_global
+
+
 ReferenceData = List[dict]
 
 logger = logging.getLogger(__name__)
@@ -103,7 +95,7 @@ def get_session(app: object = None) -> DataStoreSession:
         try:
             access_key, secret_key, token = g.credentials.get_credentials()
         except IOError as e:
-            pass
+            logger.debug('failed to load instance credentials: %s', str(e))
     if access_key is None or secret_key is None:
         access_key = config.get('AWS_ACCESS_KEY_ID', None)
         secret_key = config.get('AWS_SECRET_ACCESS_KEY', None)

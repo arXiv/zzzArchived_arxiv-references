@@ -1,3 +1,6 @@
+"""Helpers for data store."""
+
+
 def clean(reference: dict) -> dict:
     """
     Remove empty values.
@@ -11,7 +14,7 @@ def clean(reference: dict) -> dict:
     dict
     """
     if reference is None:
-        return
+        return None
 
     # TODO: This will not work if we want an explicitly False(y) value.
     def _inner_clean(datum):

@@ -1,3 +1,5 @@
+"""Helpers for the reference extraction process."""
+
 import re
 import os
 import shlex
@@ -5,8 +7,7 @@ import shutil
 import tempfile
 import subprocess
 import datetime
-from contextlib import contextmanager
-from references.types import List
+from typing import List
 
 from references import logging
 logger = logging.getLogger(__name__)
@@ -15,63 +16,20 @@ VolumeList = List[List[str]]
 PortList = List[List[int]]
 
 
-@contextmanager
-def indir(directory: str) -> None:
-    """
-    Context manager for performing actions within a given directory, guaranteed
-    to return to previous directory upon exit.
-
-    Parameters
-    ----------
-    directory: str
-
-    Returns
-    -------
-    None
-    """
-    cwd = os.getcwd()
-    try:
-        os.chdir(directory)
-        yield
-        os.chdir(cwd)
-    except Exception as e:
-        raise e
-    finally:
-        os.chdir(cwd)
-
-
-@contextmanager
-def tempdir(cleanup: bool = True) -> str:
-    """
-    A near copy of tempfile.TemporaryDirectory but does not clean up
-    automatically after calling. Useful for debugging purposes for troublesome
-    pdfs in the workflow.
-
-    Parameters
-    ----------
-    cleanup: bool
-        Whether to delete the directory after use
-
-    Returns
-    -------
-    directory: str
-        Temporary directory name
-    """
-    directory = tempfile.mkdtemp()
-    try:
-        yield directory
-    except Exception as e:
-        raise e
-    finally:
-        if cleanup:
-            shutil.rmtree(directory)
+CATEGORIES = [
+    "acc-phys", "adap-org", "alg-geom", "ao-sci", "astro-ph", "atom-ph",
+    "bayes-an", "chao-dyn", "chem-ph", "cmp-lg", "comp-gas", "cond-mat", "cs",
+    "dg-ga", "funct-an", "gr-qc", "hep-ex", "hep-lat", "hep-ph", "hep-th",
+    "math", "math-ph", "mtrl-th", "nlin", "nucl-ex", "nucl-th", "patt-sol",
+    "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int",
+    "supr-con", "eess", "econ"
+]
 
 
 def files_modified_since(fldr: str, timestamp: datetime.datetime,
-                         extension: str = 'pdf'):
+                         extension: str = 'pdf') -> list:
     """
-    Get a list of files modified since a particular timestamp, which also match
-    the given extension.
+    Get a list of files modified since a particular timestamp.
 
     Parameters
     ----------
@@ -109,7 +67,9 @@ def files_modified_since(fldr: str, timestamp: datetime.datetime,
 
 def find_arxiv_id(string: str) -> str:
     """
-    Try to extract an arxiv id from a string, looking for one of two forms:
+    Try to extract an arxiv id from a string.
+
+    Looking for one of two forms:
         1. New form -- 1603.00324
         2. Old form -- hep-th/0002839
 
@@ -161,6 +121,7 @@ def rotating_backup_name(filename: str) -> str:
         if os.path.exists(n):
             continue
         return n
+    return None
 
 
 def backup(filename: str):

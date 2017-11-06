@@ -1,8 +1,8 @@
 """Provides a controller for reference metadata views."""
 
 import logging
+from typing import Tuple
 
-from references.types import ControllerResponseData
 from references.services import data_store
 from references import status
 from flask import url_for
@@ -11,6 +11,8 @@ from urllib import parse
 log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
 logging.basicConfig(format=log_format, level=logging.ERROR)
 logger = logging.getLogger(__name__)
+
+ControllerResponse = Tuple[dict, int, dict]
 
 
 def _gs_query(reference: dict) -> str:
@@ -55,7 +57,7 @@ def _get_identifiers(reference_data: dict) -> dict:
     return {k: v for k, v in identifiers.items() if v}
 
 
-def resolve(document_id: str, reference_id: str) -> ControllerResponseData:
+def resolve(document_id: str, reference_id: str) -> ControllerResponse:
     """
     Get a redirect URL for a reference.
 
@@ -70,31 +72,32 @@ def resolve(document_id: str, reference_id: str) -> ControllerResponseData:
     int
     """
     reference_data, response_status = get(document_id, reference_id)
-
+    headers = {}
     if response_status != status.HTTP_200_OK:
-        return {
+        content = {
             'explanation': "No data exists for this reference"
-        }, response_status
-
-    identifiers = _get_identifiers(reference_data)
-
-    if 'arxiv' in identifiers:
-        url = 'https://arxiv.org/abs/%s' % identifiers['arxiv']
-    elif 'doi' in identifiers:
-        url = 'https://dx.doi.org/%s' % identifiers['doi']
-    elif 'isbn' in identifiers:
-        url = 'https://www.worldcat.org/isbn/%s' % identifiers['isbn']
-    elif 'title' in identifiers:
-        url = 'https://scholar.google.com/scholar?%s' % \
-              _gs_query(reference_data)
+        }
     else:
-        return {
-            'explanation': 'Cannot generate redirect for this reference.'
-        }, status.HTTP_404_NOT_FOUND
-    return url, status.HTTP_303_SEE_OTHER
+        response_status = status.HTTP_303_SEE_OTHER
+        identifiers = _get_identifiers(reference_data)
+        if 'arxiv' in identifiers:
+            content = {'url': 'https://arxiv.org/abs/%s' %
+                              identifiers['arxiv']}
+        elif 'doi' in identifiers:
+            content = {'url': 'https://dx.doi.org/%s' % identifiers['doi']}
+        elif 'isbn' in identifiers:
+            content = {'url': 'https://www.worldcat.org/isbn/%s' %
+                              identifiers['isbn']}
+        elif 'title' in identifiers:
+            content = {'url': 'https://scholar.google.com/scholar?%s' %
+                              _gs_query(reference_data)}
+        else:
+            content = {'explanation': 'cannot provide redirect for reference'}
+            response_status = status.HTTP_404_NOT_FOUND
+    return content, response_status, headers
 
 
-def get(document_id: str, reference_id: str) -> ControllerResponseData:
+def get(document_id: str, reference_id: str) -> ControllerResponse:
     """
     Get metadata for a specific reference in a document.
 
@@ -106,9 +109,13 @@ def get(document_id: str, reference_id: str) -> ControllerResponseData:
     Returns
     -------
     dict
+        Response content.
     int
         HTTP status code.
+    dict
+        Response headers.
     """
+    headers = {}
     try:
         reference = data_store.get_reference(document_id, reference_id)
     except IOError as e:
@@ -116,14 +123,14 @@ def get(document_id: str, reference_id: str) -> ControllerResponseData:
                      % (document_id, reference_id, e))
         return {
             'explanation': "An error occurred while retrieving data"
-        }, status.HTTP_500_INTERNAL_SERVER_ERROR
+        }, status.HTTP_500_INTERNAL_SERVER_ERROR, headers
 
     if reference is None:
         logger.info("Request for non-existant reference: %s, %s"
                     % (document_id, reference_id))
         return {
             'explanation': "No reference data exists for %s" % document_id
-        }, status.HTTP_404_NOT_FOUND
+        }, status.HTTP_404_NOT_FOUND, headers
 
     for key, value in reference.items():
         if type(value) is list:
@@ -132,10 +139,10 @@ def get(document_id: str, reference_id: str) -> ControllerResponseData:
             reference[key] = None
         else:
             reference[key] = value
-    return reference, status.HTTP_200_OK
+    return reference, status.HTTP_200_OK, headers
 
 
-def list(document_id: str, reftype: str='__all__') -> ControllerResponseData:
+def list(document_id: str, reftype: str='__all__') -> ControllerResponse:
     """
     Get latest reference metadata for an arXiv document.
 
@@ -147,23 +154,26 @@ def list(document_id: str, reftype: str='__all__') -> ControllerResponseData:
     Returns
     -------
     dict
-        Response payload.
+        Response content.
     int
         HTTP status code.
+    dict
+        Response headers.
     """
+    headers = {}
     try:
         data = data_store.get_latest_extractions(document_id, reftype=reftype)
     except IOError as e:
         logger.error("Error retrieving data (%s): %s " % (document_id, e))
         return {
             'explanation': "An error occurred while retrieving data"
-        }, status.HTTP_500_INTERNAL_SERVER_ERROR
+        }, status.HTTP_500_INTERNAL_SERVER_ERROR, headers
 
     if data is None:
         logger.info("Request for non-existant record: %s" % document_id)
         return {
             'explanation': "No reference data exists for %s" % document_id
-        }, status.HTTP_404_NOT_FOUND
+        }, status.HTTP_404_NOT_FOUND, headers
 
     # Missing values should be null.
     for reference in data['references']:
@@ -180,11 +190,10 @@ def list(document_id: str, reftype: str='__all__') -> ControllerResponseData:
                                extractor=extractor)
             for extractor in data['extractors']
         }
-    return data, status.HTTP_200_OK
+    return data, status.HTTP_200_OK, headers
 
 
-def get_raw_extraction(document_id: str,
-                       extractor: str) -> ControllerResponseData:
+def get_raw_extraction(document_id: str, extractor: str) -> ControllerResponse:
     """
     Get raw extraction metadata for a specific extractor.
 
@@ -196,17 +205,20 @@ def get_raw_extraction(document_id: str,
     Returns
     -------
     dict
-        Response payload.
+        Response content.
     int
         HTTP status code.
+    dict
+        Response headers.
     """
+    headers = {}
     try:
         extraction = data_store.get_raw_extraction(document_id, extractor)
     except IOError as e:
         logger.error("Error retrieving data (%s): %s " % (document_id, e))
         return {
             'explanation': "An error occurred while retrieving data"
-        }, status.HTTP_500_INTERNAL_SERVER_ERROR
+        }, status.HTTP_500_INTERNAL_SERVER_ERROR, headers
 
     if extraction is None:
         logger.info("Request for non-existant record: %s, %s" %
@@ -214,5 +226,5 @@ def get_raw_extraction(document_id: str,
         return {
             'explanation': "No reference data exists for %s from %s" %
             (document_id, extractor)
-        }, status.HTTP_404_NOT_FOUND
-    return extraction, status.HTTP_200_OK
+        }, status.HTTP_404_NOT_FOUND, headers
+    return extraction, status.HTTP_200_OK, headers

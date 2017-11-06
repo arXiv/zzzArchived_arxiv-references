@@ -1,23 +1,15 @@
 """
-This module encapsulates reference extraction logic.
+This module encapsulates the reference extraction process.
 
-The processing pipeline is comprised of several independent modules that
-perform specific tasks. These modules are stateless, remain totally unaware of
-each other, and are not responsible for IO operations (except reading
-from/writing to the filesystem). Each module exposes a single method.
 
-Extractor:
-- Expects the location of a PDF on the filesystem;
-- Extracts reference lines and structured reference metadata;
-- Returns reference lines and metadata.
 """
+
+from datetime import datetime
+from statistics import mean
 
 from references.process.extract import cermine, grobid, refextract
 from references import logging
 from references.services import metrics
-from datetime import datetime
-from statistics import mean
-
 
 logger = logging.getLogger(__name__)
 
@@ -72,13 +64,13 @@ def extract(pdf_path: str, document_id: str,
     """
     extractions = {}
     for name, extractor in extractors:
-        logger.info('Starting extraction with %s' % name)
+        logger.debug('%s: starting extraction with %s', document_id, name)
         try:
             start_time = datetime.now()
             extractions[name] = extractor(pdf_path, document_id)
             end_time = datetime.now()
 
-            logger.info('Extraction with %s succeeded' % name)
+            logger.debug('%s: extraction with %s succeeded', document_id, name)
             if report:
                 metrics.report('ExtractionSucceeded', 1.,
                                dimensions={'Extractor': name})
@@ -95,6 +87,6 @@ def extract(pdf_path: str, document_id: str,
             if report:
                 metrics.report('ExtractionSucceeded', 0.,
                                dimensions={'Extractor': name})
-            logger.info('Extraction failed for %s with %s: %s' %
-                        (pdf_path, name, e))
+            logger.debug('%s: extraction failed for %s with %s: %s',
+                         document_id, pdf_path, name, e)
     return extractions

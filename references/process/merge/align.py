@@ -3,20 +3,23 @@
 import copy
 import statistics
 from itertools import islice, chain
-from typing import List
+from typing import List, Dict, Tuple, Any
 
 from references.process.textutil import clean_text
 
 
-def argmax(array):
+def argmax(array: list) -> int:
+    """Calculate the index of the first maximum value in ``array``."""
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index
 
 
 def jacard(str0: str, str1: str) -> float:
     """
-    Jacard similarity score between str0 and str1, containing the fraction of
-    matching words that are the same between the two strings.
+    Jacard similarity score between str0 and str1.
+
+    Based on the fraction of matching words that are the same between the two
+    strings.
 
     Parameters
     ----------
@@ -40,9 +43,11 @@ def jacard(str0: str, str1: str) -> float:
 
 def digest(metadata: dict) -> str:
     """
-    Create a single string that represents the record. It does so by
-    recursively digesting the structure, taking any strings in a list or
-    dictionary value and combining them into a word list (single string)
+    Create a single string that represents the record.
+
+    It does so by recursively digesting the structure, taking any strings in a
+    list or dictionary value and combining them into a word list (single
+    string)
 
     Parameters
     ----------
@@ -70,10 +75,8 @@ def digest(metadata: dict) -> str:
         return clean_text(str(metadata), numok=True)
 
 
-def flatten(arr):
-    """
-    Flatten a structure into a list of the values in that structure
-    """
+def flatten(arr: list) -> list:
+    """Flatten a structure into a list of the values in that structure."""
     if isinstance(arr, dict):
         return list(chain(*[flatten(i) for i in arr.values()]))
     if isinstance(arr, list):
@@ -83,8 +86,10 @@ def flatten(arr):
 
 def similarity_cutoff(records: dict) -> float:
     """
-    Get the similarity score cutoff to assist in determining whether two items
-    are actually similar or in fact have no matches.
+    Get the similarity score cutoff.
+
+    Assist in determining whether two items are actually similar or in fact
+    have no matches.
 
     Parameters
     ----------
@@ -133,13 +138,13 @@ def similarity_cutoff(records: dict) -> float:
     return _cutoff(flatten(copy.deepcopy(jac)))
 
 
-def align_records(records: List[dict]) -> List[List[tuple]]:
+def align_records(records: Dict[str, List[dict]]) -> List[List[Tuple[str, dict]]]:
     """
-    Match references from a number of records so that similar
+    Align records across extractor outputs.
 
     Parameters
     ----------
-    records : dict of metadata
+    records : dict
         A set of records where each reference list is labelled by the extractor
         name i.e. {"cermine": [references], "grobid": [references]}
 
@@ -182,7 +187,7 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
                   key=lambda extraction: -len(extraction[1]))]
     output = [[(extractors[0], rec)] for rec in records[extractors[0]]]
     for ikey, extractor in islice(enumerate(extractors), 1, len(records)):
-        used = []
+        used: List[int] = []
 
         record = records[extractor]
         for iref, ref in enumerate(record):
@@ -207,11 +212,11 @@ def align_records(records: List[dict]) -> List[List[tuple]]:
             entry = [(extractor, ref)]
             if scores:
                 score, index = scores[0]
+                # used.append(index) 
                 if extractor not in list(zip(*output[index]))[0]:
                     output[index] = output[index] + entry
                 else:
                     output.append(entry)
             else:
                 output.append(entry)
-
     return output

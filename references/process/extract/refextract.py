@@ -1,7 +1,10 @@
 """
-Provides extractions using the `refextract
-<https://github.com/inspirehep/refextract>`_ package.
+Provides extractions using the refextract package.
+
+See <https://github.com/inspirehep/refextract>.
 """
+
+from typing import List, Any, Dict
 
 from references.services import refextract
 from references import logging
@@ -20,8 +23,20 @@ FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
 ]
 
 
-def _transform(refextract_metadatum):
-    metadatum = {'reftype': 'citation'}
+def _transform(refextract_metadatum: dict) -> dict:
+    """
+    Restructure refextract output to match internal extraction struct.
+
+    Parameters
+    ----------
+    refextract_metadatum : dict
+        RefExtract output.
+
+    Returns
+    -------
+    dict
+    """
+    metadatum: Dict[str, Any] = {'reftype': 'citation'}
     for re_key, key in FIELD_MAPPINGS:
         value = refextract_metadatum.get(re_key)
         if value:
@@ -32,7 +47,7 @@ def _transform(refextract_metadatum):
     return metadatum
 
 
-def extract_references(filename: str, document_id: str) -> str:
+def extract_references(filename: str, document_id: str) -> List[dict]:
     """
     Wrapper for :func:`refextract.extract_references_from_file` function.
 
@@ -46,12 +61,11 @@ def extract_references(filename: str, document_id: str) -> str:
     references : list of dicts
         Reference metadata extracted from PDF.
     """
-    raw = refextract.extract_references(filename)
     try:
         return [_transform(reference) for reference
-                in raw]
+                in refextract.extract_references(filename)]
     except IOError as e:
-        raise IOError('%s' % e) from e
+        raise IOError('Failed to transform reference metadata') from e
     except Exception as e:
-        msg = 'Failed to extract references from %s: %s' % (filename, e)
-        raise RuntimeError(msg) from e
+        logger.error('Failed to extract references from %s: %s', filename, e)
+        raise RuntimeError('Failed to extract references') from e
