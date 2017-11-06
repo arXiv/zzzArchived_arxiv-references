@@ -27,4 +27,4 @@ WORKDIR /opt/refextract/
 
 ADD extract /opt/refextract/extract/
 
-CMD uwsgi --http 0.0.0.0:8000 -w wsgi --processes 1 --threads 8
+CMD uwsgi --http-socket :8000 -w wsgi -t 3000 --processes 8 --threads 1 -M --async 100 --ugreen

@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 
 class TestCredentialsService(unittest.TestCase):
-    """Expected behavior of :class:`.credentials.CredentialsSession`."""
+    """Expected behavior of :class:`.InstanceCredentialsSession`."""
 
     @mock.patch('requests.get')
     def setUp(self, mock_get):
@@ -24,6 +24,7 @@ class TestCredentialsService(unittest.TestCase):
           "Expiration": "2017-05-17T15:09:54Z"
         })
         mock_get.return_value = mock_response
+        os.environ['INSTANCE_CREDENTIALS'] = 'true'
         from references.services import credentials
         self.session = credentials.get_session()
 
@@ -41,6 +42,8 @@ class TestCredentialsService(unittest.TestCase):
             del os.environ['AWS_SESSION_TOKEN']
         if 'CREDENTIALS_EXPIRE' in os.environ:
             del os.environ['CREDENTIALS_EXPIRE']
+        if 'INSTANCE_CREDENTIALS' in os.environ:
+            del os.environ['INSTANCE_CREDENTIALS']
 
     def test_credentials_are_not_set(self):
         """Before setUp(), no credentials were set."""

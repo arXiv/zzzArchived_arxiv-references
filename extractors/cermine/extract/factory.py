@@ -9,6 +9,7 @@ def create_cermine_app() -> Flask:
     app = Flask('cermine')
     app.config['UPLOAD_PATH'] = os.environ.get('UPLOAD_PATH', '/tmp/uploads')
     app.config['LOGFILE'] = os.environ.get('LOGFILE', None)
+    app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = False
     loglevel = os.environ.get('LOGLEVEL', logging.INFO)
     if isinstance(loglevel, str):
         try:

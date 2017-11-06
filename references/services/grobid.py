@@ -2,7 +2,7 @@
 
 import os
 from urllib.parse import urljoin
-
+from urllib3 import Retry
 import requests
 
 from references.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
@@ -29,8 +29,12 @@ class GrobidSession(object):
         """
         self.endpoint = endpoint
         self.path = path
+        self._session = requests.Session()
+        _retry = Retry(connect=30, read=10, backoff_factor=20)
+        self._adapter = requests.adapters.HTTPAdapter(max_retries=_retry)
+        self._session.mount('http://', self._adapter)
         try:
-            head = requests.head(urljoin(self.endpoint, self.path))
+            head = self._session.head(urljoin(self.endpoint, self.path))
         except Exception as e:
             raise IOError('Failed to connect to Grobid at %s: %s' %
                           (self.endpoint, e)) from e
@@ -54,19 +58,15 @@ class GrobidSession(object):
             Raw XML response from Grobid.
         """
         try:
-            with open(filename, 'rb') as filehandle:
-                files = {'input': filehandle}
-                response = requests.post(urljoin(self.endpoint, self.path),
-                                         files=files)
-        except Exception as e:
-            raise IOError('Request to Grobid failed: %s' % e) from e
-
-        if response.status_code != HTTP_200_OK:
-            msg = 'GROBID ({}) return error code {} ({}): {}'.format(
-                response.url, response.status_code,
-                response.reason, response.content
-            )
-            raise IOError(msg)
+            _target = urljoin(self.endpoint, self.path)
+            response = self._session.post(_target, files={
+                'input': open(filename, 'rb')
+            })
+        except requests.exceptions.ConnectionError as e:
+            raise IOError('%s: GROBID extraction failed: %s' % (filename, e))
+        if not response.ok:
+            raise IOError('%s: GROBID extraction failed: %s' %
+                          (filename, response.content))
         return response.content
 
 

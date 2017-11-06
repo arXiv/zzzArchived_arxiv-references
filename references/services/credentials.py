@@ -2,7 +2,6 @@
 
 import os
 from datetime import datetime, timedelta
-
 import requests
 import werkzeug
 
@@ -13,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 class CredentialsSession(object):
-    """Responsible for maintaining current access credentials for this role."""
-
+    """Base class for credentials."""
+    
     fmt = "%Y-%m-%dT%H:%M:%SZ"
 
     def __init__(self, endpoint, role, config):
@@ -38,23 +37,6 @@ class CredentialsSession(object):
         :class:`.datetime`
         """
         return datetime.strptime(datestring, self.fmt)
-
-    def _refresh_credentials(self) -> None:
-        """Retrieve fresh credentials for the service role."""
-        try:
-            response = requests.get(self.url)
-        except requests.exceptions.ConnectionError as e:
-            logger.error(str(e))
-            raise IOError('Could not retrieve credentials') from e
-
-        if not response.ok:
-            logger.error(str(response.content))
-            raise IOError('Could not retrieve credentials')
-        data = response.json()
-        self.config['AWS_ACCESS_KEY_ID'] = data['AccessKeyId']
-        self.config['AWS_SECRET_ACCESS_KEY'] = data['SecretAccessKey']
-        self.config['AWS_SESSION_TOKEN'] = data['Token']
-        self.config['CREDENTIALS_EXPIRE'] = data['Expiration']
 
     @property
     def access_key(self) -> str:
@@ -93,6 +75,27 @@ class CredentialsSession(object):
         # This is padded by 15 seconds, just to be safe.
         return self.expires - datetime.now() <= timedelta(seconds=15)
 
+
+class InstanceCredentialsSession(CredentialsSession):
+    """Responsible for maintaining current access credentials for this role."""
+
+    def _refresh_credentials(self) -> None:
+        """Retrieve fresh credentials for the service role."""
+        try:
+            response = requests.get(self.url)
+        except requests.exceptions.ConnectionError as e:
+            logger.error(str(e))
+            raise IOError('Could not retrieve credentials') from e
+
+        if not response.ok:
+            logger.error(str(response.content))
+            raise IOError('Could not retrieve credentials')
+        data = response.json()
+        self.config['AWS_ACCESS_KEY_ID'] = data['AccessKeyId']
+        self.config['AWS_SECRET_ACCESS_KEY'] = data['SecretAccessKey']
+        self.config['AWS_SESSION_TOKEN'] = data['Token']
+        self.config['CREDENTIALS_EXPIRE'] = data['Expiration']
+
     def get_credentials(self):
         """Retrieve the current credentials for this role."""
         logger.debug('get credentials...')
@@ -100,6 +103,14 @@ class CredentialsSession(object):
             logger.debug('expired, refreshing')
             self._refresh_credentials()
         logger.debug('new expiry: %s', self.expires.strftime(self.fmt))
+        return self.access_key, self.secret_key, self.session_token
+
+
+class PassthroughCredentialsSession(CredentialsSession):
+    """Loads credentials directly from config."""
+
+    def get_credentials(self):
+        """Retrieve the current credentials."""
         return self.access_key, self.secret_key, self.session_token
 
 
@@ -116,12 +127,14 @@ def init_app(app) -> None:
 def get_session(app: object = None) -> CredentialsSession:
     """Create a new :class:`.CredentialsSession`."""
     config = get_application_config(app)
-    role = config.get('CREDENTIALS_ROLE', "arxiv-references")
-    endpoint = config.get(
-        'CREDENTIALS_URL',
-        'http://169.254.169.254/latest/meta-data/iam/security-credentials'
-    )
-    return CredentialsSession(endpoint, role, config)
+    if config.get('INSTANCE_CREDENTIALS', 'true') == 'true':
+        role = config.get('CREDENTIALS_ROLE', "arxiv-references")
+        endpoint = config.get(
+            'CREDENTIALS_URL',
+            'http://169.254.169.254/latest/meta-data/iam/security-credentials'
+        )
+        return InstanceCredentialsSession(endpoint, role, config)
+    return PassthroughCredentialsSession('', '', config)
 
 
 def current_session(app: werkzeug.local.LocalProxy=None) -> CredentialsSession:
@@ -130,6 +143,8 @@ def current_session(app: werkzeug.local.LocalProxy=None) -> CredentialsSession:
     if g:
         if 'credentials' not in g:
             g.credentials = get_session(app)
-        g.credentials.get_credentials()
+        g.credentials
         return g.credentials
-    return get_session(app)
+    creds = get_session(app)
+    creds.get_credentials()
+    return creds

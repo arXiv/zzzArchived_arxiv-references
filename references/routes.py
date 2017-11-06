@@ -3,7 +3,8 @@
 from flask.json import jsonify
 from flask import Blueprint, render_template, redirect, request, url_for
 
-from references.controllers import extracted_references, extraction
+from references.controllers import extraction
+from references.controllers import extracted_references as extr
 from references.controllers.health import health_check
 from references import status
 
@@ -14,7 +15,8 @@ blueprint = Blueprint('references', __name__, url_prefix='')
 @blueprint.route('/status', methods=['GET'])
 def ok() -> tuple:
     """Provide current integration status information for health checks."""
-    return jsonify(health_check()), status.HTTP_200_OK
+    data, code, headers = health_check()
+    return jsonify(data), code, headers
 
 
 @blueprint.route('/references', methods=['POST'])
@@ -49,7 +51,7 @@ def resolve_reference(doc_id: str, ref_id: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    content, status_code, _ = extracted_references.resolve(doc_id, ref_id)
+    content, status_code, _ = extr.resolve(doc_id, ref_id)
     if status_code != status.HTTP_303_SEE_OTHER:
         return jsonify(content), status_code
     return redirect(content.get('url'), code=status_code)
@@ -73,8 +75,8 @@ def reference(doc_id: str, ref_id: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    response, status_code = extracted_references.get(doc_id, ref_id)
-    return jsonify(response), status_code
+    response, status_code, headers = extr.get(doc_id, ref_id)
+    return jsonify(response), status_code, headers
 
 
 @blueprint.route('/references/<arxiv:doc_id>', methods=['GET'])
@@ -94,8 +96,8 @@ def references(doc_id: str) -> tuple:
         HTTP status code. See :mod:`references.status` for details.
     """
     reftype = request.args.get('reftype', '__all__')
-    response, status_code = extracted_references.list(doc_id, reftype=reftype)
-    return jsonify(response), status_code
+    response, status_code, headers = extr.list(doc_id, reftype=reftype)
+    return jsonify(response), status_code, headers
 
 
 @blueprint.route('/references/<arxiv:doc_id>/raw/<string:extractor>',
@@ -116,6 +118,5 @@ def raw(doc_id: str, extractor: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    response, status_code = extracted_references.get_raw_extraction(doc_id,
-                                                                    extractor)
-    return jsonify(response), status_code
+    response, status_code, headers = extr.get_raw_extraction(doc_id, extractor)
+    return jsonify(response), status_code, headers

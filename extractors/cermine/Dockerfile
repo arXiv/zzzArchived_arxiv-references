@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     default-jdk \
     gcc \
  && rm -rf /var/lib/apt/lists/*
- 
+
 RUN pip install uwsgi
 
 RUN mkdir /opt/cermine
@@ -30,4 +30,4 @@ WORKDIR /opt/cermine/
 
 ADD extract /opt/cermine/extract/
 
-CMD uwsgi --http 0.0.0.0:8000 -w wsgi -t 300 --processes 1 --threads 8
+CMD uwsgi --http-socket :8000 -w wsgi -t 3000 --processes 4 --threads 1 -M --async 100 --ugreen

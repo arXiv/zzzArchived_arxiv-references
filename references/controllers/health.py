@@ -53,4 +53,4 @@ def health_check() -> ControllerResponse:
     for name, obj in _getServices():
         logger.info('Getting status of %s' % name)
         status[name] = _healthy_session(obj)
-    return {}, status, {}
+    return status, 200, {}
