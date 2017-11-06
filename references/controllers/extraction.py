@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 ControllerResponse = Tuple[dict, int, dict]
 
-
+BAD_REQUEST = {'reason': 'could not parse request'}
 DOCUMENT_ID_MISSING = {'reason': 'document_id missing in request'}
 FILE_MISSING_OR_INVALID = {'reason': 'file not found or invalid'}
 ACCEPTED = {'reason': 'reference extraction in process'}
@@ -44,6 +44,8 @@ def extract(payload: dict, current_version: float=0.0) -> ControllerResponse:
     dict
         Response headers.
     """
+    if not hasattr(payload, 'get'):
+        return BAD_REQUEST, http_status.HTTP_400_BAD_REQUEST, {}
     document_id = payload.get('document_id')
     if document_id is None or not isinstance(document_id, str):
         return DOCUMENT_ID_MISSING, http_status.HTTP_400_BAD_REQUEST, {}

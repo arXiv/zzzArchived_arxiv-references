@@ -38,10 +38,11 @@ ENV SECRETS_BUCKET_NAME ""
 ENV ARXIV_HOME "https://arxiv.org"
 ENV REFEXTRACT_ENDPOINT ""
 ENV INSTANCE_CREDENTIALS "true"
+ENV CREDENTIALS_URL "http://169.254.169.254/latest/meta-data/iam/security-credentials"
 
 EXPOSE 8000
 
 RUN chmod +x /opt/arxiv/start_web.sh
 
 WORKDIR /opt/arxiv/
-CMD ["/bin/bash", "/opt/arxiv/start_web.sh"]
+CMD uwsgi --http-socket :8000 -w wsgi -t 3000 --processes 8 --threads 1 -M --async 100 --ugreen --manage-script-name

@@ -2,6 +2,7 @@
 
 import os
 from urllib.parse import urljoin
+from urllib3 import Retry
 
 import requests
 from flask import _app_ctx_stack as stack
@@ -27,7 +28,10 @@ class CermineSession(object):
         endpoint : str
         """
         self.endpoint = endpoint
-        response = requests.get(urljoin(self.endpoint, '/cermine/status'))
+        self._session = requests.Session()
+        self._adapter = requests.adapters.HTTPAdapter(max_retries=2)
+        self._session.mount('http://', self._adapter)
+        response = self._session.get(urljoin(self.endpoint, '/cermine/status'))
         if not response.ok:
             raise IOError('CERMINE endpoint not available: %s' %
                           response.content)
@@ -46,12 +50,18 @@ class CermineSession(object):
             Raw XML response from Cermine.
         """
         # This can take a while.
-        response = requests.post(urljoin(self.endpoint, '/cermine/extract'),
-                                 files={'file': open(filename, 'rb')},
-                                 timeout=300)
+        self._adapter.max_retries = Retry(connect=30, read=10,
+                                          backoff_factor=20)
+        _target = urljoin(self.endpoint, '/cermine/extract')
+        try:
+            response = self._session.post(_target,
+                                          files={'file': open(filename, 'rb')})
+        except requests.exceptions.ConnectionError as e:
+            raise IOError('%s: CERMINE extraction failed: %s' % (filename, e))
         if not response.ok:
             raise IOError('%s: CERMINE extraction failed: %s' %
                           (filename, response.content))
+        print(response)
         return response.content
 
 

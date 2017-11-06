@@ -22,7 +22,7 @@ def getLogger():
     """Create a logger based on application configuration."""
     default_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
     try:
-        log_level = current_app.config.get('LOGLEVEL', logging.INFO)
+        log_level = int(current_app.config.get('LOGLEVEL', logging.INFO))
         log_format = current_app.config.get('LOGFORMAT', default_format)
         log_file = current_app.config.get('LOGFILE')
     except AttributeError:
@@ -50,7 +50,10 @@ def handle_upload(uploaded_file: FileStorage) -> str:
     filename = secure_filename(uploaded_file.filename)
     if not filename.endswith('.pdf'):
         raise ValueError('Unsupported file type')
-    filepath = os.path.join(current_app.config['UPLOAD_PATH'], filename)
+    upload_path = current_app.config.get('UPLOAD_PATH', '/tmp')
+    stub, ext = os.path.splitext(filename)
+    os.mkdir(os.path.join(upload_path, stub))
+    filepath = os.path.join(upload_path, stub, filename)
     uploaded_file.save(filepath)
     return filepath
 

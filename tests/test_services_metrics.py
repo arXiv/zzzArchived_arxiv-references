@@ -69,16 +69,18 @@ class TestMetricsCredentials(unittest.TestCase):
         os.environ['AWS_ACCESS_KEY_ID'] = 'foo'
         os.environ['AWS_SECRET_ACCESS_KEY'] = 'baz'
         os.environ['AWS_SESSION_TOKEN'] = 'bat'
+        os.environ['INSTANCE_CREDENTIALS'] = 'false'
         session = metrics.current_session()
         self.assertEqual(session.aws_access_key, 'foo')
         self.assertEqual(session.aws_secret_key, 'baz')
         self.assertEqual(session.aws_session_token, 'bat')
 
     def test_flask_app_with_no_credentials(self):
-        """Should rely on app config for when credentials not available."""
+        """Should rely on app config when credentials not available."""
         from flask import Flask
         from references.services import metrics
         app = Flask('test')
+        app.config['INSTANCE_CREDENTIALS'] = 'false'
         app.config['AWS_ACCESS_KEY_ID'] = 'qwerty'
         app.config['AWS_SECRET_ACCESS_KEY'] = 'ytrewq'
         app.config['AWS_SESSION_TOKEN'] = 'asdfghjkl'

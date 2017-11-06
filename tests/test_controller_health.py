@@ -13,7 +13,7 @@ class TestHealthCheck(unittest.TestCase):
     @mock.patch('references.controllers.health.refextract')
     def test_health_check_ok(self, *mocks):
         """A dict of health states is returned."""
-        _, status, _ = health_check()
+        status, code, _ = health_check()
         self.assertIsInstance(status, dict)
         self.assertEqual(len(status), len(_getServices()))
         for stat in status.values():
@@ -29,7 +29,7 @@ class TestHealthCheck(unittest.TestCase):
         for obj in mocks:
             type(obj).session = mock.PropertyMock(side_effect=RuntimeError)
 
-        _, status, _ = health_check()
+        status, code, _ = health_check()
         self.assertIsInstance(status, dict)
         self.assertEqual(len(status), len(_getServices()))
         print(status)

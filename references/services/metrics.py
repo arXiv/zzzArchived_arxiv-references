@@ -8,6 +8,7 @@ from flask import _app_ctx_stack as stack
 from typing import Callable
 from references.context import get_application_config, get_application_global
 from references import logging
+from references.services import credentials
 
 logger = logging.getLogger(__name__)
 
@@ -69,14 +70,12 @@ def init_app(app: object = None) -> None:
 def get_session(app: object = None) -> MetricsSession:
     """Get a new metrics session."""
     config = get_application_config(app)
-    g = get_application_global()
-    access_key, secret_key, token = None, None, None
-    if g is not None and 'credentials' in g and \
-            config.get('INSTANCE_CREDENTIALS', 'true') == 'true':
-        try:
-            access_key, secret_key, token = g.credentials.get_credentials()
-        except IOError as e:
-            logger.debug('failed to load instance credentials: %s', str(e))
+    creds = credentials.current_session()
+    try:
+        access_key, secret_key, token = creds.get_credentials()
+    except IOError as e:
+        access_key, secret_key, token = None, None, None
+        logger.debug('failed to load instance credentials: %s', str(e))
     if access_key is None or secret_key is None:
         access_key = config.get('AWS_ACCESS_KEY_ID', None)
         secret_key = config.get('AWS_SECRET_ACCESS_KEY', None)
@@ -95,9 +94,6 @@ def current_session():
         return get_session()
     if 'metrics' not in g:
         g.metrics = get_session()
-    if 'credentials' in g and g.credentials.expired:
-        g.metrics.aws_access_key, g.metrics.aws_secret_key, g.metrics.aws_session_token  = g.credentials.get_credentials()
-
     return g.metrics
 
 

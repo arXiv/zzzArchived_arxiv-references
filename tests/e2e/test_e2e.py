@@ -5,6 +5,7 @@ from unittest import mock
 import os
 import time
 import boto3
+from urllib3 import Retry
 import requests
 from urllib.parse import urljoin
 import logging
@@ -59,12 +60,14 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
         status_endpoint = urljoin(EXTRACTION_ENDPOINT, "/status")
         logger.debug('Check status at %s' % status_endpoint)
 
-        response = requests.get(status_endpoint, timeout=1)
+        cls._session = requests.Session()
+        cls._adapter = requests.adapters.HTTPAdapter(
+            max_retries=Retry(connect=30, read=10, backoff_factor=5))
+        cls._session.mount('http://', cls._adapter)
+
+        response = cls._session.get(status_endpoint, timeout=1)
         if response.status_code != 200:
             raise IOError('ack!')
-            #         break
-            # except Exception as e:
-            #     logger.info('Could not connect at %s, retry' % status_endpoint)
 
         mock_app.config = {
             'DYNAMODB_ENDPOINT': DYNAMODB_ENDPOINT,
@@ -99,8 +102,8 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
             "url": "https://arxiv.org/pdf/1606.00125"
         }
         start_time = datetime.now()
-        response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
-                                 json=payload)
+        _target = urljoin(EXTRACTION_ENDPOINT, "/references")
+        response = self._session.post(_target, json=payload)
         self.assertEqual(response.status_code, 202,
                          "A valid POST request is accepted")
         redirect_url = response.headers.get('Location', None)
@@ -109,28 +112,27 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
 
         target_url = urljoin(EXTRACTION_ENDPOINT,
                              '/references/%s' % document_id)
-        response = requests.get(redirect_url)
+        response = self._session.get(redirect_url)
         self.assertTrue(response.status_code in [200, 303],
                         "Status endpoint should be available")
         while not response.url.startswith(target_url):
-            response = requests.get(response.url)
+            response = self._session.get(response.url)
             if response.status_code not in [200, 303]:
                 self.fail("Status check should return OK or redirect.")
 
             logger.debug('Response: %i, %s' %
                          (response.status_code, response.content))
-            time.sleep(4)
             if datetime.now() - start_time > timedelta(minutes=3):
                 self.fail('Extraction should complete in reasonable time')
 
         # POST again with the same request.
         try:
-            response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
-                                     json=payload)
+            _target = urljoin(EXTRACTION_ENDPOINT, "/references")
+            response = self._session.post(_target, json=payload)
         except requests.exceptions.ConnectionError:
             time.sleep(1)
-            response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
-                                     json=payload)
+            _target = urljoin(EXTRACTION_ENDPOINT, "/references")
+            response = self._session.post(_target, json=payload)
         self.assertEqual(response.status_code, 200,
                          "Response status for duplicate request should be OK")
         target_url = urljoin(EXTRACTION_ENDPOINT,
@@ -141,8 +143,8 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
 
         # Now get generated resources.
         try:
-            response = requests.get(urljoin(EXTRACTION_ENDPOINT,
-                                            '/references/%s' % document_id))
+            response = self._session.get(urljoin(EXTRACTION_ENDPOINT,
+                                         '/references/%s' % document_id))
         except Exception as e:
             logger.error(e)
             self.fail('Document references endpoint should be available')
@@ -157,29 +159,27 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
         if extractors is None:
             self.fail('At least one extractor should be included')
         for extractor, path in extractors.items():
-            response = requests.get(urljoin(EXTRACTION_ENDPOINT, path))
+            response = self._session.get(urljoin(EXTRACTION_ENDPOINT, path))
             self.assertEqual(response.status_code, 200,
                              "Raw extraction metadata should be available.")
 
         ref = content.get('references')[0]
         path = '/references/%s/ref/%s' % (document_id, ref.get('identifier'))
         try:
-            response = requests.get(urljoin(EXTRACTION_ENDPOINT, path))
+            response = self._session.get(urljoin(EXTRACTION_ENDPOINT, path))
         except Exception as e:
             logger.error(e)
             self.fail('Individual reference endpoint should be available')
         self.assertEqual(response.status_code, 200,
                          "Individual reference endpoint should respond OK")
 
-
-
     def test_incomplete_requests_are_rejected(self):
         """Extraction is requested without a document id."""
         payload = {
             "url": "https://arxiv.org/pdf/1606.00125"
         }
-        response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
-                                 json=payload)
+        _target = urljoin(EXTRACTION_ENDPOINT, "/references")
+        response = self._session.post(_target, json=payload)
         self.assertEqual(response.status_code, 400,
                          "Incomplete requests should not be accepted")
 
@@ -190,15 +190,15 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
             "document_id": document_id,
             "url": "https://asdf.org/pdf/1606.00125"
         }
-        response = requests.post(urljoin(EXTRACTION_ENDPOINT, "/references"),
-                                 json=payload)
+        _target = urljoin(EXTRACTION_ENDPOINT, "/references")
+        response = self._session.post(_target, json=payload)
         self.assertEqual(response.status_code, 400,
                          "Requests with untrusted URLs should be rejected")
 
     def test_nonexistant_document(self):
         """Reference data are requested for an unknown document."""
-        response = requests.get(urljoin(EXTRACTION_ENDPOINT,
-                                        '/references/1234.5678'))
+        response = self._session.get(urljoin(EXTRACTION_ENDPOINT,
+                                             '/references/1234.5678'))
         self.assertEqual(response.status_code, 404,
                          "Response should have status 404")
 
