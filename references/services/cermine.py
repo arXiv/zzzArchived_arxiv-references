@@ -29,8 +29,7 @@ class CermineSession(object):
         """
         self.endpoint = endpoint
         self._session = requests.Session()
-        _retry = Retry(connect=30, read=10, backoff_factor=20)
-        self._adapter = requests.adapters.HTTPAdapter(max_retries=_retry)
+        self._adapter = requests.adapters.HTTPAdapter(max_retries=2)
         self._session.mount('http://', self._adapter)
         response = self._session.get(urljoin(self.endpoint, '/cermine/status'))
         if not response.ok:
@@ -51,6 +50,8 @@ class CermineSession(object):
             Raw XML response from Cermine.
         """
         # This can take a while.
+        self._adapter.max_retries = Retry(connect=30, read=10,
+                                          backoff_factor=20)
         _target = urljoin(self.endpoint, '/cermine/extract')
         try:
             response = self._session.post(_target,

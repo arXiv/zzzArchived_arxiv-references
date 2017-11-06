@@ -30,8 +30,7 @@ class GrobidSession(object):
         self.endpoint = endpoint
         self.path = path
         self._session = requests.Session()
-        _retry = Retry(connect=30, read=10, backoff_factor=20)
-        self._adapter = requests.adapters.HTTPAdapter(max_retries=_retry)
+        self._adapter = requests.adapters.HTTPAdapter(max_retries=2)
         self._session.mount('http://', self._adapter)
         try:
             head = self._session.head(urljoin(self.endpoint, self.path))
@@ -57,6 +56,8 @@ class GrobidSession(object):
         str
             Raw XML response from Grobid.
         """
+        self._adapter.max_retries = Retry(connect=30, read=10,
+                                          backoff_factor=20)
         try:
             _target = urljoin(self.endpoint, self.path)
             response = self._session.post(_target, files={
