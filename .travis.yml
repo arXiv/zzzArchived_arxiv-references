@@ -6,7 +6,6 @@ python:
 jdk:
   - oraclejdk8
 script:
-  - pip install coverage
-  - pip install nose
-  - pip install -r requirements.txt
+  - pip install -r requirements/web.txt
+  - pip install -r requirements/test.txt
   - nosetests --with-coverage --cover-package=references
