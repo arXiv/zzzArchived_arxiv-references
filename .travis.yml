@@ -8,4 +8,5 @@ jdk:
 script:
   - pip install coverage
   - pip install nose
+  - pip install -r requirements.txt
   - nosetests --with-coverage --cover-package=references
