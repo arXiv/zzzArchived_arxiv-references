@@ -1,12 +1,12 @@
-import unittest
-import json
-import jsonschema
-
-from references.process.extract import href
-
-import logging
-logging.getLogger().setLevel(logging.ERROR)
-
+# import unittest
+# import json
+# import jsonschema
+#
+# from references.process.extract import href
+#
+# import logging
+# logging.getLogger().setLevel(logging.ERROR)
+# 
 # We're not actively using this, so disabling for now.
 # class TestHREFExtraction(unittest.TestCase):
 #     """Tests for :mod:`references.process.extract.href` module."""
