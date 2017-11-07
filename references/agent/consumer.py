@@ -54,7 +54,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self.credentials.get_credentials()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
-                   sequence_number: bytes = None,
+                   sequence_number: str = None,
                    sub_sequence_number: int = None) -> None:
         """Make periodic checkpoints while processing records."""
         for n in range(0, self._CHECKPOINT_RETRIES):
@@ -192,7 +192,7 @@ class RecordProcessor(processor.RecordProcessorBase):
             last_check = time.time() - self._last_checkpoint_time
             if last_check > self._CHECKPOINT_FREQ:
                 self.checkpoint(records.checkpointer,
-                                str(self._largest_seq[0]).encode('ascii'),
+                                str(self._largest_seq[0]),
                                 self._largest_seq[1])
                 self._last_checkpoint_time = time.time()
         except Exception as e:
