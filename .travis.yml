@@ -1,0 +1,16 @@
+language: python
+cache: pip
+os:
+  - linux
+python:
+  - "3.6"
+jdk:
+  - oraclejdk8
+script:
+  - pip install -r requirements/web.txt
+  - pip install -r requirements/worker.txt
+  - pip install -r requirements/agent.txt
+  - pip install -r requirements/test.txt
+  - nosetests --with-coverage --cover-package=references
+after_success:
+  - coveralls
