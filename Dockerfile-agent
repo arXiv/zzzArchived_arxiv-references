@@ -50,6 +50,7 @@ ENV AWS_CBOR_DISABLE false
 ENV SECRETS_BUCKET_NAME ""
 ENV ARXIV_HOME "https://arxiv.org"
 ENV EXTRACTION_ENDPOINT ""
+ENV INSTANCE_CREDENTIALS "true"
 
 RUN chmod +x /opt/arxiv/start_agent.sh
 

@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class CredentialsSession(object):
     """Base class for credentials."""
-    
+
     fmt = "%Y-%m-%dT%H:%M:%SZ"
 
     def __init__(self, endpoint, role, config):
@@ -98,7 +98,7 @@ class InstanceCredentialsSession(CredentialsSession):
 
     def get_credentials(self):
         """Retrieve the current credentials for this role."""
-        logger.debug('get credentials...')
+        logger.debug('InstanceCredentialsSession: get credentials...')
         if self.expired or self.access_key is None:
             logger.debug('expired, refreshing')
             self._refresh_credentials()
@@ -111,6 +111,7 @@ class PassthroughCredentialsSession(CredentialsSession):
 
     def get_credentials(self):
         """Retrieve the current credentials."""
+        logger.debug('PassthroughCredentialsSession: get credentials...')
         return self.access_key, self.secret_key, self.session_token
 
 

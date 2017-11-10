@@ -5,6 +5,7 @@ from unittest import mock
 import os
 import time
 import boto3
+from botocore.exceptions import ClientError
 from urllib3 import Retry
 import requests
 from urllib.parse import urljoin
@@ -31,6 +32,7 @@ DYNAMODB_ENDPOINT = os.environ.get("DYNAMODB_ENDPOINT",
 KINESIS_ENDPOINT = os.environ.get("KINESIS_ENDPOINT",
                                   "https://references-test-localstack:4568")
 KINESIS_VERIFY = os.environ.get("KINESIS_VERIFY", "false") == "true"
+KINESIS_STREAM = os.environ.get('KINESIS_STREAM', 'PDFIsAvailable')
 DYNAMODB_VERIFY = os.environ.get("DYNAMODB_VERIFY", "false") == "true"
 CLOUDWATCH_VERIFY = os.environ.get("CLOUDWATCH_VERIFY", "false") == "true"
 EXTRACTION_ENDPOINT = os.environ.get("EXTRACTION_ENDPOINT",
@@ -51,6 +53,70 @@ REFERENCES_TABLE_NAME = os.environ.get("REFERENCES_TABLE_NAME",
 
 with open('schema/StoredReference.json') as f:
     stored_references_schema = json.load(f)
+
+
+class TestReferenceConsumer(unittest.TestCase):
+    """Exercise the reference extraction agent (Kinesis consumer)."""
+
+    @classmethod
+    def setUpClass(cls):
+        """Initialize the kinesis stream."""
+        cls.client = boto3.client('kinesis', verify=KINESIS_VERIFY,
+                                  region_name=AWS_REGION,
+                                  endpoint_url=KINESIS_ENDPOINT,
+                                  aws_access_key_id=AWS_ACCESS_KEY_ID,
+                                  aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+                                  aws_session_token=AWS_SESSION_TOKEN)
+        try:
+            cls.client.create_stream(StreamName=KINESIS_STREAM, ShardCount=1)
+        except ClientError as e:
+            pass
+
+        cls._session = requests.Session()
+        cls._adapter = requests.adapters.HTTPAdapter(
+            max_retries=Retry(connect=30, read=10, backoff_factor=5))
+        cls._session.mount('http://', cls._adapter)
+
+    @mock.patch('flask.current_app')
+    def test_process_record(self, mock_app):
+        """Initiate extraction via the agent."""
+        mock_app.config = {
+            'DYNAMODB_ENDPOINT': DYNAMODB_ENDPOINT,
+            'DYNAMODB_VERIFY': DYNAMODB_VERIFY,
+            'CLOUDWATCH_ENDPOINT': CLOUDWATCH_ENDPOINT,
+            'CLOUDWATCH_VERIFY': CLOUDWATCH_VERIFY,
+            'AWS_REGION': AWS_REGION,
+            'RAW_TABLE_NAME': RAW_TABLE_NAME,
+            'EXTRACTIONS_TABLE_NAME': EXTRACTIONS_TABLE_NAME,
+            'REFERENCES_TABLE_NAME': REFERENCES_TABLE_NAME,
+            'INSTANCE_CREDENTIALS': 'nope',
+            'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
+            'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
+        }
+        mock_app._get_current_object = mock.MagicMock(return_value=mock_app)
+
+        from references.services import data_store
+        data_store.init_app(mock_app)
+        data_store.init_db()
+
+        document_id = '1606.00123'
+        payload = json.dumps({
+            "document_id": document_id,
+            "url": "https://arxiv.org/pdf/%s" % document_id
+        }).encode('utf-8')
+        self.client.put_record(StreamName='PDFIsAvailable', Data=payload,
+                               PartitionKey='0')
+
+        time.sleep(30)
+        target = urljoin(EXTRACTION_ENDPOINT, '/references/%s' % document_id)
+        response = self._session.get(target)
+        retries = 0
+        while response.status_code != 200:
+            if retries > 5:
+                self.fail('Record not processed')
+            time.sleep(10)
+            response = self._session.get(target)
+            retries += 1
 
 
 class TestReferenceExtractionViaAPI(unittest.TestCase):

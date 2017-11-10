@@ -16,8 +16,10 @@ from amazon_kclpy.messages import ProcessRecordsInput, ShutdownInput
 
 from references.services import extractor, credentials, metrics
 from references import logging
+from references.context import get_application_config
 
 logger = logging.getLogger(__name__)
+logger.setLevel(10)
 
 ARXIV_HOME = 'https://arxiv.org'
 
@@ -38,9 +40,10 @@ class RecordProcessor(processor.RecordProcessorBase):
 
     def __init__(self):
         """Initialize checkpointing state and retry configuration."""
-        self._SLEEP_SECONDS = 5
-        self._CHECKPOINT_RETRIES = 5
-        self._CHECKPOINT_FREQ = 60
+        self.cfg = get_application_config()
+        self._SLEEP_SECONDS = int(self.cfg.get('AGENT_SLEEP_SECONDS', 5))
+        self._CHECKPOINT_RETRIES = int(self.cfg.get('AGENT_CHECKPOINT_RETRIES', 5))
+        self._CHECKPOINT_FREQ = int(self.cfg.get('AGENT_CHECKPOINT_FREQ', 60))
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
@@ -94,7 +97,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         """Request reference extraction from the extraction service."""
         try:
             pdf_url = '%s/pdf/%s' % (ARXIV_HOME, document_id)
-            self.extractor.extract_references(document_id, pdf_url)
+            self.extractor.extract(document_id, pdf_url)
         except Exception as e:
             logger.error('%s: failed to extract references: %s',
                          document_id, e)
@@ -166,7 +169,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         ----------
         records : :class:`amazon_kclpy.messages.ProcessRecordsInput`
         """
-        # try:
+        logger.debug('Start processing %i records', len(records.records))
         for record in records.records:
             try:
                 if self.credentials.expired:
@@ -187,17 +190,17 @@ class RecordProcessor(processor.RecordProcessorBase):
             if self.should_update_sequence(seq, sub_seq):
                 self._largest_seq = (seq, sub_seq)
 
-        try:
-            # Checkpoints every self._CHECKPOINT_FREQ seconds
-            last_check = time.time() - self._last_checkpoint_time
-            if last_check > self._CHECKPOINT_FREQ:
-                self.checkpoint(records.checkpointer,
-                                str(self._largest_seq[0]).encode('ascii'),
-                                self._largest_seq[1])
-                self._last_checkpoint_time = time.time()
-        except Exception as e:
-            logger.error('Failed to checkpoint: %s', e)
-            raise RuntimeError('%s' % e) from e
+        # Checkpoints every self._CHECKPOINT_FREQ seconds
+        last_check = time.time() - self._last_checkpoint_time
+        if last_check > self._CHECKPOINT_FREQ:
+            # try:
+            self.checkpoint(records.checkpointer,
+                            str(self._largest_seq[0]),
+                            str(self._largest_seq[1]))
+            self._last_checkpoint_time = time.time()
+            # except Exception as e:
+            #     logger.error('Failed to checkpoint: %s', e)
+            #     raise RuntimeError('%s' % e) from e
 
     def shutdown(self, shutdown: ShutdownInput) -> None:
         """

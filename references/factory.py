@@ -11,8 +11,6 @@ from references.services import refextract, retrieve
 
 from references import routes
 
-
-
 celery_app = Celery(__name__, results=celeryconfig.result_backend,
                     broker=celeryconfig.broker_url)
 celery_app.config_from_object(celeryconfig)
@@ -42,12 +40,6 @@ def create_web_app() -> Flask:
     refextract.init_app(app)
     retrieve.init_app(retrieve)
     app.register_blueprint(routes.blueprint)
-
-    celery = Celery(app.name, results=celeryconfig.result_backend,
-                    broker=celeryconfig.broker_url)
-    celery.config_from_object(celeryconfig)
-    celery.autodiscover_tasks(['references.process'])
-    celery.conf.task_default_queue = 'references-worker'
     return app
 
 
