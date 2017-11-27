@@ -12,7 +12,7 @@ class TestWebAppFactory(unittest.TestCase):
     """We require a Flask application instance."""
 
     def setUp(self):
-        os.environ['INSTANCE_CREDENTIALS'] = 'false'
+        os.environ['INSTANCE_CREDENTIALS'] = ''
 
     @mock.patch('references.services.credentials')
     def test_returns_flask_app(self, mock_credentials):
@@ -26,7 +26,7 @@ class TestProcessAppFactory(unittest.TestCase):
     """We require a Celery worker application instance."""
 
     def setUp(self):
-        os.environ['INSTANCE_CREDENTIALS'] = 'false'
+        os.environ['INSTANCE_CREDENTIALS'] = ''
 
     @mock.patch('references.services.credentials')
     def test_returns_celery_app(self, mock_credentials):

@@ -28,7 +28,7 @@ class TestRecordProcessor(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        os.environ['INSTANCE_CREDENTIALS'] = 'nope'
+        os.environ['INSTANCE_CREDENTIALS'] = ''
         os.environ['EXTRACTION_ENDPOINT'] = 'http://foo.bar'
 
     @mock.patch('references.services.extractor.requests.Session')
@@ -55,7 +55,7 @@ class TestRecordProcessorCheckpoint(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        os.environ['INSTANCE_CREDENTIALS'] = 'nope'
+        os.environ['INSTANCE_CREDENTIALS'] = ''
         os.environ['EXTRACTION_ENDPOINT'] = 'http://foo.bar'
 
     @mock.patch('references.services.extractor.requests.Session')
@@ -162,7 +162,7 @@ class TestRecordProcessorShouldUpdateSequence(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        os.environ['INSTANCE_CREDENTIALS'] = 'nope'
+        os.environ['INSTANCE_CREDENTIALS'] = ''
         os.environ['EXTRACTION_ENDPOINT'] = 'http://foo.bar'
 
     @mock.patch('references.services.extractor.requests.Session')
@@ -188,7 +188,7 @@ class TestRecordProcessorShutdown(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        os.environ['INSTANCE_CREDENTIALS'] = 'nope'
+        os.environ['INSTANCE_CREDENTIALS'] = ''
         os.environ['EXTRACTION_ENDPOINT'] = 'http://foo.bar'
 
     @mock.patch('references.services.extractor.requests.Session')

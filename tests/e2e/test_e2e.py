@@ -89,7 +89,7 @@ class TestReferenceConsumer(unittest.TestCase):
             'RAW_TABLE_NAME': RAW_TABLE_NAME,
             'EXTRACTIONS_TABLE_NAME': EXTRACTIONS_TABLE_NAME,
             'REFERENCES_TABLE_NAME': REFERENCES_TABLE_NAME,
-            'INSTANCE_CREDENTIALS': 'nope',
+            'INSTANCE_CREDENTIALS': '',
             'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
             'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
         }
@@ -144,7 +144,7 @@ class TestReferenceExtractionViaAPI(unittest.TestCase):
             'RAW_TABLE_NAME': RAW_TABLE_NAME,
             'EXTRACTIONS_TABLE_NAME': EXTRACTIONS_TABLE_NAME,
             'REFERENCES_TABLE_NAME': REFERENCES_TABLE_NAME,
-            'INSTANCE_CREDENTIALS': 'nope',
+            'INSTANCE_CREDENTIALS': '',
             'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
             'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
         }

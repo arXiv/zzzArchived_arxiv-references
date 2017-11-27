@@ -21,7 +21,7 @@ services:
       MODE: "test"
       JAVA_FLAGS: "-Dcom.amazonaws.sdk.disableCertChecking"
       AWS_CBOR_DISABLE: "true"
-      INSTANCE_CREDENTIALS: "false"
+      INSTANCE_CREDENTIALS: ""
       AGENT_CHECKPOINT_FREQ: "1"
       AGENT_SLEEP_SECONDS: "1"
     networks:
@@ -75,7 +75,7 @@ services:
       REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
       DYNAMODB_VERIFY: "false"
       CLOUDWATCH_VERIFY: "false"
-      INSTANCE_CREDENTIALS: "false"
+      INSTANCE_CREDENTIALS: ""
       LOGLEVEL: 10
     networks:
       - references-test
@@ -102,7 +102,7 @@ services:
       REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
       DYNAMODB_VERIFY: "false"
       CLOUDWATCH_VERIFY: "false"
-      INSTANCE_CREDENTIALS: "false"
+      INSTANCE_CREDENTIALS: ""
       LOGLEVEL: 10
     ports:
       - "8001:8000"

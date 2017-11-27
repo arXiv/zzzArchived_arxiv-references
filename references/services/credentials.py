@@ -2,6 +2,7 @@
 
 import os
 from datetime import datetime, timedelta
+from typing import Tuple
 import requests
 import werkzeug
 
@@ -128,7 +129,7 @@ def init_app(app) -> None:
 def get_session(app: object = None) -> CredentialsSession:
     """Create a new :class:`.CredentialsSession`."""
     config = get_application_config(app)
-    if config.get('INSTANCE_CREDENTIALS', 'true') == 'true':
+    if config.get('INSTANCE_CREDENTIALS', False):
         role = config.get('CREDENTIALS_ROLE', "arxiv-references")
         endpoint = config.get(
             'CREDENTIALS_URL',
@@ -149,3 +150,8 @@ def current_session(app: werkzeug.local.LocalProxy=None) -> CredentialsSession:
     creds = get_session(app)
     creds.get_credentials()
     return creds
+
+
+def get_credentials() -> Tuple[str, str, str]:
+    """Get current credentials."""
+    return current_session().get_credentials()

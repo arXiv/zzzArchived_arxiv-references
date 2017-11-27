@@ -30,9 +30,8 @@ def create_web_app() -> Flask:
     from references.converter import ArXivConverter
     app.url_map.converters['arxiv'] = ArXivConverter
 
-    if app.config.get('INSTANCE_CREDENTIALS') == 'true':
-        credentials.init_app(app)
-        credentials.current_session(app)   # Will get fresh creds.
+    credentials.init_app(app)
+    credentials.current_session(app)   # Will get fresh creds.
 
     data_store.init_app(app)
     cermine.init_app(app)
@@ -52,9 +51,8 @@ def create_worker_app() -> Celery:
     flask_app.config.from_pyfile('config.py')
     celery_app.conf.update(flask_app.config)
 
-    if flask_app.config.get('INSTANCE_CREDENTIALS') == 'true':
-        credentials.init_app(flask_app)
-        credentials.current_session(flask_app)   # Will get fresh creds.
+    credentials.init_app(flask_app)
+    credentials.current_session(flask_app)   # Will get fresh creds.
     data_store.init_app(flask_app)
     cermine.init_app(flask_app)
     grobid.init_app(flask_app)
