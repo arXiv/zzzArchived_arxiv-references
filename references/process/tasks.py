@@ -125,7 +125,7 @@ process_document.async_result = AsyncResult
 
 
 @after_task_publish.connect
-def update_sent_state(sender=None, headers=None, body=None, **kwargs):
+def update_sent_state(sender = None, headers = None, body = None, **kwargs):
     """Set state to SENT, so that we can tell whether a task exists."""
     task = current_app.tasks.get(sender)
     backend = task.backend if task else current_app.backend

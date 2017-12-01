@@ -157,7 +157,7 @@ def _fix_authors(authors: list) -> list:
 
 
 def _pool(metadata: dict, fields: list, prob_valid: Callable,
-          similarity_threshold: float=0.9) -> dict:
+          similarity_threshold: float = 0.9) -> dict:
     """Pool similar values for a field across extractions."""
     # Similar values (above a threshold) for fields are grouped together, and
     #  their P(value|extractor, field) are combined (summed, then normalized).
@@ -219,7 +219,7 @@ def _score(result: dict) -> float:
 
 
 def arbitrate(metadata: list, valid: list, priors: list,
-              similarity_threshold: float=0.9) -> Tuple[dict, float]:
+              similarity_threshold: float = 0.9) -> Tuple[dict, float]:
     """
     Apply arbitration logic to raw extraction metadata for a single reference.
 
@@ -273,7 +273,7 @@ def arbitrate(metadata: list, valid: list, priors: list,
 
 
 def arbitrate_all(metadata_all: list, valid_all: list,
-                  priors_all: list, N_extractions: int=0) -> list:
+                  priors_all: list, N_extractions: int = 0) -> list:
     """
     Helper to apply arbitration to metadata for a set of cited references.
 
