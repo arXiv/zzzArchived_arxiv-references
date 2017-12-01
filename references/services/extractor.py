@@ -7,7 +7,6 @@ import json
 from urllib.parse import urljoin
 
 import requests
-from flask import _app_ctx_stack as stack
 
 from references import logging
 from references.context import get_application_config, get_application_global
@@ -26,13 +25,18 @@ class RequestExtractionSession(object):
         self._session.mount('http://', self._adapter)
 
     def status(self):
+        """Get the status of the extraction service."""
         try:
-            response = self._session.get(urljoin(self.endpoint, '/status'))
+            response = self._session.get(urljoin(self.endpoint,
+                                                 '/references/status'))
         except IOError:
             return False
         if not response.ok:
             return False
         return True
+
+    def _too_long(self, start: datetime) -> bool:
+        return datetime.now() - start > timedelta(seconds=300)
 
     def extract(self, document_id: str, pdf_url: str) -> dict:
         """
@@ -71,12 +75,13 @@ class RequestExtractionSession(object):
                              response.content)
                 raise IOError("Failed to get extraction state")
 
-            if datetime.now() - start > timedelta(seconds=300):
+            if self._too_long(start):
                 logger.error('%s: extraction running after five minutes',
                              document_id)
                 raise IOError('Extraction exceeded five minutes')
 
             time.sleep(2 + failed * 2)    # Back off.
+            response = self._check_status(status_url)
             try:
                 response = requests.get(status_url)
             except Exception as e:
@@ -86,7 +91,6 @@ class RequestExtractionSession(object):
 
             if not response.ok:
                 failed += 1
-
         return response.json()
 
 
@@ -99,10 +103,15 @@ def get_session(app: object = None) -> RequestExtractionSession:
 
 
 def current_session():
-    """Get/create :class:`.MetricsSession` for this context."""
+    """Get/create :class:`.RequestExtractionSession` for this context."""
     g = get_application_global()
     if g is None:
         return get_session()
     if 'extract' not in g:
         g.extract = get_session()
     return g.extract
+
+
+def extract(document_id: str, pdf_url: str) -> dict:
+    """Extract references using the current session."""
+    return current_session().extract(document_id, pdf_url)

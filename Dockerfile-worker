@@ -28,7 +28,6 @@ ENV PATH "/opt/arxiv:${PATH}"
 # Runtime configuration.
 ENV AWS_ACCESS_KEY_ID ""
 ENV AWS_SECRET_ACCESS_KEY ""
-ENV REDIS_ENDPOINT ""
 
 # If not set, secrets will not be retrieved.
 ENV SECRETS_BUCKET_NAME ""

@@ -76,7 +76,7 @@ def extract() -> tuple:
         response_data = extract_references_from_file(filepath)
         status = HTTP_200_OK
     except Exception as e:
-        response_data = {'explanation': 'refextract failed: %s' % e.msg}
+        response_data = {'explanation': 'refextract failed: %s' % e}
         status = HTTP_500_INTERNAL_SERVER_ERROR
     finally:
         try:

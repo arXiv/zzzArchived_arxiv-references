@@ -9,7 +9,7 @@ from references.controllers.health import health_check
 from references import status
 
 
-blueprint = Blueprint('references', __name__, url_prefix='')
+blueprint = Blueprint('references', __name__, url_prefix='/references')
 
 
 @blueprint.route('/status', methods=['GET'])
@@ -19,7 +19,7 @@ def ok() -> tuple:
     return jsonify(data), code, headers
 
 
-@blueprint.route('/references', methods=['POST'])
+@blueprint.route('', methods=['POST'])
 def extract_references() -> tuple:
     """Handle requests for reference extraction."""
     data, code, headers = extraction.extract(request.get_json(force=True))
@@ -33,7 +33,7 @@ def task_status(task_id: str) -> tuple:
     return jsonify(data), code, headers
 
 
-@blueprint.route('/references/<arxiv:doc_id>/ref/<string:ref_id>/resolve',
+@blueprint.route('/<arxiv:doc_id>/ref/<string:ref_id>/resolve',
                  methods=['GET'])
 def resolve_reference(doc_id: str, ref_id: str) -> tuple:
     """
@@ -57,7 +57,7 @@ def resolve_reference(doc_id: str, ref_id: str) -> tuple:
     return redirect(content.get('url'), code=status_code)
 
 
-@blueprint.route('/references/<arxiv:doc_id>/ref/<string:ref_id>',
+@blueprint.route('/<arxiv:doc_id>/ref/<string:ref_id>',
                  methods=['GET'])
 def reference(doc_id: str, ref_id: str) -> tuple:
     """
@@ -79,7 +79,7 @@ def reference(doc_id: str, ref_id: str) -> tuple:
     return jsonify(response), status_code, headers
 
 
-@blueprint.route('/references/<arxiv:doc_id>', methods=['GET'])
+@blueprint.route('/<arxiv:doc_id>', methods=['GET'])
 def references(doc_id: str) -> tuple:
     """
     Retrieve all reference metadata for an arXiv publication.
@@ -100,8 +100,7 @@ def references(doc_id: str) -> tuple:
     return jsonify(response), status_code, headers
 
 
-@blueprint.route('/references/<arxiv:doc_id>/raw/<string:extractor>',
-                 methods=['GET'])
+@blueprint.route('/<arxiv:doc_id>/raw/<string:extractor>', methods=['GET'])
 def raw(doc_id: str, extractor: str) -> tuple:
     """
     Retrieve raw reference metadata for a specific extractor.

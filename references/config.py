@@ -219,14 +219,27 @@ DYNAMODB_VERIFY = os.environ.get('DYNAMODB_VERIFY', 'true')
 """For testing only."""
 
 # Cermine configuration.
+CERMINE_SERVICE_HOST = os.environ.get('ARXIV_REFERENCES_CERMINE_SERVICE_HOST', 'localhost')
+CERMINE_SERVICE_PORT = os.environ.get('ARXIV_REFERENCES_CERMINE_SERVICE_PORT', '80')
 CERMINE_ENDPOINT = os.environ.get('CERMINE_ENDPOINT',
-                                  'http://localhost/cermine/')
+                                 'http://%s:%s' % (CERMINE_SERVICE_HOST,
+                                                   CERMINE_SERVICE_PORT))
 
+REFEXTRACT_SERVICE_HOST = os.environ.get('ARXIV_REFERENCES_REFEXTRACT_SERVICE_HOST', 'localhost')
+REFEXTRACT_SERVICE_PORT = os.environ.get('ARXIV_REFERENCES_REFEXTRACT_SERVICE_PORT', '80')
 REFEXTRACT_ENDPOINT = os.environ.get('REFEXTRACT_ENDPOINT',
-                                     'http://localhost/refextract/')
+                                     'http://%s:%s' % (
+                                        REFEXTRACT_SERVICE_HOST,
+                                        REFEXTRACT_SERVICE_PORT
+                                    ))
 
 # Grobid configuration.
-GROBID_ENDPOINT = os.environ.get('GROBID_ENDPOINT', 'http://localhost:8080')
+GROBID_SERVICE_HOST = os.environ.get('ARXIV_REFERENCES_GROBID_SERVICE_HOST', 'localhost')
+GROBID_SERVICE_PORT = os.environ.get('ARXIV_REFERENCES_GROBID_SERVICE_PORT', '8080')
+GROBID_ENDPOINT = os.environ.get('GROBID_ENDPOINT',
+                                 'http://%s:%s' % (GROBID_SERVICE_HOST,
+                                                   GROBID_SERVICE_PORT))
+
 GROBID_PATH = os.environ.get('GROBID_PATH',
                              'processFulltextDocument')
 
@@ -247,8 +260,10 @@ RAW_TABLE_NAME = os.environ.get('RawExtractions')
 EXTRACTIONS_TABLE_NAME = os.environ.get('Extractions')
 REFERENCES_TABLE_NAME = os.environ.get('StoredReference')
 
+EXTRACTION_HOST = os.environ.get('ARXIV_REFERENCES_API_SERVICE_HOST', 'localhost')
+EXTRACTION_PORT = os.environ.get('ARXIV_REFERENCES_API_SERVICE_PORT', '80')
+EXTRACTION_ENDPOINT = os.environ.get('EXTRACTION_ENDPOINT', 'http://%s:%s' % (EXTRACTION_HOST, EXTRACTION_PORT))
 
-EXTRACTION_ENDPOINT = os.environ.get('EXTRACTION_ENDPOINT')
 
 LOGFILE = os.environ.get('LOGFILE')
 LOGLEVEL = os.environ.get('LOGLEVEL', 20)

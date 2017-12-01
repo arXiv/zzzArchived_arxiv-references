@@ -47,14 +47,12 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
-        self.extractor = extractor.current_session()
-        self.credentials = credentials.current_session()
 
     def initialize(self, initialize_input):
         """Called once by a KCLProcess before any calls to process_records."""
         self._largest_seq = (None, None)
         self._last_checkpoint_time = time.time()
-        self.credentials.get_credentials()
+        credentials.get_credentials()
 
     def checkpoint(self, checkpointer: amazon_kclpy.kcl.Checkpointer,
                    sequence_number: bytes = None,
@@ -97,7 +95,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         """Request reference extraction from the extraction service."""
         try:
             pdf_url = '%s/pdf/%s' % (ARXIV_HOME, document_id)
-            self.extractor.extract(document_id, pdf_url)
+            extractor.extract(document_id, pdf_url)
         except Exception as e:
             logger.error('%s: failed to extract references: %s',
                          document_id, e)
@@ -172,8 +170,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         logger.debug('Start processing %i records', len(records.records))
         for record in records.records:
             try:
-                if self.credentials.expired:
-                    self.credentials.get_credentials()
+                credentials.get_credentials()
             except Exception as e:
                 logger.error('Failed to get fresh credentials')
                 raise RuntimeError('%s' % e) from e

@@ -49,8 +49,8 @@ ENV AWS_CBOR_DISABLE false
 # If not set, secrets will not be retrieved.
 ENV SECRETS_BUCKET_NAME ""
 ENV ARXIV_HOME "https://arxiv.org"
-ENV EXTRACTION_ENDPOINT ""
-ENV INSTANCE_CREDENTIALS "true"
+
+RUN touch /var/log/references-agent
 
 RUN chmod +x /opt/arxiv/start_agent.sh
 
