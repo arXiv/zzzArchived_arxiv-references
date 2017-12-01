@@ -45,9 +45,9 @@ class ReferenceSession(object):
 
     def __init__(self, endpoint_url: str, aws_access_key: str,
                  aws_secret_key: str, aws_session_token: str, region_name: str,
-                 verify: bool=True, extracted_schema: str=None,
-                 stored_schema: str=None,
-                 table_name: str='StoredReference') -> None:
+                 verify: bool=True, extracted_schema: str = None,
+                 stored_schema: str = None,
+                 table_name: str = 'StoredReference') -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.table_name = table_name
         self.dynamodb = boto3.resource('dynamodb', verify=verify,
@@ -208,7 +208,7 @@ class ReferenceSession(object):
 
     def create(self, document_id: str, references: ReferenceData,
                version: str, score: float=1.0,
-               extractors: list=[]) -> Tuple[str, list]:
+               extractors: list = []) -> Tuple[str, list]:
         """
         Insert a new reference data set into the data store.
 
@@ -303,7 +303,7 @@ class ReferenceSession(object):
         return response['Items'][0]
 
     def retrieve_latest(self, document_id: str,
-                        reftype: str='__all__') -> dict:
+                        reftype: str = '__all__') -> dict:
         """
         Retrieve the most recent extracted references for a document.
 
@@ -328,7 +328,7 @@ class ReferenceSession(object):
         return latest
 
     def retrieve_all(self, document_id: str, extraction: str = None,
-                     reftype: str='__all__') -> list:
+                     reftype: str = '__all__') -> list:
         """
         Retrieve reference metadata for an arXiv document.
 

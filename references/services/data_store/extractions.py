@@ -22,7 +22,7 @@ class ExtractionSession(object):
     def __init__(self, endpoint_url: str, aws_access_key: str,
                  aws_secret_key: str, aws_session_token: str,
                  region_name: str, verify: bool=True,
-                 table_name: str='Extractions') -> None:
+                 table_name: str = 'Extractions') -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.table_name = table_name
         self.dynamodb = boto3.resource('dynamodb', verify=verify,
@@ -87,7 +87,7 @@ class ExtractionSession(object):
         return str(b64encode(hash_string), encoding='utf-8')[:100]
 
     def create(self, document_id: str, version: str, created: str,
-               score: float=1.0, extractors: list=[]) -> None:
+               score: float = 1.0, extractors: list = []) -> None:
         """
         Create a new extraction entry.
 

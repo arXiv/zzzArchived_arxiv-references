@@ -78,7 +78,7 @@ def minimum_length(length: int) -> Callable:
     return _min_len
 
 
-def likely(func, min_prob: float=0.0, max_prob: float=1.0) -> Callable:
+def likely(func, min_prob: float = 0.0, max_prob: float = 1.0) -> Callable:
     def call(value: object) -> float:
         return max(min(func(value), max_prob), min_prob)
     return call
@@ -90,8 +90,8 @@ def does_not_contain_arxiv(value: object) -> float:
     return 0. if 'arxiv' in value else 1.
 
 
-def contains(substring: str, false_prob: float=0.0,
-             true_prob: float=1.0) -> Callable:
+def contains(substring: str, false_prob: float = 0.0,
+             true_prob: float = 1.0) -> Callable:
     def call(value: object) -> float:
         if not isinstance(value, str):
             return 0.0
@@ -99,8 +99,8 @@ def contains(substring: str, false_prob: float=0.0,
     return call
 
 
-def ends_with(substring: str, false_prob: float=0.0,
-              true_prob: float=1.0) -> Callable:
+def ends_with(substring: str, false_prob: float = 0.0,
+              true_prob: float = 1.0) -> Callable:
     def call(value: object) -> float:
         if not isinstance(value, str):
             return 0.0
@@ -108,8 +108,8 @@ def ends_with(substring: str, false_prob: float=0.0,
     return call
 
 
-def doesnt_end_with(substring: str, false_prob: float=0.0,
-                    true_prob: float=1.0) -> Callable:
+def doesnt_end_with(substring: str, false_prob: float = 0.0,
+                    true_prob: float = 1.0) -> Callable:
     return ends_with(substring, false_prob=true_prob, true_prob=false_prob)
 
 

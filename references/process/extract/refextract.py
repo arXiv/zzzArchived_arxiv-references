@@ -65,7 +65,7 @@ def extract_references(filename: str, document_id: str) -> List[dict]:
         return [_transform(reference) for reference
                 in refextract.extract_references(filename)]
     except IOError as e:
-        raise IOError('Failed to transform reference metadata') from e
+        raise IOError('Connection to refextract failed: %s' % e) from e
     except Exception as e:
         logger.error('Failed to extract references from %s: %s', filename, e)
         raise RuntimeError('Failed to extract references') from e

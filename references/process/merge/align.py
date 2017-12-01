@@ -212,7 +212,7 @@ def align_records(records: Dict[str, List[dict]]) -> List[List[Tuple[str, dict]]
             entry = [(extractor, ref)]
             if scores:
                 score, index = scores[0]
-                # used.append(index) 
+                # used.append(index)
                 if extractor not in list(zip(*output[index]))[0]:
                     output[index] = output[index] + entry
                 else:

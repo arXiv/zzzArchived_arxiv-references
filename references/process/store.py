@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 def store(metadata: list, document_id: str, score: float=1.0,
-          extractors: list=[]) -> str:
+          extractors: list = []) -> str:
     """
     Deposit extracted references in the datastore.
 

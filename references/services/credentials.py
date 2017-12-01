@@ -2,6 +2,7 @@
 
 import os
 from datetime import datetime, timedelta
+from typing import Tuple
 import requests
 import werkzeug
 
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class CredentialsSession(object):
     """Base class for credentials."""
-    
+
     fmt = "%Y-%m-%dT%H:%M:%SZ"
 
     def __init__(self, endpoint, role, config):
@@ -98,7 +99,7 @@ class InstanceCredentialsSession(CredentialsSession):
 
     def get_credentials(self):
         """Retrieve the current credentials for this role."""
-        logger.debug('get credentials...')
+        logger.debug('InstanceCredentialsSession: get credentials...')
         if self.expired or self.access_key is None:
             logger.debug('expired, refreshing')
             self._refresh_credentials()
@@ -111,6 +112,7 @@ class PassthroughCredentialsSession(CredentialsSession):
 
     def get_credentials(self):
         """Retrieve the current credentials."""
+        logger.debug('PassthroughCredentialsSession: get credentials...')
         return self.access_key, self.secret_key, self.session_token
 
 
@@ -127,7 +129,7 @@ def init_app(app) -> None:
 def get_session(app: object = None) -> CredentialsSession:
     """Create a new :class:`.CredentialsSession`."""
     config = get_application_config(app)
-    if config.get('INSTANCE_CREDENTIALS', 'true') == 'true':
+    if config.get('INSTANCE_CREDENTIALS', False):
         role = config.get('CREDENTIALS_ROLE', "arxiv-references")
         endpoint = config.get(
             'CREDENTIALS_URL',
@@ -148,3 +150,8 @@ def current_session(app: werkzeug.local.LocalProxy=None) -> CredentialsSession:
     creds = get_session(app)
     creds.get_credentials()
     return creds
+
+
+def get_credentials() -> Tuple[str, str, str]:
+    """Get current credentials."""
+    return current_session().get_credentials()

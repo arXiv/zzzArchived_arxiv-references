@@ -1,7 +1,7 @@
 """
 
 """
-
+import os
 from datetime import datetime
 from typing import List
 
@@ -110,6 +110,8 @@ def process_document(document_id: str, pdf_url: str) -> dict:
                    (start_time - end_time).microseconds, 'Microseconds')
     metrics.report('ProcessingSucceeded', 1.)
     logger.info('%s: finished extracting metadata', document_id)
+    if os.path.exists(pdf_path):
+        os.remove(pdf_path)
     return {
         'document_id': document_id,
         'references': metadata,
@@ -123,7 +125,7 @@ process_document.async_result = AsyncResult
 
 
 @after_task_publish.connect
-def update_sent_state(sender=None, headers=None, body=None, **kwargs):
+def update_sent_state(sender = None, headers = None, body = None, **kwargs):
     """Set state to SENT, so that we can tell whether a task exists."""
     task = current_app.tasks.get(sender)
     backend = task.backend if task else current_app.backend

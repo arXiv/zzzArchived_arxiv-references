@@ -47,8 +47,10 @@ class RefExtractSession(object):
             response = self._session.post(_target,
                                           files={'file': open(filename, 'rb')})
         except requests.exceptions.ConnectionError as e:
-            raise IOError('%s: Refextract failed: %s' % (filename, e))
+            logger.debug('ConnectionError: %s', e)
+            raise IOError('%s: Refextract failed: %s' % (filename, e)) from e
         if not response.ok:
+            logger.debug('Bad status: %i', response.status_code)
             raise IOError('%s: Refextract failed: %s' %
                           (filename, response.content))
         return response.json()

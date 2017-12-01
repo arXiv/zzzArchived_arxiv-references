@@ -20,8 +20,8 @@ class RawExtractionSession(object):
 
     def __init__(self, endpoint_url: str, aws_access_key: str,
                  aws_secret_key: str, aws_session_token: str,
-                 region_name: str, verify: bool=True,
-                 table_name: str='RawExtractions') -> None:
+                 region_name: str, verify: bool = True,
+                 table_name: str = 'RawExtractions') -> None:
         """Load JSON schema for reference metadata, and set up remote table."""
         self.table_name = table_name
         self.dynamodb = boto3.resource('dynamodb', verify=verify,

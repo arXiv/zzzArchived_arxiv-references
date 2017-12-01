@@ -1,5 +1,6 @@
 """Tests for :mod:`references.services.metrics` module."""
 
+import os
 import unittest
 from unittest import mock
 from references.services.metrics import MetricsSession
@@ -69,7 +70,7 @@ class TestMetricsCredentials(unittest.TestCase):
         os.environ['AWS_ACCESS_KEY_ID'] = 'foo'
         os.environ['AWS_SECRET_ACCESS_KEY'] = 'baz'
         os.environ['AWS_SESSION_TOKEN'] = 'bat'
-        os.environ['INSTANCE_CREDENTIALS'] = 'false'
+        os.environ['INSTANCE_CREDENTIALS'] = ''
         session = metrics.current_session()
         self.assertEqual(session.aws_access_key, 'foo')
         self.assertEqual(session.aws_secret_key, 'baz')
@@ -80,7 +81,7 @@ class TestMetricsCredentials(unittest.TestCase):
         from flask import Flask
         from references.services import metrics
         app = Flask('test')
-        app.config['INSTANCE_CREDENTIALS'] = 'false'
+        app.config['INSTANCE_CREDENTIALS'] = ''
         app.config['AWS_ACCESS_KEY_ID'] = 'qwerty'
         app.config['AWS_SECRET_ACCESS_KEY'] = 'ytrewq'
         app.config['AWS_SESSION_TOKEN'] = 'asdfghjkl'
@@ -113,6 +114,7 @@ class TestMetricsCredentials(unittest.TestCase):
         app.config['AWS_ACCESS_KEY_ID'] = 'qwerty'
         app.config['AWS_SECRET_ACCESS_KEY'] = 'ytrewq'
         app.config['AWS_SESSION_TOKEN'] = 'asdfghjkl'
+        app.config['INSTANCE_CREDENTIALS'] = 'yes'
         with app.app_context():
             credentials.init_app(app)
             creds = credentials.current_session()
@@ -147,10 +149,11 @@ class TestMetricsCredentials(unittest.TestCase):
         from references.services import credentials
         from references.services import metrics
         app = Celery('test')
-        app.conf['AWS_ACCESS_KEY_ID'] = 'qwerty'
-        app.conf['AWS_SECRET_ACCESS_KEY'] = 'ytrewq'
-        app.conf['AWS_SESSION_TOKEN'] = 'asdfghjkl'
 
+        os.environ['AWS_ACCESS_KEY_ID'] = 'qwerty'
+        os.environ['AWS_SECRET_ACCESS_KEY'] = 'ytrewq'
+        os.environ['AWS_SESSION_TOKEN'] = 'asdfghjkl'
+        os.environ['INSTANCE_CREDENTIALS'] = 'yes'
         credentials.init_app(app)
         creds = credentials.current_session()
 

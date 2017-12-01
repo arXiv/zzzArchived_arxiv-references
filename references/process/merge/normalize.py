@@ -89,7 +89,7 @@ def normalize_records(records: list) -> list:
     return [_normalize_record(record) for record in records]
 
 
-def filter_records(records: list, threshold: float=0.5) -> Tuple[list, float]:
+def filter_records(records: list, threshold: float = 0.5) -> Tuple[list, float]:
     """
     Remove low-quality extracted references, and generate a composite score.
 

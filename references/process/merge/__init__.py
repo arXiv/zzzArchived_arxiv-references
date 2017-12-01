@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 def merge_records(records: dict,
-                  extractor_priors: list=EXTRACTORS) -> Tuple[list, float]:
+                  extractor_priors: list = EXTRACTORS) -> Tuple[list, float]:
     """
     Merge extracted references into a single authoritative set of references.
 

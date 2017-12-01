@@ -23,10 +23,10 @@ class DataStoreSession(object):
 
     def __init__(self, endpoint_url: str, aws_access_key: str,
                  aws_secret_key: str, aws_session_token: str, region_name: str,
-                 verify: bool=True, stored_schema: str=None,
-                 extracted_schema: str=None, raw_table_name: str=None,
-                 extractions_table_name: str=None,
-                 references_table_name: str=None) -> None:
+                 verify: bool = True, stored_schema: str = None,
+                 extracted_schema: str = None, raw_table_name: str = None,
+                 extractions_table_name: str = None,
+                 references_table_name: str = None) -> None:
         """Initialize datastore sessions."""
         raw_kwargs = {}
         if raw_table_name:

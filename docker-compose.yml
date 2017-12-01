@@ -1,6 +1,35 @@
 version: '3'
 
 services:
+  references-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile-agent
+    container_name: references-agent
+    environment:
+      AWS_ACCESS_KEY_ID: "foo"
+      AWS_SECRET_ACCESS_KEY: "bar"
+      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
+      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
+      KINESIS_ENDPOINT: "https://references-test-localstack:4568"
+      KINESIS_VERIFY: "false"
+      DYNAMODB_VERIFY: "false"
+      CLOUDWATCH_VERIFY: "false"
+      EXTRACTION_ENDPOINT: "http://references-api:8000"
+      LOGLEVEL: 10
+      LOGFILE: "/var/log/references-agent-processor.log"
+      MODE: "test"
+      JAVA_FLAGS: "-Dcom.amazonaws.sdk.disableCertChecking"
+      AWS_CBOR_DISABLE: "true"
+      INSTANCE_CREDENTIALS: ""
+      AGENT_CHECKPOINT_FREQ: "1"
+      AGENT_SLEEP_SECONDS: "1"
+    networks:
+      - references-test
+    depends_on:
+      - references-test-localstack
+      - references-worker
+      - references-api
   references-cermine:
     build:
       context: ./extractors/cermine
@@ -46,7 +75,7 @@ services:
       REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
       DYNAMODB_VERIFY: "false"
       CLOUDWATCH_VERIFY: "false"
-      INSTANCE_CREDENTIALS: "false"
+      INSTANCE_CREDENTIALS: ""
       LOGLEVEL: 10
     networks:
       - references-test
@@ -73,7 +102,7 @@ services:
       REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
       DYNAMODB_VERIFY: "false"
       CLOUDWATCH_VERIFY: "false"
-      INSTANCE_CREDENTIALS: "false"
+      INSTANCE_CREDENTIALS: ""
       LOGLEVEL: 10
     ports:
       - "8001:8000"
@@ -85,32 +114,7 @@ services:
       - references-worker
       - references-cermine
       - references-refextract
-  references-agent:
-    build:
-      context: .
-      dockerfile: Dockerfile-agent
-    environment:
-      AWS_ACCESS_KEY_ID: "foo"
-      AWS_SECRET_ACCESS_KEY: "bar"
-      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
-      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
-      KINESIS_ENDPOINT: "https://references-test-localstack:4568"
-      KINESIS_VERIFY: "false"
-      DYNAMODB_VERIFY: "false"
-      CLOUDWATCH_VERIFY: "false"
-      EXTRACTION_ENDPOINT: "http://references-api:8000"
-      LOGLEVEL: 10
-      LOGFILE: "/var/log/references-agent-processor.log"
-      MODE: "test"
-      JAVA_FLAGS: "-Dcom.amazonaws.sdk.disableCertChecking"
-      AWS_CBOR_DISABLE: "true"
-      INSTANCE_CREDENTIALS: "false"
-    networks:
-      - references-test
-    depends_on:
-      - references-test-localstack
-      - references-worker
-      - references-api
+
 
 networks:
   references-test:
