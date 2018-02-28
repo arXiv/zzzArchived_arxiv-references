@@ -62,12 +62,14 @@ def extract_references(filename: str, document_id: str) \
     Parameters
     ----------
     filename : str
-        Name of the pdf from which to extract references.
+        Name of the PDF from which to extract references.
+    document_id : str
+        arXiv paper ID.
 
     Returns
     -------
     references : list of :class:`ExtractedReference`
-        Reference metadata extracted from PDF.
+        Parsed metadata from a bibliographic reference.
     """
     try:
         return [_transform(reference) for reference

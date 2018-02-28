@@ -34,7 +34,7 @@ REGEX_ISBN_13 = (
 
 
 def longest_string(strings):
-    """ Return the longest string from the bunch """
+    """Return the longest string from the bunch."""
     index, value = max(enumerate(strings), key=lambda x: len(x[1]))
     return value
 
@@ -50,8 +50,7 @@ def extract_identifiers(text):
 
     Returns
     -------
-    metadata : dictionary
-
+    metadata : :class:`ExtractedReference`
         The metadata dictionary corresponding to what was found,
         see schema for formatting specifics. Generally, will be similar to:
 
@@ -65,7 +64,6 @@ def extract_identifiers(text):
                 ]
             }
     """
-
     document = {}
     arxivids = [longest_string(ID) for ID
                 in re.findall(REGEX_ARXIV_FLEXIBLE, text)]

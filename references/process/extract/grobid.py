@@ -176,9 +176,8 @@ def extract_references(filename: str, document_id: str) \
 
     Returns
     -------
-    reference_docs : list
-        Dictionary of reference metadata with metadata separated into author,
-        journal, year, etc
+    reference_docs : list of :class:`ExtractedReference`
+        Parsed metadata from a bibliographic reference.
     """
     try:
         data = grobid.extract_references(filename)
