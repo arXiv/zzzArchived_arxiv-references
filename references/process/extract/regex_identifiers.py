@@ -1,3 +1,5 @@
+from references.domain import ExtractedReference, Author, Identifier
+
 import regex as re
 
 from references.process.extract.regex_arxiv import REGEX_ARXIV_FLEXIBLE
@@ -84,17 +86,17 @@ def extract_identifiers(text):
     identifiers = []
     if isbn10:
         identifiers.extend([
-            {'identifier_type': 'ISBN', 'identifier': ID}
+            Identifier(identifier_type='ISBN', identifier=ID)
             for ID in isbn10
         ])
 
     if isbn13:
         identifiers.extend([
-            {'identifier_type': 'ISBN', 'identifier': ID}
+            Identifier(identifier_type='ISBN', identifier=ID)
             for ID in isbn13
         ])
 
     if identifiers:
         document['identifiers'] = identifiers
 
-    return document
+    return ExtractedReference(**document)

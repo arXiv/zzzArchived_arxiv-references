@@ -6,6 +6,7 @@ See <https://github.com/inspirehep/refextract>.
 
 from typing import List, Any, Dict
 
+from references.domain import ExtractedReference, Identifier, Author
 from references.services import refextract
 from references import logging
 logger = logging.getLogger(__name__)
@@ -23,7 +24,7 @@ FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
 ]
 
 
-def _transform(refextract_metadatum: dict) -> dict:
+def _transform(refextract_metadatum: dict) -> ExtractedReference:
     """
     Restructure refextract output to match internal extraction struct.
 
@@ -41,13 +42,20 @@ def _transform(refextract_metadatum: dict) -> dict:
         value = refextract_metadatum.get(re_key)
         if value:
             metadatum[key] = value[0]   # All refextract values are lists.
+    if 'identifiers' in refextract_metadatum:
+        metadatum['identifiers'] = [
+            Identifier(**ident) for ident in metadatum['identifiers']
+        ]
     if 'author' in refextract_metadatum:
-        metadatum['authors'] = [{'fullname': author} for author
-                                in refextract_metadatum['author']]
-    return metadatum
+        metadatum['authors'] = [
+            Author(fullname=author) for author
+            in refextract_metadatum['author']
+        ]
+    return ExtractedReference(**metadatum)
 
 
-def extract_references(filename: str, document_id: str) -> List[dict]:
+def extract_references(filename: str, document_id: str) \
+        -> List[ExtractedReference]:
     """
     Wrapper for :func:`refextract.extract_references_from_file` function.
 
@@ -58,7 +66,7 @@ def extract_references(filename: str, document_id: str) -> List[dict]:
 
     Returns
     -------
-    references : list of dicts
+    references : list of :class:`ExtractedReference`
         Reference metadata extracted from PDF.
     """
     try:

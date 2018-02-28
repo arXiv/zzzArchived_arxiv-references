@@ -7,6 +7,7 @@ from typing import List
 
 from references import logging
 from references.services import grobid
+from references.domain import ExtractedReference
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,7 @@ def _xml_path_elem(elem, path):
     return elem.findall(path)
 
 
-def _xml_path_attrib(elem, path, attrib):
+def _xml_path_attr(elem, path, attrib):
     found = _xml_path_elem(elem, path)
     return ' '.join([
         f.attrib.get(attrib, '') for f in found if f is not None
@@ -86,12 +87,12 @@ def _xml_format_biblStruct(bbl):
         source = _xml_path_text(bbl, 'monogr/imprint/publisher')
 
     # no matter what, these values come the monogr section
-    year = _xml_path_attrib(
+    year = _xml_path_attr(
         bbl, 'monogr/imprint/date[@type="published"]', 'when'
     )
     pages = '{}-{}'.format(
-        _xml_path_attrib(bbl, 'monogr/imprint/biblScope[@unit="page"]', 'from'),
-        _xml_path_attrib(bbl, 'monogr/imprint/biblScope[@unit="page"]', 'to')
+        _xml_path_attr(bbl, 'monogr/imprint/biblScope[@unit="page"]', 'from'),
+        _xml_path_attr(bbl, 'monogr/imprint/biblScope[@unit="page"]', 'to')
     )
     volume = _xml_path_text(bbl, 'monogr/imprint/biblScope[@unit="volume"]')
     issue = _xml_path_text(bbl, 'monogr/imprint/biblScope[@unit="issue"]')
@@ -155,12 +156,13 @@ def format_grobid_output(output: bytes) -> List[dict]:
     for bbl in listbbl.iter(tag=xt('biblStruct')):
         reference = dict(blank_reference)
         reference.update(_xml_format_biblStruct(bbl))
-        references.append(reference)
+        references.append(ExtractedReference(**reference))
 
     return references
 
 
-def extract_references(filename: str, document_id: str) -> List[dict]:
+def extract_references(filename: str, document_id: str) \
+        -> List[ExtractedReference]:
     """
     Extract references from the PDF at ``filename`` using GROBID.
 

@@ -13,6 +13,7 @@ from references import logging
 from references.process import util
 from references.process.extract import regex_identifiers
 from references.services import cermine
+from references.domain import ExtractedReference, Identifier
 
 
 logger = logging.getLogger(__name__)
@@ -109,7 +110,7 @@ def _cxml_format_reference_line(elm):
     return text
 
 
-def cxml_format_document(root, documentid: str='') -> List[dict]:
+def cxml_format_document(root, documentid: str='') -> List[ExtractedReference]:
     """
     Convert a CERMINE XML element into a reference document i.e.:
 
@@ -159,9 +160,12 @@ def cxml_format_document(root, documentid: str='') -> List[dict]:
         # add regex extracted information to the metadata (not CERMINE's)
         rawline = reference.get('raw', '') or ''
         identifiers = regex_identifiers.extract_identifiers(rawline)
-        reference.update(identifiers)
 
-        references.append(reference)
+        reference['identifiers'] = [
+            Identifier(**ident) for ident in reference.get('identifiers', [])
+        ]
+        reference['identifiers'] += identifiers
+        references.append(ExtractedReference(**reference))
 
     return references
 
@@ -185,7 +189,7 @@ def convert_cxml_json(raw_data: bytes, document_id: str) -> List[dict]:
 
 
 def extract_references(filename: str, document_id: str,
-                       cleanup: bool=True) -> List[dict]:
+                       cleanup: bool=True) -> List[ExtractedReference]:
     """
     Extract references from ``filename`` using Cermine.
 
