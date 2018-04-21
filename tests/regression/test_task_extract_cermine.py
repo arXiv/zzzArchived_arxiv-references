@@ -65,7 +65,7 @@ class CERMINEExtractorRegressionTests(unittest.TestCase):
         with open(cxml_document_path, 'rb') as f:
             jsondoc = cermine.convert_cxml_json(f.read(), '1702.07336')
 
-        schema_path = 'schema/ExtractedReference.json'
+        schema_path = 'schema/Reference.json'
         schemadoc = json.load(open(schema_path))
         for ref in jsondoc:
             jsonschema.validate(ref, schemadoc)
@@ -85,7 +85,7 @@ class GROBIDExtractorRegressionTests(unittest.TestCase):
         gxml_path = article2('grobid.xml')
         jsondoc = grobid.format_grobid_output(open(gxml_path, 'rb').read())
 
-        schema_path = 'schema/ExtractedReference.json'
+        schema_path = 'schema/Reference.json'
         schemadoc = json.load(open(schema_path))
         for ref in jsondoc:
             jsonschema.validate(ref, schemadoc)
@@ -109,7 +109,7 @@ class ScienceParseExtractorRegressionTests(unittest.TestCase):
             json.load(open(json_path))
         )
 
-        schema_path = 'schema/ExtractedReference.json'
+        schema_path = 'schema/Reference.json'
         schemadoc = json.load(open(schema_path))
         for ref in jsondoc:
             jsonschema.validate(ref, schemadoc)

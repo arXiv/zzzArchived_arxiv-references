@@ -1,6 +1,7 @@
 """Unit tests for :mod:`references.process.merge.arbitrate`."""
 
 import unittest
+from references.domain import Reference
 from references.process.merge import arbitrate
 
 
@@ -13,25 +14,24 @@ class TestArbitrate(unittest.TestCase):
             ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
             ('refextract', {'title': 'asdf', 'doi': 'nonsense',
                             'volume': '12'}),
-            ('alt', {'title': 'nope', 'foo': 'bar', 'volume': 'baz'})
+            ('alt', {'title': 'nope', 'volume': 'baz'})
         ]
         valid = [
             ('cermine', {'title': 0.9, 'doi': 0.8}),
             ('refextract', {'title': 0.6, 'doi': 0.1, 'volume': 0.8}),
-            ('alt', {'title': 0.1, 'foo': 1.0})
+            ('alt', {'title': 0.1})
         ]
         priors = [
             ('cermine', {'title': 0.8, 'doi': 0.9}),
             ('refextract', {'title': 0.9, 'doi': 0.2, 'volume': 0.2}),
-            ('alt', {'title': 0.2, 'foo': 0.9})
+            ('alt', {'title': 0.2})
         ]
 
         final, score = arbitrate.arbitrate(metadata, valid, priors)
-        self.assertIsInstance(final, dict)
-        self.assertEqual(final['title'], 'yep')
-        self.assertEqual(final['doi'], '10.123/123.4566')
-        self.assertEqual(final['volume'], '12')
-        self.assertEqual(final['foo'], 'bar')
+        self.assertIsInstance(final, Reference)
+        self.assertEqual(final.title, 'yep')
+        self.assertEqual(final.doi, '10.123/123.4566')
+        self.assertEqual(final.volume, '12')
         self.assertIsInstance(score, float)
         self.assertGreater(score, 0.5)
 
@@ -42,24 +42,23 @@ class TestArbitrate(unittest.TestCase):
                 'authors': ['yep', 'yep'],
             }),
             ('refextract', {'authors': 'asdf', 'volume': '12'}),
-            ('alt', {'authors': 'nope', 'foo': 'bar', 'volume': 'baz'})
+            ('alt', {'authors': 'nope', 'volume': 'baz'})
         ]
         valid = [
             ('cermine', {'authors': 0.9}),
             ('refextract', {'authors': 0.6, 'volume': 0.8}),
-            ('alt', {'authors': 0.1, 'foo': 1.0})
+            ('alt', {'authors': 0.1})
         ]
         priors = [
             ('cermine', {'authors': 0.8}),
             ('refextract', {'authors': 0.9, 'volume': 0.2}),
-            ('alt', {'authors': 0.2, 'foo': 0.9})
+            ('alt', {'authors': 0.2})
         ]
 
         final, score = arbitrate.arbitrate(metadata, valid, priors)
-        self.assertIsInstance(final, dict)
-        self.assertEqual(final['authors'], ['yep', 'yep'])
-        self.assertEqual(final['volume'], '12')
-        self.assertEqual(final['foo'], 'bar')
+        self.assertIsInstance(final, Reference)
+        self.assertEqual(final.authors, ['yep', 'yep'])
+        self.assertEqual(final.volume, '12')
         self.assertIsInstance(score, float)
         self.assertGreater(score, 0.0)
 
@@ -73,7 +72,7 @@ class TestArbitrate(unittest.TestCase):
             }
         }
         final, score = arbitrate._select(pooled)
-        self.assertEqual(final['source'], 'yes')
+        self.assertEqual(final.source, 'yes')
         # This is low, because we are now scoring partially by completeness.
         self.assertEqual(score, 0.15)
 
@@ -87,7 +86,7 @@ class TestArbitrate(unittest.TestCase):
             }
         }
         final, score = arbitrate._select(pooled)
-        self.assertEqual(final['source'], 'yes')
+        self.assertEqual(final.source, 'yes')
         # This is low, because we are now scoring partially by completeness.
         self.assertEqual(score, 0.15625)
 
@@ -155,7 +154,7 @@ class TestArbitrate(unittest.TestCase):
             ('alt', {'title': 1.0})
         ]
         final, score = arbitrate.arbitrate(metadata, valid, priors)
-        self.assertEqual(final['title'], 'meh')
+        self.assertEqual(final.title, 'meh')
         self.assertLess(score - 0.52, 0.01)
 
     def test_drop_value_if_prior_missing(self):
@@ -164,21 +163,21 @@ class TestArbitrate(unittest.TestCase):
             ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
             ('refextract', {'title': 'asdf', 'doi': 'nonsense',
                             'volume': '12'}),
-            ('alt', {'title': 'nope', 'foo': 'bar', 'volume': 'baz'})
+            ('alt', {'title': 'nope', 'volume': 'baz'})
         ]
         valid = [
             ('cermine', {'title': 0.9, 'doi': 0.8}),
             ('refextract', {'title': 0.6, 'doi': 0.1, 'volume': 0.8}),
-            ('alt', {'title': 0.1, 'foo': 1.0})
+            ('alt', {'title': 0.1})
         ]
         priors = [
             ('cermine', {'title': 0.8}),
             ('refextract', {'title': 0.9, 'doi': 0.2, 'volume': 0.2}),
-            ('alt', {'title': 0.2, 'foo': 0.9})
+            ('alt', {'title': 0.2})
         ]
 
         final, score = arbitrate.arbitrate(metadata, valid, priors)
-        self.assertEqual(final['doi'], 'nonsense')
+        self.assertEqual(final.doi, 'nonsense')
 
     def test_misaligned_input_raises_valueerror(self):
         """Misalignment of input raises a ValueError."""
@@ -200,26 +199,26 @@ class TestArbitrate(unittest.TestCase):
             ('cermine', {'title': 'yep', 'doi': '10.123/123.4567'}),
             ('refextract', {'title': 'asdf', 'doi': 'nonsense',
                             'volume': '12'}),
-            ('alt', {'title': 'nope', 'foo': 'bar', 'volume': 'baz'})
+            ('alt', {'title': 'nope', 'volume': 'baz'})
         ], [
             ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
             ('refextract', {'title': 'asdf', 'doi': 'nonsense',
                             'volume': '12'}),
-            ('alt', {'title': 'nope', 'foo': 'bar', 'volume': 'baz'})
+            ('alt', {'title': 'nope', 'volume': 'baz'})
         ]]
         valid = [[
             ('cermine', {'title': 0.9, 'doi': 0.8}),
             ('refextract', {'title': 0.6, 'doi': 0.1, 'volume': 0.8}),
-            ('alt', {'title': 0.1, 'foo': 1.0})
+            ('alt', {'title': 0.1})
         ], [
             ('cermine', {'title': 0.9, 'doi': 0.8}),
             ('refextract', {'title': 0.6, 'doi': 0.1, 'volume': 0.8}),
-            ('alt', {'title': 0.1, 'foo': 1.0})
+            ('alt', {'title': 0.1})
         ]]
         priors = [
             ('cermine', {'title': 0.8, 'doi': 0.9}),
             ('refextract', {'title': 0.9, 'doi': 0.2, 'volume': 0.2}),
-            ('alt', {'title': 0.2, 'foo': 0.9})
+            ('alt', {'title': 0.2})
         ]
 
         final = arbitrate.arbitrate_all(metadata, valid, priors, 3)
@@ -228,10 +227,9 @@ class TestArbitrate(unittest.TestCase):
         for obj, score in final:
             self.assertGreater(score, 0.0)
             self.assertLess(score, 1.0)
-            self.assertIsInstance(obj, dict)
-            self.assertEqual(obj['title'], 'yep')
-            self.assertEqual(obj['volume'], '12')
-            self.assertEqual(obj['foo'], 'bar')
+            self.assertIsInstance(obj, Reference)
+            self.assertEqual(obj.title, 'yep')
+            self.assertEqual(obj.volume, '12')
 
     def test_empty_value_is_treated_as_value(self):
         """If a key is present, but value empty, treat it as a real value."""
@@ -251,7 +249,7 @@ class TestArbitrate(unittest.TestCase):
             ('grobid', {'title': 1.0}),
         ]
         final, score = arbitrate.arbitrate_all(metadata, valid, priors, 3)[0]
-        self.assertEqual(final['title'], "")
+        self.assertEqual(final.title, "")
 
     def test_missing_value_is_not_treated_as_value(self):
         """If a key is not present, do not treat it as a real value."""
@@ -271,4 +269,4 @@ class TestArbitrate(unittest.TestCase):
             ('grobid', {'title': 1.0}),
         ]
         final, score = arbitrate.arbitrate_all(metadata, valid, priors, 3)[0]
-        self.assertEqual(final['title'], "This is correct")
+        self.assertEqual(final.title, "This is correct")

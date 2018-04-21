@@ -8,7 +8,7 @@ import subprocess
 import unittest
 from unittest import mock
 
-from references.domain import ExtractedReference
+from references.domain import Reference
 from references.process.extract import refextract
 
 
@@ -50,5 +50,5 @@ class TestRefextractExtractor(unittest.TestCase):
                         "The service should POST to the configured endpoint.")
 
         self.assertIsInstance(references, list)
-        self.assertIsInstance(references[0], ExtractedReference)
+        self.assertIsInstance(references[0], Reference)
         self.assertEqual(len(references), 45)

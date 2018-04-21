@@ -6,8 +6,8 @@ from typing import List
 from urllib3 import Retry
 import requests
 
-from references import logging
-from references.context import get_application_config, get_application_global
+from arxiv.base import logging
+from arxiv.base.globals import get_application_config, get_application_global
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,8 @@ class RefExtractSession(object):
             logger.debug('Bad status: %i', response.status_code)
             raise IOError('%s: Refextract failed: %s' %
                           (filename, response.content))
-        return response.json()
+        data: List[dict] = response.json()
+        return data
 
 
 def init_app(app: object = None) -> None:
@@ -70,14 +71,15 @@ def get_session(app: object = None) -> RefExtractSession:
     return RefExtractSession(endpoint)
 
 
-def current_session():
+def current_session() -> RefExtractSession:
     """Get/create :class:`.RefExtractSession` for this context."""
     g = get_application_global()
     if g is None:
         return get_session()
     if 'refextract' not in g:
         g.refextract = get_session()
-    return g.refextract
+    session: RefExtractSession = g.refextract
+    return session
 
 
 def extract_references(filename: str) -> List[dict]:

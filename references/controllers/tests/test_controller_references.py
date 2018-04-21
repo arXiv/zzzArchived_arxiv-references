@@ -1,12 +1,17 @@
 """Tests for the :mod:`references.controllers.references` module."""
 
-import unittest
-from unittest import mock
+from unittest import TestCase, mock
+from urllib import parse
+from datetime import datetime
 from references.controllers import extracted_references
 from moto import mock_dynamodb2
+
+from werkzeug.exceptions import NotFound, InternalServerError
+
 from references.services import data_store
-from references import status
-from urllib import parse
+from arxiv import status
+from references.domain import ReferenceSet, Reference
+
 
 import logging
 for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
@@ -17,7 +22,7 @@ for name in ['botocore.endpoint', 'botocore.hooks', 'botocore.auth',
     logger.setLevel('ERROR')
 
 
-class TestReferenceResolver(unittest.TestCase):
+class TestReferenceResolver(TestCase):
     """Test the behavior of :func:`.reference.resolve`."""
 
     @mock.patch('references.controllers.extracted_references.get')
@@ -92,92 +97,69 @@ class TestReferenceResolver(unittest.TestCase):
         self.assertEqual(query['as_publication'], ['Journal of Bardistry'])
 
 
-class TestReferenceMetadataControllerList(unittest.TestCase):
+class TestReferenceMetadataControllerList(TestCase):
     """Test the ReferenceMetadataController.list method."""
 
-    @mock.patch.object(data_store, 'get_latest_extractions')
+    @mock.patch.object(data_store, 'load')
     def test_list_calls_datastore_session(self, retrieve_mock):
         """Test :func:`.reference.list` function."""
-        retrieve_mock.return_value = {'references': []}
+        retrieve_mock.return_value = ReferenceSet(
+            document_id='fooid123',
+            references=[],
+            version='0.1',
+            score=0.9,
+            created=datetime.now(),
+            updated=datetime.now()
+        )
         try:
             response, code, _ = extracted_references.list('arxiv:1234.5678')
         except TypeError:
             self.fail('list() should return a tuple')
         self.assertEqual(retrieve_mock.call_count, 1)
 
-    @mock.patch.object(data_store, 'get_latest_extractions')
-    def test_list_calls_datastore_with_reftype(self, retrieve_mock):
-        """Test calls with reftype argument."""
-        retrieve_mock.return_value = {'references': []}
-        try:
-            response, code, _ = extracted_references.list('arxiv:1234.5678',
-                                                          'citation')
-        except TypeError:
-            self.fail('list() should return a tuple')
-        self.assertEqual(retrieve_mock.call_count, 1)
-        try:
-            retrieve_mock.assert_called_with('arxiv:1234.5678',
-                                             reftype='citation')
-        except AssertionError as e:
-            self.fail('%s' % e)
-
-    @mock.patch.object(data_store, 'get_latest_extractions')
+    @mock.patch.object(data_store, 'load')
     def test_list_handles_IOError(self, retrieve_mock):
-        """Test the case that the underlying datastore raises an IOError."""
-        def raise_ioerror(*args, **kwargs):
-            raise IOError('Whoops!')
-        retrieve_mock.side_effect = raise_ioerror
-        try:
+        """Test the case that the datastore cannot connect."""
+        retrieve_mock.side_effect = data_store.CommunicationError
+        with self.assertRaises(InternalServerError):
             response, code, _ = extracted_references.list('arxiv:1234.5678')
-        except TypeError:
-            self.fail('list() should return a tuple')
-        self.assertEqual(code, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @mock.patch.object(data_store, 'get_latest_extractions')
+    @mock.patch.object(data_store, 'load')
     def test_list_handles_nonexistant_record(self, retrieve_mock):
         """Test the case that a non-existant record is requested."""
-        retrieve_mock.return_value = None
-        try:
+        retrieve_mock.side_effect = data_store.ReferencesNotFound
+        with self.assertRaises(NotFound):
             response, code, _ = extracted_references.list('arxiv:1234.5678')
-        except TypeError:
-            self.fail('list() should return a tuple')
-        self.assertEqual(code, status.HTTP_404_NOT_FOUND)
 
 
-class TestReferenceMetadataControllerGet(unittest.TestCase):
+class TestReferenceMetadataControllerGet(TestCase):
     """Test the :func:`.reference.get` function."""
 
-    @mock.patch.object(data_store, 'get_reference')
+    @mock.patch.object(data_store, 'load')
     def test_get_calls_datastore_session(self, retrieve_mock):
         """Test :func:`.reference.get` function."""
-        retrieve_mock.return_value = {}
-        try:
-            response, code, _ = extracted_references.get('arxiv:1234.5678',
-                                                         'asdf')
-        except TypeError:
-            self.fail('get() should return a tuple')
+        ref = Reference(raw='asdf')
+        retrieve_mock.return_value = ReferenceSet(
+            document_id='fooid123',
+            references=[ref],
+            version='0.1',
+            score=0.9,
+            created=datetime.now(),
+            updated=datetime.now()
+        )
+        extracted_references.get('arxiv:1234.5678', ref.identifier)
         self.assertEqual(retrieve_mock.call_count, 1)
 
-    @mock.patch.object(data_store, 'get_reference')
+    @mock.patch.object(data_store, 'load')
     def test_get_handles_IOError(self, retrieve_mock):
-        """The underlying datastore raises an IOError."""
-        def raise_ioerror(*args):
-            raise IOError('Whoops!')
-        retrieve_mock.side_effect = raise_ioerror
-        try:
-            response, code, _ = extracted_references.get('arxiv:1234.5678',
-                                                         'asdf')
-        except TypeError:
-            self.fail('get() should return a tuple')
-        self.assertEqual(code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        """The underlying datastore cannot communicate."""
+        retrieve_mock.side_effect = data_store.CommunicationError
+        with self.assertRaises(InternalServerError):
+            extracted_references.get('arxiv:1234.5678', 'asdf')
 
-    @mock.patch.object(data_store, 'get_reference')
+    @mock.patch.object(data_store, 'load')
     def test_get_handles_nonexistant_record(self, retrieve_mock):
         """A non-existant record is requested."""
-        retrieve_mock.return_value = None
-        try:
-            response, code, _ = extracted_references.get('arxiv:1234.5678',
-                                                         'asdf')
-        except TypeError:
-            self.fail('get() should return a tuple')
-        self.assertEqual(code, status.HTTP_404_NOT_FOUND)
+        retrieve_mock.side_effect = data_store.ReferencesNotFound
+        with self.assertRaises(NotFound):
+            extracted_references.get('arxiv:1234.5678', 'asdf')

@@ -1,8 +1,8 @@
-from references.domain import ExtractedReference, Author, Identifier
-
+from typing import List, Dict, Any
 import regex as re
 
-from references.process.extract.regex_arxiv import REGEX_ARXIV_FLEXIBLE
+from references.domain import Reference, Author, Identifier
+from .regex_arxiv import REGEX_ARXIV_FLEXIBLE
 
 # https://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 REGEX_DOI = (
@@ -33,13 +33,13 @@ REGEX_ISBN_13 = (
 )
 
 
-def longest_string(strings):
+def longest_string(strings: List[str]) -> str:
     """Return the longest string from the bunch."""
     index, value = max(enumerate(strings), key=lambda x: len(x[1]))
     return value
 
 
-def extract_identifiers(text):
+def extract_identifiers(text: str) -> Reference:
     """
     Get available ID metadata from a text selection.
 
@@ -50,7 +50,7 @@ def extract_identifiers(text):
 
     Returns
     -------
-    metadata : :class:`ExtractedReference`
+    metadata : :class:`Reference`
         The metadata dictionary corresponding to what was found,
         see schema for formatting specifics. Generally, will be similar to:
 
@@ -64,14 +64,14 @@ def extract_identifiers(text):
                 ]
             }
     """
-    document = {}
+    document: Dict[str, Any] = {}
     arxivids = [longest_string(ID) for ID
                 in re.findall(REGEX_ARXIV_FLEXIBLE, text)]
     if arxivids:
-        if len(arxivids) > 1:
-            document['arxiv_id'] = arxivids
-        else:
-            document['arxiv_id'] = arxivids[0]
+        # if len(arxivids) > 1:
+        #     document['arxiv_id'] = arxivids
+        # else:
+        document['arxiv_id'] = arxivids[0]
 
     dois = re.findall(REGEX_DOI, text)
     if dois:
@@ -81,20 +81,20 @@ def extract_identifiers(text):
     isbn13 = re.findall(REGEX_ISBN_13, text)
 
     # gather the identifiers one at a time
-    identifiers = []
+    identifiers: List[Identifier] = []
     if isbn10:
         identifiers.extend([
-            Identifier(identifier_type='ISBN', identifier=ID)
+            Identifier(identifier_type='ISBN', identifier=ID)   # type: ignore
             for ID in isbn10
         ])
 
     if isbn13:
         identifiers.extend([
-            Identifier(identifier_type='ISBN', identifier=ID)
+            Identifier(identifier_type='ISBN', identifier=ID)   # type: ignore
             for ID in isbn13
         ])
 
     if identifiers:
         document['identifiers'] = identifiers
 
-    return ExtractedReference(**document)
+    return Reference(**document)    # type: ignore

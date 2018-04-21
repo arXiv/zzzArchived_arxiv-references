@@ -7,9 +7,9 @@ import shutil
 import tempfile
 import subprocess
 import datetime
-from typing import List
+from typing import List, Optional, Generator
 
-from references import logging
+from arxiv.base import logging
 logger = logging.getLogger(__name__)
 
 VolumeList = List[List[str]]
@@ -87,7 +87,7 @@ def find_arxiv_id(string: str) -> str:
     newform = re.compile(r'(\d{4,}\.\d{5,})')
 
     for regex in (newform, oldform):
-        match = regex.findall(string)
+        match: List[str] = regex.findall(string)
         if len(match) > 0:
             return match[0]
     return ''
@@ -95,10 +95,10 @@ def find_arxiv_id(string: str) -> str:
 
 def rotating_backup_name(filename: str) -> str:
     """
+    Create the next name in a series of rotating backup files.
 
-    Create the next name in a series of rotating backup files beginning with
-    the root name `filename`. In particular, keeping appending `.bk-[0-9]+`
-    forever, beginning the first unused number.
+    Beginning with the root name `filename`. In particular, keeping appending
+    `.bk-[0-9]+` forever, beginning the first unused number.
 
     Parameters
     ----------
@@ -111,7 +111,7 @@ def rotating_backup_name(filename: str) -> str:
         Name of the next rotating file. If the first time called, it will be
         <filename>.bk-0
     """
-    def _genname(base):
+    def _genname(base: str) -> Generator:
         index = 0
         while True:
             yield '{}.bk-{}'.format(base, index)
@@ -120,11 +120,11 @@ def rotating_backup_name(filename: str) -> str:
     for n in _genname(filename):
         if os.path.exists(n):
             continue
-        return n
-    return None
+        break
+    return n    # type: ignore
 
 
-def backup(filename: str):
+def backup(filename: str) -> None:
     """
     Perform a rotating backup on `filename` in the same directory by appending
     <filename>.bk-[0-9]+
@@ -142,14 +142,14 @@ def backup(filename: str):
     shutil.copy2(filename, backup_name)
 
 
-def ps2pdf(ps):
+def ps2pdf(ps: str) -> None:
     subprocess.check_call(['ps2pdf', ps])
 
 
-def dvi2ps(dvi):
+def dvi2ps(dvi: str) -> None:
     subprocess.check_call(['dvi2ps', dvi])
 
 
-def argmax(array):
+def argmax(array: List[float]) -> int:
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index

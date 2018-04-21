@@ -50,8 +50,6 @@ class ReferenceExtractionAndArbitration(unittest.TestCase):
         from references.process import extract
         from references.process.merge import align, arbitrate, priors, beliefs, \
             normalize
-        # refs = extract.extract('evaluation/pdfs/0801.0012.pdf',
-        #                        document_id="0801.0012", report=False)
         pdf_path = 'evaluation/pdfs/0801.0012.pdf'
         document_id = '0801.0012'
 

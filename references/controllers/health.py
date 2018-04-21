@@ -2,10 +2,10 @@
 
 from typing import Tuple
 
-from references.services import cermine, data_store, metrics, grobid
+from references.services import cermine, data_store, grobid
 from references.services import refextract
 
-from references import logging
+from arxiv.base import logging
 logger = logging.getLogger(__name__)
 
 ControllerResponse = Tuple[dict, int, dict]
@@ -15,7 +15,6 @@ def _getServices() -> list:
     """Yield a list of services to check for connectivity."""
     return [
         ('datastore', data_store),
-        ('metrics', metrics),
         ('grobid', grobid),
         ('cermine', cermine),
         ('refextract', refextract),

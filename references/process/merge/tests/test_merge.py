@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+from references.domain import Reference
 from references.process.merge import merge_records
 from references.process.merge.normalize import filter_records
 
@@ -11,9 +12,9 @@ class TestNormalize(unittest.TestCase):
     def setUp(self):
         """Given some records..."""
         self.records = [
-            ({'foo': 'bar'}, 0.1),
-            ({'baz': 'bat'}, 0.4),
-            ({'lorem': 'ipsum'}, 0.9)
+            (Reference(title='bar'), 0.1),
+            (Reference(title='bat'), 0.4),
+            (Reference(title='ipsum'), 0.9)
         ]
 
     def test_filter_threshold(self):
@@ -24,12 +25,6 @@ class TestNormalize(unittest.TestCase):
         self.assertEqual(len(filter_records(self.records, 0.5)[0]), 1)
         self.assertEqual(len(filter_records(self.records, 0.9)[0]), 1)
         self.assertEqual(len(filter_records(self.records, 1.0)[0]), 0)
-
-    def test_filter_threshold_adds_score(self):
-        """Each record should be updated with its score."""
-        filtered, mean_score = filter_records(self.records, 0.1)
-        for record in filtered:
-            self.assertIn('score', record)
 
 
 class TestMergeSimple(unittest.TestCase):
@@ -73,12 +68,11 @@ class TestMergeSimple(unittest.TestCase):
     def test_merge_full(self):
         """Test that :func:`.merge_records` returns a merged reference set."""
         records, score = merge_records(self.simple_docs, self.priors)
-        print(records)
         self.assertIsInstance(records, list)
         self.assertEqual(len(records), 3)
         for ref in records:
-            self.assertTrue('source' in ref)
-            self.assertTrue('volume' in ref)
-            self.assertTrue('year' in ref)
+            self.assertTrue(bool(ref.source))
+            self.assertTrue(bool(ref.volume))
+            self.assertTrue(bool(ref.year))
         self.assertGreaterEqual(score, 0.0)
         self.assertLessEqual(score, 1.0)

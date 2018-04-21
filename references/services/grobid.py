@@ -1,12 +1,13 @@
 """Service layer integration for GROBID."""
 
 import os
+from functools import wraps
 from urllib.parse import urljoin
 from urllib3 import Retry
 import requests
 
-from references.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
-from references.context import get_application_config, get_application_global
+from arxiv.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
+from arxiv.base.globals import get_application_config, get_application_global
 
 
 class GrobidSession(object):
@@ -18,8 +19,7 @@ class GrobidSession(object):
 
         Parameters
         ----------
-        hostname: str
-        port : int
+        endpoint : str
         path : str
 
         Raises
@@ -53,8 +53,9 @@ class GrobidSession(object):
 
         Returns
         -------
-        str
+        bytes
             Raw XML response from Grobid.
+
         """
         self._adapter.max_retries = Retry(connect=30, read=10,
                                           backoff_factor=20)
@@ -86,16 +87,18 @@ def get_session(app: object = None) -> GrobidSession:
     return GrobidSession(endpoint, path)
 
 
-def current_session():
-    """Get/create :class:`.MetricsSession` for this context."""
+def current_session() -> GrobidSession:
+    """Get/create :class:`.GrobidSession` for this context."""
     g = get_application_global()
     if g is None:
         return get_session()
     if 'grobid' not in g:
         g.grobid = get_session()
-    return g.grobid
+    session: GrobidSession = g.grobid
+    return session
 
 
+@wraps(GrobidSession.extract_references)
 def extract_references(filename: str) -> bytes:
     """
     Extract references from the PDF at ``filename``.

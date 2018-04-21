@@ -9,7 +9,7 @@ import unittest
 from unittest import mock
 
 from references.process.extract import cermine
-from references.domain import ExtractedReference
+from references.domain import Reference
 
 
 class TestCermineExtractor(unittest.TestCase):
@@ -46,5 +46,5 @@ class TestCermineExtractor(unittest.TestCase):
                         "The service should POST to the configured endpoint.")
 
         self.assertIsInstance(references, list)
-        self.assertIsInstance(references[0], ExtractedReference)
+        self.assertIsInstance(references[0], Reference)
         self.assertEqual(len(references), 1)

@@ -45,4 +45,3 @@ if __name__ == '__main__':
             v_sim = merge.arbitrate._similarity(value_t, value_e)
             field_scores.append(v_sim)
         scores.append(mean(field_scores))
-    print(mean(scores), stdev(scores))

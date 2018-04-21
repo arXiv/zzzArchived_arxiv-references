@@ -5,8 +5,9 @@ from decimal import Decimal
 import re
 from typing import Tuple, Union, List, Callable
 
+from references.domain import Reference
 from references.process.util import CATEGORIES
-from references import logging
+from arxiv.base import logging
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +90,8 @@ def normalize_records(records: list) -> list:
     return [_normalize_record(record) for record in records]
 
 
-def filter_records(records: list, threshold: float = 0.5) -> Tuple[list, float]:
+def filter_records(records: List[Tuple[Reference, float]],
+                   threshold: float = 0.5) -> Tuple[List[Reference], float]:
     """
     Remove low-quality extracted references, and generate a composite score.
 
@@ -107,11 +109,14 @@ def filter_records(records: list, threshold: float = 0.5) -> Tuple[list, float]:
         Filtered list of reference metadata (``dict``) and a composite score
         for all retained records (``float``).
     """
-    filtered_records = [
-        (dict(list(rec.items()) + [('score', Decimal(str(round(sc, 2))))]), sc)
-        for rec, sc in records if sc >= threshold
-    ]
-    if len(filtered_records) == 0:
+    # We need to both filter and update each record with the key 'score'.
+    filtered = []
+    for ref, score in records:
+        ref.score = score
+        if score >= threshold:
+            filtered.append((ref, score))
+    if len(filtered) == 0:
         return [], 0.
-    filtered_records, scores = zip(*filtered_records)
-    return list(filtered_records), mean(scores)
+    ref_tuple, scores = zip(*filtered)
+    references: List[Reference] = list(ref_tuple)
+    return references, mean(scores)

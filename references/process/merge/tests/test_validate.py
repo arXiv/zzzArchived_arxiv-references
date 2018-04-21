@@ -59,7 +59,6 @@ class TestValidateSimpleRecords(unittest.TestCase):
             ]
         ]
         aligned_probs = beliefs.validate(records)
-        print(aligned_probs)
         self.assertGreater(dict(aligned_probs[0])['ext1']['title'], 0)
         self.assertGreater(dict(aligned_probs[0])['ext1']['pages'], 0)
 
@@ -74,7 +73,6 @@ class TestValidateSimpleRecords(unittest.TestCase):
             ]
         ]
         aligned_probs = beliefs.validate(records)
-        print(aligned_probs)
         self.assertEqual(dict(aligned_probs[0])['ext1'].get('title', 0), 0)
         self.assertEqual(dict(aligned_probs[0])['ext1'].get('pages', 0), 0)
 

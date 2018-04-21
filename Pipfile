@@ -22,6 +22,9 @@ ftfy = "*"
 editdistance = "*"
 regex = "*"
 amazon-kclpy = "*"
+"17e504d" = {path = "./../arxiv-base-ui"}
+redis = "*"
+dataclasses = "*"
 
 
 [dev-packages]

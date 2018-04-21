@@ -10,7 +10,7 @@ except ImportError as e:
     StringBloomFilter = None
 
 from typing import Callable, Dict, List, Any, Sized, Tuple
-from references import logging
+from arxiv.base import logging
 from references.process.textutil import clean_text
 from references.process.extract.regex_arxiv import REGEX_ARXIV_STRICT
 from references.process.extract.regex_identifiers import (
@@ -26,14 +26,14 @@ RE_INTEGER = (
 logger = logging.getLogger(__name__)
 
 
-def _prepare_filters_or_not():
+def _prepare_filters_or_not() -> dict:
     try:
         return _load_filters()
     except Exception as e:
         return {}
 
 
-def _load_filters():
+def _load_filters() -> dict:
     # a size bigger than our filters but smaller than memory so we can
     # just automatically load the whole thing without recording sizes
     BIGNUMBER = int(1e8)
@@ -78,9 +78,11 @@ def minimum_length(length: int) -> Callable:
     return _min_len
 
 
-def likely(func, min_prob: float = 0.0, max_prob: float = 1.0) -> Callable:
+def likely(func: Callable, min_prob: float = 0.0, max_prob: float = 1.0) \
+        -> Callable:
     def call(value: object) -> float:
-        return max(min(func(value), max_prob), min_prob)
+        prob: float = max(min(func(value), max_prob), min_prob)
+        return prob
     return call
 
 
@@ -204,7 +206,7 @@ def valid_arxiv_id(value: str) -> float:
     return 0.0
 
 
-def unity(r):
+def unity(r: Any) -> float:
     return 1.0
 
 

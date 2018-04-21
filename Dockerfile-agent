@@ -37,6 +37,7 @@ ENV PATH "/opt/arxiv:/opt/arxiv/jars:${PATH}"
 # Runtime configuration.
 ENV AWS_ACCESS_KEY_ID ""
 ENV AWS_SECRET_ACCESS_KEY ""
+
 # Set to `test` when testing with localstack.
 ENV MODE "agent"
 
@@ -61,4 +62,3 @@ RUN ln -s /usr/local/bin/python3 /usr/local/bin/python
 ADD references /opt/arxiv/references/
 
 CMD ["/bin/bash", "/opt/arxiv/start_agent.sh"]
-#CMD ["/bin/bash"]

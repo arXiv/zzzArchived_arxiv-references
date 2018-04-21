@@ -3,9 +3,8 @@ import boto3
 from botocore.exceptions import ClientError
 from botocore.client import Config
 import os
-from references.services import credentials
 from references.factory import create_web_app
-from references.context import get_application_config
+from arxiv.base.globals import get_application_config
 import sys
 
 
@@ -14,7 +13,8 @@ if __name__ == '__main__':
     app.app_context().push()
     config = get_application_config()
 
-    access_key, secret, token = credentials.get_credentials()
+    access_key = config.get('AWS_ACCESS_KEY_ID')
+    secret = config.get('AWS_SECRET_ACCESS_KEY')
     endpoint = config.get('KINESIS_ENDPOINT')
     region = config.get('AWS_REGION', 'us-east-1')
     verify = config.get('KINESIS_VERIFY') == 'true'

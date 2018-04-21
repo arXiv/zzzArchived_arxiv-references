@@ -11,13 +11,8 @@ from celery import Celery
 class TestWebAppFactory(unittest.TestCase):
     """We require a Flask application instance."""
 
-    def setUp(self):
-        os.environ['INSTANCE_CREDENTIALS'] = ''
-
-    @mock.patch('references.services.credentials')
-    def test_returns_flask_app(self, mock_credentials):
+    def test_returns_flask_app(self):
         """:func:`.create_web_app` returns a :class:`flask.Flask` instance."""
-        type(mock_credentials).init_app = mock.MagicMock()
         app = create_web_app()
         self.assertIsInstance(app, Flask)
 
@@ -25,12 +20,7 @@ class TestWebAppFactory(unittest.TestCase):
 class TestProcessAppFactory(unittest.TestCase):
     """We require a Celery worker application instance."""
 
-    def setUp(self):
-        os.environ['INSTANCE_CREDENTIALS'] = ''
-
-    @mock.patch('references.services.credentials')
-    def test_returns_celery_app(self, mock_credentials):
+    def test_returns_celery_app(self):
         """:func:`.create_web_app` returns a :class:`.Flask` instance."""
-        type(mock_credentials).init_app = mock.MagicMock()
         app = create_worker_app()
         self.assertIsInstance(app, Flask)

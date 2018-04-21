@@ -3,11 +3,12 @@
 import re
 import io
 import xml.etree.ElementTree
-from typing import List
+from xml.etree.ElementTree import Element
+from typing import List, Dict
 
-from references import logging
+from arxiv.base import logging
 from references.services import grobid
-from references.domain import ExtractedReference
+from references.domain import Reference
 
 logger = logging.getLogger(__name__)
 
@@ -15,28 +16,28 @@ RE_XMLNS = re.compile(r'^[{](.*?)[}].*')
 XMLNS = 'http://www.tei-c.org/ns/1.0'
 
 
-def _xml_set_ns(root):
+def _xml_set_ns(root: Element) -> None:
     global XMLNS
     XMLNS = RE_XMLNS.findall(root.tag)[0]
 
 
-def _xml_tag(tag):
+def _xml_tag(tag: str) -> str:
     return '{{{xmlns}}}{tag}'.format(xmlns=XMLNS, tag=tag)
 
 
-def _xml_path_elem(elem, path):
+def _xml_path_elem(elem: Element, path: str) -> List[Element]:
     path = '/'.join([xt(i) for i in path.split('/')])
     return elem.findall(path)
 
 
-def _xml_path_attr(elem, path, attrib):
+def _xml_path_attr(elem: Element, path: str, attrib: str) -> str:
     found = _xml_path_elem(elem, path)
     return ' '.join([
         f.attrib.get(attrib, '') for f in found if f is not None
     ])
 
 
-def _xml_path_text(elem, path):
+def _xml_path_text(elem: Element, path: str) -> str:
     found = _xml_path_elem(elem, path)
     return ' '.join([
         f.text for f in found if f is not None and f.text is not None
@@ -46,12 +47,13 @@ def _xml_path_text(elem, path):
 xt = _xml_tag
 
 
-def _xml_format_biblStruct(bbl):
+def _xml_format_biblStruct(bbl: Element) -> dict:
     """
-    Given a TEI biblStruct, format the reference to our schema. Note that
-    once again, the extraction process seems to have trouble. Therefore,
-    we must case out the presence of <analytic> and <monogr> sections,
-    straying from the strict definitions in TEI.
+    Given a TEI biblStruct, format the reference to our schema.
+
+    Note that once again, the extraction process seems to have trouble.
+    Therefore, we must case out the presence of <analytic> and <monogr>
+    sections, straying from the strict definitions in TEI.
 
     Parameters
     ----------
@@ -63,11 +65,11 @@ def _xml_format_biblStruct(bbl):
     reference_metadata : dict
         A single schema formatted reference line
     """
-    def _authors(bbl, path):
+    def _authors(bbl: Element, path: str) -> List[Dict[str, str]]:
         authors = []
         for elem in _xml_path_elem(bbl, path):
-            first = ' '.join(map(lambda x: x.text, elem.iter(xt('forename'))))
-            last = ' '.join(map(lambda x: x.text, elem.iter(xt('surname'))))
+            first = ' '.join(map(lambda x: x.text, elem.iter(xt('forename'))))  # type: ignore
+            last = ' '.join(map(lambda x: x.text, elem.iter(xt('surname'))))  # type: ignore
             auth = {
                 'givennames': first,
                 'surname': last
@@ -111,7 +113,7 @@ def _xml_format_biblStruct(bbl):
     }
 
 
-def format_grobid_output(output: bytes) -> List[dict]:
+def format_grobid_output(output: bytes) -> List[Reference]:
     """
     Transform GROBID output to internal metadata struct.
 
@@ -156,13 +158,13 @@ def format_grobid_output(output: bytes) -> List[dict]:
     for bbl in listbbl.iter(tag=xt('biblStruct')):
         reference = dict(blank_reference)
         reference.update(_xml_format_biblStruct(bbl))
-        references.append(ExtractedReference(**reference))
+        references.append(Reference(**reference))   # type: ignore
 
     return references
 
 
 def extract_references(filename: str, document_id: str) \
-        -> List[ExtractedReference]:
+        -> List[Reference]:
     """
     Extract references from the PDF at ``filename`` using GROBID.
 
@@ -176,7 +178,7 @@ def extract_references(filename: str, document_id: str) \
 
     Returns
     -------
-    reference_docs : list of :class:`ExtractedReference`
+    reference_docs : list of :class:`Reference`
         Parsed metadata from a bibliographic reference.
     """
     try:

@@ -1,15 +1,14 @@
-"""
-
-"""
+"""Asynchronous tasks for reference extraction."""
 import os
 from datetime import datetime
-from typing import List
+from typing import List, Any
 
+from references.domain import ReferenceSet
 from references.process.extract import extract
 from references.process.merge import merge_records
-from references.process.store import store, store_raw
-from references.services import metrics, retrieve
-from references import logging
+from references.services import retrieve, data_store
+from arxiv.base import logging
+from arxiv.base.globals import get_application_config
 
 from celery import shared_task
 from celery.result import AsyncResult
@@ -21,7 +20,6 @@ logger = logging.getLogger(__name__)
 
 def _fail(document_id: str, e: Exception, reason: str) -> None:
     """"""
-    metrics.report('ProcessingSucceeded', 0.)
     logger.error('%s: failed to process: %s', document_id, reason)
     raise e
 
@@ -45,34 +43,27 @@ def process_document(document_id: str, pdf_url: str) -> dict:
     ------
     RuntimeError
     """
+    config = get_application_config()
     # These are set up here so that they are always defined in the finally
     # block, below.
     metadata: List[dict] = []
-    extraction_id = None
-
-    start_time = datetime.now()
     logger.debug('%s: started processing document',  document_id)
 
     # Retrieve PDF from arXiv central document store.
     try:
         pdf_path = retrieve.retrieve_pdf(pdf_url, document_id)
-        if pdf_path is None:
-            metrics.report('PDFIsAvailable', 0.)
-            _fail(document_id, RuntimeError('No PDF available'),
-                  'no PDF available')
-    except IOError as e:
-        metrics.report('PDFIsAvailable', 0.)
+    except retrieve.PDFNotFound:
+        _fail(document_id, RuntimeError('PDF not found'), 'PDF not found')
+    except retrieve.RetrieveFailed as e:
         _fail(document_id, e, "failed to retrieve PDF")
-    except ValueError as e:
+    except retrieve.InvalidURL as e:
         _fail(document_id, e, "failed to retrieve PDF")
 
-    metrics.report('PDFIsAvailable', 1.)
     logger.info('%s: retrieved PDF', document_id)
 
     # Extract references using an array of extractors.
     logger.debug('%s: extracting metadata', document_id)
     extractions = extract(pdf_path, document_id)
-    metrics.report('NumberExtractorsSucceeded', len(extractions))
 
     if len(extractions) == 0:
         _fail(document_id, RuntimeError("no extractors succeeded"),
@@ -82,9 +73,20 @@ def process_document(document_id: str, pdf_url: str) -> dict:
                  document_id, len(extractions), ', '.join(extractions.keys()))
 
     # Attempt to store raw extraction metadata for each extractor.
+    now = datetime.now()
     for extractor_name, extractor_metadata in extractions.items():
+        reference_set = ReferenceSet(      # type: ignore
+            document_id=document_id,
+            references=extractor_metadata,
+            version=config['VERSION'],
+            score=0.0,
+            created=now,
+            updated=now,
+            extractor=extractor_name,
+            raw=True
+        )
         try:
-            store_raw(document_id, extractor_name, extractor_metadata)
+            data_store.save(reference_set)
         except IOError as e:
             logger.error('%s: could not store raw: %s', document_id, e)
 
@@ -99,23 +101,25 @@ def process_document(document_id: str, pdf_url: str) -> dict:
 
     # Store final reference set.
     try:
-        extraction_id = store(metadata, document_id, score=score,
-                              extractors=list(extractions.keys()))
+        reference_set = ReferenceSet(   # type: ignore
+            document_id=document_id,
+            references=metadata,
+            version=config['VERSION'],
+            score=score,
+            created=now,
+            updated=now,
+            extractors=list(extractions.keys())
+        )
+        data_store.save(reference_set)
     except Exception as e:
         _fail(document_id, e, "store failed")
 
-    end_time = datetime.now()
-    metrics.report('FinalQuality', score)
-    metrics.report('ProcessingDuration',
-                   (start_time - end_time).microseconds, 'Microseconds')
-    metrics.report('ProcessingSucceeded', 1.)
     logger.info('%s: finished extracting metadata', document_id)
     if os.path.exists(pdf_path):
         os.remove(pdf_path)
     return {
         'document_id': document_id,
-        'references': metadata,
-        'extraction': extraction_id
+        'references': metadata
     }
 
 
@@ -125,7 +129,8 @@ process_document.async_result = AsyncResult
 
 
 @after_task_publish.connect
-def update_sent_state(sender = None, headers = None, body = None, **kwargs):
+def update_sent_state(sender: Any = None, headers: dict = {},
+                      body: Any = None, **kwargs: Any) -> None:
     """Set state to SENT, so that we can tell whether a task exists."""
     task = current_app.tasks.get(sender)
     backend = task.backend if task else current_app.backend

@@ -4,12 +4,13 @@ from collections import Counter, defaultdict
 from statistics import mean
 from itertools import repeat
 import re
-from typing import Tuple, Any, Union, Callable
+from typing import Tuple, Any, Union, Callable, Tuple, List
 
 import editdistance    # For string similarity.
 
+from references.domain import Reference
 from references.process.util import argmax
-from references import logging
+from arxiv.base import logging
 from references.process.merge.align import align_records
 
 logger = logging.getLogger(__name__)
@@ -27,7 +28,7 @@ def _dict_repr(value: dict) -> str:
     -------
     str
     """
-    def _keysort(item):
+    def _keysort(item):     # type: ignore
         return item[0]
 
     return str([(key.strip(), value.strip()) for key, value
@@ -66,7 +67,8 @@ def _similarity_str(value_a: str, value_b: str) -> float:
     N_max = max(len(value_a), len(value_b))
     if N_max == 0:
         return 0.
-    return (N_max - editdistance.eval(value_a, value_b))/N_max
+    sim: float = (N_max - editdistance.eval(value_a, value_b))/N_max
+    return sim
 
 
 def _similarity_dict(value_a: dict, value_b: dict) -> float:
@@ -134,7 +136,7 @@ def _cast_value(field: str, value: Union[str, int]) -> Any:
             return None
     if field in ['authors', 'identifiers']:
         try:
-            return eval(value)
+            return list(eval(value))    # type: ignore
         except SyntaxError:
             return value
     return value
@@ -189,7 +191,7 @@ def _pool(metadata: dict, fields: list, prob_valid: Callable,
             for field, scores in pooled.items()}
 
 
-def _select(pooled: dict) -> Tuple[dict, float]:
+def _select(pooled: dict) -> Tuple[Reference, float]:
     """Select the most likely values given their pooled weights."""
     result = {}
     max_probs = []
@@ -207,7 +209,8 @@ def _select(pooled: dict) -> Tuple[dict, float]:
         if field == 'authors':
             result[field] = _fix_authors(result[field])
         max_probs.append(max(norm_prob))
-    return result, _score(result)*mean(max_probs)
+    ref = Reference(**result)   # type: ignore
+    return ref, _score(result) * mean(max_probs)
 
 
 def _score(result: dict) -> float:
@@ -219,7 +222,8 @@ def _score(result: dict) -> float:
 
 
 def arbitrate(metadata: list, valid: list, priors: list,
-              similarity_threshold: float = 0.9) -> Tuple[dict, float]:
+              similarity_threshold: float = 0.9) \
+        -> Tuple[Reference, float]:
     """
     Apply arbitration logic to raw extraction metadata for a single reference.
 
@@ -239,7 +243,7 @@ def arbitrate(metadata: list, valid: list, priors: list,
 
     Returns
     -------
-    dict
+    :class:`.Reference`
         Authoritative metadata record for a single extracted reference.
     float
         Reference quality score.
@@ -264,7 +268,8 @@ def arbitrate(metadata: list, valid: list, priors: list,
         p_val = _valid[extractor].get(field, 0.)
         p_extr = _priors[extractor].get('__all__', 0.)
         p_extr_field = _priors[extractor].get(field, p_extr)
-        return p_val * p_extr_field
+        p: float = p_val * p_extr_field
+        return p
 
     pooled = _pool(_metadata, fields, _prob_valid,
                    similarity_threshold=similarity_threshold)
@@ -272,8 +277,8 @@ def arbitrate(metadata: list, valid: list, priors: list,
     return _select(pooled)
 
 
-def arbitrate_all(metadata_all: list, valid_all: list,
-                  priors_all: list, N_extractions: int = 0) -> list:
+def arbitrate_all(metadata_all: list, valid_all: list, priors_all: list,
+                  N_extractions: int = 0) -> List[Tuple[Reference, float]]:
     """
     Helper to apply arbitration to metadata for a set of cited references.
 
@@ -294,4 +299,4 @@ def arbitrate_all(metadata_all: list, valid_all: list,
         :func:`.arbitrate` for more details.
     """
     N = len(metadata_all)
-    return list(map(arbitrate, metadata_all, valid_all, repeat(priors_all, N)))
+    return list(map(arbitrate, metadata_all, valid_all, repeat(priors_all, N))) # type: ignore

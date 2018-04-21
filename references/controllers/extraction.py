@@ -2,8 +2,8 @@
 
 from typing import Tuple
 
-from references import logging
-from references import status as http_status
+from arxiv.base import logging
+from arxiv import status as http_status
 from references.services import data_store, retrieve
 from references.process.tasks import process_document, AsyncResult
 

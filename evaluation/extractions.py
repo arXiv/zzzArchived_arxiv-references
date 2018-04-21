@@ -6,7 +6,7 @@ from references.process.merge import align, arbitrate, beliefs, normalize, prior
 import os
 from pprint import pprint
 import csv
-from references import logging
+from arxiv.base import logging
 logging.getLogger('references.process.extract').setLevel(40)
 
 basepath = os.path.abspath('evaluation/pdfs')
@@ -26,7 +26,7 @@ if __name__ == '__main__':
         document_id = row['pdf'][:-4]
         print('Extracting %s' % document_id)
 
-        extractions = extract.extract(full_path, document_id, report=False)
+        extractions = extract.extract(full_path, document_id)
         for extractor, refs in extractions.items():
             print(extractor, len(refs), row['N'])
 

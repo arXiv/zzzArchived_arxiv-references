@@ -6,9 +6,9 @@ See <https://github.com/inspirehep/refextract>.
 
 from typing import List, Any, Dict
 
-from references.domain import ExtractedReference, Identifier, Author
+from references.domain import Reference, Identifier, Author
 from references.services import refextract
-from references import logging
+from arxiv.base import logging
 logger = logging.getLogger(__name__)
 
 
@@ -24,7 +24,7 @@ FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
 ]
 
 
-def _transform(refextract_metadatum: dict) -> ExtractedReference:
+def _transform(refextract_metadatum: dict) -> Reference:
     """
     Restructure refextract output to match internal extraction struct.
 
@@ -44,18 +44,19 @@ def _transform(refextract_metadatum: dict) -> ExtractedReference:
             metadatum[key] = value[0]   # All refextract values are lists.
     if 'identifiers' in refextract_metadatum:
         metadatum['identifiers'] = [
-            Identifier(**ident) for ident in metadatum['identifiers']
+            Identifier(**ident)     # type: ignore
+            for ident in metadatum['identifiers']
         ]
     if 'author' in refextract_metadatum:
         metadatum['authors'] = [
-            Author(fullname=author) for author
-            in refextract_metadatum['author']
+            Author(fullname=author)     # type: ignore
+            for author in refextract_metadatum['author']
         ]
-    return ExtractedReference(**metadatum)
+    return Reference(**metadatum)   # type: ignore
 
 
 def extract_references(filename: str, document_id: str) \
-        -> List[ExtractedReference]:
+        -> List[Reference]:
     """
     Wrapper for :func:`refextract.extract_references_from_file` function.
 
@@ -68,7 +69,7 @@ def extract_references(filename: str, document_id: str) \
 
     Returns
     -------
-    references : list of :class:`ExtractedReference`
+    references : list of :class:`Reference`
         Parsed metadata from a bibliographic reference.
     """
     try:

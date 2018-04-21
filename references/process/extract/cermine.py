@@ -5,21 +5,21 @@ from io import BytesIO
 import shutil
 import subprocess
 import xml.etree.ElementTree
-from typing import List
+from typing import List, Callable, Dict
 
 import regex as re
 
-from references import logging
+from arxiv.base import logging
 from references.process import util
 from references.process.extract import regex_identifiers
 from references.services import cermine
-from references.domain import ExtractedReference, Identifier
+from references.domain import Reference, Identifier
 
 
 logger = logging.getLogger(__name__)
 
 
-def _cxml_element_func(tagname):
+def _cxml_element_func(tagname: str) -> Callable:
     """
     Return a function which retrieves the text element associated with a
     certain xml tag from an xml root element.
@@ -35,12 +35,12 @@ def _cxml_element_func(tagname):
     -------
     func : callable
     """
-    def _inner(root):
+    def _inner(root):   # type: ignore
         return ' '.join([i.text.strip() for i in root.iter(tag=tagname)])
     return _inner
 
 
-def _cxml_ref_authors(ref):
+def _cxml_ref_authors(ref: xml.etree.ElementTree.Element) -> List[dict]:
     """
     Given an xml element return the marked up information corresponding to
     patterns that look like CERMINE authors. `ref` is the root of the reference
@@ -63,7 +63,7 @@ def _cxml_ref_authors(ref):
     return authors
 
 
-def _cxml_format_reference_line(elm):
+def _cxml_format_reference_line(elm: xml.etree.ElementTree.Element) -> str:
     """
     Convert a CERMINE XML element to a reference line i.e.:
 
@@ -110,9 +110,12 @@ def _cxml_format_reference_line(elm):
     return text
 
 
-def cxml_format_document(root, documentid: str='') -> List[ExtractedReference]:
+def cxml_format_document(root: xml.etree.ElementTree.Element,
+                         documentid: str = '') -> List[Reference]:
     """
-    Convert a CERMINE XML element into a reference document i.e.:
+    Convert a CERMINE XML element into a reference document.
+
+    For example:
 
         {
             "author": {"givenname": "Matt", "surname", "Bierbaum"},
@@ -133,7 +136,7 @@ def cxml_format_document(root, documentid: str='') -> List[ExtractedReference]:
     doc : dictionary
         Formatted reference document using CERMINE metadata
     """
-    reference_constructor = {
+    reference_constructor: Dict[str, Callable] = {
         'authors': _cxml_ref_authors,
         'raw': _cxml_format_reference_line,
         'title': _cxml_element_func('article-title'),
@@ -159,18 +162,19 @@ def cxml_format_document(root, documentid: str='') -> List[ExtractedReference]:
 
         # add regex extracted information to the metadata (not CERMINE's)
         rawline = reference.get('raw', '') or ''
-        identifiers = regex_identifiers.extract_identifiers(rawline)
+        partial = regex_identifiers.extract_identifiers(rawline)
 
         reference['identifiers'] = [
-            Identifier(**ident) for ident in reference.get('identifiers', [])
+            Identifier(**ident)     # type: ignore
+            for ident in reference.get('identifiers', [])
         ]
-        reference['identifiers'] += identifiers
-        references.append(ExtractedReference(**reference))
+        reference['identifiers'] += partial.identifiers
+        references.append(Reference(**reference))  # type: ignore
 
     return references
 
 
-def convert_cxml_json(raw_data: bytes, document_id: str) -> List[dict]:
+def cxml_to_json(raw_data: bytes, document_id: str) -> List[Reference]:
     """
     Transforms a CERMINE XML file into internal reference struct.
 
@@ -189,7 +193,7 @@ def convert_cxml_json(raw_data: bytes, document_id: str) -> List[dict]:
 
 
 def extract_references(filename: str, document_id: str,
-                       cleanup: bool=True) -> List[ExtractedReference]:
+                       cleanup: bool=True) -> List[Reference]:
     """
     Extract references from ``filename`` using Cermine.
 
@@ -206,7 +210,7 @@ def extract_references(filename: str, document_id: str,
 
     Returns
     -------
-    reference_docs : list of :class:`ExtractedReference`
+    reference_docs : list of :class:`Reference`
         Parsed metadata from a bibliographic reference.
     """
     filename = os.path.abspath(filename)
@@ -220,4 +224,4 @@ def extract_references(filename: str, document_id: str,
     except IOError as e:
         logger.error('%s: Cermine extraction failed: %s', filename, e)
         raise RuntimeError('Cermine extraction failed') from e
-    return convert_cxml_json(data, document_id)
+    return cxml_to_json(data, document_id)

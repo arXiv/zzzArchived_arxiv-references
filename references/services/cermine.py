@@ -7,7 +7,7 @@ from urllib3 import Retry
 import requests
 from flask import _app_ctx_stack as stack
 
-from references.context import get_application_config, get_application_global
+from arxiv.base.globals import get_application_config, get_application_global
 
 
 class ExtractionError(Exception):
@@ -36,7 +36,7 @@ class CermineSession(object):
             raise IOError('CERMINE endpoint not available: %s' %
                           response.content)
 
-    def extract_references(self, filename: str):
+    def extract_references(self, filename: str) -> bytes:
         """
         Extract references from the PDF represented by ``filehandle``.
 
@@ -61,7 +61,6 @@ class CermineSession(object):
         if not response.ok:
             raise IOError('%s: CERMINE extraction failed: %s' %
                           (filename, response.content))
-        print(response)
         return response.content
 
 
@@ -79,14 +78,15 @@ def get_session(app: object = None) -> CermineSession:
     return CermineSession(endpoint)
 
 
-def current_session():
-    """Get/create :class:`.MetricsSession` for this context."""
+def current_session() -> CermineSession:
+    """Get/create :class:`.CermineSession` for this context."""
     g = get_application_global()
     if g is None:
         return get_session()
     if 'cermine' not in g:
         g.cermine = get_session()
-    return g.cermine
+    session: CermineSession = g.cermine
+    return session
 
 
 def extract_references(filename: str) -> bytes:

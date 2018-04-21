@@ -5,7 +5,7 @@ Docstrings are from the `Flask configuration documentation
 <http://flask.pocoo.org/docs/0.12/config/>`_.
 """
 import os
-
+from datetime import datetime
 
 
 VERSION = '0.2'
@@ -249,17 +249,6 @@ SOURCE_WHITELIST = os.environ.get('SOURCE_WHITELIST',
 CLOUDWATCH_ENDPOINT = os.environ.get('CLOUDWATCH_ENDPOINT', None)
 CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true')
 
-INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', False)
-CREDENTIALS_ROLE = os.environ.get('CREDENTIALS_ROLE', 'arxiv-references')
-CREDENTIALS_URL = os.environ.get(
-    'CREDENTIALS_URL',
-    'http://169.254.169.254/latest/meta-data/iam/security-credentials'
-)
-
-RAW_TABLE_NAME = os.environ.get('RawExtractions')
-EXTRACTIONS_TABLE_NAME = os.environ.get('Extractions')
-REFERENCES_TABLE_NAME = os.environ.get('StoredReference')
-
 EXTRACTION_HOST = os.environ.get('ARXIV_REFERENCES_API_SERVICE_HOST', 'localhost')
 EXTRACTION_PORT = os.environ.get('ARXIV_REFERENCES_API_SERVICE_PORT', '80')
 EXTRACTION_ENDPOINT = os.environ.get('EXTRACTION_ENDPOINT', 'http://%s:%s' % (EXTRACTION_HOST, EXTRACTION_PORT))
@@ -268,7 +257,16 @@ EXTRACTION_ENDPOINT = os.environ.get('EXTRACTION_ENDPOINT', 'http://%s:%s' % (EX
 LOGFILE = os.environ.get('LOGFILE')
 LOGLEVEL = os.environ.get('LOGLEVEL', 20)
 
-AGENT_SLEEP_SECONDS = os.environ.get('AGENT_SLEEP_SECONDS', 5)
-AGENT_CHECKPOINT_RETRIES = os.environ.get('AGENT_CHECKPOINT_RETRIES', 5)
-AGENT_CHECKPOINT_FREQ = os.environ.get('AGENT_CHECKPOINT_FREQ', 60)
+# Configuration for Kinesis stream to which the exraction agent subscribes.
 KINESIS_ENDPOINT = os.environ.get('KINESIS_ENDPOINT')
+KINESIS_STREAM = os.environ.get('KINESIS_STREAM', "PDFIsAvailable")
+KINESIS_SHARD_ID = os.environ.get('KINESIS_SHARD_ID', 'shardId-000000000000')
+KINESIS_VERIFY = os.environ.get('KINESIS_VERIFY', 'true')
+KINESIS_START_TYPE = os.environ.get('KINESIS_START_TYPE', 'AT_TIMESTAMP')
+NOW = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+KINESIS_START_AT = os.environ.get('KINESIS_START_AT', NOW)
+
+# This is where extracted references should be stored.
+REFERENCES_REDIS_HOST = os.environ.get('REDIS_MASTER_SERVICE_HOST', 'localhost')
+REFERENCES_REDIS_PORT = os.environ.get('REDIS_MASTER_SERVICE_PORT', '6379')
+REFERENCES_REDIS_DATABASE = os.environ.get('REFERENCES_REDIS_DATABASE', '1')

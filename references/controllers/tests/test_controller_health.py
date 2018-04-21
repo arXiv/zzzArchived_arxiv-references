@@ -9,7 +9,6 @@ class TestHealthCheck(unittest.TestCase):
     @mock.patch('references.controllers.health.cermine')
     @mock.patch('references.controllers.health.data_store')
     @mock.patch('references.controllers.health.grobid')
-    @mock.patch('references.controllers.health.metrics')
     @mock.patch('references.controllers.health.refextract')
     def test_health_check_ok(self, *mocks):
         """A dict of health states is returned."""
@@ -22,7 +21,6 @@ class TestHealthCheck(unittest.TestCase):
     @mock.patch('references.controllers.health.cermine')
     @mock.patch('references.controllers.health.data_store')
     @mock.patch('references.controllers.health.grobid')
-    @mock.patch('references.controllers.health.metrics')
     @mock.patch('references.controllers.health.refextract')
     def test_health_check_failure(self, *mocks):
         """A dict of health states is returned."""
@@ -32,6 +30,5 @@ class TestHealthCheck(unittest.TestCase):
         status, code, _ = health_check()
         self.assertIsInstance(status, dict)
         self.assertEqual(len(status), len(_getServices()))
-        print(status)
         for stat in status.values():
             self.assertFalse(stat)
