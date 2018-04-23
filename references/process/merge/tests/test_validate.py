@@ -1,6 +1,7 @@
 import json
 import unittest
 
+from references.domain import Reference
 from references.process.merge import beliefs
 
 
@@ -12,20 +13,15 @@ class TestValidateSimpleRecords(unittest.TestCase):
 
         self.aligned_records = [
             [
-                ["ext1", {"title": "Matt", "cheatcode": "uuddlrlrba",
-                          "year": 2011}],
-                ["ext2", {"title": "Matt", "cheatcode": "uuddlrlrbaba",
-                          "year": 2011}]
+                ["ext1", Reference(title="Matt", year=2011)],
+                ["ext2", Reference(title="Matt", year=2011)]
             ],
             [
-                ["ext1", {"title": "Erick", "cheatcode": "babaudbalrba",
-                          "year": 2013}],
-                ["ext3", {'title': 'Eric', 'cheatcode': 'babaudbalrba',
-                         'year': 2013}]
+                ["ext1", Reference(title="Erick", year=2013)],
+                ["ext3", Reference(title="Eric", year=2013)]
             ],
             [
-                ["ext3", {"title": "John", "cheatcode": "start",
-                          "year": 2010}]
+                ["ext3", Reference(title="John", year=2010)]
             ]
         ]
 
@@ -48,33 +44,18 @@ class TestValidateSimpleRecords(unittest.TestCase):
                                             "Probability never less than 0.")
                     self.assertLessEqual(value, 1.0,
                                          "Probability never more than 1.")
+
     def test_blank_value_is_valid(self):
         """A blank value is treated as a real value."""
         records = [
             [
-                ["ext1", {"title": "", "cheatcode": "uuddlrlrba",
-                          "year": 2011, "pages": ""}],
-                ["ext2", {"title": "Matt", "cheatcode": "uuddlrlrbaba",
-                          "year": 2011, "pages": ""}]
+                ["ext1", Reference(title="", year=2011, pages="")],
+                ["ext2", Reference(title="Matt", year=2011, pages="")]
             ]
         ]
         aligned_probs = beliefs.validate(records)
         self.assertGreater(dict(aligned_probs[0])['ext1']['title'], 0)
         self.assertGreater(dict(aligned_probs[0])['ext1']['pages'], 0)
-
-    def test_missing_value_is_invalid(self):
-        """A missing value is treated as invalid."""
-        records = [
-            [
-                ["ext1", {"cheatcode": "uuddlrlrba",
-                          "year": 2011}],
-                ["ext2", {"title": "Matt", "cheatcode": "uuddlrlrbaba",
-                          "year": 2011, "pages": ""}]
-            ]
-        ]
-        aligned_probs = beliefs.validate(records)
-        self.assertEqual(dict(aligned_probs[0])['ext1'].get('title', 0), 0)
-        self.assertEqual(dict(aligned_probs[0])['ext1'].get('pages', 0), 0)
 
 
 class TestFullRecords(unittest.TestCase):
@@ -84,7 +65,10 @@ class TestFullRecords(unittest.TestCase):
         """Given some aligned records from a real extraction...."""
         json_aligned = 'tests/data/1704.01689v1.aligned.json'
         with open(json_aligned) as f:
-            self.aligned_records = json.load(f)
+            self.aligned_records = [
+                [(extractor, Reference(**data)) for extractor, data in record]
+                for record in json.load(f)
+            ]
 
     def test_full_records(self):
         """Test that :func:`.validate` returns sensical probabilities."""

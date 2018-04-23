@@ -1,6 +1,6 @@
 """Provides health-check controller(s)."""
 
-from typing import Tuple
+from typing import Tuple, Any
 
 from references.services import cermine, data_store, grobid
 from references.services import refextract
@@ -21,7 +21,7 @@ def _getServices() -> list:
     ]
 
 
-def _healthy_session(service):
+def _healthy_session(service: Any) -> bool:
     """Evaluate whether we have an healthy session with ``service``."""
     try:
         if hasattr(service, 'session'):

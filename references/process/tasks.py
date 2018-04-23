@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from typing import List, Any
 
-from references.domain import ReferenceSet
+from references.domain import ReferenceSet, Reference
 from references.process.extract import extract
 from references.process.merge import merge_records
 from references.services import retrieve, data_store
@@ -44,9 +44,6 @@ def process_document(document_id: str, pdf_url: str) -> dict:
     RuntimeError
     """
     config = get_application_config()
-    # These are set up here so that they are always defined in the finally
-    # block, below.
-    metadata: List[dict] = []
     logger.debug('%s: started processing document',  document_id)
 
     # Retrieve PDF from arXiv central document store.
@@ -91,6 +88,7 @@ def process_document(document_id: str, pdf_url: str) -> dict:
             logger.error('%s: could not store raw: %s', document_id, e)
 
     # Merge references across extractors, if more than one succeeded.
+    metadata: List[Reference]
     try:
         logger.debug('%s: merging metadata', document_id)
         metadata, score = merge_records(extractions)

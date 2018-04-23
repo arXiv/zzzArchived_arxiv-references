@@ -34,15 +34,15 @@ class TestMergeSimple(unittest.TestCase):
         """Given aligned references from several extractors, and priors..."""
         self.simple_docs = {
             'ext1': [
-                {'source': 'Matthew', 'volume': 'uuddlrlrba', 'year': 2011},
-                {'source': 'Erick P', 'volume': 'babaudbalrba', 'year': 2013},
+                Reference(source='Matthew', volume='uuddlrlrba', year=2011),
+                Reference(source='Erick P', volume='babaudbalrba', year=2013),
             ],
             'ext2': [
-                {'source': 'Matthew', 'volume': 'uuddlrlrbaba', 'year': 2011},
+                Reference(source='Matthew', volume='uuddlrlrbaba', year=2011),
             ],
             'ext3': [
-                {'source': 'Johnathan', 'volume': 'start', 'year': 2010},
-                {'source': 'Eric Pe', 'volume': 'babaudbalrba', 'year': 2013},
+                Reference(source='Johnathan', volume='start', year=2010),
+                Reference(source='Eric Pe', volume='babaudbalrba', year=2013),
             ]
         }
         self.priors = [

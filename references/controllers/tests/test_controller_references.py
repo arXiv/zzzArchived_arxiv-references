@@ -37,7 +37,7 @@ class TestReferenceResolver(TestCase):
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        mock_get.return_value = (data, 200)
+        mock_get.return_value = (data, 200, {})
         content, status_code, _ = extracted_references.resolve('5432.6789',
                                                                'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
@@ -53,7 +53,7 @@ class TestReferenceResolver(TestCase):
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        mock_get.return_value = (data, 200)
+        mock_get.return_value = (data, 200, {})
         content, status_code, _ = extracted_references.resolve('5432.6789',
                                                                'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
@@ -68,7 +68,7 @@ class TestReferenceResolver(TestCase):
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        mock_get.return_value = (data, 200)
+        mock_get.return_value = (data, 200, {})
         content, status_code, _ = extracted_references.resolve('5432.6789',
                                                                'asdf1234')
         self.assertEqual(status_code, status.HTTP_303_SEE_OTHER)
@@ -82,7 +82,7 @@ class TestReferenceResolver(TestCase):
                 'year': 1999,
                 'source': 'Journal of Bardistry',
                 'authors': [{'forename': 'Sir', 'surname': 'Robin'}]}
-        mock_get.return_value = (data, 200)
+        mock_get.return_value = (data, 200, {})
         content, status_code, _ = extracted_references.resolve('5432.6789',
                                                                'asdf1234')
         url = parse.urlparse(content.get('url'))

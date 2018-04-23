@@ -44,7 +44,7 @@ def jacard(str0: str, str1: str) -> float:
     return shared_words/all_words
 
 
-def digest(metadata: dict) -> str:
+def digest(metadata: Reference) -> str:
     """
     Create a single string that represents the record.
 
@@ -54,7 +54,7 @@ def digest(metadata: dict) -> str:
 
     Parameters
     ----------
-    metadata : dict
+    metadata : :class:`.Reference`
         Single record. Does not necessarily have to be a dict, but that is
         what we are working with at the moment
 
@@ -62,7 +62,7 @@ def digest(metadata: dict) -> str:
     -------
     digest : string
     """
-    badkeys = ['raw', 'doi', 'identifiers']
+    badkeys = ['raw', 'doi', 'identifiers', 'identifier', 'reftype']
     dig: str
     if isinstance(metadata, list):
         dig = clean_text(
@@ -72,7 +72,8 @@ def digest(metadata: dict) -> str:
     elif isinstance(metadata, dict):
         dig = clean_text(
             ' '.join([
-                digest(v) for k, v in metadata.items() if k not in badkeys
+                digest(v) for k, v in metadata.to_dict().items()
+                if k not in badkeys
             ]), numok=True
         )
     else:
@@ -176,7 +177,7 @@ def align_records(records: Dict[str, List[Reference]]) \
         extractor = list(records.keys())[0]
         return [[(extractor, ref)] for ref in list(records.values())[0]]
 
-    def _jacard_max(r0: dict, rlist: List[dict]) -> float:
+    def _jacard_max(r0: Reference, rlist: List[Reference]) -> float:
         # calculate the maximum jacard score between r0 and the list rlist
         return max([jacard(digest(r0), digest(r1)) for r1 in rlist])
 

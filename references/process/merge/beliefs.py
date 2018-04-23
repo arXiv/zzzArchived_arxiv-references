@@ -11,6 +11,7 @@ except ImportError as e:
 
 from typing import Callable, Dict, List, Any, Sized, Tuple
 from arxiv.base import logging
+from references.domain import Reference
 from references.process.textutil import clean_text
 from references.process.extract.regex_arxiv import REGEX_ARXIV_STRICT
 from references.process.extract.regex_identifiers import (
@@ -251,7 +252,7 @@ BELIEF_FUNCTIONS: Dict[str, List[Callable]] = {
 }
 
 
-def calculate_belief(reference: dict) -> dict:
+def calculate_belief(reference: Reference) -> dict:
     """
     Calculate the beliefs about the elements in a single record.
 
@@ -260,8 +261,8 @@ def calculate_belief(reference: dict) -> dict:
 
     Parameters
     ----------
-    reference : dict
-        A single reference metadata dictionary (formatted according to schema)
+    reference : :class:`.Reference`
+        A single reference metadata record.
 
     Returns
     -------
@@ -271,7 +272,7 @@ def calculate_belief(reference: dict) -> dict:
     """
     output = {}
 
-    for key, value in reference.items():
+    for key, value in reference.to_dict().items():
         if not value:
             # Blank values are perfectly plausible, and there isn't much else
             # that we can say about them.

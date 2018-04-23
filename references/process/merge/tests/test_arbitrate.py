@@ -6,15 +6,14 @@ from references.process.merge import arbitrate
 
 
 class TestArbitrate(unittest.TestCase):
-    """Tests for :func:`references.process.merge.arbitrate.arbitrate` function."""
+    """Tests for :func:`.process.merge.arbitrate.arbitrate` function."""
 
     def test_arbitrate(self):
         """Successful arbitration with valid data."""
         metadata = [
-            ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
-            ('refextract', {'title': 'asdf', 'doi': 'nonsense',
-                            'volume': '12'}),
-            ('alt', {'title': 'nope', 'volume': 'baz'})
+            ('cermine', Reference(title='yep', doi='10.123/123.4566')),
+            ('refextract', Reference(title='asdf', doi='nnsns', volume='12')),
+            ('alt', Reference(title='nope', volume='baz'))
         ]
         valid = [
             ('cermine', {'title': 0.9, 'doi': 0.8}),
@@ -38,11 +37,9 @@ class TestArbitrate(unittest.TestCase):
     def test_arbitrate_with_list_and_dict(self):
         """Successful arbitration with dict and list values."""
         metadata = [
-            ('cermine', {
-                'authors': ['yep', 'yep'],
-            }),
-            ('refextract', {'authors': 'asdf', 'volume': '12'}),
-            ('alt', {'authors': 'nope', 'volume': 'baz'})
+            ('cermine', Reference(authors=['yep', 'yep'])),
+            ('refextract', Reference(authors='asdf', volume='12')),
+            ('alt', Reference(authors='nope', volume='baz'))
         ]
         valid = [
             ('cermine', {'authors': 0.9}),
@@ -101,9 +98,9 @@ class TestArbitrate(unittest.TestCase):
         def _prob_valid(extractor, field):
             return 0.55 if extractor in ['cermine', 'refextract'] else 0.95
 
-        metadata = [('cermine', {'title': 'meh'}),
-                    ('refextract', {'title': 'meh'}),
-                    ('alt', {'title': 'too good to be true'})]
+        metadata = [('cermine', Reference(title='meh')),
+                    ('refextract', Reference(title='meh')),
+                    ('alt', Reference(title='too good to be true'))]
         pooled = arbitrate._pool(dict(metadata), ['title'], _prob_valid)
         self.assertEqual(pooled['title']['meh'], 1.1)
         self.assertEqual(pooled['title']['too good to be true'], 0.95)
@@ -113,9 +110,10 @@ class TestArbitrate(unittest.TestCase):
         def _prob_valid(extractor, field):
             return 0.55 if extractor in ['cermine', 'refextract'] else 0.95
 
-        metadata = [('cermine', {'title': ['meh', 'meh']}),
-                    ('refextract', {'title': ['meh', 'meh']}),
-                    ('alt', {'title': 'too good to be true'})]
+        metadata = [('cermine', Reference(title=['meh', 'meh'])),
+                    ('refextract', Reference(title=['meh', 'meh'])),
+                    ('alt', Reference(title='too good to be true'))]
+
         try:
             pooled = arbitrate._pool(dict(metadata), ['title'], _prob_valid)
         except Exception as e:
@@ -139,9 +137,9 @@ class TestArbitrate(unittest.TestCase):
     def test_pooling_matters(self):
         """Two med-scoring values can beat a single high-scoring value."""
         metadata = [
-            ('cermine', {'title': 'meh'}),
-            ('refextract', {'title': 'meh'}),
-            ('alt', {'title': 'too good to be true'})
+            ('cermine', Reference(title='meh')),
+            ('refextract', Reference(title='meh')),
+            ('alt', Reference(title='too good to be true'))
         ]
         valid = [
             ('cermine', {'title': 0.5}),
@@ -160,9 +158,8 @@ class TestArbitrate(unittest.TestCase):
     def test_drop_value_if_prior_missing(self):
         """A field-value is ignored if extractor prior is missing."""
         metadata = [
-            ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
-            ('refextract', {'title': 'asdf', 'doi': 'nonsense',
-                            'volume': '12'}),
+            ('cermine', Reference(title='yep', doi='10.123/123.4566')),
+            ('refextract', Reference(title='asdf', doi='nnsns', volume='12')),
             ('alt', {'title': 'nope', 'volume': 'baz'})
         ]
         valid = [
@@ -177,7 +174,7 @@ class TestArbitrate(unittest.TestCase):
         ]
 
         final, score = arbitrate.arbitrate(metadata, valid, priors)
-        self.assertEqual(final.doi, 'nonsense')
+        self.assertEqual(final.doi, 'nnsns')
 
     def test_misaligned_input_raises_valueerror(self):
         """Misalignment of input raises a ValueError."""
@@ -194,17 +191,15 @@ class TestArbitrate(unittest.TestCase):
             arbitrate.arbitrate(metadata, valid, priors)
 
     def test_arbitrate_all(self):
-        """Exercise :func:`references.process.merge.arbitrate.arbitrate_all`."""
+        """Exercise :func:`.process.merge.arbitrate.arbitrate_all`."""
         metadata = [[
-            ('cermine', {'title': 'yep', 'doi': '10.123/123.4567'}),
-            ('refextract', {'title': 'asdf', 'doi': 'nonsense',
-                            'volume': '12'}),
-            ('alt', {'title': 'nope', 'volume': 'baz'})
+            ('cermine', Reference(title='yep', doi='10.123/123.4567')),
+            ('refextract', Reference(title='asdf', doi='nnsns', volume='12')),
+            ('alt', Reference(title='nope', volume='baz'))
         ], [
-            ('cermine', {'title': 'yep', 'doi': '10.123/123.4566'}),
-            ('refextract', {'title': 'asdf', 'doi': 'nonsense',
-                            'volume': '12'}),
-            ('alt', {'title': 'nope', 'volume': 'baz'})
+            ('cermine', Reference(title='yep', doi='10.123/123.4566')),
+            ('refextract', Reference(title='asdf', doi='nnsns', volume='12')),
+            ('alt', Reference(title='nope', volume='baz'))
         ]]
         valid = [[
             ('cermine', {'title': 0.9, 'doi': 0.8}),
@@ -234,9 +229,9 @@ class TestArbitrate(unittest.TestCase):
     def test_empty_value_is_treated_as_value(self):
         """If a key is present, but value empty, treat it as a real value."""
         metadata = [[
-            ('cermine', {'title': ""}),
-            ('refextract', {'title': ""}),
-            ('grobid', {'title': "This is a false positive"})
+            ('cermine', Reference(title="")),
+            ('refextract', Reference(title="")),
+            ('grobid', Reference(title="This is a false positive"))
         ]]
         valid = [[
             ('cermine', {'title': 1.0}),
@@ -254,9 +249,9 @@ class TestArbitrate(unittest.TestCase):
     def test_missing_value_is_not_treated_as_value(self):
         """If a key is not present, do not treat it as a real value."""
         metadata = [[
-            ('cermine', {}),
-            ('refextract', {}),
-            ('grobid', {'title': "This is correct"})
+            ('cermine', Reference()),
+            ('refextract', Reference()),
+            ('grobid', Reference(title="This is correct"))
         ]]
         valid = [[
             ('cermine', {'title': 1.0}),

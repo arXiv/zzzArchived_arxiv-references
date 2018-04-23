@@ -55,7 +55,7 @@ class ReferenceStoreSession(object):
             raise CommunicationError('Failed to load references') from e
         if not data:
             raise ReferencesNotFound('No such extraction')
-        return json.loads(data)
+        return ReferenceSet(**json.loads(data))     # type: ignore
 
 
 def init_app(app: object) -> None:
@@ -99,7 +99,8 @@ def current_session() -> ReferenceStoreSession:
         return get_session()
     if 'data_store' not in g:
         g.data_store = get_session()
-    return g.data_store
+    session: ReferenceStoreSession = g.data_store
+    return session
 
 
 @wraps(ReferenceStoreSession.save)

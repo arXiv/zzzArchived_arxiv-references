@@ -52,42 +52,43 @@ NORMALIZERS: List[Tuple[str, Callable]] = [
 ]
 
 
-def _normalize_record(record: dict) -> dict:
+def normalize_record(record: Reference) -> Reference:
     """
     Perform normalization/cleanup on a per-field basis.
 
     Parameters
     ----------
-    record : dict
+    record : :class:`.Reference`
 
     Returns
     -------
     dict
     """
     for field, normalizer in NORMALIZERS:
-        value = record.get(field)
+        value = getattr(record, field, None)
         if value is None:
             continue
         if isinstance(value, list):
-            record[field] = [normalizer(obj) for obj in value]
+            setattr(record, field, [normalizer(obj) for obj in value])
         else:
-            record[field] = normalizer(value)
+            setattr(record, field, normalizer(value))
     return record
 
 
-def normalize_records(records: list) -> list:
+def normalize_records(records: List[Reference]) -> List[Reference]:
     """
     Perform normalization/cleanup on a per-field basis.
 
     Parameters
     ----------
     records : list
+        A list of :class:`Reference` instances.
 
     Returns
     -------
     list
     """
-    return [_normalize_record(record) for record in records]
+    return [normalize_record(record) for record in records]
 
 
 def filter_records(records: List[Tuple[Reference, float]],

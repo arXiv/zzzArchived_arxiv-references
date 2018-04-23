@@ -76,7 +76,7 @@ def resolve(document_id: str, reference_id: str) -> ControllerResponse:
     reference_data, response_status, _ = get(document_id, reference_id)
     if response_status != status.HTTP_200_OK:
         content = {
-            'explanation': "No data exists for this reference"
+            'reason': "No data exists for this reference"
         }
     else:
         response_status = status.HTTP_303_SEE_OTHER
@@ -93,8 +93,7 @@ def resolve(document_id: str, reference_id: str) -> ControllerResponse:
             content = {'url': 'https://scholar.google.com/scholar?%s' %
                               _gs_query(reference_data)}
         else:
-            content = {'explanation': 'cannot provide redirect for reference'}
-            response_status = status.HTTP_404_NOT_FOUND
+            raise NotFound({'reason': 'cannot provide redirect for reference'})
     return content, response_status, {}
 
 

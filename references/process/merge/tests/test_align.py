@@ -1,6 +1,7 @@
 import json
 import unittest
 
+from references.domain import Reference
 from references.process.merge import align
 
 testfile = 'tests/data/1704.01689v1'
@@ -18,44 +19,32 @@ class TestAlignRecords(unittest.TestCase):
         """Regression test for alignment with fake records."""
         docs = {
             'ext1': [
-                {'name': 'Matt', 'cheatcode': 'uuddlrlrba', 'year': 2011},
-                {'name': 'Erick', 'cheatcode': 'babaudbalrba', 'year': 2013},
+                Reference(title='Matt', year=2011),
+                Reference(title='Erick', year=2013),
             ],
             'ext2': [
-                {'name': 'Matt', 'cheatcode': 'uuddlrlrbaba', 'year': 2011},
+                Reference(title='Matt', year=2011),
             ],
             'ext3': [
-                {'name': 'John', 'cheatcode': 'start', 'year': 2010},
-                {'name': 'Eric', 'cheatcode': 'babaudbalrba', 'year': 2013},
+                Reference(title='John', year=2010),
+                Reference(title='Eric', year=2013),
             ]
         }
 
         aligned_answer = [
             [
-                ["ext1", {"name": "Matt", "cheatcode": "uuddlrlrba",
-                          "year": 2011}],
-                ["ext2", {"name": "Matt", "cheatcode": "uuddlrlrbaba",
-                          "year": 2011}]
+                ["ext1", Reference(title='Matt', year=2011)],
+                ["ext2", Reference(title='Matt', year=2011)]
             ],
             [
-                ["ext1", {"name": "Erick", "cheatcode": "babaudbalrba",
-                          "year": 2013}],
-                ["ext3", {'name': 'Eric', 'cheatcode': 'babaudbalrba',
-                          'year': 2013}]
+                ["ext1", Reference(title='Erick', year=2013)],
+                ["ext3", Reference(title='Eric', year=2013)]
             ],
             [
-                ["ext3", {"name": "John", "cheatcode": "start", "year": 2010}]
+                ["ext3", Reference(title='John', year=2010)]
             ]
         ]
 
         aligned_calc = align.align_records(docs)
-        self.assertEqual(obj_digest(aligned_calc), obj_digest(aligned_answer))
-
-    def test_full_records(self):
-        """Regression test for alignment with real data."""
-        records = [json.load(open(testfile+ext)) for ext in extensions]
-        recs = {lbl: rec for lbl, rec in zip(labels, records)}
-        aligned_calc = align.align_records(recs)
-        aligned_file = json.load(open(json_aligned))
-
-        self.assertEqual(obj_digest(aligned_calc), obj_digest(aligned_file))
+        for ref_ans, ref_calc in zip(aligned_answer, aligned_calc):
+            self.assertDictEqual(dict(ref_ans), dict(ref_calc))

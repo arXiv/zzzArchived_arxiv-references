@@ -31,22 +31,22 @@ class Identifier:
 class Reference:
     """An instance of a parsed bibliographic reference."""
 
-    title: str = field(default_factory=str)
+    title: Optional[str] = field(default=None)
     """The title of the reference."""
     raw: str = field(default_factory=str)
     """The un-parsed reference string."""
-    arxiv_id: str = field(default_factory=str)
+    arxiv_id: Optional[str] = field(default=None)
     """arXiv paper ID."""
     authors: List[Author] = field(default_factory=list)
     reftype: str = field(default='article')
     """The type of work to which the reference refers."""
-    doi: str = field(default_factory=str)
-    volume: str = field(default_factory=str)
-    issue: str = field(default_factory=str)
-    pages: str = field(default_factory=str)
-    source: str = field(default_factory=str)
+    doi: Optional[str] = field(default=None)
+    volume: Optional[str] = field(default=None)
+    issue: Optional[str] = field(default=None)
+    pages: Optional[str] = field(default=None)
+    source: Optional[str] = field(default=None)
     """Journal, conference, etc."""
-    year: str = field(default_factory=str)
+    year: Optional[str] = field(default=None)
     identifiers: List[Identifier] = field(default_factory=list)
 
     identifier: str = field(default_factory=str)
@@ -54,14 +54,14 @@ class Reference:
 
     score: float = field(default=0.)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Set the identifier based on reference content."""
         hash_string = bytes(unidecode(self.raw), encoding='ascii')
         self.identifier = str(b64encode(hash_string), encoding='utf-8')[:100]
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Return a dict representation of this object."""
-        return asdict(self)
+        return {k: v for k, v in asdict(self).items() if v is not None}
 
 
 @dataclass
@@ -89,9 +89,9 @@ class ReferenceSet:
     raw: bool = field(default=False)
     """If True, refs are from a single extractor before reconciliation."""
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Generate a dict representation of this object."""
-        data = asdict(self)
+        data: dict = asdict(self)
         data['created'] = self.created.isoformat()
         data['updated'] = self.updated.isoformat()
         return data
