@@ -21,7 +21,7 @@ curl -u $USERNAME:$GITHUB_TOKEN \
 
 
 # Check pydocstyle integration
-pipenv run pydocstyle --convention=numpy --add-ignore=D401 references
+pipenv run pydocstyle --convention=numpy --add-ignore=D401,D205 references
 PYDOCSTYLE_STATUS=$?
 if [ $PYDOCSTYLE_STATUS -ne 0 ]; then PYDOCSTYLE_STATE="failure" && echo "pydocstyle failed"; else PYDOCSTYLE_STATE="success" &&  echo "pydocstyle passed"; fi
 
