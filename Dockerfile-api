@@ -1,48 +1,38 @@
-# arxiv/references-api
+# arxiv/references-agent
 
-FROM ubuntu:zesty
+FROM arxiv/base:0.6
 
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    wget \
-    gcc \
-    g++ \
-    libpython3.6 \
-    python3.6 \
-    python3.6-dev \
-    python3.6-venv \
- && rm -rf /var/lib/apt/lists/*
+WORKDIR /opt/arxiv
 
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python3.6 get-pip.py
+ADD Pipfile /opt/arxiv/
+ADD Pipfile.lock /opt/arxiv/
 
-RUN pip install uwsgi
+ENV KINESIS_ENDPOINT ""
+ENV KINESIS_VERIFY "true"
+ENV KINESIS_SHARD_ID "shardId-000000000000"
+ENV KINESIS_STREAM "PDFIsAvailable"
+ENV KINESIS_CHECKPOINT_VOLUME /checkpoint
 
-# Add Python consumer and configuration.
-ADD requirements/web.txt /opt/arxiv/requirements.txt
-ADD wsgi.py /opt/arxiv/
-ADD bin/start_web.sh /opt/arxiv/
-RUN pip install -U pip
-RUN pip install -r /opt/arxiv/requirements.txt
+RUN pip install pipenv
+RUN pipenv install
 
+# Add the application itself last, for faster builds on minor revisions.
 ADD references /opt/arxiv/references/
+ADD bin/start_api.sh /opt/arxiv/
+RUN chmod +x /opt/arxiv/start_api.sh
 
-ENV PATH "/opt/arxiv:${PATH}"
-
-# Runtime configuration.
-ENV AWS_ACCESS_KEY_ID ""
-ENV AWS_SECRET_ACCESS_KEY ""
-
-# If not set, secrets will not be retrieved.
-ENV SECRETS_BUCKET_NAME ""
-ENV ARXIV_HOME "https://arxiv.org"
-ENV REFEXTRACT_ENDPOINT ""
-ENV INSTANCE_CREDENTIALS "true"
-ENV CREDENTIALS_URL "http://169.254.169.254/latest/meta-data/iam/security-credentials"
+VOLUME /checkpoint
 
 EXPOSE 8000
 
-RUN chmod +x /opt/arxiv/start_web.sh
-
-WORKDIR /opt/arxiv/
-CMD uwsgi --http-socket :8000 -w wsgi -t 3000 --processes 8 --threads 1 -M --async 100 --ugreen --manage-script-name
+ENTRYPOINT ["/opt/arxiv/start_api.sh"]
+CMD ["--http-socket", ":8000", \
+     "-M", \
+     "-t 3000", \
+     "--manage-script-name", \
+     "--processes", "8", \
+     "--threads", "1", \
+     "--async", "100", \
+     "--ugreen", \
+     "--mount", "/references=wsgi.py", \
+     "--logformat", "%(addr) %(addr) - %(user_id)|%(session_id) [%(rtime)] [%(uagent)] \"%(method) %(uri) %(proto)\" %(status) %(size) %(micros) %(ttfb)"]

@@ -5,8 +5,9 @@ from decimal import Decimal
 import re
 from typing import Tuple, Union, List, Callable
 
-from references.process.util import CATEGORIES
-from references import logging
+from references.domain import Reference
+from arxiv import taxonomy
+from arxiv.base import logging
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ def _fix_arxiv_id(value: Union[list, str]) -> Union[list, str]:
     """Fix common mistakes in arXiv identifiers."""
     if isinstance(value, list):
         return [_fix_arxiv_id(obj) for obj in value]
-    for category in CATEGORIES:
+    for category in taxonomy.ARCHIVES.keys():
         typo = category.replace('-', '')
         if typo in value:
             return value.replace(typo, category)
@@ -51,45 +52,47 @@ NORMALIZERS: List[Tuple[str, Callable]] = [
 ]
 
 
-def _normalize_record(record: dict) -> dict:
+def normalize_record(record: Reference) -> Reference:
     """
     Perform normalization/cleanup on a per-field basis.
 
     Parameters
     ----------
-    record : dict
+    record : :class:`.Reference`
 
     Returns
     -------
     dict
     """
     for field, normalizer in NORMALIZERS:
-        value = record.get(field)
+        value = getattr(record, field, None)
         if value is None:
             continue
         if isinstance(value, list):
-            record[field] = [normalizer(obj) for obj in value]
+            setattr(record, field, [normalizer(obj) for obj in value])
         else:
-            record[field] = normalizer(value)
+            setattr(record, field, normalizer(value))
     return record
 
 
-def normalize_records(records: list) -> list:
+def normalize_records(records: List[Reference]) -> List[Reference]:
     """
     Perform normalization/cleanup on a per-field basis.
 
     Parameters
     ----------
     records : list
+        A list of :class:`Reference` instances.
 
     Returns
     -------
     list
     """
-    return [_normalize_record(record) for record in records]
+    return [normalize_record(record) for record in records]
 
 
-def filter_records(records: list, threshold: float=0.5) -> Tuple[list, float]:
+def filter_records(records: List[Tuple[Reference, float]],
+                   threshold: float = 0.5) -> Tuple[List[Reference], float]:
     """
     Remove low-quality extracted references, and generate a composite score.
 
@@ -107,11 +110,14 @@ def filter_records(records: list, threshold: float=0.5) -> Tuple[list, float]:
         Filtered list of reference metadata (``dict``) and a composite score
         for all retained records (``float``).
     """
-    filtered_records = [
-        (dict(list(rec.items()) + [('score', Decimal(str(round(sc, 2))))]), sc)
-        for rec, sc in records if sc >= threshold
-    ]
-    if len(filtered_records) == 0:
+    # We need to both filter and update each record with the key 'score'.
+    filtered = []
+    for ref, score in records:
+        ref.score = score
+        if score >= threshold:
+            filtered.append((ref, score))
+    if len(filtered) == 0:
         return [], 0.
-    filtered_records, scores = zip(*filtered_records)
-    return list(filtered_records), mean(scores)
+    ref_tuple, scores = zip(*filtered)
+    references: List[Reference] = list(ref_tuple)
+    return references, mean(scores)

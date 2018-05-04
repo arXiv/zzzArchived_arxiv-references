@@ -1,31 +1,36 @@
 """
-This module encapsulates the reference extraction process.
+Encapsulates the reference extraction process.
 
-
+Leverages third-party reference extraction services to generate a set of raw
+bibliographic metadata.
 """
 
+from typing import Dict, List, Callable, Tuple
 from datetime import datetime
 from statistics import mean
 
-from references.process.extract import cermine, grobid, refextract
-from references import logging
-from references.services import metrics
+from arxiv.base import logging
+
+from references.services import cermine, grobid, refextract, scienceparse
+from references.domain import Reference
 
 logger = logging.getLogger(__name__)
 
-EXTRACTORS = [
+EXTRACTORS: List[Tuple[str, Callable]] = [
     ('cermine', cermine.extract_references),
     ('grobid', grobid.extract_references),
     ('refextract', refextract.extract_references),
+    ('scienceparse', scienceparse.extract_references),
 ]
 
 
-def getDefaultExtractors():
+def getDefaultExtractors() -> List[Tuple[str, Callable]]:
+    """Get the default extractors for this service."""
     return EXTRACTORS
 
 
 def estimate_quality(metadata: list) -> float:
-    """"
+    """
     Generate a rough estimate of extraction quality.
 
     Parameters
@@ -39,11 +44,13 @@ def estimate_quality(metadata: list) -> float:
     """
     return mean([
         len([(key, value) for key, value in metadatum.items() if value])/10.
-        for metadatum in metadata])
+        for metadatum in metadata
+    ])
 
 
 def extract(pdf_path: str, document_id: str,
-            extractors: list=getDefaultExtractors(), report=True) -> dict:
+            extractors: list = getDefaultExtractors()) \
+        -> Dict[str, List[Reference]]:
     """
     Perform reference extractions using all available extractors.
 
@@ -66,27 +73,9 @@ def extract(pdf_path: str, document_id: str,
     for name, extractor in extractors:
         logger.debug('%s: starting extraction with %s', document_id, name)
         try:
-            start_time = datetime.now()
             extractions[name] = extractor(pdf_path, document_id)
-            end_time = datetime.now()
-
             logger.debug('%s: extraction with %s succeeded', document_id, name)
-            if report:
-                metrics.report('ExtractionSucceeded', 1.,
-                               dimensions={'Extractor': name})
-                metrics.report('ExtractionDuration',
-                               (start_time - end_time).microseconds,
-                               dimensions={'Extractor': name},
-                               units='Microseconds')
-                metrics.report('ExtractionQuality',
-                               estimate_quality(extractions[name]),
-                               dimensions={'Extractor': name},
-                               units='Microseconds')
-
         except Exception as e:
-            if report:
-                metrics.report('ExtractionSucceeded', 0.,
-                               dimensions={'Extractor': name})
             logger.debug('%s: extraction failed for %s with %s: %s',
                          document_id, pdf_path, name, e)
     return extractions

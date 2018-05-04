@@ -4,12 +4,14 @@ from collections import Counter, defaultdict
 from statistics import mean
 from itertools import repeat
 import re
-from typing import Tuple, Any, Union, Callable
+
+from typing import Tuple, Any, Union, Callable, List, Dict
 
 import editdistance    # For string similarity.
 
-from references.process.util import argmax
-from references import logging
+from references.domain import Reference
+from references.util import argmax
+from arxiv.base import logging
 from references.process.merge.align import align_records
 
 logger = logging.getLogger(__name__)
@@ -27,7 +29,7 @@ def _dict_repr(value: dict) -> str:
     -------
     str
     """
-    def _keysort(item):
+    def _keysort(item):     # type: ignore
         return item[0]
 
     return str([(key.strip(), value.strip()) for key, value
@@ -66,7 +68,8 @@ def _similarity_str(value_a: str, value_b: str) -> float:
     N_max = max(len(value_a), len(value_b))
     if N_max == 0:
         return 0.
-    return (N_max - editdistance.eval(value_a, value_b))/N_max
+    sim: float = (N_max - editdistance.eval(value_a, value_b))/N_max
+    return sim
 
 
 def _similarity_dict(value_a: dict, value_b: dict) -> float:
@@ -134,7 +137,7 @@ def _cast_value(field: str, value: Union[str, int]) -> Any:
             return None
     if field in ['authors', 'identifiers']:
         try:
-            return eval(value)
+            return list(eval(value))    # type: ignore
         except SyntaxError:
             return value
     return value
@@ -156,15 +159,15 @@ def _fix_authors(authors: list) -> list:
     return fixed
 
 
-def _pool(metadata: dict, fields: list, prob_valid: Callable,
-          similarity_threshold: float=0.9) -> dict:
+def _pool(metadata: Dict[str, Reference], fields: list, prob_valid: Callable,
+          similarity_threshold: float = 0.9) -> dict:
     """Pool similar values for a field across extractions."""
     # Similar values (above a threshold) for fields are grouped together, and
     #  their P(value|extractor, field) are combined (summed, then normalized).
     pooled: defaultdict = defaultdict(Counter)
     for extractor, metadatum in metadata.items():
         for field in fields:
-            value = _prep_value(metadatum.get(field, None))
+            value = _prep_value(getattr(metadatum, field, None))
             if value is None:
                 continue
             p_value = prob_valid(extractor, field)
@@ -189,7 +192,7 @@ def _pool(metadata: dict, fields: list, prob_valid: Callable,
             for field, scores in pooled.items()}
 
 
-def _select(pooled: dict) -> Tuple[dict, float]:
+def _select(pooled: dict) -> Tuple[Reference, float]:
     """Select the most likely values given their pooled weights."""
     result = {}
     max_probs = []
@@ -207,7 +210,8 @@ def _select(pooled: dict) -> Tuple[dict, float]:
         if field == 'authors':
             result[field] = _fix_authors(result[field])
         max_probs.append(max(norm_prob))
-    return result, _score(result)*mean(max_probs)
+    ref = Reference(**result)   # type: ignore
+    return ref, _score(result) * mean(max_probs)
 
 
 def _score(result: dict) -> float:
@@ -218,16 +222,16 @@ def _score(result: dict) -> float:
     return mean([1. if result.get(field) else 0. for field in core])
 
 
-def arbitrate(metadata: list, valid: list, priors: list,
-              similarity_threshold: float=0.9) -> Tuple[dict, float]:
+def arbitrate(metadata: List[Tuple[str, Reference]], valid: list, priors: list,
+              similarity_threshold: float = 0.9) -> Tuple[Reference, float]:
     """
     Apply arbitration logic to raw extraction metadata for a single reference.
 
     Parameters
     ----------
     metadata : list
-        Each item is a two-tuple of ``(str, dict)``, representing an extractor
-        and its metadata record.
+        Each item is a two-tuple of ``(str, Reference)``,
+        representing an extractor and its metadata record.
     valid : list
         Represents the probability of each field-value in each metadata record
         being valid. Should have the same shape as ``metadata``, except that
@@ -239,7 +243,7 @@ def arbitrate(metadata: list, valid: list, priors: list,
 
     Returns
     -------
-    dict
+    :class:`.Reference`
         Authoritative metadata record for a single extracted reference.
     float
         Reference quality score.
@@ -254,9 +258,8 @@ def arbitrate(metadata: list, valid: list, priors: list,
 
     # We want to know all of the unique field names present across the aligned
     #  extractions.
-    fields = list({
-        field for metadatum in _metadata.values() for field in metadatum.keys()
-    })
+    fields = list(set(Reference.__annotations__.keys())
+                  - {'score', 'identifier'})
 
     # Pulling this out for readability.
     def _prob_valid(extractor: str, field: str) -> float:
@@ -264,7 +267,8 @@ def arbitrate(metadata: list, valid: list, priors: list,
         p_val = _valid[extractor].get(field, 0.)
         p_extr = _priors[extractor].get('__all__', 0.)
         p_extr_field = _priors[extractor].get(field, p_extr)
-        return p_val * p_extr_field
+        p: float = p_val * p_extr_field
+        return p
 
     pooled = _pool(_metadata, fields, _prob_valid,
                    similarity_threshold=similarity_threshold)
@@ -272,18 +276,19 @@ def arbitrate(metadata: list, valid: list, priors: list,
     return _select(pooled)
 
 
-def arbitrate_all(metadata_all: list, valid_all: list,
-                  priors_all: list, N_extractions: int=0) -> list:
+def arbitrate_all(metadata: List[List[Tuple[str, Reference]]],
+                  valid: list, priors: list, N_extractions: int = 0) \
+        -> List[Tuple[Reference, float]]:
     """
     Helper to apply arbitration to metadata for a set of cited references.
 
     Parameters
     ----------
-    metadata_all : list
+    metadata : list
         List of lists (see :func:`.arbitrate`).
-    valid_all : list
+    valid : list
         List of lists (see :func:`.arbitrate`).
-    priors_all : list
+    priors : list
         List of lists (see :func:`.arbitrate`).
     N_extractions : int
 
@@ -293,5 +298,6 @@ def arbitrate_all(metadata_all: list, valid_all: list,
         Optimal metadata for cited references. Each item is a ``dict``. See
         :func:`.arbitrate` for more details.
     """
-    N = len(metadata_all)
-    return list(map(arbitrate, metadata_all, valid_all, repeat(priors_all, N)))
+    N = len(metadata)
+    priors_iter = repeat(priors, N)
+    return list(map(arbitrate, metadata, valid, priors_iter))

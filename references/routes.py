@@ -1,15 +1,18 @@
 """Provides REST API routes."""
 
+from typing import Union
 from flask.json import jsonify
 from flask import Blueprint, render_template, redirect, request, url_for
+
+from werkzeug import Response
 
 from references.controllers import extraction
 from references.controllers import extracted_references as extr
 from references.controllers.health import health_check
-from references import status
+from arxiv import status
 
 
-blueprint = Blueprint('references', __name__, url_prefix='')
+blueprint = Blueprint('references', __name__, url_prefix='/references')
 
 
 @blueprint.route('/status', methods=['GET'])
@@ -19,7 +22,7 @@ def ok() -> tuple:
     return jsonify(data), code, headers
 
 
-@blueprint.route('/references', methods=['POST'])
+@blueprint.route('', methods=['POST'])
 def extract_references() -> tuple:
     """Handle requests for reference extraction."""
     data, code, headers = extraction.extract(request.get_json(force=True))
@@ -33,9 +36,9 @@ def task_status(task_id: str) -> tuple:
     return jsonify(data), code, headers
 
 
-@blueprint.route('/references/<arxiv:doc_id>/ref/<string:ref_id>/resolve',
+@blueprint.route('/<arxiv:doc_id>/ref/<string:ref_id>/resolve',
                  methods=['GET'])
-def resolve_reference(doc_id: str, ref_id: str) -> tuple:
+def resolve_reference(doc_id: str, ref_id: str) -> Union[tuple, Response]:
     """
     Forward a user to a resource for a specific reference.
 
@@ -53,11 +56,13 @@ def resolve_reference(doc_id: str, ref_id: str) -> tuple:
     """
     content, status_code, _ = extr.resolve(doc_id, ref_id)
     if status_code != status.HTTP_303_SEE_OTHER:
-        return jsonify(content), status_code
-    return redirect(content.get('url'), code=status_code)
+        response: Response = jsonify(content, status_code=status_code)
+    else:
+        response = redirect(content.get('url'), code=status_code)
+    return response
 
 
-@blueprint.route('/references/<arxiv:doc_id>/ref/<string:ref_id>',
+@blueprint.route('/<arxiv:doc_id>/ref/<string:ref_id>',
                  methods=['GET'])
 def reference(doc_id: str, ref_id: str) -> tuple:
     """
@@ -79,7 +84,7 @@ def reference(doc_id: str, ref_id: str) -> tuple:
     return jsonify(response), status_code, headers
 
 
-@blueprint.route('/references/<arxiv:doc_id>', methods=['GET'])
+@blueprint.route('/<arxiv:doc_id>', methods=['GET'])
 def references(doc_id: str) -> tuple:
     """
     Retrieve all reference metadata for an arXiv publication.
@@ -95,13 +100,11 @@ def references(doc_id: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    reftype = request.args.get('reftype', '__all__')
-    response, status_code, headers = extr.list(doc_id, reftype=reftype)
+    response, status_code, headers = extr.list(doc_id)
     return jsonify(response), status_code, headers
 
 
-@blueprint.route('/references/<arxiv:doc_id>/raw/<string:extractor>',
-                 methods=['GET'])
+@blueprint.route('/<arxiv:doc_id>/raw/<string:extractor>', methods=['GET'])
 def raw(doc_id: str, extractor: str) -> tuple:
     """
     Retrieve raw reference metadata for a specific extractor.
@@ -118,5 +121,5 @@ def raw(doc_id: str, extractor: str) -> tuple:
     int
         HTTP status code. See :mod:`references.status` for details.
     """
-    response, status_code, headers = extr.get_raw_extraction(doc_id, extractor)
+    response, status_code, headers = extr.list(doc_id, extractor)
     return jsonify(response), status_code, headers

@@ -10,10 +10,11 @@ except ImportError as e:
     StringBloomFilter = None
 
 from typing import Callable, Dict, List, Any, Sized, Tuple
-from references import logging
+from arxiv.base import logging
+from references.domain import Reference
 from references.process.textutil import clean_text
-from references.process.extract.regex_arxiv import REGEX_ARXIV_STRICT
-from references.process.extract.regex_identifiers import (
+from references.util.regex_arxiv import REGEX_ARXIV_STRICT
+from references.util.regex_identifiers import (
     REGEX_DOI, REGEX_ISBN_10, REGEX_ISBN_13
 )
 
@@ -26,14 +27,16 @@ RE_INTEGER = (
 logger = logging.getLogger(__name__)
 
 
-def _prepare_filters_or_not():
+def _prepare_filters_or_not() -> dict:
+    """Attempt to load bloom filters, if available."""
     try:
         return _load_filters()
     except Exception as e:
         return {}
 
 
-def _load_filters():
+def _load_filters() -> dict:
+    """Load bloom filters."""
     # a size bigger than our filters but smaller than memory so we can
     # just automatically load the whole thing without recording sizes
     BIGNUMBER = int(1e8)
@@ -61,6 +64,7 @@ def _load_filters():
 
 
 def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
+    """Check a string against a bloom filter."""
     score = [
         1 if word in bloom_filter else 0
         for word in clean_text(value, numok=True).split()
@@ -71,6 +75,7 @@ def bloom_match(value: str, bloom_filter: StringBloomFilter) -> float:
 
 
 def minimum_length(length: int) -> Callable:
+    """Generate a function that checks for a minimum string length."""
     def _min_len(value: Sized) -> float:
         if length > len(value) > 0:
             return 0.
@@ -78,20 +83,25 @@ def minimum_length(length: int) -> Callable:
     return _min_len
 
 
-def likely(func, min_prob: float=0.0, max_prob: float=1.0) -> Callable:
+def likely(func: Callable, min_prob: float = 0.0, max_prob: float = 1.0) \
+        -> Callable:
+    """Generate function that constrains a likehlihood function."""
     def call(value: object) -> float:
-        return max(min(func(value), max_prob), min_prob)
+        prob: float = max(min(func(value), max_prob), min_prob)
+        return prob
     return call
 
 
 def does_not_contain_arxiv(value: object) -> float:
+    """Value does not contain the word `arxiv`."""
     if not isinstance(value, str):
         return 0.0
     return 0. if 'arxiv' in value else 1.
 
 
-def contains(substring: str, false_prob: float=0.0,
-             true_prob: float=1.0) -> Callable:
+def contains(substring: str, false_prob: float = 0.0,
+             true_prob: float = 1.0) -> Callable:
+    """Generate a function that checks whether a substring is present."""
     def call(value: object) -> float:
         if not isinstance(value, str):
             return 0.0
@@ -99,8 +109,9 @@ def contains(substring: str, false_prob: float=0.0,
     return call
 
 
-def ends_with(substring: str, false_prob: float=0.0,
-              true_prob: float=1.0) -> Callable:
+def ends_with(substring: str, false_prob: float = 0.0,
+              true_prob: float = 1.0) -> Callable:
+    """Generate a function to check whether a value ends with a substring."""
     def call(value: object) -> float:
         if not isinstance(value, str):
             return 0.0
@@ -108,12 +119,14 @@ def ends_with(substring: str, false_prob: float=0.0,
     return call
 
 
-def doesnt_end_with(substring: str, false_prob: float=0.0,
-                    true_prob: float=1.0) -> Callable:
+def doesnt_end_with(substring: str, false_prob: float = 0.0,
+                    true_prob: float = 1.0) -> Callable:
+    """Inverse of :func:`.ends_with`."""
     return ends_with(substring, false_prob=true_prob, true_prob=false_prob)
 
 
 def is_integer(value: str) -> float:
+    """Asserts that a value is an integer."""
     try:
         int(value)
     except ValueError as e:
@@ -122,6 +135,7 @@ def is_integer(value: str) -> float:
 
 
 def is_integer_like(value: Any) -> float:
+    """Asserts that a value could be coerced to an integer."""
     if value is None:
         return 0.
     if isinstance(value, int):
@@ -144,6 +158,7 @@ def is_integer_like(value: Any) -> float:
 
 
 def is_year(value: str) -> float:
+    """Asserts that a value is plausibly a year."""
     try:
         year = int(value)
         if year > 1600 and year < 2100:
@@ -154,6 +169,7 @@ def is_year(value: str) -> float:
 
 
 def is_year_like(value: str) -> float:
+    """Asserts that a value could be coerced to something like a year."""
     try:
         numbers = re.findall(RE_INTEGER, value)
         if not numbers:
@@ -164,6 +180,7 @@ def is_year_like(value: str) -> float:
 
 
 def is_pages(value: str) -> float:
+    """Asserts that a value looks like page number(s)."""
     pages = re.compile(r'(\d+)(?:\s+)?[\s\-._/\:]+(?:\s+)?(\d+)')
     match = pages.match(value)
 
@@ -176,12 +193,14 @@ def is_pages(value: str) -> float:
 
 
 def valid_doi(value: str) -> float:
+    """Asserts that a value is a valid DOI."""
     if re.match(REGEX_DOI, value):
         return 1.0
     return 0.0
 
 
 def valid_identifier(value: list) -> float:
+    """Asserts that a value looks like a document identifier."""
     num_identifiers = len(value)
     num_good = 0
 
@@ -199,12 +218,14 @@ def valid_identifier(value: list) -> float:
 
 
 def valid_arxiv_id(value: str) -> float:
+    """Asserts that a value is a valid arXiv paper ID."""
     if re.match(REGEX_ARXIV_STRICT, value):
         return 1.0
     return 0.0
 
 
-def unity(r):
+def unity(r: Any) -> float:
+    """Returns 1.0."""
     return 1.0
 
 
@@ -216,8 +237,8 @@ if StringBloomFilter and bloom_filters:
     words_auth = partial(bloom_match, bloom_filter=bloom_filters['auth'])
 
 
-
 def words_author_structure(value: list) -> float:
+    """General evaluation of overall author metadata quality."""
     num_authors = 0
     num_good = 0.0
 
@@ -249,7 +270,7 @@ BELIEF_FUNCTIONS: Dict[str, List[Callable]] = {
 }
 
 
-def calculate_belief(reference: dict) -> dict:
+def calculate_belief(reference: Reference) -> dict:
     """
     Calculate the beliefs about the elements in a single record.
 
@@ -258,8 +279,8 @@ def calculate_belief(reference: dict) -> dict:
 
     Parameters
     ----------
-    reference : dict
-        A single reference metadata dictionary (formatted according to schema)
+    reference : :class:`.Reference`
+        A single reference metadata record.
 
     Returns
     -------
@@ -269,7 +290,7 @@ def calculate_belief(reference: dict) -> dict:
     """
     output = {}
 
-    for key, value in reference.items():
+    for key, value in reference.to_dict().items():
         if not value:
             # Blank values are perfectly plausible, and there isn't much else
             # that we can say about them.
@@ -290,9 +311,10 @@ def calculate_belief(reference: dict) -> dict:
 
 def identity_belief(reference: dict) -> dict:
     """
-    Returns an identity function for the beliefs (so that we can debug more
-    easily). Therefore, does almost nothing but replace values with 1.0 in
-    a data structure.
+    Returns an identity function for the beliefs.
+
+    This is so that we can debug more easily. Therefore, does almost nothing
+    but replace values with 1.0 in a data structure.
 
     Parameters
     ----------

@@ -1,19 +1,18 @@
 """
-This module is responsible for merging extracted reference metadata.
+Procedure for merging extracted reference metadata.
 
-The :mod:`references.process.extract` module provides several reference
-extraction mechanisms, each of which provides variable levels of completeness
-and quality.
-
-
+The :mod:`references.process.extract` module provides an entry-point to several
+reference extraction mechanisms, each of which provides variable levels of
+completeness and quality.
 
 .. automodule:: merge
    :members:
 
 """
-from typing import Tuple
+from typing import Tuple, List, Dict
 
-from references import logging
+from arxiv.base import logging
+from references.domain import Reference
 from references.process.merge import align, arbitrate, priors, beliefs
 from references.process.merge.priors import EXTRACTORS
 from references.process.merge import normalize
@@ -21,8 +20,9 @@ from references.process.merge import normalize
 logger = logging.getLogger(__name__)
 
 
-def merge_records(records: dict,
-                  extractor_priors: list=EXTRACTORS) -> Tuple[list, float]:
+def merge_records(records: Dict[str, List[Reference]],
+                  extractor_priors: list = EXTRACTORS) \
+        -> Tuple[List[Reference], float]:
     """
     Merge extracted references into a single authoritative set of references.
 

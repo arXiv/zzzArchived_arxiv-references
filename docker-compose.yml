@@ -1,6 +1,30 @@
 version: '3'
 
 services:
+  references-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile-agent
+    container_name: references-agent
+    environment:
+      AWS_ACCESS_KEY_ID: "foo"
+      AWS_SECRET_ACCESS_KEY: "bar"
+      KINESIS_ENDPOINT: "https://references-test-localstack:4568"
+      KINESIS_VERIFY: "false"
+      KINESIS_START_TYPE: "TRIM_HORIZON"
+      LOGLEVEL: 10
+      REDIS_MASTER_SERVICE_HOST: references-test-redis
+      REDIS_MASTER_SERVICE_PORT: 6379
+      GROBID_ENDPOINT: "http://references-grobid:8080"
+      REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
+      CERMINE_ENDPOINT: "http://references-cermine:8000"
+      SCIENCEPARSE_ENDPOINT: "http://references-scienceparse:8000"
+
+    networks:
+      - references-test
+    depends_on:
+      - references-test-localstack
+
   references-cermine:
     build:
       context: ./extractors/cermine
@@ -8,6 +32,7 @@ services:
     container_name: references-cermine
     networks:
       - references-test
+
   references-refextract:
     build:
       context: ./extractors/refextract
@@ -15,11 +40,25 @@ services:
     container_name: references-refextract
     networks:
       - references-test
+
+  references-grobid:
+    image: arxiv/grobid
+    container_name: references-grobid
+    networks:
+      - references-test
+
+  references-scienceparse:
+    image: arxiv/scienceparse
+    container_name: references-scienceparse
+    networks:
+      - references-test
+
   references-test-redis:
     image: redis
     container_name: references-test-redis
     networks:
       - references-test
+
   references-test-localstack:
     image: atlassianlabs/localstack
     container_name: references-test-localstack
@@ -32,6 +71,7 @@ services:
     environment:
       USE_SSL: 'true'
       DEBUG: 'true'
+
   references-worker:
     build:
       context: .
@@ -40,13 +80,10 @@ services:
       REDIS_ENDPOINT: "references-test-redis:6379"
       AWS_ACCESS_KEY_ID: "foo"
       AWS_SECRET_ACCESS_KEY: "bar"
-      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
-      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
       CERMINE_ENDPOINT: "http://references-cermine:8000"
       REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
-      DYNAMODB_VERIFY: "false"
-      CLOUDWATCH_VERIFY: "false"
-      INSTANCE_CREDENTIALS: "false"
+      GROBID_ENDPOINT: "http://references-grobid:8080"
+      SCIENCEPARSE_ENDPOINT: "http://references-scienceparse:8000"
       LOGLEVEL: 10
     networks:
       - references-test
@@ -58,6 +95,7 @@ services:
       - references-test-localstack
       - references-cermine
       - references-refextract
+
   references-api:
     build:
       context: .
@@ -67,13 +105,10 @@ services:
       REDIS_ENDPOINT: "references-test-redis:6379"
       AWS_ACCESS_KEY_ID: "foo"
       AWS_SECRET_ACCESS_KEY: "bar"
-      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
-      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
       CERMINE_ENDPOINT: "http://references-cermine:8000"
       REFEXTRACT_ENDPOINT: "http://references-refextract:8000"
-      DYNAMODB_VERIFY: "false"
-      CLOUDWATCH_VERIFY: "false"
-      INSTANCE_CREDENTIALS: "false"
+      GROBID_ENDPOINT: "http://references-grobid:8080"
+      SCIENCEPARSE_ENDPOINT: "http://references-scienceparse:8000"
       LOGLEVEL: 10
     ports:
       - "8001:8000"
@@ -85,32 +120,7 @@ services:
       - references-worker
       - references-cermine
       - references-refextract
-  references-agent:
-    build:
-      context: .
-      dockerfile: Dockerfile-agent
-    environment:
-      AWS_ACCESS_KEY_ID: "foo"
-      AWS_SECRET_ACCESS_KEY: "bar"
-      CLOUDWATCH_ENDPOINT: "https://references-test-localstack:4582"
-      DYNAMODB_ENDPOINT: "https://references-test-localstack:4569"
-      KINESIS_ENDPOINT: "https://references-test-localstack:4568"
-      KINESIS_VERIFY: "false"
-      DYNAMODB_VERIFY: "false"
-      CLOUDWATCH_VERIFY: "false"
-      EXTRACTION_ENDPOINT: "http://references-api:8000"
-      LOGLEVEL: 10
-      LOGFILE: "/var/log/references-agent-processor.log"
-      MODE: "test"
-      JAVA_FLAGS: "-Dcom.amazonaws.sdk.disableCertChecking"
-      AWS_CBOR_DISABLE: "true"
-      INSTANCE_CREDENTIALS: "false"
-    networks:
-      - references-test
-    depends_on:
-      - references-test-localstack
-      - references-worker
-      - references-api
+
 
 networks:
   references-test:

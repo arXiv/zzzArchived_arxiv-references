@@ -12,7 +12,7 @@ nonlet = re.compile(r"([^A-Za-z0-9 ])")
 purenum = re.compile(r"\b[0-9]+\b")
 
 
-def clean_text(txt, numok=False):
+def clean_text(txt: str, numok: bool = False) -> str:
     """
     Normalize a set of text so that it can be compared with different sources.
 
@@ -33,10 +33,8 @@ def clean_text(txt, numok=False):
     return txt.strip()
 
 
-def clean_blob(blob, numok=False):
-    """
-    Given a blob of text, apply the `clean_text` to each line in the text.
-    """
+def clean_blob(blob: str, numok: bool = False) -> str:
+    """Apply :func:`.clean_text` to each line in a blob of text."""
     output = []
 
     lines = blob.split('\n')

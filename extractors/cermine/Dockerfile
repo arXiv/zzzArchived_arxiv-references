@@ -20,6 +20,7 @@ RUN cp cermine-impl-${VERSION}-jar-with-dependencies.jar /opt/cermine/cermine-im
 ADD requirements.txt /opt/cermine/
 RUN pip install -U pip
 RUN pip install -r /opt/cermine/requirements.txt
+RUN pip install arxiv-base pytz
 
 ADD wsgi.py /opt/cermine/
 
@@ -30,4 +31,6 @@ WORKDIR /opt/cermine/
 
 ADD extract /opt/cermine/extract/
 
-CMD uwsgi --socket=/opt/uwsgi.sock -w wsgi -t 3000 --processes 4 --threads 1 -M --async 100 --ugreen --pidfile=/opt/python/run/uwsgi-master.pid --vacuum 
+EXPOSE 8000
+
+CMD uwsgi --http-socket :8000 -w wsgi -t 3000 --processes 4 --threads 1 -M --async 100 --ugreen --vacuum

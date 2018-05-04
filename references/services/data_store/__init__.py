@@ -1,57 +1,61 @@
-"""Integration with reference metadata store."""
+"""Persistance for extracted references, using Redis."""
 
-import os
+import json
+from typing import List, Tuple, Optional
+from functools import wraps
 
-from flask import _app_ctx_stack as stack
-from flask import current_app
-from references import logging
-from typing import List
-from references.context import get_application_config, get_application_global
-from references.services import credentials
-from .raw import RawExtractionSession
-from .references import ReferenceSession
-from .extractions import ExtractionSession
+import redis
+
+from arxiv.base.globals import get_application_config, get_application_global
+from references.domain import Reference, ReferenceSet
+from .exceptions import CommunicationError, ReferencesNotFound
 
 
-ReferenceData = List[dict]
+class ReferenceStoreSession(object):
+    """Manages a connection to Redis."""
 
-logger = logging.getLogger(__name__)
+    def __init__(self, host: str, port: int, database: int) -> None:
+        """Open the connection to Redis."""
+        self.r = redis.StrictRedis(host=host, port=port, db=database)
 
+    def _version(self, rset: ReferenceSet) -> str:
+        """Generate a key using document ID, version, and extrator."""
+        return f"{rset.document_id}_{rset.version}_{rset.extractor}"
 
-class DataStoreSession(object):
-    """Container for datastore sessions."""
+    def _extractor(self, rset: ReferenceSet) -> str:
+        """Generate an indexing key based on document ID and extractor."""
+        return f"{rset.document_id}_{rset.extractor}"
 
-    def __init__(self, endpoint_url: str, aws_access_key: str,
-                 aws_secret_key: str, aws_session_token: str, region_name: str,
-                 verify: bool=True, stored_schema: str=None,
-                 extracted_schema: str=None, raw_table_name: str=None,
-                 extractions_table_name: str=None,
-                 references_table_name: str=None) -> None:
-        """Initialize datastore sessions."""
-        raw_kwargs = {}
-        if raw_table_name:
-            raw_kwargs['table_name'] = raw_table_name
-        self.raw = RawExtractionSession(endpoint_url, aws_access_key,
-                                        aws_secret_key, aws_session_token,
-                                        region_name, verify, **raw_kwargs)
-        extraction_kwargs = {}
-        if extractions_table_name:
-            extraction_kwargs['table_name'] = extractions_table_name
-        self.extractions = ExtractionSession(endpoint_url, aws_access_key,
-                                             aws_secret_key, aws_session_token,
-                                             region_name, verify,
-                                             **extraction_kwargs)
+    def _index(self, rset: ReferenceSet) -> None:
+        """Update document indices."""
+        # We're using a sorted sets as a kind of index. For each
+        # document-extraction key, we index the versioned extractions using
+        # the version number itself (major and minor parts) as the sort score.
+        version = float('.'.join(rset.version.split('.')[:2]))
+        self.r.zadd(self._extractor(rset), version, self._version(rset))
 
-        references_kwargs = {
-            'stored_schema': stored_schema,
-            'extracted_schema': extracted_schema
-        }
-        if references_table_name:
-            references_kwargs['table_name'] = references_table_name
-        self.references = ReferenceSession(endpoint_url, aws_access_key,
-                                           aws_secret_key, aws_session_token,
-                                           region_name, verify,
-                                           **references_kwargs)
+    def save(self, reference_set: ReferenceSet) -> None:
+        """Store a :class:`.ReferenceSet`."""
+        try:
+            self.r.set(self._version(reference_set), json.dumps(reference_set))
+        except redis.exceptions.ConnectionError as e:
+            raise CommunicationError('Failed to save references') from e
+
+    def load(self, document_id: str, extractor: str = 'combined',
+             version: str = 'latest') -> ReferenceSet:
+        """Load a class:`.ReferenceSet` from the data store."""
+        try:
+            if version == 'latest':
+                _extractor = f"{document_id}_{extractor}"
+                key = self.r.zrangebyscore(_extractor, '-inf', '+inf')[-1]
+            else:
+                key = f"{document_id}_{version}_{extractor}"
+            data = self.r.get(key)
+        except redis.exceptions.ConnectionError as e:
+            raise CommunicationError('Failed to load references') from e
+        if not data:
+            raise ReferencesNotFound('No such extraction')
+        return ReferenceSet(**json.loads(data))     # type: ignore
 
 
 def init_app(app: object) -> None:
@@ -60,22 +64,15 @@ def init_app(app: object) -> None:
 
     Parameters
     ----------
-    app : :class:`flask.Flask` or :class:`celery.Celery`
+    app : :class:`flask.Flask`
     """
     config = get_application_config(app)
-    config.setdefault('REFLINK_EXTRACTED_SCHEMA',
-                      'schema/ExtractedReference.json')
-    config.setdefault('REFLINK_STORED_SCHEMA', 'schema/StoredReference.json')
-    config.setdefault('DYNAMODB_ENDPOINT',
-                      'https://dynamodb.us-east-1.amazonaws.com')
-    config.setdefault('AWS_REGION', 'us-east-1')
-    config.setdefault('DYNAMODB_VERIFY', 'true')
-    config.setdefault('RAW_TABLE_NAME', 'RawExtractions')
-    config.setdefault('EXTRACTIONS_TABLE_NAME', 'Extractions')
-    config.setdefault('REFERENCES_TABLE_NAME', 'StoredReference')
+    config.setdefault('REFERENCES_REDIS_HOST', 'localhost')
+    config.setdefault('REFERENCES_REDIS_PORT', '6379')
+    config.setdefault('REFERENCES_REDIS_DATABASE', '1')
 
 
-def get_session(app: object = None) -> DataStoreSession:
+def get_session(app: object = None) -> ReferenceStoreSession:
     """
     Initialize a session with the data store.
 
@@ -87,105 +84,57 @@ def get_session(app: object = None) -> DataStoreSession:
     Returns
     -------
     :class:`.DataStoreSession`
+
     """
     config = get_application_config(app)
-    creds = credentials.current_session()
-    try:
-        access_key, secret_key, token = creds.get_credentials()
-    except IOError as e:
-        access_key, secret_key, token = None, None, None
-        logger.debug('failed to load instance credentials: %s', str(e))
-
-    if access_key is None or secret_key is None:
-        access_key = config.get('AWS_ACCESS_KEY_ID', None)
-        secret_key = config.get('AWS_SECRET_ACCESS_KEY', None)
-        token = config.get('AWS_SESSION_TOKEN', None)
-    if not access_key or not secret_key:
-        raise RuntimeError('Could not find usable credentials')
-    extracted_schema = config.get('REFLINK_EXTRACTED_SCHEMA', None)
-    stored_schema = config.get('REFLINK_STORED_SCHEMA', None)
-    endpoint_url = config.get('DYNAMODB_ENDPOINT', None)
-    region_name = config.get('AWS_REGION', 'us-east-1')
-    raw_table = config.get('RAW_TABLE_NAME')
-    extractions_table = config.get('EXTRACTIONS_TABLE_NAME')
-    references_table = config.get('REFERENCES_TABLE_NAME')
-    verify = config.get('DYNAMODB_VERIFY', 'true') == 'true'
-    return DataStoreSession(endpoint_url, access_key, secret_key, token,
-                            region_name, verify=verify,
-                            stored_schema=stored_schema,
-                            extracted_schema=extracted_schema,
-                            raw_table_name=raw_table,
-                            extractions_table_name=extractions_table,
-                            references_table_name=references_table)
+    host = config.get('REFERENCES_REDIS_HOST', 'localhost')
+    port = int(config.get('REFERENCES_REDIS_PORT', '6379'))
+    database = int(config.get('REFERENCES_REDIS_DATABASE', '1'))
+    return ReferenceStoreSession(host, port, database)
 
 
-def current_session():
+def current_session() -> ReferenceStoreSession:
     """Get/create :class:`.ReferenceStoreSession` for this context."""
     g = get_application_global()
     if g is None:
         return get_session()
     if 'data_store' not in g:
         g.data_store = get_session()
-    return g.data_store
+    session: ReferenceStoreSession = g.data_store
+    return session
 
 
-def store_references(*args, **kwargs):
+@wraps(ReferenceStoreSession.save)
+def save(references: ReferenceSet) -> None:
     """
     Store extracted references for a document.
 
-    See :meth:`.references.ReferenceStoreSession.create`.
+    Parameters
+    ----------
+    references : :class:`.ReferenceSet`
+
     """
-    return current_session().references.create(*args, **kwargs)
-
-
-def get_reference(*args, **kwargs):
-    """
-    Retrieve metadata for a specific reference in a document.
-
-    See :meth:`.references.ReferenceStoreSession.retrieve`.
-    """
-    return current_session().references.retrieve(*args, **kwargs)
-
-
-def get_latest_extraction(*args, **kwargs):
-    """
-    Retrieve info about the most recent extraction for a document.
-
-    See :meth:`.extraction.ExtractionSession.latest`.
-    """
-    return current_session().extractions.latest(*args, **kwargs)
-
-
-def get_latest_extractions(*args, **kwargs):
-    """
-    Retrieve the most recent extracted references for a document.
-
-    See :meth:`.references.ReferenceStoreSession.retrieve_latest`.
-    """
-    return current_session().references.retrieve_latest(*args, **kwargs)
-
-
-def store_raw_extraction(*args, **kwargs):
-    """
-    Store raw extraction metadata for a single extractor.
-
-    See :meth:`.raw.RawExtractionSession.store_extraction`.
-    """
-    return current_session().raw.store_extraction(*args, **kwargs)
-
-
-def get_raw_extraction(*args, **kwargs):
-    """
-    Retrieve raw extraction metadata for a single extractor.
-
-    See :meth:`.raw.RawExtractionSession.get_extraction`.
-    """
-    return current_session().raw.get_extraction(*args, **kwargs)
-
-
-def init_db():
-    """Create datastore tables."""
     session = current_session()
-    session.raw.create_table()
-    session.extractions.create_table()
-    session.references.create_table()
+    return session.save(references)
+
+
+@wraps(ReferenceStoreSession.load)
+def load(document_id: str, extractor: str = 'combined',
+         version: str = 'latest') -> ReferenceSet:
+    """
+    Retrieve extracted references.
+
+    Parameters
+    ----------
+    document_id : str
+        arXiv paper ID (with version affix).
+    extractor : str
+        If provided, load the raw extraction for a particular extractor.
+
+
+    Returns
+    -------
+    :class:`.ReferenceSet`
+
+    """
+    return current_session().load(document_id, extractor=extractor)
