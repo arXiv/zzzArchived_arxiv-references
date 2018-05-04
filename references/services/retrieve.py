@@ -2,15 +2,28 @@
 
 import os
 from urllib.parse import urlparse
+from functools import wraps
 import tempfile
 
 import requests
 from flask import _app_ctx_stack as stack
 
-from references import logging
-from references.context import get_application_config, get_application_global
+from arxiv.base import logging
+from arxiv.base.globals import get_application_config, get_application_global
 
 logger = logging.getLogger(__name__)
+
+
+class PDFNotFound(RuntimeError):
+    """PDF could not be found."""
+
+
+class RetrieveFailed(IOError):
+    """Failed to retrieve PDF."""
+
+
+class InvalidURL(ValueError):
+    """An invalid URL was requested."""
 
 
 class RetrievePDFSession(object):
@@ -61,18 +74,17 @@ class RetrievePDFSession(object):
         """
         if not self.is_valid_url(target):
             logger.error('Target URL not valid: %s', target)
-            raise ValueError('URL not allowed: %s' % target)
+            raise InvalidURL('URL not allowed: %s' % target)
 
         pdf_response = requests.get(target)
-        if pdf_response.status_code == requests.codes.NOT_FOUND:
+        status_code = pdf_response.status_code
+        if status_code == requests.codes.NOT_FOUND:
             logger.error('Could not retrieve PDF for %s', document_id)
-            return None
-        elif pdf_response.status_code != requests.codes.ok:
+            raise PDFNotFound('Could not retrieve PDF')
+        elif status_code != requests.codes.ok:
             logger.error('Failed to retrieve PDF %s: %s, %s',
-                         document_id, pdf_response.status_code,
-                         pdf_response.content)
-            raise IOError('%s: unexpected status for PDF: %i' %
-                          (document_id, pdf_response.status_code))
+                         document_id, status_code, pdf_response.content)
+            raise RetrieveFailed('Unexpected status: %i' % status_code)
 
         _, pdf_path = tempfile.mkstemp(prefix=document_id.split('/')[-1],
                                        suffix='.pdf')
@@ -95,29 +107,24 @@ def get_session(app: object = None) -> RetrievePDFSession:
     return RetrievePDFSession(whitelist.split(','))
 
 
-def current_session():
+def current_session() -> RetrievePDFSession:
     """Get/create :class:`.RetrievePDFSession` for this context."""
     g = get_application_global()
     if g is None:
         return get_session()
     if 'retrieve' not in g:
         g.retrieve = get_session()
-    return g.retrieve
+    session: RetrievePDFSession = g.retrieve
+    return session
 
 
+@wraps(RetrievePDFSession.is_valid_url)
 def is_valid_url(url: str) -> bool:
-    """
-    Evaluate whether or not a URL is acceptible for retrieval.
-
-    See :meth:`.RetrievePDFSession.is_valid_url`.
-    """
+    """Evaluate whether or not a URL is acceptible for retrieval."""
     return current_session().is_valid_url(url)
 
 
+@wraps(RetrievePDFSession.retrieve)
 def retrieve_pdf(target: str, document_id: str) -> str:
-    """
-    Retrieve PDFs of published papers from the core arXiv document store.
-
-    See :meth:`.RetrievePDFSession.retrieve`.
-    """
+    """Retrieve PDF of a published paper from the core arXiv document store."""
     return current_session().retrieve(target, document_id)

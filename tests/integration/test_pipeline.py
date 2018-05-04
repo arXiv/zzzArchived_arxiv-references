@@ -48,20 +48,16 @@ class ReferenceExtractionAndArbitration(unittest.TestCase):
 
     def test_extraction(self):
         from references.process import extract
+        from references.services import refextract, cermine, grobid
         from references.process.merge import align, arbitrate, priors, beliefs, \
             normalize
-        # refs = extract.extract('evaluation/pdfs/0801.0012.pdf',
-        #                        document_id="0801.0012", report=False)
         pdf_path = 'evaluation/pdfs/0801.0012.pdf'
         document_id = '0801.0012'
 
         extractions = {}
-        extractions['cermine'] = extract.cermine.extract_references(
-                                    pdf_path, document_id)
-        extractions['grobid'] = extract.grobid.extract_references(
-                                    pdf_path, document_id)
-        extractions['refextract'] = extract.refextract.extract_references(
-                                        pdf_path, document_id)
+        extractions['cermine'] = cermine.extract_references(pdf_path)
+        extractions['grobid'] = grobid.extract_references(pdf_path)
+        extractions['refextract'] = refextract.extract_references(pdf_path)
 
         # with open('data/0801.0012.cermine.json', 'w') as f:
         #     json.dump(extractions['cermine'], f, indent=4, default=decimal_default)

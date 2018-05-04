@@ -1,0 +1,32 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+"nose2" = "*"
+flask = "*"
+coveralls = "*"
+mypy = "*"
+pydocstyle = "*"
+pylint = "*"
+"boto3" = "*"
+celery = "*"
+moto = "*"
+jsonschema = "*"
+unidecode = "*"
+ftfy = "*"
+editdistance = "*"
+regex = "*"
+amazon-kclpy = "*"
+redis = "*"
+dataclasses = "*"
+arxiv-base = "==0.6"
+uwsgi = "*"
+
+
+[dev-packages]
+

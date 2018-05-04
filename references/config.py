@@ -5,7 +5,8 @@ Docstrings are from the `Flask configuration documentation
 <http://flask.pocoo.org/docs/0.12/config/>`_.
 """
 import os
-
+from typing import Optional
+from datetime import datetime
 
 
 VERSION = '0.2'
@@ -219,56 +220,56 @@ DYNAMODB_VERIFY = os.environ.get('DYNAMODB_VERIFY', 'true')
 """For testing only."""
 
 # Cermine configuration.
-CERMINE_SERVICE_HOST = os.environ.get('ARXIV_REFERENCES_CERMINE_SERVICE_HOST', 'localhost')
-CERMINE_SERVICE_PORT = os.environ.get('ARXIV_REFERENCES_CERMINE_SERVICE_PORT', '80')
-CERMINE_ENDPOINT = os.environ.get('CERMINE_ENDPOINT',
-                                 'http://%s:%s' % (CERMINE_SERVICE_HOST,
-                                                   CERMINE_SERVICE_PORT))
-
-REFEXTRACT_SERVICE_HOST = os.environ.get('ARXIV_REFERENCES_REFEXTRACT_SERVICE_HOST', 'localhost')
-REFEXTRACT_SERVICE_PORT = os.environ.get('ARXIV_REFERENCES_REFEXTRACT_SERVICE_PORT', '80')
-REFEXTRACT_ENDPOINT = os.environ.get('REFEXTRACT_ENDPOINT',
-                                     'http://%s:%s' % (
-                                        REFEXTRACT_SERVICE_HOST,
-                                        REFEXTRACT_SERVICE_PORT
-                                    ))
-
-# Grobid configuration.
-GROBID_SERVICE_HOST = os.environ.get('ARXIV_REFERENCES_GROBID_SERVICE_HOST', 'localhost')
-GROBID_SERVICE_PORT = os.environ.get('ARXIV_REFERENCES_GROBID_SERVICE_PORT', '8080')
-GROBID_ENDPOINT = os.environ.get('GROBID_ENDPOINT',
-                                 'http://%s:%s' % (GROBID_SERVICE_HOST,
-                                                   GROBID_SERVICE_PORT))
-
-GROBID_PATH = os.environ.get('GROBID_PATH',
-                             'processFulltextDocument')
-
-SOURCE_WHITELIST = os.environ.get('SOURCE_WHITELIST',
-                                  'arxiv.org,export.arxiv.org')
-
-CLOUDWATCH_ENDPOINT = os.environ.get('CLOUDWATCH_ENDPOINT', None)
-CLOUDWATCH_VERIFY = os.environ.get('CLOUDWATCH_VERIFY', 'true')
-
-INSTANCE_CREDENTIALS = os.environ.get('INSTANCE_CREDENTIALS', False)
-CREDENTIALS_ROLE = os.environ.get('CREDENTIALS_ROLE', 'arxiv-references')
-CREDENTIALS_URL = os.environ.get(
-    'CREDENTIALS_URL',
-    'http://169.254.169.254/latest/meta-data/iam/security-credentials'
+CERMINE_HOST = os.environ.get('ARXIV_REFERENCES_CERMINE_SERVICE_HOST',
+                              'localhost')
+CERMINE_PORT = os.environ.get('ARXIV_REFERENCES_CERMINE_SERVICE_PORT', '80')
+CERMINE_ENDPOINT = os.environ.get(
+    'CERMINE_ENDPOINT',
+    f'http://{CERMINE_HOST}:{CERMINE_PORT}'
 )
 
-RAW_TABLE_NAME = os.environ.get('RawExtractions')
-EXTRACTIONS_TABLE_NAME = os.environ.get('Extractions')
-REFERENCES_TABLE_NAME = os.environ.get('StoredReference')
+REFEXTRACT_HOST = os.environ.get('ARXIV_REFERENCES_REFEXTRACT_SERVICE_HOST',
+                                 'localhost')
+REFEXTRACT_PORT = os.environ.get('ARXIV_REFERENCES_REFEXTRACT_SERVICE_PORT',
+                                 '80')
+REFEXTRACT_ENDPOINT = os.environ.get(
+    'REFEXTRACT_ENDPOINT',
+    f'http://{REFEXTRACT_HOST}:{REFEXTRACT_PORT}'
+)
 
-EXTRACTION_HOST = os.environ.get('ARXIV_REFERENCES_API_SERVICE_HOST', 'localhost')
-EXTRACTION_PORT = os.environ.get('ARXIV_REFERENCES_API_SERVICE_PORT', '80')
-EXTRACTION_ENDPOINT = os.environ.get('EXTRACTION_ENDPOINT', 'http://%s:%s' % (EXTRACTION_HOST, EXTRACTION_PORT))
+# Grobid configuration.
+GROBID_HOST = os.environ.get('ARXIV_REFERENCES_GROBID_SERVICE_HOST', 'localhost')
+GROBID_PORT = os.environ.get('ARXIV_REFERENCES_GROBID_SERVICE_PORT', '8080')
+GROBID_ENDPOINT = os.environ.get(
+    'GROBID_ENDPOINT',
+    'http://{GROBID_HOST}:{GROBID_ENDPOINT}'
+)
+GROBID_PATH = os.environ.get('GROBID_PATH', 'processFulltextDocument')
+
+SCIENCEPARSE_ENDPOINT = os.environ.get('SCIENCEPARSE_ENDPOINT', 'http://localhost:8000')
+
+SOURCE_WHITELIST = os.environ.get(
+    'SOURCE_WHITELIST',
+    'arxiv.org,export.arxiv.org'
+)
 
 
 LOGFILE = os.environ.get('LOGFILE')
 LOGLEVEL = os.environ.get('LOGLEVEL', 20)
 
-AGENT_SLEEP_SECONDS = os.environ.get('AGENT_SLEEP_SECONDS', 5)
-AGENT_CHECKPOINT_RETRIES = os.environ.get('AGENT_CHECKPOINT_RETRIES', 5)
-AGENT_CHECKPOINT_FREQ = os.environ.get('AGENT_CHECKPOINT_FREQ', 60)
-KINESIS_ENDPOINT = os.environ.get('KINESIS_ENDPOINT')
+# Configuration for Kinesis stream to which the exraction agent subscribes.
+KINESIS_ENDPOINT: Optional[str] = os.environ.get('KINESIS_ENDPOINT', "")
+if not KINESIS_ENDPOINT:
+    KINESIS_ENDPOINT = None
+KINESIS_STREAM = os.environ.get('KINESIS_STREAM', "PDFIsAvailable")
+KINESIS_SHARD_ID = os.environ.get('KINESIS_SHARD_ID', 'shardId-000000000000')
+KINESIS_VERIFY = os.environ.get('KINESIS_VERIFY', 'true')
+KINESIS_CHECKPOINT_VOLUME = os.environ.get('KINESIS_CHECKPOINT_VOLUME')
+KINESIS_START_TYPE = os.environ.get('KINESIS_START_TYPE', 'AT_TIMESTAMP')
+NOW = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+KINESIS_START_AT = os.environ.get('KINESIS_START_AT', NOW)
+
+# This is where extracted references should be stored.
+REFERENCES_REDIS_HOST = os.environ.get('REDIS_MASTER_SERVICE_HOST', 'localhost')
+REFERENCES_REDIS_PORT = os.environ.get('REDIS_MASTER_SERVICE_PORT', '6379')
+REFERENCES_REDIS_DATABASE = os.environ.get('REFERENCES_REDIS_DATABASE', '1')

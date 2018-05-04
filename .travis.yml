@@ -7,11 +7,10 @@ python:
 jdk:
   - oraclejdk8
 script:
-  - pip install -r requirements/web.txt
-  - pip install -r requirements/worker.txt
-  - pip install -r requirements/agent.txt
-  - pip install -r requirements/test.txt
+  - pip install pipenv
+  - pipenv install
+  - pipenv install --dev
   - ./lintstats.sh
-  - nosetests --with-coverage --cover-package=references
+  - pipenv run nose2 --with-coverage
 after_success:
   - coveralls

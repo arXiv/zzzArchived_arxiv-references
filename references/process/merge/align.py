@@ -3,9 +3,12 @@
 import copy
 import statistics
 from itertools import islice, chain
-from typing import List, Dict, Tuple, Any
+from typing import List, Dict, Tuple, Any, Union
 
+from references.domain import Reference
 from references.process.textutil import clean_text
+
+Matrix = List[List[float]]
 
 
 def argmax(array: list) -> int:
@@ -41,7 +44,7 @@ def jacard(str0: str, str1: str) -> float:
     return shared_words/all_words
 
 
-def digest(metadata: dict) -> str:
+def digest(metadata: Reference) -> str:
     """
     Create a single string that represents the record.
 
@@ -51,7 +54,7 @@ def digest(metadata: dict) -> str:
 
     Parameters
     ----------
-    metadata : dict
+    metadata : :class:`.Reference`
         Single record. Does not necessarily have to be a dict, but that is
         what we are working with at the moment
 
@@ -59,20 +62,23 @@ def digest(metadata: dict) -> str:
     -------
     digest : string
     """
-    badkeys = ['raw', 'doi', 'identifiers']
-
+    badkeys = ['raw', 'doi', 'identifiers', 'identifier', 'reftype']
+    dig: str
     if isinstance(metadata, list):
-        return clean_text(
+        dig = clean_text(
             ' '.join([digest(l) for l in metadata]), numok=True
         )
+        return dig
     elif isinstance(metadata, dict):
-        return clean_text(
+        dig = clean_text(
             ' '.join([
-                digest(v) for k, v in metadata.items() if k not in badkeys
+                digest(v) for k, v in metadata.to_dict().items()
+                if k not in badkeys
             ]), numok=True
         )
     else:
-        return clean_text(str(metadata), numok=True)
+        dig = clean_text(str(metadata), numok=True)
+    return dig
 
 
 def flatten(arr: list) -> list:
@@ -102,25 +108,22 @@ def similarity_cutoff(records: dict) -> float:
     cutoff : float
         The similarity score cutoff value
     """
-    def _cutoff(data):
+    def _cutoff(data: List[float]) -> float:
         # median absolute deviation (MAD)
         median = statistics.median(data)
         mad = 1.4826 * statistics.median([abs(d - median) for d in data])
-        return median + 3*mad
+        return median + 3 * mad
 
-    def _jacard_matrix(r0, r1, num):
+    def _jacard_matrix(r0: List[dict], r1: List[dict], num: int) -> Matrix:
         """Calculate all-all jacard similarity matrix for 2 sets of records."""
         # If there is a large disparity in the number of records extracted by
         #  each extractor, this will a relatively sparse matrix. Since we want
         #  to avoid the median being 0, the matrix is initialized with a
         #  relatively small number.
-        out = [[0]*len(r1) for i in range(len(r0))]
+        out = [[0.]*len(r1) for i in range(len(r0))]
         for i in range(min(num, len(r0))):
             for j in range(min(num, len(r1))):
-                out[i][j] = jacard(
-                    digest(r0[i]),
-                    digest(r1[j])
-                )
+                out[i][j] = jacard(digest(r0[i]), digest(r1[j])) # type: ignore
         return out
 
     # Number of extractions.
@@ -135,10 +138,11 @@ def similarity_cutoff(records: dict) -> float:
     for i, rec0 in islice(enumerate(records.values()), 0, R-1):
         for j, rec1 in islice(enumerate(records.values()), i+1, R):
             jac[i, j] = _jacard_matrix(rec0, rec1, N)
-    return _cutoff(flatten(copy.deepcopy(jac)))
+    return _cutoff(flatten(copy.deepcopy(jac)))     # type: ignore
 
 
-def align_records(records: Dict[str, List[dict]]) -> List[List[Tuple[str, dict]]]:
+def align_records(records: Dict[str, List[Reference]]) \
+        -> List[List[Tuple[str, Reference]]]:
     """
     Align records across extractor outputs.
 
@@ -173,7 +177,7 @@ def align_records(records: Dict[str, List[dict]]) -> List[List[Tuple[str, dict]]
         extractor = list(records.keys())[0]
         return [[(extractor, ref)] for ref in list(records.values())[0]]
 
-    def _jacard_max(r0, rlist):
+    def _jacard_max(r0: Reference, rlist: List[Reference]) -> float:
         # calculate the maximum jacard score between r0 and the list rlist
         return max([jacard(digest(r0), digest(r1)) for r1 in rlist])
 

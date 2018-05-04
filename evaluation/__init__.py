@@ -20,7 +20,7 @@ if __name__ == '__main__':
     with open(truth_path) as f:
         truth = json.load(f)
 
-    extracted = (extract.refextract.extract_references(pdf_path, document_id))
+    extracted = (extract.refextract.extract_references(pdf_path))
 
     aligned = merge.align.align_records({
         'extracted': extracted,
@@ -45,4 +45,3 @@ if __name__ == '__main__':
             v_sim = merge.arbitrate._similarity(value_t, value_e)
             field_scores.append(v_sim)
         scores.append(mean(field_scores))
-    print(mean(scores), stdev(scores))
