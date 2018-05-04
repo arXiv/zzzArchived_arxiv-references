@@ -300,4 +300,4 @@ def arbitrate_all(metadata: List[List[Tuple[str, Reference]]],
     """
     N = len(metadata)
     priors_iter = repeat(priors, N)
-    return list(map(arbitrate, metadata, valid, priors_iter))  # type: ignore
+    return list(map(arbitrate, metadata, valid, priors_iter))
