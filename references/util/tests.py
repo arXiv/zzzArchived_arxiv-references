@@ -1,7 +1,7 @@
 """Tests for :mod:`references.process.extract.regex_identifiers`."""
 
 import unittest
-from references.process.extract import regex_identifiers, regex_arxiv
+from references.util import regex_identifiers, regex_arxiv
 import re
 
 

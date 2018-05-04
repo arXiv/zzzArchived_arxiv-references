@@ -1,7 +1,7 @@
 """Web Server Gateway Interface entry-point."""
 
-from references.factory import create_web_app
 import os
+from references.factory import create_web_app
 
 
 def application(environ, start_response):

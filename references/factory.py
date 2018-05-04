@@ -26,7 +26,7 @@ def create_web_app() -> Flask:
     app = Flask('references', static_folder='static',
                 template_folder='templates')
     app.config.from_pyfile('config.py')
-    from references.converter import ArXivConverter
+    from arxiv.base.converter import ArXivConverter
     app.url_map.converters['arxiv'] = ArXivConverter
 
     data_store.init_app(app)

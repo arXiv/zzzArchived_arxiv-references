@@ -1,4 +1,9 @@
-"""This module encapsulates the reference extraction process."""
+"""
+Encapsulates the reference extraction process.
+
+Leverages third-party reference extraction services to generate a set of raw
+bibliographic metadata.
+"""
 
 from typing import Dict, List, Callable, Tuple
 from datetime import datetime
@@ -6,7 +11,7 @@ from statistics import mean
 
 from arxiv.base import logging
 
-from references.process.extract import cermine, grobid, refextract
+from references.services import cermine, grobid, refextract, scienceparse
 from references.domain import Reference
 
 logger = logging.getLogger(__name__)
@@ -15,10 +20,12 @@ EXTRACTORS: List[Tuple[str, Callable]] = [
     ('cermine', cermine.extract_references),
     ('grobid', grobid.extract_references),
     ('refextract', refextract.extract_references),
+    ('scienceparse', scienceparse.extract_references),
 ]
 
 
 def getDefaultExtractors() -> List[Tuple[str, Callable]]:
+    """Get the default extractors for this service."""
     return EXTRACTORS
 
 

@@ -20,7 +20,7 @@ if __name__ == '__main__':
     with open(truth_path) as f:
         truth = json.load(f)
 
-    extracted = (extract.refextract.extract_references(pdf_path, document_id))
+    extracted = (extract.refextract.extract_references(pdf_path))
 
     aligned = merge.align.align_records({
         'extracted': extracted,

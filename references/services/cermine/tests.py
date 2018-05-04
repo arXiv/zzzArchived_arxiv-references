@@ -8,7 +8,7 @@ import subprocess
 import unittest
 from unittest import mock
 
-from references.process.extract import cermine
+from references.services import cermine
 from references.domain import Reference
 
 
@@ -38,7 +38,7 @@ class TestCermineExtractor(unittest.TestCase):
         mock_session.return_value = mock_session_instance
 
         pdf_path = 'tests/data/1702.07336.pdf'
-        references = cermine.extract_references(pdf_path, '1702.07336')
+        references = cermine.extract_references(pdf_path)
 
         self.assertEqual(mock_post.call_count, 1,
                          "The service module should POST.")

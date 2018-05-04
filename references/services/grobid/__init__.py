@@ -2,12 +2,16 @@
 
 import os
 from functools import wraps
+from typing import List
 from urllib.parse import urljoin
 from urllib3 import Retry
 import requests
 
 from arxiv.status import HTTP_200_OK, HTTP_405_METHOD_NOT_ALLOWED
 from arxiv.base.globals import get_application_config, get_application_global
+from references.domain import Reference
+
+from .parse import format_grobid_output
 
 
 class GrobidSession(object):
@@ -43,7 +47,7 @@ class GrobidSession(object):
             raise IOError('Failed to connect to Grobid at %s: %s' %
                           (self.endpoint, head.content))
 
-    def extract_references(self, filename: str) -> bytes:
+    def extract_references(self, filename: str) -> List[Reference]:
         """
         Extract references from the PDF represented by ``filehandle``.
 
@@ -53,8 +57,8 @@ class GrobidSession(object):
 
         Returns
         -------
-        bytes
-            Raw XML response from Grobid.
+        list
+            Items are :class:`.Reference` instances.
 
         """
         self._adapter.max_retries = Retry(connect=30, read=10,
@@ -69,7 +73,7 @@ class GrobidSession(object):
         if not response.ok:
             raise IOError('%s: GROBID extraction failed: %s' %
                           (filename, response.content))
-        return response.content
+        return format_grobid_output(response.content)
 
 
 def init_app(app: object = None) -> None:
@@ -99,7 +103,7 @@ def current_session() -> GrobidSession:
 
 
 @wraps(GrobidSession.extract_references)
-def extract_references(filename: str) -> bytes:
+def extract_references(filename: str) -> List[Reference]:
     """
     Extract references from the PDF at ``filename``.
 

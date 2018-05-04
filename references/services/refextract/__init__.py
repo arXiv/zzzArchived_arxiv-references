@@ -2,12 +2,15 @@
 
 import os
 from urllib.parse import urljoin
+from functools import wraps
 from typing import List
 from urllib3 import Retry
 import requests
 
 from arxiv.base import logging
 from arxiv.base.globals import get_application_config, get_application_global
+from references.domain import Reference
+from .parse import transform
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +30,7 @@ class RefExtractSession(object):
             raise IOError('Refextract endpoint not available: %s' %
                           response.content)
 
-    def extract_references(self, filename: str) -> List[dict]:
+    def extract_references(self, filename: str) -> List[Reference]:
         """
         Extract references from the PDF at ``filename``.
 
@@ -38,7 +41,8 @@ class RefExtractSession(object):
         Returns
         -------
         list
-            Raw output from RefExtract.
+            Items are :class:`.Reference` instances.
+
         """
         self._adapter.max_retries = Retry(connect=30, read=10,
                                           backoff_factor=20)
@@ -54,7 +58,7 @@ class RefExtractSession(object):
             raise IOError('%s: Refextract failed: %s' %
                           (filename, response.content))
         data: List[dict] = response.json()
-        return data
+        return [transform(reference) for reference in data]
 
 
 def init_app(app: object = None) -> None:
@@ -82,7 +86,8 @@ def current_session() -> RefExtractSession:
     return session
 
 
-def extract_references(filename: str) -> List[dict]:
+@wraps(RefExtractSession.extract_references)
+def extract_references(filename: str) -> List[Reference]:
     """
     Extract references from the PDF at ``filename``.
 

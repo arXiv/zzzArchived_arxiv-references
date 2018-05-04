@@ -10,7 +10,7 @@ from typing import Tuple, Any, Union, Callable, List, Dict
 import editdistance    # For string similarity.
 
 from references.domain import Reference
-from references.process.util import argmax
+from references.util import argmax
 from arxiv.base import logging
 from references.process.merge.align import align_records
 

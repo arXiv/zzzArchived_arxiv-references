@@ -7,7 +7,6 @@ See <https://github.com/inspirehep/refextract>.
 from typing import List, Any, Dict
 
 from references.domain import Reference, Identifier, Author
-from references.services import refextract
 from arxiv.base import logging
 logger = logging.getLogger(__name__)
 
@@ -24,7 +23,7 @@ FIELD_MAPPINGS = [      # Maps refextract field names to our field names.
 ]
 
 
-def _transform(refextract_metadatum: dict) -> Reference:
+def transform(refextract_metadatum: dict) -> Reference:
     """
     Restructure refextract output to match internal extraction struct.
 
@@ -53,30 +52,3 @@ def _transform(refextract_metadatum: dict) -> Reference:
             for author in refextract_metadatum['author']
         ]
     return Reference(**metadatum)   # type: ignore
-
-
-def extract_references(filename: str, document_id: str) \
-        -> List[Reference]:
-    """
-    Wrapper for :func:`refextract.extract_references_from_file` function.
-
-    Parameters
-    ----------
-    filename : str
-        Name of the PDF from which to extract references.
-    document_id : str
-        arXiv paper ID.
-
-    Returns
-    -------
-    references : list of :class:`Reference`
-        Parsed metadata from a bibliographic reference.
-    """
-    try:
-        return [_transform(reference) for reference
-                in refextract.extract_references(filename)]
-    except IOError as e:
-        raise IOError('Connection to refextract failed: %s' % e) from e
-    except Exception as e:
-        logger.error('Failed to extract references from %s: %s', filename, e)
-        raise RuntimeError('Failed to extract references') from e

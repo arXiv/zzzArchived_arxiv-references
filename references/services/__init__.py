@@ -1,1 +1,1 @@
-"""This module provides integrations with external state and services."""
+"""Provides integrations with external state and services."""

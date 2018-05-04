@@ -1,3 +1,5 @@
+"""Tools for extracting document identifiers from bibliographic references."""
+
 from typing import List, Dict, Any
 import regex as re
 

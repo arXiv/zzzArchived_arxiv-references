@@ -1,11 +1,9 @@
 """
-This module is responsible for merging extracted reference metadata.
+Procedure for merging extracted reference metadata.
 
-The :mod:`references.process.extract` module provides several reference
-extraction mechanisms, each of which provides variable levels of completeness
-and quality.
-
-
+The :mod:`references.process.extract` module provides an entry-point to several
+reference extraction mechanisms, each of which provides variable levels of
+completeness and quality.
 
 .. automodule:: merge
    :members:

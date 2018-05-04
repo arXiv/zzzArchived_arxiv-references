@@ -4,7 +4,8 @@ import jsonschema
 import datetime
 import unittest
 
-from references.process.extract import cermine, grobid, scienceparse
+from references.process.extract import grobid, scienceparse
+from references.services import cermine
 
 data_directory = 'tests/data'
 

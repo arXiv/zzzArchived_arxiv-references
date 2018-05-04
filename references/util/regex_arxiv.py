@@ -1,6 +1,6 @@
 """RegEx patterns for arXiv identifiers in citations."""
 
-from references.process.util import CATEGORIES
+from arxiv import taxonomy
 
 __all__ = (
     'REGEX_ARXIV_SIMPLE',
@@ -8,9 +8,9 @@ __all__ = (
     'REGEX_ARXIV_FLEXIBLE'
 )
 
-
+categories = list(taxonomy.ARCHIVES.keys())
 # A common typo is to exclude the hyphen in the category.
-categories = CATEGORIES + [cat.replace('-', '') for cat in CATEGORIES]
+categories += [cat.replace('-', '') for cat in taxonomy.ARCHIVES.keys()]
 
 RE_SEPS = r'.{1,5}'
 RE_CATEGORIES = r'(?:{})(?:[.][A-Z]{{2}})?'.format(r'|'.join(categories))

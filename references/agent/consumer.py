@@ -1,9 +1,4 @@
-"""
-This module is used by the KCL MultiLangDaemon to process Kinesis streams.
-
-http://docs.aws.amazon.com/streams/latest/dev/kinesis-record-processor-implementation-app-py.html
-https://github.com/awslabs/amazon-kinesis-client-python/blob/master/samples/sample_kclpy_app.py
-"""
+"""Provides the :class:`.ExtractionAgent`, a Kinesis consumer."""
 
 import time
 import json
@@ -23,7 +18,7 @@ ARXIV_HOME = 'https://arxiv.org'
 
 
 class ExtractionAgent(BaseConsumer):
-    """Processes records received by the Kinesis consumer."""
+    """Perform reference extraction for each message received."""
 
     def process_record(self, record: dict) -> None:
         """

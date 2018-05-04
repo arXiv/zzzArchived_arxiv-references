@@ -84,6 +84,7 @@ def get_session(app: object = None) -> ReferenceStoreSession:
     Returns
     -------
     :class:`.DataStoreSession`
+
     """
     config = get_application_config(app)
     host = config.get('REFERENCES_REDIS_HOST', 'localhost')
@@ -109,7 +110,7 @@ def save(references: ReferenceSet) -> None:
     Store extracted references for a document.
 
     Parameters
-    -------
+    ----------
     references : :class:`.ReferenceSet`
 
     """

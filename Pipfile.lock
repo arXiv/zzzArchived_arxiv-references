@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8dc84bf0751adac22d545adc548612c1e083e1d12831f84cfb20ca09557e0b1a"
+            "sha256": "5beb66186ccc75698dd39a148b50b86c04d09fa9167d6ee125e808dadd5ed9c9"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -27,9 +27,6 @@
         ]
     },
     "default": {
-        "17e504d": {
-            "path": "./../arxiv-base-ui"
-        },
         "amazon-kclpy": {
             "hashes": [
                 "sha256:b20a1fa30ab531206b2f049ec23e107037c6a1dbe13aa4f990fc4da3ec44dee7"
@@ -49,6 +46,12 @@
                 "sha256:62b089a55be1d8949cd2bc7e0df0bddb9e028faefc8c32038cc84862aefdd6e4"
             ],
             "version": "==1.4.0"
+        },
+        "arxiv-base": {
+            "hashes": [
+                "sha256:97d50f6403b71bb4eef34d4a5451f859e7936abdc814e0ebf8e25eb2551dcc53"
+            ],
+            "version": "==0.6"
         },
         "asn1crypto": {
             "hashes": [
@@ -619,6 +622,12 @@
                 "sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f"
             ],
             "version": "==1.22"
+        },
+        "uwsgi": {
+            "hashes": [
+                "sha256:3dc2e9b48db92b67bfec1badec0d3fdcc0771316486c5efa3217569da3528bf2"
+            ],
+            "version": "==2.0.17"
         },
         "vine": {
             "hashes": [

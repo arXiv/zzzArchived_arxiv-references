@@ -34,9 +34,7 @@ def clean_text(txt: str, numok: bool = False) -> str:
 
 
 def clean_blob(blob: str, numok: bool = False) -> str:
-    """
-    Given a blob of text, apply the `clean_text` to each line in the text.
-    """
+    """Apply :func:`.clean_text` to each line in a blob of text."""
     output = []
 
     lines = blob.split('\n')

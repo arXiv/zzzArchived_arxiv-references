@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 def _fail(document_id: str, e: Exception, reason: str) -> None:
-    """"""
+    """Helper to log exceptions consistently before propagating."""
     logger.error('%s: failed to process: %s', document_id, reason)
     raise e
 

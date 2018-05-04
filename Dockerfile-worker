@@ -1,43 +1,30 @@
-# arxiv/references-worker
+# arxiv/references-agent
 
-FROM ubuntu:zesty
+FROM arxiv/base:0.6
 
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    wget \
-    gcc \
-    g++ \
-    libpython3.6 \
-    python3.6 \
-    python3.6-dev \
-    python3.6-venv \
- && rm -rf /var/lib/apt/lists/*
+WORKDIR /opt/arxiv
 
-# Install Python 3.6 and friends.
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python3.6 get-pip.py
+ADD Pipfile /opt/arxiv/
+ADD Pipfile.lock /opt/arxiv/
 
-# Add Python consumer and configuration.
-ADD requirements/worker.txt /opt/arxiv/requirements.txt
-ADD wsgi.py /opt/arxiv/
-RUN pip install -U pip
-RUN pip install -r /opt/arxiv/requirements.txt
+ENV KINESIS_ENDPOINT ""
+ENV KINESIS_VERIFY "true"
+ENV KINESIS_SHARD_ID "shardId-000000000000"
+ENV KINESIS_STREAM "PDFIsAvailable"
+ENV KINESIS_CHECKPOINT_VOLUME /checkpoint
 
-ENV PATH "/opt/arxiv:${PATH}"
+RUN pip install pipenv
+RUN pipenv install
 
-# Runtime configuration.
-ENV AWS_ACCESS_KEY_ID ""
-ENV AWS_SECRET_ACCESS_KEY ""
+# Add the application itself last, for faster builds on minor revisions.
+ADD references /opt/arxiv/references/
+ADD bin/start_agent.py /opt/arxiv/
 
-# If not set, secrets will not be retrieved.
-ENV SECRETS_BUCKET_NAME ""
-ENV ARXIV_HOME "https://arxiv.org"
-ENV CREDENTIALS_ROLE "arxiv-references-worker"
-ENV CREDENTIALS_URL "http://169.254.169.254/latest/meta-data/iam/security-credentials"
-ENV LOGLEVEL 10
+VOLUME /checkpoint
+
+CMD ["pipenv", "run", "python", "start_agent.py"]
 
 ADD references /opt/arxiv/references/
 
-WORKDIR /opt/arxiv
-ENTRYPOINT ["celery", "worker"]
+ENTRYPOINT ["pipenv", "run", "celery", "worker"]
 CMD ["-A", "references.worker.celery_app", "--loglevel=INFO", "-E", "--concurrency=4"]

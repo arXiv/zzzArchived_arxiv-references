@@ -3,11 +3,15 @@
 import os
 from urllib.parse import urljoin
 from urllib3 import Retry
+from typing import List
 
 import requests
 from flask import _app_ctx_stack as stack
 
 from arxiv.base.globals import get_application_config, get_application_global
+from references.domain import Reference
+
+from .parse import cxml_to_json
 
 
 class ExtractionError(Exception):
@@ -36,7 +40,7 @@ class CermineSession(object):
             raise IOError('CERMINE endpoint not available: %s' %
                           response.content)
 
-    def extract_references(self, filename: str) -> bytes:
+    def extract_references(self, filename: str) -> List[Reference]:
         """
         Extract references from the PDF represented by ``filehandle``.
 
@@ -46,8 +50,8 @@ class CermineSession(object):
 
         Returns
         -------
-        str
-            Raw XML response from Cermine.
+        list
+            Items are :class:`.Reference` instances.
         """
         # This can take a while.
         self._adapter.max_retries = Retry(connect=30, read=10,
@@ -61,7 +65,7 @@ class CermineSession(object):
         if not response.ok:
             raise IOError('%s: CERMINE extraction failed: %s' %
                           (filename, response.content))
-        return response.content
+        return cxml_to_json(response.content)
 
 
 def init_app(app: object = None) -> None:
@@ -89,7 +93,7 @@ def current_session() -> CermineSession:
     return session
 
 
-def extract_references(filename: str) -> bytes:
+def extract_references(filename: str) -> List[Reference]:
     """
     Extract references from the PDF at ``filename``.
 

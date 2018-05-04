@@ -1,64 +1,25 @@
 # arxiv/references-agent
 
-FROM ubuntu:zesty
+FROM arxiv/base:0.6
 
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    wget \
-    default-jdk \
-    build-essential \
-    autoconf \
-    libtool \
-    pkg-config \
-    gcc \
-    g++ \
-    libpython3.6 \
-    python3.6 \
-    python3.6-dev \
-    python3.6-venv \
- && rm -rf /var/lib/apt/lists/*
+WORKDIR /opt/arxiv
 
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python3.6 get-pip.py
+ADD Pipfile /opt/arxiv/
+ADD Pipfile.lock /opt/arxiv/
 
-# Add Python consumer and configuration.
+ENV KINESIS_ENDPOINT ""
+ENV KINESIS_VERIFY "true"
+ENV KINESIS_SHARD_ID "shardId-000000000000"
+ENV KINESIS_STREAM "PDFIsAvailable"
+ENV KINESIS_CHECKPOINT_VOLUME /checkpoint
 
-ADD requirements/agent.txt /opt/arxiv/requirements.txt
-RUN pip install -U pip && pip install -r /opt/arxiv/requirements.txt
-
-ADD agent.properties /opt/arxiv/
-ADD test.properties /opt/arxiv/
-ADD bin/run_consumer.py /opt/arxiv/
-ADD bin/start_agent.sh /opt/arxiv/
-ADD bin/start_agent.py /opt/arxiv/
-
-ENV PATH "/opt/arxiv:/opt/arxiv/jars:${PATH}"
-
-# Runtime configuration.
-ENV AWS_ACCESS_KEY_ID ""
-ENV AWS_SECRET_ACCESS_KEY ""
-
-# Set to `test` when testing with localstack.
-ENV MODE "agent"
-
-# Set `-Dcom.amazonaws.sdk.disableCertChecking` for testing
-ENV JAVA_FLAGS ""
-
-# Set `true` when testing with localstack.
-ENV AWS_CBOR_DISABLE false
-
-# If not set, secrets will not be retrieved.
-ENV SECRETS_BUCKET_NAME ""
-ENV ARXIV_HOME "https://arxiv.org"
-
-RUN touch /var/log/references-agent
-
-RUN chmod +x /opt/arxiv/start_agent.sh
-
-RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3
-RUN ln -s /usr/local/bin/python3 /usr/local/bin/python
+RUN pip install pipenv
+RUN pipenv install
 
 # Add the application itself last, for faster builds on minor revisions.
 ADD references /opt/arxiv/references/
+ADD bin/start_agent.py /opt/arxiv/
 
-CMD ["/bin/bash", "/opt/arxiv/start_agent.sh"]
+VOLUME /checkpoint
+
+CMD ["pipenv", "run", "python", "start_agent.py"]

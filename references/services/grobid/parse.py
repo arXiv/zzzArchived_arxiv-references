@@ -7,7 +7,6 @@ from xml.etree.ElementTree import Element
 from typing import List, Dict
 
 from arxiv.base import logging
-from references.services import grobid
 from references.domain import Reference
 
 logger = logging.getLogger(__name__)
@@ -161,28 +160,3 @@ def format_grobid_output(output: bytes) -> List[Reference]:
         references.append(Reference(**reference))   # type: ignore
 
     return references
-
-
-def extract_references(filename: str, document_id: str) \
-        -> List[Reference]:
-    """
-    Extract references from the PDF at ``filename`` using GROBID.
-
-    Sends the PDF to Grobid, which returns an XML response with extracted
-    reference metadata.
-
-    Parameters
-    ----------
-    filename : str
-        Location of the PDF from which to extract references.
-
-    Returns
-    -------
-    reference_docs : list of :class:`Reference`
-        Parsed metadata from a bibliographic reference.
-    """
-    try:
-        data = grobid.extract_references(filename)
-    except IOError as e:
-        raise RuntimeError('Extraction with Grobid failed: %s' % e) from e
-    return format_grobid_output(data)

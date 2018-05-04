@@ -16,16 +16,6 @@ VolumeList = List[List[str]]
 PortList = List[List[int]]
 
 
-CATEGORIES = [
-    "acc-phys", "adap-org", "alg-geom", "ao-sci", "astro-ph", "atom-ph",
-    "bayes-an", "chao-dyn", "chem-ph", "cmp-lg", "comp-gas", "cond-mat", "cs",
-    "dg-ga", "funct-an", "gr-qc", "hep-ex", "hep-lat", "hep-ph", "hep-th",
-    "math", "math-ph", "mtrl-th", "nlin", "nucl-ex", "nucl-th", "patt-sol",
-    "physics", "plasm-ph", "q-alg", "q-bio", "quant-ph", "solv-int",
-    "supr-con", "eess", "econ"
-]
-
-
 def files_modified_since(fldr: str, timestamp: datetime.datetime,
                          extension: str = 'pdf') -> list:
     """
@@ -126,8 +116,9 @@ def rotating_backup_name(filename: str) -> str:
 
 def backup(filename: str) -> None:
     """
-    Perform a rotating backup on `filename` in the same directory by appending
-    <filename>.bk-[0-9]+
+    Perform a rotating backup on `filename` in the same directory.
+
+    Works by appending <filename>.bk-[0-9]+
 
     Parameters
     ----------
@@ -143,13 +134,16 @@ def backup(filename: str) -> None:
 
 
 def ps2pdf(ps: str) -> None:
+    """Wrapper for ps2pdf."""
     subprocess.check_call(['ps2pdf', ps])
 
 
 def dvi2ps(dvi: str) -> None:
+    """Wrapper for dvi2ps."""
     subprocess.check_call(['dvi2ps', dvi])
 
 
 def argmax(array: List[float]) -> int:
+    """Simple argmax implementation for lists of floats."""
     index, value = max(enumerate(array), key=lambda x: x[1])
     return index

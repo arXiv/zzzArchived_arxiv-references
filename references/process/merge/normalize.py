@@ -6,7 +6,7 @@ import re
 from typing import Tuple, Union, List, Callable
 
 from references.domain import Reference
-from references.process.util import CATEGORIES
+from arxiv import taxonomy
 from arxiv.base import logging
 
 logger = logging.getLogger(__name__)
@@ -37,7 +37,7 @@ def _fix_arxiv_id(value: Union[list, str]) -> Union[list, str]:
     """Fix common mistakes in arXiv identifiers."""
     if isinstance(value, list):
         return [_fix_arxiv_id(obj) for obj in value]
-    for category in CATEGORIES:
+    for category in taxonomy.ARCHIVES.keys():
         typo = category.replace('-', '')
         if typo in value:
             return value.replace(typo, category)

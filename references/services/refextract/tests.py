@@ -9,7 +9,7 @@ import unittest
 from unittest import mock
 
 from references.domain import Reference
-from references.process.extract import refextract
+from references.services import refextract
 
 
 class TestRefextractExtractor(unittest.TestCase):
@@ -42,7 +42,7 @@ class TestRefextractExtractor(unittest.TestCase):
         mock_session.return_value = mock_session_instance
 
         pdf_path = 'tests/data/1702.07336.pdf'
-        references = refextract.extract_references(pdf_path, '1702.07336')
+        references = refextract.extract_references(pdf_path)
 
         self.assertEqual(mock_post.call_count, 1,
                          "The service module should POST.")
