@@ -11,6 +11,7 @@ curl -u $USERNAME:$GITHUB_TOKEN \
     > /dev/null 2>&1
 
 
+pipenv run mypy -p references | grep -v "test.*" | grep -v "defined here"
 MYPY_STATUS=$( pipenv run mypy -p references | grep -v "test.*" | grep -v "defined here" | wc -l | tr -d '[:space:]' )
 if [ $MYPY_STATUS -ne 0 ]; then MYPY_STATE="failure" && echo "mypy failed"; else MYPY_STATE="success" &&  echo "mypy passed"; fi
 
